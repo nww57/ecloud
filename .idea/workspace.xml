@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7c948725-830c-43a6-b981-f1f4dd9d150a" name="Default" comment="" />
+    <list default="true" id="7c948725-830c-43a6-b981-f1f4dd9d150a" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/config/target/" />
@@ -119,17 +121,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EnableAdminServer.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/de/codecentric/spring-boot-admin-server/1.5.7/spring-boot-admin-server-1.5.7.jar!/de/codecentric/boot/admin/config/EnableAdminServer.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="application.yml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="application.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/e-config/src/main/resources/shared/application.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="483">
@@ -139,11 +131,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/e-monitoring/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="14" column="37" lean-forward="false" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
+            <state relative-caret-position="230">
+              <caret line="13" column="5" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -530,11 +532,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\2_SourceCode\ecloud" />
       <recent name="D:\2_SourceCode\ecloud\e-gateway\src\main\resources" />
       <recent name="D:\2_SourceCode\ecloud\e-monitoring\src\main\resources" />
       <recent name="D:\2_SourceCode\ecloud\e-framework\e-common\src\main\java\com\sunesoft\ecloud\common" />
       <recent name="D:\2_SourceCode\ecloud\e-common\hibernate-support\src\main\java\com\sunesoft\ecloud" />
-      <recent name="D:\2_SourceCode\ecloud\auth-server\auth-service\src\main\resource" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -709,12 +711,12 @@
       <workItem from="1521295650910" duration="7316000" />
       <workItem from="1521425827159" duration="733000" />
       <workItem from="1521438893342" duration="24394000" />
-      <workItem from="1521472278773" duration="6431000" />
+      <workItem from="1521472278773" duration="6577000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="91269000" />
+    <option name="totallyTimeSpent" value="91415000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -790,20 +792,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/auth-server/auth-service/src/main/resource/static/js/client.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="15" column="9" lean-forward="false" selection-start-line="15" selection-start-column="9" selection-end-line="15" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/auth-server/auth-service/src/main/resource/static/js/libs/jwt-decode.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/e-gateway/src/main/resources/static/js/client.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="667">
@@ -1177,6 +1165,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="483">
           <caret line="21" column="23" lean-forward="false" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-monitoring/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="13" column="5" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
