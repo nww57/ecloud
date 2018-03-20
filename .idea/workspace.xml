@@ -2,128 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7c948725-830c-43a6-b981-f1f4dd9d150a" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-client/target/classes/com/sunesoft/ecloud/App.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-client/target/test-classes/com/sunesoft/ecloud/AppTest.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/auth-service-sources.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/auth-service.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/auth-service.jar.original" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/META-INF/build-info.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/bootstrap.yml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/com/sunesoft/ecloud/AuthApplicationBootstrap.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/com/sunesoft/ecloud/auth/config/WebSecurityConfig.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/com/sunesoft/ecloud/auth/model/security/Authority.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/com/sunesoft/ecloud/auth/model/security/AuthorityName.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/com/sunesoft/ecloud/auth/model/security/User.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/com/sunesoft/ecloud/auth/rest/Person.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/com/sunesoft/ecloud/auth/rest/PersonRestService.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/com/sunesoft/ecloud/auth/security/JwtAuthenticationEntryPoint.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/com/sunesoft/ecloud/auth/security/JwtAuthenticationRequest.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/com/sunesoft/ecloud/auth/security/JwtAuthorizationTokenFilter.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/com/sunesoft/ecloud/auth/security/JwtTokenUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/com/sunesoft/ecloud/auth/security/JwtUser.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/com/sunesoft/ecloud/auth/security/JwtUserFactory.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/com/sunesoft/ecloud/auth/security/controller/AuthenticationException.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/com/sunesoft/ecloud/auth/security/controller/AuthenticationRestController.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/com/sunesoft/ecloud/auth/security/controller/MethodProtectedRestController.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/com/sunesoft/ecloud/auth/security/controller/UserRestController.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/com/sunesoft/ecloud/auth/security/repository/UserRepository.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/com/sunesoft/ecloud/auth/security/service/JwtAuthenticationResponse.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/com/sunesoft/ecloud/auth/security/service/JwtUserDetailsService.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/static/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/static/js/client.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/classes/static/js/libs/jwt-decode.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/maven-archiver/pom.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/auth-server/auth-service/target/test-classes/com/sunesoft/ecloud/AppTest.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/ConcurrentReferenceHashMap$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/ConcurrentReferenceHashMap$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/ConcurrentReferenceHashMap$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/ConcurrentReferenceHashMap$4.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/ConcurrentReferenceHashMap$5.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/ConcurrentReferenceHashMap$Entries.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/ConcurrentReferenceHashMap$Entry.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/ConcurrentReferenceHashMap$EntryIterator.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/ConcurrentReferenceHashMap$EntrySet.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/ConcurrentReferenceHashMap$Reference.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/ConcurrentReferenceHashMap$ReferenceManager.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/ConcurrentReferenceHashMap$ReferenceType.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/ConcurrentReferenceHashMap$Restructure.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/ConcurrentReferenceHashMap$Segment$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/ConcurrentReferenceHashMap$Segment.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/ConcurrentReferenceHashMap$SoftEntryReference.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/ConcurrentReferenceHashMap$Task.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/ConcurrentReferenceHashMap$TaskOption.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/ConcurrentReferenceHashMap$WeakEntryReference.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/ConcurrentReferenceHashMap.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/Exceptions/BeanInstantiationException.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/Exceptions/BeansException.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/Exceptions/FatalBeanException.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/Exceptions/NestedRuntimeException.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/NestedExceptionUtils.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/cretiria/OrderTurn.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/cretiria/TCretiria.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/result/IResult.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/result/ListResult.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/result/PagedResult.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/result/TResult.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/result/resultFactory/ResultFactory.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/sqlBuilderTool/GroupBy$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/sqlBuilderTool/GroupBy.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/sqlBuilderTool/GroupByMath$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/sqlBuilderTool/GroupByMath.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/sqlBuilderTool/GroupMath.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/sqlBuilderTool/Join.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/sqlBuilderTool/JoinType.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/sqlBuilderTool/OrderType.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/sqlBuilderTool/SqlBuilder.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/sqlBuilderTool/SqlBuilderHelper.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/sqlBuilderTool/SqlTable.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/sqlBuilderTool/annotations/AliasName.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/sqlBuilderTool/annotations/SqlIgnore.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/sqlBuilderTool/annotations/TableName.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/Assert.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/BeanUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/CachedIntrospectionResults.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/ClassUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/CollectionUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/ConvertUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/FileUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/ObjectUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/ObjectUtl.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/PathUtl.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/ReflectionUtil$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/ReflectionUtil$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/ReflectionUtil$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/ReflectionUtil$4.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/ReflectionUtil$5.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/ReflectionUtil$6.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/ReflectionUtil$FieldCallback.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/ReflectionUtil$FieldFilter.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/ReflectionUtil$MethodCallback.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/ReflectionUtil$MethodFilter.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/ReflectionUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/classes/com/sunesoft/ecloud/common/utils/StringUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/e-common-1.0-SNAPSHOT-sources.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/e-common-1.0-SNAPSHOT.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/maven-archiver/pom.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/e-common/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/hibernate-support/target/classes/com/sunesoft/ecloud/hibernate/IEntity.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/hibernate-support/target/classes/com/sunesoft/ecloud/hibernate/repository/BaseRepository.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/e-framework/hibernate-support/target/classes/com/sunesoft/ecloud/hibernate/sqlBuilder/HSqlBuilder.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sys-admin/target/maven-archiver/pom.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sys-admin/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sys-admin/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sys-admin/target/sysAdmin-1.0-SNAPSHOT.jar" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_mysema_querydsl_querydsl_apt_4_1_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_mysema_querydsl_querydsl_core_4_1_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_mysema_querydsl_querydsl_jpa_4_1_3.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/e-framework/hibernate-support/hibernate-support.iml" afterPath="$PROJECT_DIR$/e-framework/hibernate-support/hibernate-support.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/e-framework/hibernate-support/pom.xml" afterPath="$PROJECT_DIR$/e-framework/hibernate-support/pom.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -178,66 +62,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="bootstrap.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/e-monitoring/src/main/resources/bootstrap.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/e-monitoring/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2093">
-              <caret line="91" column="36" lean-forward="false" selection-start-line="91" selection-start-column="25" selection-end-line="91" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/auth-server/auth-service/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="26" lean-forward="false" selection-start-line="0" selection-start-column="26" selection-end-line="0" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bootstrap.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/auth-server/auth-service/src/main/resource/bootstrap.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="46">
-              <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/auth-server/auth-client/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MonitoringApplication.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/e-monitoring/src/main/java/com/sunesoft/ecloud/monitoring/MonitoringApplication.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="10" column="24" lean-forward="false" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#586#587#0" expanded="true" />
-                <element signature="e#649#650#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -262,11 +92,63 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="874">
-              <caret line="38" column="0" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+              <caret line="72" column="0" lean-forward="false" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BaseRepository.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/e-framework/hibernate-support/src/main/java/com/sunesoft/ecloud/hibernate/repository/BaseRepository.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="184">
+              <caret line="14" column="17" lean-forward="false" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GenericHibernateFinder.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/e-framework/hibernate-support/src/main/java/com/sunesoft/ecloud/hibernate/repository/GenericHibernateFinder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#9039#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IEntity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/e-framework/hibernate-support/src/main/java/com/sunesoft/ecloud/hibernate/IEntity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="207">
+              <caret line="17" column="22" lean-forward="false" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HSqlBuilder.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/e-framework/hibernate-support/src/main/java/com/sunesoft/ecloud/hibernate/sqlBuilder/HSqlBuilder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="138">
+              <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/e-framework/hibernate-support/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="17" column="21" lean-forward="false" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -345,7 +227,6 @@
         <option value="$PROJECT_DIR$/e-framework/hibernate-support/src/main/java/com/sunesoft/ecloud/hibernate/repository/EcloudRepository.java" />
         <option value="$PROJECT_DIR$/e-framework/hibernate-support/src/main/java/com/sunesoft/ecloud/hibernate/IRepository.java" />
         <option value="$PROJECT_DIR$/e-framework/hibernate-support/src/main/java/com/sunesoft/ecloud/hibernate/repository/GenericHibernateFinder.java" />
-        <option value="$PROJECT_DIR$/e-framework/hibernate-support/pom.xml" />
         <option value="$PROJECT_DIR$/e-framework/hibernate-support/src/main/java/com/sunesoft/ecloud/hibernate/repository/BaseRepository.java" />
         <option value="$PROJECT_DIR$/e-config/src/main/resources/shared/e-monitoring.yml" />
         <option value="$PROJECT_DIR$/e-monitoring/src/test/java/com/sunesoft/ecloud/monitoring/MonitoringApplicationTests.java" />
@@ -374,6 +255,7 @@
         <option value="$PROJECT_DIR$/e-config/src/main/resources/shared/auth-service.yml" />
         <option value="$PROJECT_DIR$/e-config/src/main/resources/shared/application.yml" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/e-framework/hibernate-support/pom.xml" />
       </list>
     </option>
   </component>
@@ -407,6 +289,15 @@
           <item name="ecloud" type="9519ce18:MavenProjectsStructure$ProjectNode" />
           <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
         </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="hibernate-support" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="hibernate-support" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Dependencies" type="f4be9f2a:MavenProjectsStructure$DependenciesNode" />
+        </path>
       </expand>
       <select />
     </treeState>
@@ -414,7 +305,7 @@
   <component name="MavenRunner">
     <option name="skipTests" value="true" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-34" />
     <option name="width" value="1859" />
     <option name="height" value="1030" />
@@ -445,84 +336,34 @@
             <path>
               <item name="ecloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="ecloud" type="462c0819:PsiDirectoryNode" />
-              <item name="auth-server" type="462c0819:PsiDirectoryNode" />
+              <item name="e-framework" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ecloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="ecloud" type="462c0819:PsiDirectoryNode" />
-              <item name="auth-server" type="462c0819:PsiDirectoryNode" />
-              <item name="auth-client" type="462c0819:PsiDirectoryNode" />
+              <item name="e-framework" type="462c0819:PsiDirectoryNode" />
+              <item name="hibernate-support" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ecloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="ecloud" type="462c0819:PsiDirectoryNode" />
-              <item name="auth-server" type="462c0819:PsiDirectoryNode" />
-              <item name="auth-client" type="462c0819:PsiDirectoryNode" />
+              <item name="e-framework" type="462c0819:PsiDirectoryNode" />
+              <item name="hibernate-support" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ecloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="ecloud" type="462c0819:PsiDirectoryNode" />
-              <item name="auth-server" type="462c0819:PsiDirectoryNode" />
-              <item name="auth-service" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ecloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ecloud" type="462c0819:PsiDirectoryNode" />
-              <item name="e-config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ecloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ecloud" type="462c0819:PsiDirectoryNode" />
-              <item name="e-config" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ecloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ecloud" type="462c0819:PsiDirectoryNode" />
-              <item name="e-config" type="462c0819:PsiDirectoryNode" />
+              <item name="e-framework" type="462c0819:PsiDirectoryNode" />
+              <item name="hibernate-support" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ecloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="ecloud" type="462c0819:PsiDirectoryNode" />
-              <item name="e-config" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ecloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ecloud" type="462c0819:PsiDirectoryNode" />
-              <item name="e-config" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ecloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ecloud" type="462c0819:PsiDirectoryNode" />
-              <item name="e-monitoring" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ecloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ecloud" type="462c0819:PsiDirectoryNode" />
-              <item name="e-monitoring" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ecloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ecloud" type="462c0819:PsiDirectoryNode" />
-              <item name="e-monitoring" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ecloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ecloud" type="462c0819:PsiDirectoryNode" />
-              <item name="e-monitoring" type="462c0819:PsiDirectoryNode" />
+              <item name="e-framework" type="462c0819:PsiDirectoryNode" />
+              <item name="hibernate-support" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
@@ -530,7 +371,8 @@
             <path>
               <item name="ecloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="ecloud" type="462c0819:PsiDirectoryNode" />
-              <item name="e-monitoring" type="462c0819:PsiDirectoryNode" />
+              <item name="e-framework" type="462c0819:PsiDirectoryNode" />
+              <item name="hibernate-support" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
@@ -539,7 +381,8 @@
             <path>
               <item name="ecloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="ecloud" type="462c0819:PsiDirectoryNode" />
-              <item name="e-monitoring" type="462c0819:PsiDirectoryNode" />
+              <item name="e-framework" type="462c0819:PsiDirectoryNode" />
+              <item name="hibernate-support" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
@@ -549,7 +392,8 @@
             <path>
               <item name="ecloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="ecloud" type="462c0819:PsiDirectoryNode" />
-              <item name="e-monitoring" type="462c0819:PsiDirectoryNode" />
+              <item name="e-framework" type="462c0819:PsiDirectoryNode" />
+              <item name="hibernate-support" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
@@ -560,22 +404,48 @@
             <path>
               <item name="ecloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="ecloud" type="462c0819:PsiDirectoryNode" />
-              <item name="e-monitoring" type="462c0819:PsiDirectoryNode" />
+              <item name="e-framework" type="462c0819:PsiDirectoryNode" />
+              <item name="hibernate-support" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="com" type="462c0819:PsiDirectoryNode" />
               <item name="sunesoft" type="462c0819:PsiDirectoryNode" />
               <item name="ecloud" type="462c0819:PsiDirectoryNode" />
-              <item name="monitoring" type="462c0819:PsiDirectoryNode" />
+              <item name="hibernate" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ecloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="ecloud" type="462c0819:PsiDirectoryNode" />
-              <item name="e-monitoring" type="462c0819:PsiDirectoryNode" />
+              <item name="e-framework" type="462c0819:PsiDirectoryNode" />
+              <item name="hibernate-support" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="sunesoft" type="462c0819:PsiDirectoryNode" />
+              <item name="ecloud" type="462c0819:PsiDirectoryNode" />
+              <item name="hibernate" type="462c0819:PsiDirectoryNode" />
+              <item name="repository" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ecloud" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ecloud" type="462c0819:PsiDirectoryNode" />
+              <item name="e-framework" type="462c0819:PsiDirectoryNode" />
+              <item name="hibernate-support" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="sunesoft" type="462c0819:PsiDirectoryNode" />
+              <item name="ecloud" type="462c0819:PsiDirectoryNode" />
+              <item name="hibernate" type="462c0819:PsiDirectoryNode" />
+              <item name="sqlBuilder" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ecloud" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ecloud" type="462c0819:PsiDirectoryNode" />
+              <item name="e-gateway" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ecloud" type="b2602c69:ProjectViewProjectNode" />
@@ -799,12 +669,12 @@
       <workItem from="1521425827159" duration="733000" />
       <workItem from="1521438893342" duration="24394000" />
       <workItem from="1521472278773" duration="9278000" />
-      <workItem from="1521517380810" duration="117000" />
+      <workItem from="1521517380810" duration="1010000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="94233000" />
+    <option name="totallyTimeSpent" value="95126000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -816,12 +686,11 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="7" />
-    <editor active="true" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.277897" sideWeight="0.49544418" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.277897" sideWeight="0.49544418" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -835,7 +704,7 @@
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297414" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32232347" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.666287" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.666287" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297414" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33488372" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23497854" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -881,35 +750,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/e-gateway/src/main/resources/static/js/client.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="667">
-          <caret line="29" column="22" lean-forward="false" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/auth-server/auth-service/src/main/java/com/sunesoft/ecloud/auth/security/controller/AuthenticationRestController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="52" column="43" lean-forward="false" selection-start-line="52" selection-start-column="43" selection-end-line="52" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/auth-server/auth-server.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/demo2/pom.xml" />
-    <entry file="file://$PROJECT_DIR$/e-center/src/main/java/com/sunesoft/ecloud/register/RegisterApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/e-gateway/src/main/java/com/sunesoft/ecloud/gateway/GatewayApplication.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
@@ -1031,6 +871,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-296">
           <caret line="43" column="45" lean-forward="false" selection-start-line="43" selection-start-column="45" selection-end-line="43" selection-end-column="45" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1103,6 +944,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1237,7 +1079,49 @@
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="874">
-          <caret line="38" column="0" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+          <caret line="72" column="0" lean-forward="false" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-framework/hibernate-support/src/main/java/com/sunesoft/ecloud/hibernate/repository/BaseRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="14" column="17" lean-forward="false" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-framework/hibernate-support/src/main/java/com/sunesoft/ecloud/hibernate/repository/GenericHibernateFinder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#9039#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-framework/hibernate-support/src/main/java/com/sunesoft/ecloud/hibernate/IEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="17" column="22" lean-forward="false" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-framework/hibernate-support/src/main/java/com/sunesoft/ecloud/hibernate/sqlBuilder/HSqlBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e-framework/hibernate-support/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="17" column="21" lean-forward="false" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
           <folding />
         </state>
       </provider>
