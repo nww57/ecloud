@@ -1,5 +1,7 @@
 package com.sunesoft.ecloud.auth.model.security;
 
+import com.sunesoft.ecloud.hibernate.IEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -8,13 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "USER")
-public class User {
-
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
-    private Long id;
+public class User extends IEntity {
 
     @Column(name = "USERNAME", length = 50, unique = true)
     @NotNull
@@ -57,13 +53,6 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})
     private List<Authority> authorities;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;

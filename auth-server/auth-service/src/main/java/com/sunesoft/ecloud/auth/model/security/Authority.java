@@ -1,18 +1,15 @@
 package com.sunesoft.ecloud.auth.model.security;
 
+import com.sunesoft.ecloud.hibernate.IEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
 @Table(name = "AUTHORITY")
-public class Authority {
+public class Authority extends IEntity{
 
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @SequenceGenerator(name = "authority_seq", sequenceName = "authority_seq", allocationSize = 1)
-    private Long id;
 
     @Column(name = "NAME", length = 50)
     @NotNull
@@ -21,14 +18,6 @@ public class Authority {
 
     @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
     private List<User> users;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public AuthorityName getName() {
         return name;

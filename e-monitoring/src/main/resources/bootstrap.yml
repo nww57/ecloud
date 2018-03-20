@@ -1,7 +1,10 @@
 spring:
-    application:
+   application:
         name: e-monitoring
-
+   boot:
+      admin:
+        routes:
+          endpoints: env,metrics,trace,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,hystrix.stream
 server:
     port: 8764 #启动端口
 

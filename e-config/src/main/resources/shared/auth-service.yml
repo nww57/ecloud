@@ -1,6 +1,7 @@
 server:
   context-path: /uaa
   port: 5000
+
 management:
   security:
     enabled: false
@@ -26,7 +27,7 @@ spring:
         initialSize: 2
         minIdle: 2
         maxActive: 30
-    #下面配置说明请参考Druid Github Wiki，配置_StatViewServlet配置
+      #下面配置说明请参考Druid Github Wiki，配置_StatViewServlet配置
         StatViewServlet:
             loginUsername: druid
             loginPassword: druid

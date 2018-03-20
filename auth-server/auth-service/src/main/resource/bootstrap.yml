@@ -7,7 +7,9 @@ spring:
       fail-fast: true
       password: admin
       username: user
-#  boot:
-#    admin:
-#      url: http://localhost:8764
-#      name: ceshi
+
+eureka:
+  instance:
+      statusPageUrlPath: /uaa/info
+      metadata-map:
+        management.context-path: /uaa

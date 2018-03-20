@@ -15,7 +15,7 @@ import java.util.UUID;
  * Created by 中浩 on 2016/4/26.
  */
 @MappedSuperclass
-public abstract class IEntity {
+public abstract class IEntity{
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
