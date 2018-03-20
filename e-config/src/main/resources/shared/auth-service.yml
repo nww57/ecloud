@@ -1,0 +1,41 @@
+server:
+  context-path: /uaa
+  port: 5000
+management:
+  security:
+    enabled: false
+jwt:
+  header: Authorization
+  secret: mySecret
+  expiration: 604800
+  route:
+    authentication:
+      path: /auth
+      refresh: /refresh
+
+spring:
+  datasource:
+      url: jdbc:mysql://120.26.78.54:3306/springcloud?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      username: root
+      password: Sy123456
+      driver-class-name: com.mysql.jdbc.Driver
+      platform: mysql
+      type: com.alibaba.druid.pool.DruidDataSource
+      # 下面为连接池的补充设置，应用到上面所有数据源中
+      druid:
+        initialSize: 2
+        minIdle: 2
+        maxActive: 30
+    #下面配置说明请参考Druid Github Wiki，配置_StatViewServlet配置
+        StatViewServlet:
+            loginUsername: druid
+            loginPassword: druid
+        aop-patterns: com.sunesoft.ecloud.auth.security.service.*
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+

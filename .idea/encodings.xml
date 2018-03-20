@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/auth-server" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/auth-server/auth-client" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/auth-server/auth-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/demo" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/demo2" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/demo3" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/e-center" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/e-config" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/e-framework" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/e-framework/e-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/e-framework/hibernate-support" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/e-gateway" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/e-monitoring" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sys-admin" charset="UTF-8" />
+  </component>
+</project>

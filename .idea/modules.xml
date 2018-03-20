@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/auth-server/auth-client/auth-client.iml" filepath="$PROJECT_DIR$/auth-server/auth-client/auth-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/auth-server/auth-server.iml" filepath="$PROJECT_DIR$/auth-server/auth-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/auth-server/auth-service/auth-service.iml" filepath="$PROJECT_DIR$/auth-server/auth-service/auth-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo/demo.iml" filepath="$PROJECT_DIR$/demo/demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo1/demo1.iml" filepath="$PROJECT_DIR$/demo1/demo1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo2/demo2.iml" filepath="$PROJECT_DIR$/demo2/demo2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo3/demo3.iml" filepath="$PROJECT_DIR$/demo3/demo3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/e-center/e-center.iml" filepath="$PROJECT_DIR$/e-center/e-center.iml" />
+      <module fileurl="file://$PROJECT_DIR$/e-framework/e-common/e-common.iml" filepath="$PROJECT_DIR$/e-framework/e-common/e-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/e-config/e-config.iml" filepath="$PROJECT_DIR$/e-config/e-config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/e-framework/e-framework.iml" filepath="$PROJECT_DIR$/e-framework/e-framework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/e-gateway/e-gateway.iml" filepath="$PROJECT_DIR$/e-gateway/e-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/e-monitoring/e-monitoring.iml" filepath="$PROJECT_DIR$/e-monitoring/e-monitoring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ecloud.iml" filepath="$PROJECT_DIR$/ecloud.iml" />
+      <module fileurl="file://$PROJECT_DIR$/e-framework/hibernate-support/hibernate-support.iml" filepath="$PROJECT_DIR$/e-framework/hibernate-support/hibernate-support.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sys-admin/sys-admin.iml" filepath="$PROJECT_DIR$/sys-admin/sys-admin.iml" />
+    </modules>
+  </component>
+</project>

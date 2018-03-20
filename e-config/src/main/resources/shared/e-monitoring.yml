@@ -1,0 +1,7 @@
+server:
+    port: 8764 #启动端口
+
+
+management:
+  security:
+    enabled: false
