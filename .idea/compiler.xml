@@ -12,9 +12,6 @@
         <module name="authservice" />
         <module name="authService" />
         <module name="config" />
-        <module name="demo" />
-        <module name="demo2" />
-        <module name="demo3" />
         <module name="e-center" />
         <module name="e-common" />
         <module name="e-config" />
