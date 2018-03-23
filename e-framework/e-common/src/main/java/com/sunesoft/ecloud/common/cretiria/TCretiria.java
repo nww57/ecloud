@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.common.cretiria;
 
+import java.awt.print.Pageable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,4 +60,5 @@ public  class TCretiria {
     public void setOrderTurn(OrderTurn orderTurn) {
         this.orderTurn = orderTurn;
     }
+
 }

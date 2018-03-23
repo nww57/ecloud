@@ -11,8 +11,8 @@ public class BaseRepositoryImpl<T extends IEntity, ID extends Serializable> exte
 
     public final EntityManager entityManager;
 
-    public BaseRepositoryImpl(JpaEntityInformation<T, ID> entityInformation, EntityManager entityManager) {
-        super(entityInformation, entityManager);
+    public BaseRepositoryImpl(JpaEntityInformation<T, ID> jpaEntityInformation, EntityManager entityManager) {
+        super(jpaEntityInformation, entityManager);
         this.entityManager = entityManager;
     }
 

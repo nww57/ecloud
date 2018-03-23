@@ -19,4 +19,4 @@ eureka:
 
 spring:
   rabbitmq:
-    host: 192.168.1.115
+    host: localhost

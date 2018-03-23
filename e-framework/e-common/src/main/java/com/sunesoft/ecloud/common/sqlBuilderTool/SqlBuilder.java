@@ -11,7 +11,7 @@ import java.util.*;
 public abstract class SqlBuilder<T> {
 
 
-//    private Logger logger = LogManager.getLogger(SqlBuilder.class);
+      //    private Logger logger = LogManager.getLogger(SqlBuilder.class);
     private StringBuilder querySql = new StringBuilder("");
     private StringBuilder whereCondition;
     private StringBuilder groupBy = new StringBuilder("");
@@ -24,7 +24,7 @@ public abstract class SqlBuilder<T> {
 
     private StringBuilder selfDefineSelectField = new StringBuilder();
 
-    private String selfWhere ="";
+    private String selfWhere = "";
     private Map<String, Map<String, String>> columns = new HashMap<>();
 
     private Map<String, Object> whereMap = new HashMap<>();
@@ -49,7 +49,7 @@ public abstract class SqlBuilder<T> {
     private String getSql() {
         StringBuilder sql = new StringBuilder("select ");
         groupBy = new StringBuilder(" group by ");
-        if (selectClass == null&&StringUtil.isEmpty(selfDefineSelectField)) {
+        if (selectClass == null && StringUtil.isEmpty(selfDefineSelectField)) {
             try {
                 selectClass = (Class<T>) ((ParameterizedType) getClass()
                         .getGenericSuperclass()).getActualTypeArguments()[0];
@@ -57,9 +57,9 @@ public abstract class SqlBuilder<T> {
                 throw new RuntimeException("Select class can not be null!!");
             }
         }
-        if(!StringUtil.isEmpty(selfDefineSelectField.toString())){
+        if (!StringUtil.isEmpty(selfDefineSelectField.toString())) {
             sql.append(selfDefineSelectField);
-        }else {
+        } else {
             Map<String, String> propertiesMap = SqlBuilderHelper.getSimplePropertieNames(selectClass);
             Set<String> properties = propertiesMap.keySet();
             StringBuilder cols = new StringBuilder();
@@ -101,7 +101,7 @@ public abstract class SqlBuilder<T> {
                         cols.append(",");
                         n = clname;
                     } else {
-                        cols.append("'$$'");
+                        cols.append(" null ");
                         cols.append(clname).append(",");
                         n = clname;
                     }
@@ -126,6 +126,16 @@ public abstract class SqlBuilder<T> {
 //        logger.info(sql);
         return sql.toString();
 
+    }
+
+    public String getPageSql(int pageIndex, int pageSize) {
+        String sql = this.getSql();
+        return getPageSql(sql, pageIndex, pageSize);
+    }
+
+    public String getPageSql(String sql, int pageIndex, int pageSize) {
+        sql += " limit " + (pageIndex - 1) * pageSize + "," + pageSize;
+        return sql;
     }
 
 
@@ -202,13 +212,13 @@ public abstract class SqlBuilder<T> {
             }
             if (wobj instanceof UUID) {
                 params.put(field, wobj.toString());
-            } else if(wobj.getClass().isEnum()){
+            } else if (wobj.getClass().isEnum()) {
                 params.put(field, wobj.toString());
-            } else{
+            } else {
                 params.put(field, wobj);
             }
         }
-        if(!StringUtil.isEmpty(selfWhere)){
+        if (!StringUtil.isEmpty(selfWhere)) {
             whereCondition.append(" ").append(selfWhere);
         }
         return whereCondition.toString();
@@ -295,14 +305,14 @@ public abstract class SqlBuilder<T> {
         return this;
     }
 
-    public SqlBuilder where(String where){
-        this.selfWhere = " and "+where ;
-        return  this;
+    public SqlBuilder where(String where) {
+        this.selfWhere = " and " + where;
+        return this;
     }
 
-    public SqlBuilder and(String where){
-        this.selfWhere = " and "+where ;
-        return  this;
+    public SqlBuilder and(String where) {
+        this.selfWhere = " and " + where;
+        return this;
     }
 
     public SqlBuilder and(String key, Object valus) {
@@ -350,24 +360,25 @@ public abstract class SqlBuilder<T> {
         }
         return this;
     }
-    public SqlBuilder groupByMathField(String dtoField,String extension){
-        this.isHaveGroupBy= true;
-        Map<String,String> map = new HashMap<>();
-        map.put(dtoField,extension);
+
+    public SqlBuilder groupByMathField(String dtoField, String extension) {
+        this.isHaveGroupBy = true;
+        Map<String, String> map = new HashMap<>();
+        map.put(dtoField, extension);
         this.setGroupMapStr(map);
         return this;
     }
 
 
-    public SqlBuilder selectField(String sumField,String aliseName){
-        if(!StringUtil.isEmpty(selfDefineSelectField.toString())){
+    public SqlBuilder selectField(String sumField, String aliseName) {
+        if (!StringUtil.isEmpty(selfDefineSelectField.toString())) {
             selfDefineSelectField
                     .append(",")
                     .append(sumField)
                     .append(" ")
                     .append(aliseName);
 
-        }else {
+        } else {
             selfDefineSelectField
                     .append(sumField)
                     .append(" ")
