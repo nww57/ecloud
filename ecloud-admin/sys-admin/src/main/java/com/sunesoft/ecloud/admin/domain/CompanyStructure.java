@@ -13,33 +13,35 @@ import javax.persistence.*;
 @Table(name = "company_structure", schema = "ecloud", catalog = "")
 public class CompanyStructure extends BizEntity{
 
-    private String parentId;
-    private String compId;
     /**
-     *
+     * 父级id
+     */
+    private String parentId;
+
+    /**
+     *名称
      */
     private String name;
     /**
-     *
+     *代码
      */
     private String code;
     /**
-     *
+     *完整代码
      */
     private String codeFull;
     /**
-     *
+     *描述
      */
     private String description;
     /**
-     *
+     *子节点数
      */
     private Integer childCount;
-    /**
-     *
-     */
 
-
+    @ManyToOne
+    @JoinColumn(name = "compId")
+    private Company company;
 
     @Basic
     @Column(name = "parentId")
@@ -113,5 +115,11 @@ public class CompanyStructure extends BizEntity{
     }
 
 
+    public Company getCompany() {
+        return company;
+    }
 
+    public void setCompany(Company company) {
+        this.company = company;
+    }
 }
