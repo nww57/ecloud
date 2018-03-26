@@ -18,19 +18,23 @@ public class Module extends IEntity{
     /**
      * 模块代码
      */
+    @Column(name = "moduleCode")
     private String moduleCode;
+
     /**
      * 名称
      */
+    @Column(name = "moduleName")
     private String moduleName;
+
     /**
      * 描述
      */
+    @Column(name = "moduleDesc")
     private String moduleDesc;
 
 
     @Basic
-    @Column(name = "moduleCode")
     public String getModuleCode() {
         return moduleCode;
     }
@@ -40,7 +44,6 @@ public class Module extends IEntity{
     }
 
     @Basic
-    @Column(name = "moduleName")
     public String getModuleName() {
         return moduleName;
     }
@@ -50,7 +53,6 @@ public class Module extends IEntity{
     }
 
     @Basic
-    @Column(name = "moduleDesc")
     public String getModuleDesc() {
         return moduleDesc;
     }

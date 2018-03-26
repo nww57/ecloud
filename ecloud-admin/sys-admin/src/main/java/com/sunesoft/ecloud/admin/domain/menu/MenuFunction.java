@@ -13,33 +13,47 @@ import javax.persistence.*;
 @Entity
 @Table(name = "sys_menu_func", schema = "ecloud", catalog = "")
 public class MenuFunction extends IEntity{
+
     /**
      * 权限名称
      */
+    @Column(name = "name")
     private String name;
+
     /**
      * 资源编码
      */
+    @Column(name = "resCode")
     private String resCode;
+
     /**
      *资源类型
      */
+    @Column(name = "resType")
     private String resType;
+
     /**
      *资源名称
      */
+    @Column(name = "resName")
     private String resName;
+
     /**
      *资源地址
      */
+    @Column(name = "resUrl")
     private String resUrl;
+
     /**
      *资源请求类型
      */
+    @Column(name = "resRequestType")
     private String resRequestType;
+
     /**
      *描述
      */
+    @Column(name = "description")
     private String description;
 
     /**
@@ -58,7 +72,6 @@ public class MenuFunction extends IEntity{
     }
 
     @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -68,7 +81,6 @@ public class MenuFunction extends IEntity{
     }
 
     @Basic
-    @Column(name = "resCode")
     public String getResCode() {
         return resCode;
     }
@@ -78,7 +90,6 @@ public class MenuFunction extends IEntity{
     }
 
     @Basic
-    @Column(name = "resType")
     public String getResType() {
         return resType;
     }
@@ -88,7 +99,6 @@ public class MenuFunction extends IEntity{
     }
 
     @Basic
-    @Column(name = "resName")
     public String getResName() {
         return resName;
     }
@@ -98,7 +108,6 @@ public class MenuFunction extends IEntity{
     }
 
     @Basic
-    @Column(name = "resUrl")
     public String getResUrl() {
         return resUrl;
     }
@@ -108,7 +117,6 @@ public class MenuFunction extends IEntity{
     }
 
     @Basic
-    @Column(name = "resRequestType")
     public String getResRequestType() {
         return resRequestType;
     }
@@ -118,7 +126,6 @@ public class MenuFunction extends IEntity{
     }
 
     @Basic
-    @Column(name = "description")
     public String getDescription() {
         return description;
     }

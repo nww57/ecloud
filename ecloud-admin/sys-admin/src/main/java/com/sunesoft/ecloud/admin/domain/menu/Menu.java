@@ -18,45 +18,65 @@ public class Menu extends IEntity{
     @ManyToOne
     @Column(name = "moduleId")
     private Module module;
+
     /**
      * 索引
      */
+    @Column(name = "menuIndex")
     private String menuIndex;
+
     /**
      * 路径编码
      */
+    @Column(name = "routeCode")
     private String routeCode;
+
     /**
      *菜单名称
      */
+    @Column(name = "name")
     private String name;
+
     /**
      *路径资源
      */
+    @Column(name = "url")
     private String url;
+
     /**
      *菜单类型
      */
+    @Column(name = "type")
     private String type;
+
     /**
      *排序
      */
+    @Column(name = "sort")
     private Integer sort;
+
     /**
      *描述
      */
+    @Column(name = "description")
     private String description;
+
     /**
      *前段组件
      */
+    @Column(name = "frontDisc")
     private String frontDisc;
+
     /**
      *图标
      */
+    @Column(name = "icon")
     private String icon;
+
     /**
      *子节点数
      */
+    @Column(name = "childCount")
     private Integer childCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -73,7 +93,6 @@ public class Menu extends IEntity{
 
 
     @Basic
-    @Column(name = "menuIndex")
     public String getMenuIndex() {
         return menuIndex;
     }
@@ -83,7 +102,6 @@ public class Menu extends IEntity{
     }
 
     @Basic
-    @Column(name = "routeCode")
     public String getRouteCode() {
         return routeCode;
     }
@@ -93,7 +111,6 @@ public class Menu extends IEntity{
     }
 
     @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -103,7 +120,6 @@ public class Menu extends IEntity{
     }
 
     @Basic
-    @Column(name = "url")
     public String getUrl() {
         return url;
     }
@@ -113,7 +129,6 @@ public class Menu extends IEntity{
     }
 
     @Basic
-    @Column(name = "type")
     public String getType() {
         return type;
     }
@@ -123,7 +138,6 @@ public class Menu extends IEntity{
     }
 
     @Basic
-    @Column(name = "sort")
     public Integer getSort() {
         return sort;
     }
@@ -133,7 +147,6 @@ public class Menu extends IEntity{
     }
 
     @Basic
-    @Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -143,7 +156,6 @@ public class Menu extends IEntity{
     }
 
     @Basic
-    @Column(name = "frontDisc")
     public String getFrontDisc() {
         return frontDisc;
     }
@@ -153,7 +165,6 @@ public class Menu extends IEntity{
     }
 
     @Basic
-    @Column(name = "icon")
     public String getIcon() {
         return icon;
     }
@@ -163,7 +174,6 @@ public class Menu extends IEntity{
     }
 
     @Basic
-    @Column(name = "childCount")
     public Integer getChildCount() {
         return childCount;
     }
