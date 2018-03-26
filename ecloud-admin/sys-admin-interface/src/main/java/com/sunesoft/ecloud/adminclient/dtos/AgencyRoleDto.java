@@ -59,4 +59,12 @@ public class AgencyRoleDto {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public List<RoleMenuDto> getAuthList() {
+        return authList;
+    }
+
+    public void setAuthList(List<RoleMenuDto> authList) {
+        this.authList = authList;
+    }
 }

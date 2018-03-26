@@ -2,7 +2,7 @@ package com.sunesoft.ecloud.admin.query;
 
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyRoleCretiria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyRoleDto;
-import com.sunesoft.ecloud.common.result.TResult;
+import org.springframework.data.domain.Page;
 
 import java.awt.print.Pageable;
 
@@ -17,5 +17,5 @@ public interface AgencyRoleQueryService {
      * @param cretiria
      * @return
      */
-    TResult<AgencyRoleDto> findAgencyRolePaged(Pageable pageable, AgencyRoleCretiria cretiria);
+    Page<AgencyRoleDto> findAgencyRolePaged(Pageable pageable, AgencyRoleCretiria cretiria);
 }

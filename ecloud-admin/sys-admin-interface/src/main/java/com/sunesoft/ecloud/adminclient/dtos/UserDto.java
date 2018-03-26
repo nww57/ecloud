@@ -185,7 +185,6 @@ public class UserDto {
     public UUID getAgId() {
         return agId;
     }
-
     public void setAgId(UUID agId) {
         this.agId = agId;
     }
@@ -197,4 +196,6 @@ public class UserDto {
     public void setRoleIdList(List<UUID> roleIdList) {
         this.roleIdList = roleIdList;
     }
+
+
 }

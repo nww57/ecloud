@@ -47,6 +47,30 @@ import java.util.UUID;
      */
     private UUID consultantId;
 
+    public UUID getAgId() {
+        return agId;
+    }
+
+    public void setAgId(UUID agId) {
+        this.agId = agId;
+    }
+
+    public UUID getConsultantId() {
+        return consultantId;
+    }
+
+    public void setConsultantId(UUID consultantId) {
+        this.consultantId = consultantId;
+    }
+
+    public String getConsultantName() {
+        return consultantName;
+    }
+
+    public void setConsultantName(String consultantName) {
+        this.consultantName = consultantName;
+    }
+
     /**
      * 业务顾问名称
      */

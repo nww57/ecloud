@@ -41,8 +41,11 @@ public class AgencyOrganizationDto {
      */
     private String description;
 
+
+
     /**
      * 负责人Id
+
      */
     private UUID leaderId;
 
@@ -119,5 +122,11 @@ public class AgencyOrganizationDto {
         this.leaderName = leaderName;
     }
 
+    public UUID getLeaderId() {
+        return leaderId;
+    }
 
+    public void setLeaderId(UUID leaderId) {
+        this.leaderId = leaderId;
+    }
 }
