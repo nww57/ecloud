@@ -53,15 +53,7 @@ public class CompanyStructure extends BizEntity{
         this.parentId = parentId;
     }
 
-    @Basic
-    @Column(name = "compId")
-    public String getCompId() {
-        return compId;
-    }
 
-    public void setCompId(String compId) {
-        this.compId = compId;
-    }
 
     @Basic
     @Column(name = "name")
