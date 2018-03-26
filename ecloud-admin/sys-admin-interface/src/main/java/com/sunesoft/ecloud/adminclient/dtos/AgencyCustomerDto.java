@@ -1,54 +1,64 @@
-package com.sunesoft.ecloud.admin.domain.agency;
+package com.sunesoft.ecloud.adminclient.dtos;
 
-import com.sunesoft.ecloud.hibernate.BizEntity;
-
-import javax.persistence.*;
-import java.util.*;
-
+import java.util.Date;
+import java.util.UUID;
 
 /**
+ *
  * @Author: niww
- * @Date: 2018/3/25
- * 企业客户信息
+ * @Date: 2018/3/26
+ * 客户dto
  */
-@Entity
-@Table(name = "sys_ag_customer")
-public class AgencyCustomer extends BizEntity{
+ public class AgencyCustomerDto {
 
-    private UUID customerAgencyId;
+     private UUID id;
 
+    /**
+     * 所属企业id
+     */
+    private UUID agId;
     /**
      * 名称
      */
-    @Column(name = "name")
     private String name;
     /**
      *地址
      */
-    @Column(name = "address")
     private String address;
     /**
      *签约时间
      */
-    @Column(name = "signDate")
     private Date signDate;
     /**
      *客户负责人
      */
-    @Column(name = "leader")
     private String leader;
     /**
      *客户负责人手机
      */
-    @Column(name = "leaderMobile")
     private String leaderMobile;
     /**
      *客户负责人邮箱
      */
-    @Column(name = "leaderEmail")
     private String leaderEmail;
 
+    /**
+     * 业务顾问Id
+     */
+    private UUID consultantId;
 
+    /**
+     * 业务顾问名称
+     */
+    private String consultantName;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -96,13 +106,5 @@ public class AgencyCustomer extends BizEntity{
 
     public void setLeaderEmail(String leaderEmail) {
         this.leaderEmail = leaderEmail;
-    }
-
-    public UUID getCustomerAgencyId() {
-        return customerAgencyId;
-    }
-
-    public void setCustomerAgencyId(UUID customerAgencyId) {
-        this.customerAgencyId = customerAgencyId;
     }
 }
