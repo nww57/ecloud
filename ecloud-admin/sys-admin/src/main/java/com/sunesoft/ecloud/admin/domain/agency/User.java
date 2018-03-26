@@ -15,52 +15,62 @@ import java.util.List;
  * 用户
  */
 @Entity
-@Table(name = "sys_user", schema = "ecloud", catalog = "")
+@Table(name = "sys_user")
 public class User extends BizEntity{
     /**
      *用户类型
-     * @niww  todo  menu
      */
+    @Column(name = "userType")
     private String userType;
     /**
      *用户编号
      */
+    @Column(name = "userCode")
     private String userCode;
     /**
      *用户名
      */
+    @Column(name = "userName")
     private String userName;
     /**
      *真实姓名
      */
+    @Column(name = "realName")
     private String realName;
     /**
      *密码
      */
+    @Column(name = "password")
     private String password;
     /**
      *性别
      */
+    @Column(name = "sex")
     private String sex;
     /**
      *邮箱
      */
+    @Column(name = "email")
     private String email;
     /**
      *联系电话
      */
+    @Column(name = "callphone")
     private String callphone;
     /**
      *是否在职
      */
+    @Column(name = "isWorkon")
     private Boolean isWorkon;
     /**
      *最后登录时间
      */
+    @Column(name = "lastLoginDatetime")
     private Date lastLoginDatetime;
     /**
      *最后登录IP
      */
+    @Column(name = "lastLoginIp")
     private String lastLoginIp;
 
     @ManyToOne
@@ -69,13 +79,11 @@ public class User extends BizEntity{
 
     @ManyToMany
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    @JoinTable(name = "sys_user_role_rel",
+    @JoinTable(name = "sys_ag_user_role",
             joinColumns = {@JoinColumn(name = "userId")},
             inverseJoinColumns = {@JoinColumn(name = "roleId")})
     private List<AgencyRole> roleList = new ArrayList<>();
 
-    @Basic
-    @Column(name = "userType")
     public String getUserType() {
         return userType;
     }
@@ -84,8 +92,6 @@ public class User extends BizEntity{
         this.userType = userType;
     }
 
-    @Basic
-    @Column(name = "userCode")
     public String getUserCode() {
         return userCode;
     }
@@ -94,8 +100,6 @@ public class User extends BizEntity{
         this.userCode = userCode;
     }
 
-    @Basic
-    @Column(name = "userName")
     public String getUserName() {
         return userName;
     }
@@ -104,8 +108,6 @@ public class User extends BizEntity{
         this.userName = userName;
     }
 
-    @Basic
-    @Column(name = "realName")
     public String getRealName() {
         return realName;
     }
@@ -114,8 +116,6 @@ public class User extends BizEntity{
         this.realName = realName;
     }
 
-    @Basic
-    @Column(name = "password")
     public String getPassword() {
         return password;
     }
@@ -124,8 +124,6 @@ public class User extends BizEntity{
         this.password = password;
     }
 
-    @Basic
-    @Column(name = "sex")
     public String getSex() {
         return sex;
     }
@@ -134,8 +132,6 @@ public class User extends BizEntity{
         this.sex = sex;
     }
 
-    @Basic
-    @Column(name = "email")
     public String getEmail() {
         return email;
     }
@@ -144,8 +140,6 @@ public class User extends BizEntity{
         this.email = email;
     }
 
-    @Basic
-    @Column(name = "callphone")
     public String getCallphone() {
         return callphone;
     }
@@ -154,8 +148,6 @@ public class User extends BizEntity{
         this.callphone = callphone;
     }
 
-    @Basic
-    @Column(name = "isWorkon")
     public Boolean getWorkon() {
         return isWorkon;
     }
@@ -164,8 +156,6 @@ public class User extends BizEntity{
         isWorkon = workon;
     }
 
-    @Basic
-    @Column(name = "lastLoginDatetime")
     public Date getLastLoginDatetime() {
         return lastLoginDatetime;
     }
@@ -173,9 +163,6 @@ public class User extends BizEntity{
     public void setLastLoginDatetime(Timestamp lastLoginDatetime) {
         this.lastLoginDatetime = lastLoginDatetime;
     }
-
-    @Basic
-    @Column(name = "lastLoginIp")
     public String getLastLoginIp() {
         return lastLoginIp;
     }

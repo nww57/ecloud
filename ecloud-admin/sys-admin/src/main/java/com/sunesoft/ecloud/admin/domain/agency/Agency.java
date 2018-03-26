@@ -19,74 +19,94 @@ public class Agency extends IEntity{
     /**
      *企业机构代码
      */
+    @Column(name = "code")
     private String code;
     /**
      *企业名称
      */
+    @Column(name = "name")
     private String name;
-
 
     /**
      * 机构类型（服务商/客户）
      */
+    @Column(name = "agencyType")
     private AgencyType agencyType;
     /**
      *所属国家
      */
+    @Column(name = "country")
     private String country;
     /**
      *注册时间
      */
+    @Column(name = "registerDate")
     private Date registerDate;
     /**
      *企业地址
      */
+    @Column(name = "address")
     private String address;
     /**
      *邮编
      */
+    @Column(name = "zipcode")
     private String zipcode;
     /**
      *负责人
      */
+    @Column(name = "leader")
     private String leader;
     /**
      *邮箱
      */
+    @Column(name = "email")
     private String email;
     /**
      *联系电话
      */
+    @Column(name = "cellphone")
     private String cellphone;
     /**
      *传真
      */
+    @Column(name = "fax")
     private String fax;
     /**
      *网站名
      */
+    @Column(name = "websiteName")
     private String websiteName;
     /**
      *网站logo
      */
+    @Column(name = "websiteLogo")
     private String websiteLogo;
     /**
      *服务状态
      */
+    @Column(name = "serverStatus")
     private String serverStatus;
     /**
      *服务起始时间
      */
+    @Column(name = "serverEndDate")
     private Date serverStartDate;
     /**
      *服务结束时间
      */
+    @Column(name = "serverEndDate")
     private Date serverEndDate;
+
+
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "sys_comp_aptitude_file",joinColumns = {@JoinColumn(name = "agId")},inverseJoinColumns ={@JoinColumn(name = "fileId")})
+    private List<AgencyFileInfo> fileList = new ArrayList<>();
+
 
     private List<AgencyCustomer> customers;
 
-    @Basic
-    @Column(name = "code")
     public String getCode() {
         return code;
     }
@@ -95,8 +115,6 @@ public class Agency extends IEntity{
         this.code = code;
     }
 
-    @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -105,8 +123,7 @@ public class Agency extends IEntity{
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "country")
+
     public String getCountry() {
         return country;
     }
@@ -115,8 +132,7 @@ public class Agency extends IEntity{
         this.country = country;
     }
 
-    @Basic
-    @Column(name = "registerDate")
+
     public Date getRegisterDate() {
         return registerDate;
     }
@@ -125,8 +141,7 @@ public class Agency extends IEntity{
         this.registerDate = registerDate;
     }
 
-    @Basic
-    @Column(name = "address")
+
     public String getAddress() {
         return address;
     }
@@ -135,8 +150,7 @@ public class Agency extends IEntity{
         this.address = address;
     }
 
-    @Basic
-    @Column(name = "zipcode")
+
     public String getZipcode() {
         return zipcode;
     }
@@ -145,8 +159,7 @@ public class Agency extends IEntity{
         this.zipcode = zipcode;
     }
 
-    @Basic
-    @Column(name = "leader")
+
     public String getLeader() {
         return leader;
     }
@@ -155,8 +168,7 @@ public class Agency extends IEntity{
         this.leader = leader;
     }
 
-    @Basic
-    @Column(name = "email")
+
     public String getEmail() {
         return email;
     }
@@ -165,8 +177,7 @@ public class Agency extends IEntity{
         this.email = email;
     }
 
-    @Basic
-    @Column(name = "cellphone")
+
     public String getCellphone() {
         return cellphone;
     }
@@ -175,8 +186,6 @@ public class Agency extends IEntity{
         this.cellphone = cellphone;
     }
 
-    @Basic
-    @Column(name = "fax")
     public String getFax() {
         return fax;
     }
@@ -185,8 +194,6 @@ public class Agency extends IEntity{
         this.fax = fax;
     }
 
-    @Basic
-    @Column(name = "websiteName")
     public String getWebsiteName() {
         return websiteName;
     }
@@ -195,8 +202,6 @@ public class Agency extends IEntity{
         this.websiteName = websiteName;
     }
 
-    @Basic
-    @Column(name = "websiteLogo")
     public String getWebsiteLogo() {
         return websiteLogo;
     }
@@ -205,8 +210,6 @@ public class Agency extends IEntity{
         this.websiteLogo = websiteLogo;
     }
 
-    @Basic
-    @Column(name = "serverStatus")
     public String getServerStatus() {
         return serverStatus;
     }
@@ -215,8 +218,6 @@ public class Agency extends IEntity{
         this.serverStatus = serverStatus;
     }
 
-    @Basic
-    @Column(name = "serverStartDate")
     public Date getServerStartDate() {
         return serverStartDate;
     }
@@ -225,8 +226,6 @@ public class Agency extends IEntity{
         this.serverStartDate = serverStartDate;
     }
 
-    @Basic
-    @Column(name = "serverEndDate")
     public Date getServerEndDate() {
         return serverEndDate;
     }

@@ -12,40 +12,43 @@ import java.util.*;
  * 企业客户信息
  */
 @Entity
-@Table(name = "sys_company_customer", schema = "ecloud", catalog = "")
+@Table(name = "sys_ag_customer")
 public class AgencyCustomer extends BizEntity{
 
-    private UUID CustomerAgencyId;
+    private UUID customerAgencyId;
 
     /**
      * 名称
      */
+    @Column(name = "name")
     private String name;
     /**
      *地址
      */
+    @Column(name = "address")
     private String address;
     /**
      *签约时间
      */
+    @Column(name = "signDate")
     private Date signDate;
     /**
      *客户负责人
      */
+    @Column(name = "leader")
     private String leader;
     /**
      *客户负责人手机
      */
+    @Column(name = "leaderMobile")
     private String leaderMobile;
     /**
      *客户负责人邮箱
      */
+    @Column(name = "leaderEmail")
     private String leaderEmail;
 
 
-
-    @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -54,8 +57,6 @@ public class AgencyCustomer extends BizEntity{
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "address")
     public String getAddress() {
         return address;
     }
@@ -64,8 +65,6 @@ public class AgencyCustomer extends BizEntity{
         this.address = address;
     }
 
-    @Basic
-    @Column(name = "signDate")
     public Date getSignDate() {
         return signDate;
     }
@@ -74,8 +73,6 @@ public class AgencyCustomer extends BizEntity{
         this.signDate = signDate;
     }
 
-    @Basic
-    @Column(name = "leader")
     public String getLeader() {
         return leader;
     }
@@ -84,8 +81,6 @@ public class AgencyCustomer extends BizEntity{
         this.leader = leader;
     }
 
-    @Basic
-    @Column(name = "leaderMobile")
     public String getLeaderMobile() {
         return leaderMobile;
     }
@@ -94,8 +89,6 @@ public class AgencyCustomer extends BizEntity{
         this.leaderMobile = leaderMobile;
     }
 
-    @Basic
-    @Column(name = "leaderEmail")
     public String getLeaderEmail() {
         return leaderEmail;
     }
@@ -104,5 +97,11 @@ public class AgencyCustomer extends BizEntity{
         this.leaderEmail = leaderEmail;
     }
 
+    public UUID getCustomerAgencyId() {
+        return customerAgencyId;
+    }
 
+    public void setCustomerAgencyId(UUID customerAgencyId) {
+        this.customerAgencyId = customerAgencyId;
+    }
 }

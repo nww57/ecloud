@@ -1,8 +1,11 @@
 package com.sunesoft.ecloud.admin.domain.agency;
 
+import com.sunesoft.ecloud.admin.domain.menu.Menu;
 import com.sunesoft.ecloud.hibernate.BizEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author: niww
@@ -10,53 +13,49 @@ import javax.persistence.*;
  * 企业组织架构
  */
 @Entity
-@Table(name = "sys_company_structure", schema = "ecloud", catalog = "")
+@Table(name = "sys_ag_organization")
 public class AgencyOrgnization extends BizEntity{
 
-    /**
-     * 父级id
-     */
-    private String parentId;
 
     /**
      *名称
      */
+    @Column(name = "name")
     private String name;
     /**
      *代码
      */
+    @Column(name = "code")
     private String code;
     /**
      *完整代码
      */
+    @Column(name = "codeFull")
     private String codeFull;
     /**
      *描述
      */
+    @Column(name = "description")
     private String description;
     /**
      *子节点数
      */
+    @Column(name = "name")
     private Integer childCount;
 
     @ManyToOne
-    @JoinColumn(name = "compId")
-    private Agency company;
-
-    @Basic
-    @Column(name = "parentId")
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
+    @JoinColumn(name = "agId")
+    private Agency agency;
 
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pid")
+    private AgencyOrgnization parentOrg;
 
-    @Basic
-    @Column(name = "name")
+    @OneToMany(targetEntity = AgencyOrgnization.class, cascade = { CascadeType.ALL }, mappedBy = "parentOrg")
+    private List<AgencyOrgnization> childOrgList = new ArrayList<>();
+
+
     public String getName() {
         return name;
     }
@@ -65,8 +64,6 @@ public class AgencyOrgnization extends BizEntity{
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "code")
     public String getCode() {
         return code;
     }
@@ -75,8 +72,6 @@ public class AgencyOrgnization extends BizEntity{
         this.code = code;
     }
 
-    @Basic
-    @Column(name = "codeFull")
     public String getCodeFull() {
         return codeFull;
     }
@@ -85,8 +80,6 @@ public class AgencyOrgnization extends BizEntity{
         this.codeFull = codeFull;
     }
 
-    @Basic
-    @Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -95,9 +88,6 @@ public class AgencyOrgnization extends BizEntity{
         this.description = description;
     }
 
-
-    @Basic
-    @Column(name = "childCount")
     public Integer getChildCount() {
         return childCount;
     }
@@ -106,12 +96,27 @@ public class AgencyOrgnization extends BizEntity{
         this.childCount = childCount;
     }
 
-
-    public Agency getCompany() {
-        return company;
+    public Agency getAgency() {
+        return agency;
     }
 
-    public void setCompany(Agency company) {
-        this.company = company;
+    public void setAgency(Agency agency) {
+        this.agency = agency;
+    }
+
+    public AgencyOrgnization getParentOrg() {
+        return parentOrg;
+    }
+
+    public void setParentOrg(AgencyOrgnization parentOrg) {
+        this.parentOrg = parentOrg;
+    }
+
+    public List<AgencyOrgnization> getChildOrgList() {
+        return childOrgList;
+    }
+
+    public void setChildOrgList(List<AgencyOrgnization> childOrgList) {
+        this.childOrgList = childOrgList;
     }
 }

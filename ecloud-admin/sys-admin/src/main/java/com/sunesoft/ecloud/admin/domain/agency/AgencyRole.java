@@ -13,25 +13,26 @@ import java.util.List;
  * 角色信息
  */
 @Entity
-@Table(name = "sys_role", schema = "ecloud", catalog = "")
+@Table(name = "sys_ag_role")
 public class AgencyRole extends BizEntity {
 
     /**
      * 名称
      */
+    @Column(name="name")
     private String name;
     /**
      *code
      */
+    @Column(name="code")
     private String code;
     /**
      * 描述
      */
+    @Column(name="description")
     private String description;
 
 
-    @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -40,8 +41,6 @@ public class AgencyRole extends BizEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "code")
     public String getCode() {
         return code;
     }
@@ -50,8 +49,6 @@ public class AgencyRole extends BizEntity {
         this.code = code;
     }
 
-    @Basic
-    @Column(name = "description")
     public String getDescription() {
         return description;
     }

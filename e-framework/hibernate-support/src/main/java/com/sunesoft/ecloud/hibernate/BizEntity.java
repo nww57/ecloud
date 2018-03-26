@@ -9,13 +9,13 @@ import java.util.UUID;
  */
 public abstract class BizEntity extends IEntity {
 
-    private UUID corpId;
+    private UUID agId;
 
-    public UUID getCorpId() {
-        return corpId;
+    public UUID getAgId() {
+        return agId;
     }
 
-    public void setCorpId(UUID corpId) {
-        this.corpId = corpId;
+    public void setAgId(UUID agId) {
+        this.agId = agId;
     }
 }

@@ -12,11 +12,17 @@ import java.util.*;
  * 企业菜单权限
  */
 @Entity
-@Table(name = "sys_company_menu_rel", schema = "ecloud", catalog = "")
+@Table(name = "sys_ag_authmenu")
 public class AgencyAuthorizedMenu extends IEntity {
 
+    /**
+     * 机构id
+     */
     private UUID agencyId;
 
+    /**
+     * 菜单
+     */
     @ManyToOne
     @JoinColumn(name = "menuId")
     private Menu menu;

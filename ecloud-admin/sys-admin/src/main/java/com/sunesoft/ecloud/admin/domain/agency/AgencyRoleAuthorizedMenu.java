@@ -2,15 +2,16 @@ package com.sunesoft.ecloud.admin.domain.agency;
 
 import com.sunesoft.ecloud.hibernate.IEntity;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 /**
  * @Auther: niww
  * @Date: 2018/3/26/026
+ * 角色的菜单权限
  */
+@Entity
+@Table(name="sys_ag_role_authmenu")
 public class AgencyRoleAuthorizedMenu extends IEntity {
 
     @ManyToOne
@@ -19,7 +20,7 @@ public class AgencyRoleAuthorizedMenu extends IEntity {
 
     @ManyToOne
     @JoinColumn(name = "menuId", referencedColumnName = "menuId")
-    private AgencyAuthorizedMenu companyMenu;
+    private AgencyAuthorizedMenu agencyMenu;
 
     @OneToMany
     @JoinColumn(name = "roleMenuId")
@@ -33,11 +34,19 @@ public class AgencyRoleAuthorizedMenu extends IEntity {
         this.role = role;
     }
 
-    public AgencyAuthorizedMenu getCompanyMenu() {
-        return companyMenu;
+    public AgencyAuthorizedMenu getAgencyMenu() {
+        return agencyMenu;
     }
 
-    public void setCompanyMenu(AgencyAuthorizedMenu companyMenu) {
-        this.companyMenu = companyMenu;
+    public void setAgencyMenu(AgencyAuthorizedMenu agencyMenu) {
+        this.agencyMenu = agencyMenu;
+    }
+
+    public List<AgencyMenuAuthorizedFunction> getRoleMenuFunctionEntities() {
+        return roleMenuFunctionEntities;
+    }
+
+    public void setRoleMenuFunctionEntities(List<AgencyMenuAuthorizedFunction> roleMenuFunctionEntities) {
+        this.roleMenuFunctionEntities = roleMenuFunctionEntities;
     }
 }
