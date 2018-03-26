@@ -4,6 +4,7 @@ import com.sunesoft.ecloud.hibernate.IEntity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,7 +19,7 @@ public class Menu extends IEntity{
     /**
      * 索引
      */
-    private String index;
+    private String menuIndex;
     /**
      * 路径编码
      */
@@ -61,17 +62,19 @@ public class Menu extends IEntity{
     private Menu parentMenu;
 
     @OneToMany(targetEntity = Menu.class, cascade = { CascadeType.ALL }, mappedBy = "parentMenu")
-    private List<Menu> childMenuList;
+    private List<Menu> childMenuList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "menu",cascade = CascadeType.ALL)
+    private List<CompanyMenuRelEntity> companyMenuList = new ArrayList<>();
 
     @Basic
-    @Column(name = "index")
-    public String getIndex() {
-        return index;
+    @Column(name = "menuIndex")
+    public String getMenuIndex() {
+        return menuIndex;
     }
 
-    public void setIndex(String index) {
-        this.index = index;
+    public void setMenuIndex(String menuIndex) {
+        this.menuIndex = menuIndex;
     }
 
     @Basic
@@ -178,5 +181,13 @@ public class Menu extends IEntity{
 
     public void setChildMenuList(List<Menu> childMenuList) {
         this.childMenuList = childMenuList;
+    }
+
+    public List<CompanyMenuRelEntity> getCompanyMenuList() {
+        return companyMenuList;
+    }
+
+    public void setCompanyMenuList(List<CompanyMenuRelEntity> companyMenuList) {
+        this.companyMenuList = companyMenuList;
     }
 }

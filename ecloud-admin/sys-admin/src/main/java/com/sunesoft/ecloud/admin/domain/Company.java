@@ -4,6 +4,7 @@ import com.sunesoft.ecloud.hibernate.IEntity;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
  * 企业
  */
 @Entity
-@Table(name = "sys_company", schema = "g", catalog = "")
+@Table(name = "sys_company")
 public class Company extends IEntity{
     /**
      *企业机构代码
@@ -76,11 +77,17 @@ public class Company extends IEntity{
     private Date serverEndDate;
 
     @OneToMany(cascade =CascadeType.ALL,mappedBy = "company")
-    private List<CompanyCustomer> customerList;
+    private List<CompanyCustomer> customerList = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "company")
-    @JoinTable(name = "comp_aptitude_file",joinColumns = {@JoinColumn(name = "compId")},inverseJoinColumns ={@JoinColumn(name = "fileId")})
-    private List<FileInfo> fileList;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "sys_comp_aptitude_file",joinColumns = {@JoinColumn(name = "compId")},inverseJoinColumns ={@JoinColumn(name = "fileId")})
+    private List<FileInfo> fileList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "company",cascade=CascadeType.ALL)
+    private List<CompanyMenuRelEntity> companyMenuList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "company")
+    private List<Role> roleList = new ArrayList<>();
 
     @Basic
     @Column(name = "code")
@@ -247,5 +254,21 @@ public class Company extends IEntity{
 
     public void setFileList(List<FileInfo> fileList) {
         this.fileList = fileList;
+    }
+
+    public List<CompanyMenuRelEntity> getCompanyMenuList() {
+        return companyMenuList;
+    }
+
+    public void setCompanyMenuList(List<CompanyMenuRelEntity> companyMenuList) {
+        this.companyMenuList = companyMenuList;
+    }
+
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
     }
 }

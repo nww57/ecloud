@@ -10,7 +10,7 @@ import javax.persistence.*;
  * 企业组织架构
  */
 @Entity
-@Table(name = "company_structure", schema = "ecloud", catalog = "")
+@Table(name = "sys_company_structure", schema = "ecloud", catalog = "")
 public class CompanyStructure extends BizEntity{
 
     /**

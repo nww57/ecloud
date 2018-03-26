@@ -6,6 +6,7 @@ import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -67,14 +68,14 @@ public class User extends BizEntity{
     private Company company;
 
     @OneToMany(mappedBy = "user")
-    private List<CompanyCustomer> customerList;
+    private List<CompanyCustomer> customerList = new ArrayList<>();
 
     @ManyToMany
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    @JoinTable(name = "user_role_rel",
+    @JoinTable(name = "sys_user_role_rel",
             joinColumns = {@JoinColumn(name = "userId")},
-            inverseJoinColumns = {@JoinColumn(name = "roleId")})//inverseJoinColumns定义另一在中间表的主键映射
-    private List<Role> roleList;
+            inverseJoinColumns = {@JoinColumn(name = "roleId")})
+    private List<Role> roleList = new ArrayList<>();
 
     @Basic
     @Column(name = "userType")
@@ -213,4 +214,6 @@ public class User extends BizEntity{
     public void setRoleList(List<Role> roleList) {
         this.roleList = roleList;
     }
+
+
 }

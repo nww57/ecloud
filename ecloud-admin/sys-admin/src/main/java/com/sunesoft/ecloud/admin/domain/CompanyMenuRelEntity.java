@@ -1,111 +1,55 @@
 package com.sunesoft.ecloud.admin.domain;
 
+import com.sunesoft.ecloud.hibernate.BizEntity;
+import com.sunesoft.ecloud.hibernate.IEntity;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
  * @Author: niww
  * @Date: 2018/3/25
+ * 企业菜单权限
  */
 @Entity
-@Table(name = "company_menu_rel", schema = "ecloud", catalog = "")
-public class CompanyMenuRelEntity {
-    private String id;
-    private String compId;
-    private String menuId;
-    private Timestamp createDatetime;
-    private String createBy;
-    private Timestamp lastModifyDatetime;
-    private String lastModifyBy;
+@Table(name = "sys_company_menu_rel", schema = "ecloud", catalog = "")
+public class CompanyMenuRelEntity extends IEntity{
 
-    @Id
-    @Column(name = "id")
-    public String getId() {
-        return id;
+    @ManyToOne
+    @JoinColumn(name = "compId")
+    private Company company;
+
+    @ManyToOne
+    @JoinColumn(name = "menuId")
+    private Menu menu;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<RoleMenuRelEntity> roleMenuList = new ArrayList<>();
+
+    public Company getCompany() {
+        return company;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
-    @Basic
-    @Column(name = "compId")
-    public String getCompId() {
-        return compId;
+    public Menu getMenu() {
+        return menu;
     }
 
-    public void setCompId(String compId) {
-        this.compId = compId;
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
 
-    @Basic
-    @Column(name = "menuId")
-    public String getMenuId() {
-        return menuId;
+    public List<RoleMenuRelEntity> getRoleMenuList() {
+        return roleMenuList;
     }
 
-    public void setMenuId(String menuId) {
-        this.menuId = menuId;
-    }
-
-    @Basic
-    @Column(name = "createDatetime")
-    public Timestamp getCreateDatetime() {
-        return createDatetime;
-    }
-
-    public void setCreateDatetime(Timestamp createDatetime) {
-        this.createDatetime = createDatetime;
-    }
-
-    @Basic
-    @Column(name = "createBy")
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
-    }
-
-    @Basic
-    @Column(name = "lastModifyDatetime")
-    public Timestamp getLastModifyDatetime() {
-        return lastModifyDatetime;
-    }
-
-    public void setLastModifyDatetime(Timestamp lastModifyDatetime) {
-        this.lastModifyDatetime = lastModifyDatetime;
-    }
-
-    @Basic
-    @Column(name = "lastModifyBy")
-    public String getLastModifyBy() {
-        return lastModifyBy;
-    }
-
-    public void setLastModifyBy(String lastModifyBy) {
-        this.lastModifyBy = lastModifyBy;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CompanyMenuRelEntity that = (CompanyMenuRelEntity) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(compId, that.compId) &&
-                Objects.equals(menuId, that.menuId) &&
-                Objects.equals(createDatetime, that.createDatetime) &&
-                Objects.equals(createBy, that.createBy) &&
-                Objects.equals(lastModifyDatetime, that.lastModifyDatetime) &&
-                Objects.equals(lastModifyBy, that.lastModifyBy);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, compId, menuId, createDatetime, createBy, lastModifyDatetime, lastModifyBy);
+    public void setRoleMenuList(List<RoleMenuRelEntity> roleMenuList) {
+        this.roleMenuList = roleMenuList;
     }
 }

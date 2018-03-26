@@ -3,8 +3,7 @@ package com.sunesoft.ecloud.admin.domain;
 import com.sunesoft.ecloud.hibernate.IEntity;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Objects;
+
 
 /**
  * @Author: niww
@@ -46,10 +45,10 @@ public class MenuFunction extends IEntity{
     /**
      * 所属菜单
      */
-    private Menu menu;
-
     @ManyToOne
     @JoinColumn(name="menuId")
+    private Menu menu;
+
     public Menu getMenu() {
         return menu;
     }

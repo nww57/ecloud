@@ -12,7 +12,7 @@ import java.util.Date;
  * 企业客户信息
  */
 @Entity
-@Table(name = "company_customer", schema = "ecloud", catalog = "")
+@Table(name = "sys_company_customer", schema = "ecloud", catalog = "")
 public class CompanyCustomer extends BizEntity{
 
     /**
@@ -44,7 +44,7 @@ public class CompanyCustomer extends BizEntity{
     @JoinColumn(name = "compId")
     private Company company;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "counselorId")
     private User user;
 
