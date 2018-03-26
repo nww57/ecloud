@@ -1,5 +1,7 @@
 package com.sunesoft.ecloud.admin.domain.menu;
 
+import com.sunesoft.ecloud.admin.domain.ResourcesRequestType;
+import com.sunesoft.ecloud.admin.domain.ResourcesType;
 import com.sunesoft.ecloud.hibernate.IEntity;
 
 import javax.persistence.*;
@@ -30,7 +32,8 @@ public class MenuFunction extends IEntity{
      *资源类型
      */
     @Column(name = "resType")
-    private String resType;
+    @Enumerated(EnumType.STRING)
+    private ResourcesType resType;
 
     /**
      *资源名称
@@ -48,7 +51,8 @@ public class MenuFunction extends IEntity{
      *资源请求类型
      */
     @Column(name = "resRequestType")
-    private String resRequestType;
+    @Enumerated(EnumType.STRING)
+    private ResourcesRequestType resRequestType;
 
     /**
      *描述
@@ -90,11 +94,11 @@ public class MenuFunction extends IEntity{
     }
 
     @Basic
-    public String getResType() {
+    public ResourcesType getResType() {
         return resType;
     }
 
-    public void setResType(String resType) {
+    public void setResType(ResourcesType resType) {
         this.resType = resType;
     }
 
@@ -117,11 +121,11 @@ public class MenuFunction extends IEntity{
     }
 
     @Basic
-    public String getResRequestType() {
+    public ResourcesRequestType getResRequestType() {
         return resRequestType;
     }
 
-    public void setResRequestType(String resRequestType) {
+    public void setResRequestType(ResourcesRequestType resRequestType) {
         this.resRequestType = resRequestType;
     }
 

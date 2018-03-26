@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.admin.domain.menu;
 
+import com.sunesoft.ecloud.admin.domain.MenuType;
 import com.sunesoft.ecloud.hibernate.IEntity;
 
 import javax.persistence.*;
@@ -47,7 +48,9 @@ public class Menu extends IEntity{
      *菜单类型
      */
     @Column(name = "type")
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private MenuType type;
+
 
     /**
      *排序
@@ -129,11 +132,11 @@ public class Menu extends IEntity{
     }
 
     @Basic
-    public String getType() {
+    public MenuType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(MenuType type) {
         this.type = type;
     }
 
