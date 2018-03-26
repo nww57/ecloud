@@ -98,13 +98,6 @@ public class Agency extends IEntity{
     @Column(name = "serverEndDate")
     private Date serverEndDate;
 
-
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "sys_comp_aptitude_file",joinColumns = {@JoinColumn(name = "agId")},inverseJoinColumns ={@JoinColumn(name = "fileId")})
-    private List<AgencyFileInfo> fileList = new ArrayList<>();
-
-
     private List<AgencyCustomer> customers;
 
     public String getCode() {
