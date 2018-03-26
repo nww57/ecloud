@@ -83,11 +83,6 @@ public class Agency extends IEntity{
      */
     private Date serverEndDate;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "sys_comp_aptitude_file",joinColumns = {@JoinColumn(name = "compId")},inverseJoinColumns ={@JoinColumn(name = "fileId")})
-    private List<AgencyFileInfo> fileList = new ArrayList<>();
-
-
     private List<AgencyCustomer> customers;
 
     @Basic
@@ -240,12 +235,6 @@ public class Agency extends IEntity{
         this.serverEndDate = serverEndDate;
     }
 
-    public List<AgencyFileInfo> getFileList() {
-        return fileList;
-    }
 
-    public void setFileList(List<AgencyFileInfo> fileList) {
-        this.fileList = fileList;
-    }
 
 }
