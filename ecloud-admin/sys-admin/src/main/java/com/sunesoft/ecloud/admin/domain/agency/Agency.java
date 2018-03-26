@@ -4,8 +4,8 @@ import com.sunesoft.ecloud.admin.domain.AgencyType;
 import com.sunesoft.ecloud.hibernate.IEntity;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
