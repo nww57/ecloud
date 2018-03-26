@@ -2,6 +2,7 @@ package com.sunesoft.ecloud.admin.domain;
 
 import com.sunesoft.ecloud.hibernate.BizEntity;
 import com.sunesoft.ecloud.hibernate.IEntity;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -65,8 +66,15 @@ public class User extends BizEntity{
     @JoinColumn(name = "compId")
     private Company company;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private List<CompanyCustomer> customerList;
+
+    @ManyToMany
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @JoinTable(name = "user_role_rel",
+            joinColumns = {@JoinColumn(name = "userId")},
+            inverseJoinColumns = {@JoinColumn(name = "roleId")})//inverseJoinColumns定义另一在中间表的主键映射
+    private List<Role> roleList;
 
     @Basic
     @Column(name = "userType")
@@ -178,5 +186,31 @@ public class User extends BizEntity{
         this.lastLoginIp = lastLoginIp;
     }
 
+    public void setLastLoginDatetime(Date lastLoginDatetime) {
+        this.lastLoginDatetime = lastLoginDatetime;
+    }
 
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public List<CompanyCustomer> getCustomerList() {
+        return customerList;
+    }
+
+    public void setCustomerList(List<CompanyCustomer> customerList) {
+        this.customerList = customerList;
+    }
+
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+    }
 }

@@ -233,4 +233,19 @@ public class Company extends IEntity{
     }
 
 
+    public List<CompanyCustomer> getCustomerList() {
+        return customerList;
+    }
+
+    public void setCustomerList(List<CompanyCustomer> customerList) {
+        this.customerList = customerList;
+    }
+
+    public List<FileInfo> getFileList() {
+        return fileList;
+    }
+
+    public void setFileList(List<FileInfo> fileList) {
+        this.fileList = fileList;
+    }
 }
