@@ -1,7 +1,6 @@
-package com.sunesoft.ecloud.admin.domain;
+package com.sunesoft.ecloud.admin.domain.agency;
 
 import com.sunesoft.ecloud.hibernate.BizEntity;
-import com.sunesoft.ecloud.hibernate.IEntity;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -20,6 +19,7 @@ import java.util.List;
 public class User extends BizEntity{
     /**
      *用户类型
+     * @niww  todo  menu
      */
     private String userType;
     /**
@@ -64,18 +64,15 @@ public class User extends BizEntity{
     private String lastLoginIp;
 
     @ManyToOne
-    @JoinColumn(name = "compId")
-    private Company company;
-
-    @OneToMany(mappedBy = "user")
-    private List<CompanyCustomer> customerList = new ArrayList<>();
+    @JoinColumn(name = "structureId")
+    private AgencyOrgnization agencyOrgnization;
 
     @ManyToMany
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinTable(name = "sys_user_role_rel",
             joinColumns = {@JoinColumn(name = "userId")},
             inverseJoinColumns = {@JoinColumn(name = "roleId")})
-    private List<Role> roleList = new ArrayList<>();
+    private List<AgencyRole> roleList = new ArrayList<>();
 
     @Basic
     @Column(name = "userType")
@@ -191,27 +188,19 @@ public class User extends BizEntity{
         this.lastLoginDatetime = lastLoginDatetime;
     }
 
-    public Company getCompany() {
-        return company;
+    public AgencyOrgnization getAgencyOrgnization() {
+        return agencyOrgnization;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setAgencyOrgnization(AgencyOrgnization agencyOrgnization) {
+        this.agencyOrgnization = agencyOrgnization;
     }
 
-    public List<CompanyCustomer> getCustomerList() {
-        return customerList;
-    }
-
-    public void setCustomerList(List<CompanyCustomer> customerList) {
-        this.customerList = customerList;
-    }
-
-    public List<Role> getRoleList() {
+    public List<AgencyRole> getRoleList() {
         return roleList;
     }
 
-    public void setRoleList(List<Role> roleList) {
+    public void setRoleList(List<AgencyRole> roleList) {
         this.roleList = roleList;
     }
 

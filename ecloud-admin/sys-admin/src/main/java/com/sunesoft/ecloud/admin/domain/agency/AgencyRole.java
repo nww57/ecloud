@@ -1,4 +1,4 @@
-package com.sunesoft.ecloud.admin.domain;
+package com.sunesoft.ecloud.admin.domain.agency;
 
 import com.sunesoft.ecloud.hibernate.BizEntity;
 import org.hibernate.annotations.Cascade;
@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "sys_role", schema = "ecloud", catalog = "")
-public class Role extends BizEntity {
+public class AgencyRole extends BizEntity {
 
     /**
      * 名称
@@ -29,16 +29,6 @@ public class Role extends BizEntity {
      */
     private String description;
 
-    @ManyToMany(mappedBy = "roleList")
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    private List<User> userList = new ArrayList<>();
-
-
-    @ManyToOne
-    @JoinColumn(name = "compId")
-    private Company company;
-
-    private List<RoleMenuRelEntity> roleMenuList = new ArrayList<>();
 
     @Basic
     @Column(name = "name")
@@ -71,19 +61,4 @@ public class Role extends BizEntity {
     }
 
 
-    public List<User> getUserList() {
-        return userList;
-    }
-
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
 }

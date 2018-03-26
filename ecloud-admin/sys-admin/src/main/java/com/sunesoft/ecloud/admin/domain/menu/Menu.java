@@ -1,12 +1,10 @@
-package com.sunesoft.ecloud.admin.domain;
+package com.sunesoft.ecloud.admin.domain.menu;
 
 import com.sunesoft.ecloud.hibernate.IEntity;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @Author: niww
@@ -16,6 +14,10 @@ import java.util.Objects;
 @Entity
 @Table(name = "sys_menu", schema = "ecloud", catalog = "")
 public class Menu extends IEntity{
+
+    @ManyToOne
+    @Column(name = "moduleId")
+    private Module module;
     /**
      * 索引
      */
@@ -64,8 +66,11 @@ public class Menu extends IEntity{
     @OneToMany(targetEntity = Menu.class, cascade = { CascadeType.ALL }, mappedBy = "parentMenu")
     private List<Menu> childMenuList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "menu",cascade = CascadeType.ALL)
-    private List<CompanyMenuRelEntity> companyMenuList = new ArrayList<>();
+
+    @OneToMany
+    @Column(name ="menuId")
+    private List<MenuFunction> menuFunctions;
+
 
     @Basic
     @Column(name = "menuIndex")
@@ -183,11 +188,19 @@ public class Menu extends IEntity{
         this.childMenuList = childMenuList;
     }
 
-    public List<CompanyMenuRelEntity> getCompanyMenuList() {
-        return companyMenuList;
+    public Module getModule() {
+        return module;
     }
 
-    public void setCompanyMenuList(List<CompanyMenuRelEntity> companyMenuList) {
-        this.companyMenuList = companyMenuList;
+    public void setModule(Module module) {
+        this.module = module;
+    }
+
+    public List<MenuFunction> getMenuFunctions() {
+        return menuFunctions;
+    }
+
+    public void setMenuFunctions(List<MenuFunction> menuFunctions) {
+        this.menuFunctions = menuFunctions;
     }
 }

@@ -1,4 +1,4 @@
-package com.sunesoft.ecloud.admin.domain;
+package com.sunesoft.ecloud.admin.domain.agency;
 
 import com.sunesoft.ecloud.hibernate.BizEntity;
 
@@ -11,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "sys_company_structure", schema = "ecloud", catalog = "")
-public class CompanyStructure extends BizEntity{
+public class AgencyOrgnization extends BizEntity{
 
     /**
      * 父级id
@@ -41,7 +41,7 @@ public class CompanyStructure extends BizEntity{
 
     @ManyToOne
     @JoinColumn(name = "compId")
-    private Company company;
+    private Agency company;
 
     @Basic
     @Column(name = "parentId")
@@ -107,11 +107,11 @@ public class CompanyStructure extends BizEntity{
     }
 
 
-    public Company getCompany() {
+    public Agency getCompany() {
         return company;
     }
 
-    public void setCompany(Company company) {
+    public void setCompany(Agency company) {
         this.company = company;
     }
 }

@@ -1,10 +1,9 @@
-package com.sunesoft.ecloud.admin.domain;
+package com.sunesoft.ecloud.admin.domain.agency;
 
+import com.sunesoft.ecloud.admin.domain.agency.Agency;
 import com.sunesoft.ecloud.hibernate.IEntity;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Objects;
 
 /**
  * @Author: niww
@@ -13,7 +12,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "sys_file_info", schema = "ecloud", catalog = "")
-public class FileInfo extends IEntity{
+public class AgencyFileInfo extends IEntity{
 
     /**
      * 文件名称
@@ -49,7 +48,7 @@ public class FileInfo extends IEntity{
     private Byte isActive;
 
     @ManyToOne
-    private Company company;
+    private Agency company;
 
 
     @Basic
@@ -132,11 +131,11 @@ public class FileInfo extends IEntity{
         this.isActive = isActive;
     }
 
-    public Company getCompany() {
+    public Agency getCompany() {
         return company;
     }
 
-    public void setCompany(Company company) {
+    public void setCompany(Agency company) {
         this.company = company;
     }
 }

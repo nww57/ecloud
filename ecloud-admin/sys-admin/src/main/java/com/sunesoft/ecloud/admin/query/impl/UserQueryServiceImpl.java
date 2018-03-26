@@ -1,6 +1,6 @@
 package com.sunesoft.ecloud.admin.query.impl;
 
-import com.sunesoft.ecloud.admin.domain.User;
+import com.sunesoft.ecloud.admin.domain.agency.User;
 import com.sunesoft.ecloud.admin.query.UserQueryService;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCretiria;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
@@ -20,9 +20,9 @@ import org.springframework.stereotype.Service;
 public class UserQueryServiceImpl extends GenericQuery implements UserQueryService {
     @Override
     public Page<UserDto> findUserPaged(Pageable pageable, UserCretiria cretiria) {
-        SqlBuilder builder = HSqlBuilder.hFrom(User.class,"u")
+        SqlBuilder builder = HSqlBuilder.hFrom(User.class, "u")
                 .where(cretiria.getParams())
-                .pagging(pageable.getPageNumber(),pageable.getPageSize())
+                .pagging(pageable.getPageNumber(), pageable.getPageSize())
                 .select(UserDto.class);
         return this.queryPaged(builder);
     }

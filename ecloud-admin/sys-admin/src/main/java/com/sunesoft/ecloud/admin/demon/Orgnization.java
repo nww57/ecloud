@@ -1,4 +1,4 @@
-package com.sunesoft.ecloud.admin.domain;
+package com.sunesoft.ecloud.admin.demon;
 
 import com.sunesoft.ecloud.hibernate.IEntity;
 

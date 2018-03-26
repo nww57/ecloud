@@ -1,5 +1,6 @@
-package com.sunesoft.ecloud.admin.domain;
+package com.sunesoft.ecloud.admin.domain.agency;
 
+import com.sunesoft.ecloud.admin.domain.AgencyType;
 import com.sunesoft.ecloud.hibernate.IEntity;
 
 import javax.persistence.*;
@@ -10,11 +11,11 @@ import java.util.List;
 /**
  * @Author: niww
  * @Date: 2018/3/25
- * 企业
+ * 企业 (事务所)
  */
 @Entity
-@Table(name = "sys_company")
-public class Company extends IEntity{
+@Table(name = "sys_agency")
+public class Agency extends IEntity{
     /**
      *企业机构代码
      */
@@ -23,6 +24,12 @@ public class Company extends IEntity{
      *企业名称
      */
     private String name;
+
+
+    /**
+     * 机构类型（服务商/客户）
+     */
+    private AgencyType agencyType;
     /**
      *所属国家
      */
@@ -76,18 +83,12 @@ public class Company extends IEntity{
      */
     private Date serverEndDate;
 
-    @OneToMany(cascade =CascadeType.ALL,mappedBy = "company")
-    private List<CompanyCustomer> customerList = new ArrayList<>();
-
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "sys_comp_aptitude_file",joinColumns = {@JoinColumn(name = "compId")},inverseJoinColumns ={@JoinColumn(name = "fileId")})
-    private List<FileInfo> fileList = new ArrayList<>();
+    private List<AgencyFileInfo> fileList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "company",cascade=CascadeType.ALL)
-    private List<CompanyMenuRelEntity> companyMenuList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "company")
-    private List<Role> roleList = new ArrayList<>();
+    private List<AgencyCustomer> customers;
 
     @Basic
     @Column(name = "code")
@@ -239,36 +240,12 @@ public class Company extends IEntity{
         this.serverEndDate = serverEndDate;
     }
 
-
-    public List<CompanyCustomer> getCustomerList() {
-        return customerList;
-    }
-
-    public void setCustomerList(List<CompanyCustomer> customerList) {
-        this.customerList = customerList;
-    }
-
-    public List<FileInfo> getFileList() {
+    public List<AgencyFileInfo> getFileList() {
         return fileList;
     }
 
-    public void setFileList(List<FileInfo> fileList) {
+    public void setFileList(List<AgencyFileInfo> fileList) {
         this.fileList = fileList;
     }
 
-    public List<CompanyMenuRelEntity> getCompanyMenuList() {
-        return companyMenuList;
-    }
-
-    public void setCompanyMenuList(List<CompanyMenuRelEntity> companyMenuList) {
-        this.companyMenuList = companyMenuList;
-    }
-
-    public List<Role> getRoleList() {
-        return roleList;
-    }
-
-    public void setRoleList(List<Role> roleList) {
-        this.roleList = roleList;
-    }
 }

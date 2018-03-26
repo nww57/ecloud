@@ -1,9 +1,9 @@
-package com.sunesoft.ecloud.admin.domain;
+package com.sunesoft.ecloud.admin.domain.agency;
 
 import com.sunesoft.ecloud.hibernate.BizEntity;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.*;
 
 
 /**
@@ -13,7 +13,9 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "sys_company_customer", schema = "ecloud", catalog = "")
-public class CompanyCustomer extends BizEntity{
+public class AgencyCustomer extends BizEntity{
+
+    private UUID CustomerAgencyId;
 
     /**
      * 名称
@@ -40,13 +42,6 @@ public class CompanyCustomer extends BizEntity{
      */
     private String leaderEmail;
 
-    @ManyToOne
-    @JoinColumn(name = "compId")
-    private Company company;
-
-    @ManyToOne
-    @JoinColumn(name = "counselorId")
-    private User user;
 
 
     @Basic
@@ -109,19 +104,5 @@ public class CompanyCustomer extends BizEntity{
         this.leaderEmail = leaderEmail;
     }
 
-    public Company getCompany() {
-        return company;
-    }
 
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

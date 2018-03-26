@@ -1,6 +1,6 @@
 package com.sunesoft.ecloud.admin.repository;
 
-import com.sunesoft.ecloud.admin.domain.User;
+import com.sunesoft.ecloud.admin.domain.agency.User;
 import com.sunesoft.ecloud.hibernate.repository.BaseRepository;
 import org.springframework.stereotype.Repository;
 

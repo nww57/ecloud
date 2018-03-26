@@ -1,6 +1,6 @@
 package com.sunesoft.ecloud.admin.service.impl;
 
-import com.sunesoft.ecloud.admin.domain.User;
+import com.sunesoft.ecloud.admin.domain.agency.User;
 import com.sunesoft.ecloud.admin.repository.UserRepository;
 import com.sunesoft.ecloud.admin.service.UserService;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
