@@ -9,36 +9,74 @@ import java.util.*;
 public class UserDto {
 
     private UUID Id;
+
     /**
-     * 组织机构Id
+     * 所属企业id
      */
-    private UUID orgId;
+    private UUID agId;
+
     /**
-     * 组织机构名称
+     *用户类型
      */
-    private UUID orgName;
+    private String userType;
     /**
-     * 用户名
+     *用户编号
+     */
+    private String userCode;
+    /**
+     *用户名
      */
     private String userName;
     /**
-     * 密码
-     */
-    private String password;
-
-    /**
-     * 真实姓名
+     *真实姓名
      */
     private String realName;
-
     /**
-     * 电话号码
+     *密码
      */
-    private String phoneNo;
+    private String password;
     /**
-     * 邮箱
+     *性别
+     */
+    private String sex;
+    /**
+     *邮箱
      */
     private String email;
+    /**
+     *联系电话
+     */
+    private String callphone;
+    /**
+     *是否在职
+     *
+     * ture:在职  false:离职
+     */
+    private Boolean isWorkon;
+
+
+    /**
+     * 创建时间
+     */
+    private String createDate;
+
+    /**
+     * 所属机构-名称
+     */
+    private String organizationName;
+
+
+    /**
+     * 角色Id
+     */
+    private List<UUID> roleIdList;
+
+
+
+    /**
+     * 角色名称
+     */
+    private List<String> roleNameList;
 
     public UUID getId() {
         return Id;
@@ -48,20 +86,20 @@ public class UserDto {
         Id = id;
     }
 
-    public UUID getOrgId() {
-        return orgId;
+    public String getUserType() {
+        return userType;
     }
 
-    public void setOrgId(UUID orgId) {
-        this.orgId = orgId;
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
-    public UUID getOrgName() {
-        return orgName;
+    public String getUserCode() {
+        return userCode;
     }
 
-    public void setOrgName(UUID orgName) {
-        this.orgName = orgName;
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
     }
 
     public String getUserName() {
@@ -72,14 +110,6 @@ public class UserDto {
         this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getRealName() {
         return realName;
     }
@@ -88,12 +118,20 @@ public class UserDto {
         this.realName = realName;
     }
 
-    public String getPhoneNo() {
-        return phoneNo;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public String getEmail() {
@@ -102,5 +140,61 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCallphone() {
+        return callphone;
+    }
+
+    public void setCallphone(String callphone) {
+        this.callphone = callphone;
+    }
+
+    public Boolean getWorkon() {
+        return isWorkon;
+    }
+
+    public void setWorkon(Boolean workon) {
+        isWorkon = workon;
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getOrganizationName() {
+        return organizationName;
+    }
+
+    public void setOrganizationName(String organizationName) {
+        this.organizationName = organizationName;
+    }
+
+    public List<String> getRoleNameList() {
+        return roleNameList;
+    }
+
+    public void setRoleNameList(List<String> roleNameList) {
+        this.roleNameList = roleNameList;
+    }
+
+    public UUID getAgId() {
+        return agId;
+    }
+
+    public void setAgId(UUID agId) {
+        this.agId = agId;
+    }
+
+    public List<UUID> getRoleIdList() {
+        return roleIdList;
+    }
+
+    public void setRoleIdList(List<UUID> roleIdList) {
+        this.roleIdList = roleIdList;
     }
 }

@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface UserService {
 
     /**
-     * 新增修改密码
+     * 新增/修改 用户信息
      * @param userDto
      * @return
      */
@@ -29,20 +29,20 @@ public interface UserService {
      * @param ids
      * @return
      */
-    TResult deleteUserBatch(UUID[] ids);
+    TResult deleteUserBatch(UUID... ids);
 
 
     /**
      * 修改密码
      * @param id
-     * @param oldPassword
      * @param newPassword
+     * @param confirmPassword
      * @return
      */
-    TResult changePassword(UUID id,String oldPassword,String newPassword);
+    TResult changePassword(UUID id,String newPassword,String confirmPassword);
 
     /**
-     *
+     *设置密码
      * @param id
      * @param newPassword
      * @return
