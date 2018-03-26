@@ -20,9 +20,4 @@ public interface MenuService {
      * 删除菜单
      */
     TResult delete(UUID uuid);
-
-    /**
-     * 查询菜单
-     */
-    TResult queryMenu();
 }

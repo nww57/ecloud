@@ -22,9 +22,4 @@ public interface MenuFunctionService {
      * 删除菜单功能
      */
     TResult delete(List ids);
-
-    /**
-     * 查询菜单功能
-     */
-    TResult queryMenuFunction(UUID uuid);
 }
