@@ -36,4 +36,5 @@ public class RoleMenuDto {
     public void setFuncId(List<UUID> funcId) {
         this.funcId = funcId;
     }
+
 }
