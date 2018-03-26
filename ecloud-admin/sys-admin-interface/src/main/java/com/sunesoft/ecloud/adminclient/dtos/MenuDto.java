@@ -67,9 +67,10 @@ public class MenuDto {
      */
     private Integer childCount;
 
+    /**
+     * 父级节点菜单
+     */
     private MenuDto parentMenu;
-
-    private List<MenuDto> childMenuList = new ArrayList<>();
 
 
     private List<MenuFunctionDto> menuFunctions;
