@@ -1,5 +1,7 @@
 package com.sunesoft.ecloud.admin.domain;
 
+import com.sunesoft.ecloud.hibernate.IEntity;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -7,33 +9,48 @@ import java.util.Objects;
 /**
  * @Author: niww
  * @Date: 2018/3/25
+ * 文件
  */
 @Entity
 @Table(name = "sys_file_info", schema = "ecloud", catalog = "")
-public class SysFileInfoEntity {
-    private String id;
+public class FileInfo extends IEntity{
+
+    /**
+     * 文件名称
+     */
     private String fileName;
+    /**
+     *文件类型
+     */
     private String fileType;
+    /**
+     *文件路径
+     */
     private String filePath;
+    /**
+     *md5
+     */
     private String md5;
+    /**
+     *文件大小
+     */
     private Integer fileSize;
+    /**
+     *文件头
+     */
     private String fileHeader;
+    /**
+     *isFake
+     */
     private Byte isFake;
+    /**
+     *是否有效
+     */
     private Byte isActive;
-    private Timestamp createDatetime;
-    private String createBy;
-    private Timestamp lastModifyDatetime;
-    private String lastModifyBy;
 
-    @Id
-    @Column(name = "id")
-    public String getId() {
-        return id;
-    }
+    @ManyToOne
+    private Company company;
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     @Basic
     @Column(name = "fileName")
@@ -115,69 +132,11 @@ public class SysFileInfoEntity {
         this.isActive = isActive;
     }
 
-    @Basic
-    @Column(name = "createDatetime")
-    public Timestamp getCreateDatetime() {
-        return createDatetime;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setCreateDatetime(Timestamp createDatetime) {
-        this.createDatetime = createDatetime;
-    }
-
-    @Basic
-    @Column(name = "createBy")
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
-    }
-
-    @Basic
-    @Column(name = "lastModifyDatetime")
-    public Timestamp getLastModifyDatetime() {
-        return lastModifyDatetime;
-    }
-
-    public void setLastModifyDatetime(Timestamp lastModifyDatetime) {
-        this.lastModifyDatetime = lastModifyDatetime;
-    }
-
-    @Basic
-    @Column(name = "lastModifyBy")
-    public String getLastModifyBy() {
-        return lastModifyBy;
-    }
-
-    public void setLastModifyBy(String lastModifyBy) {
-        this.lastModifyBy = lastModifyBy;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SysFileInfoEntity that = (SysFileInfoEntity) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(fileName, that.fileName) &&
-                Objects.equals(fileType, that.fileType) &&
-                Objects.equals(filePath, that.filePath) &&
-                Objects.equals(md5, that.md5) &&
-                Objects.equals(fileSize, that.fileSize) &&
-                Objects.equals(fileHeader, that.fileHeader) &&
-                Objects.equals(isFake, that.isFake) &&
-                Objects.equals(isActive, that.isActive) &&
-                Objects.equals(createDatetime, that.createDatetime) &&
-                Objects.equals(createBy, that.createBy) &&
-                Objects.equals(lastModifyDatetime, that.lastModifyDatetime) &&
-                Objects.equals(lastModifyBy, that.lastModifyBy);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, fileName, fileType, filePath, md5, fileSize, fileHeader, isFake, isActive, createDatetime, createBy, lastModifyDatetime, lastModifyBy);
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }

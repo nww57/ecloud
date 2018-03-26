@@ -78,6 +78,10 @@ public class Company extends IEntity{
     @OneToMany(cascade =CascadeType.ALL,mappedBy = "company")
     private List<CompanyCustomer> customerList;
 
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "company")
+    @JoinTable(name = "comp_aptitude_file",joinColumns = {@JoinColumn(name = "compId")},inverseJoinColumns ={@JoinColumn(name = "fileId")})
+    private List<FileInfo> fileList;
+
     @Basic
     @Column(name = "code")
     public String getCode() {
