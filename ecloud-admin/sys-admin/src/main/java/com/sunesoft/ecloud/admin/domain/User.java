@@ -1,46 +1,95 @@
 package com.sunesoft.ecloud.admin.domain;
 
-import com.sunesoft.ecloud.admin.domain.Orgnization;
+import com.sunesoft.ecloud.hibernate.BizEntity;
 import com.sunesoft.ecloud.hibernate.IEntity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 
 /**
- * @author: Zhouzh
- * @Date: 2018/3/23
+ * @Author: niww
+ * @Date: 2018/3/25
  * 用户
  */
 @Entity
-@Table(name="sys_user")
-public class User extends IEntity{
-
+@Table(name = "sys_user", schema = "ecloud", catalog = "")
+public class User extends BizEntity{
     /**
-     * 用户名
+     *用户类型
+     */
+    private String userType;
+    /**
+     *用户编号
+     */
+    private String userCode;
+    /**
+     *用户名
      */
     private String userName;
     /**
-     * 密码
-     */
-    private String password;
-
-    /**
-     * 真实姓名
+     *真实姓名
      */
     private String realName;
-
     /**
-     * 电话号码
+     *密码
      */
-    private String phoneNo;
+    private String password;
     /**
-     * 邮箱
+     *性别
+     */
+    private String sex;
+    /**
+     *邮箱
      */
     private String email;
+    /**
+     *联系电话
+     */
+    private String callphone;
+    /**
+     *是否在职
+     */
+    private Boolean isWorkon;
+    /**
+     *最后登录时间
+     */
+    private Date lastLoginDatetime;
+    /**
+     *最后登录IP
+     */
+    private String lastLoginIp;
 
     @ManyToOne
-    @JoinColumn(name = "orgId")
-    private Orgnization orgnization;
+    @JoinColumn(name = "compId")
+    private Company company;
 
+    @OneToMany
+    private List<CompanyCustomer> customerList;
+
+    @Basic
+    @Column(name = "userType")
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    @Basic
+    @Column(name = "userCode")
+    public String getUserCode() {
+        return userCode;
+    }
+
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
+    }
+
+    @Basic
+    @Column(name = "userName")
     public String getUserName() {
         return userName;
     }
@@ -49,14 +98,8 @@ public class User extends IEntity{
         this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
+    @Basic
+    @Column(name = "realName")
     public String getRealName() {
         return realName;
     }
@@ -65,14 +108,28 @@ public class User extends IEntity{
         this.realName = realName;
     }
 
-    public String getPhoneNo() {
-        return phoneNo;
+    @Basic
+    @Column(name = "password")
+    public String getPassword() {
+        return password;
     }
 
-    public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
+    @Basic
+    @Column(name = "sex")
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    @Basic
+    @Column(name = "email")
     public String getEmail() {
         return email;
     }
@@ -80,4 +137,46 @@ public class User extends IEntity{
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Basic
+    @Column(name = "callphone")
+    public String getCallphone() {
+        return callphone;
+    }
+
+    public void setCallphone(String callphone) {
+        this.callphone = callphone;
+    }
+
+    @Basic
+    @Column(name = "isWorkon")
+    public Boolean getWorkon() {
+        return isWorkon;
+    }
+
+    public void setWorkon(Boolean workon) {
+        isWorkon = workon;
+    }
+
+    @Basic
+    @Column(name = "lastLoginDatetime")
+    public Date getLastLoginDatetime() {
+        return lastLoginDatetime;
+    }
+
+    public void setLastLoginDatetime(Timestamp lastLoginDatetime) {
+        this.lastLoginDatetime = lastLoginDatetime;
+    }
+
+    @Basic
+    @Column(name = "lastLoginIp")
+    public String getLastLoginIp() {
+        return lastLoginIp;
+    }
+
+    public void setLastLoginIp(String lastLoginIp) {
+        this.lastLoginIp = lastLoginIp;
+    }
+
+
 }
