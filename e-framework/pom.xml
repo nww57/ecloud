@@ -12,6 +12,7 @@
     <modules>
         <module>hibernate-support</module>
         <module>e-common</module>
+        <module>ecloud-core</module>
     </modules>
     <artifactId>e-framework</artifactId>
 
