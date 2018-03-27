@@ -1,6 +1,8 @@
 package com.sunesoft.ecloud.admin.repository;
 
 import com.sunesoft.ecloud.admin.domain.menu.MenuFunction;
+import com.sunesoft.ecloud.adminclient.dtos.MenuFunctionDto;
+import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.hibernate.repository.BaseRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,5 +20,5 @@ public interface MenuFunctionRepository extends BaseRepository<MenuFunction, UUI
     /**
      * 根据菜单ID查询相应操作功能
      */
-    List<MenuFunction> findMenuFunctionsByMenuId(UUID uuid);
+    ListResult<MenuFunctionDto> findMenuFunctionsByMenuId(UUID uuid);
 }
