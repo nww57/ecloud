@@ -90,9 +90,8 @@ public class Menu extends IEntity{
     private List<Menu> childMenuList = new ArrayList<>();
 
 
-    @OneToMany
-    @Column(name ="menuId")
-    private List<MenuFunction> menuFunctions;
+    @OneToMany(mappedBy = "menu")
+    private List<MenuFunction> menuFunctions = new ArrayList<>();
 
 
     @Basic

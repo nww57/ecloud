@@ -1,6 +1,5 @@
 package com.sunesoft.ecloud.admin.domain.agency;
 
-import com.sunesoft.ecloud.admin.domain.menu.Menu;
 import com.sunesoft.ecloud.hibernate.BizEntity;
 
 import javax.persistence.*;
@@ -14,7 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "sys_ag_organization")
-public class AgencyOrgnization extends BizEntity{
+public class AgencyOrganization extends BizEntity{
 
 
     /**
@@ -50,10 +49,10 @@ public class AgencyOrgnization extends BizEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pid")
-    private AgencyOrgnization parentOrg;
+    private AgencyOrganization parentOrg;
 
-    @OneToMany(targetEntity = AgencyOrgnization.class, cascade = { CascadeType.ALL }, mappedBy = "parentOrg")
-    private List<AgencyOrgnization> childOrgList = new ArrayList<>();
+    @OneToMany(targetEntity = AgencyOrganization.class, cascade = { CascadeType.ALL }, mappedBy = "parentOrg")
+    private List<AgencyOrganization> childOrgList = new ArrayList<>();
 
 
     public String getName() {
@@ -104,19 +103,19 @@ public class AgencyOrgnization extends BizEntity{
         this.agency = agency;
     }
 
-    public AgencyOrgnization getParentOrg() {
+    public AgencyOrganization getParentOrg() {
         return parentOrg;
     }
 
-    public void setParentOrg(AgencyOrgnization parentOrg) {
+    public void setParentOrg(AgencyOrganization parentOrg) {
         this.parentOrg = parentOrg;
     }
 
-    public List<AgencyOrgnization> getChildOrgList() {
+    public List<AgencyOrganization> getChildOrgList() {
         return childOrgList;
     }
 
-    public void setChildOrgList(List<AgencyOrgnization> childOrgList) {
+    public void setChildOrgList(List<AgencyOrganization> childOrgList) {
         this.childOrgList = childOrgList;
     }
 }

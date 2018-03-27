@@ -75,7 +75,7 @@ public class User extends BizEntity{
 
     @ManyToOne
     @JoinColumn(name = "structureId")
-    private AgencyOrgnization agencyOrgnization;
+    private AgencyOrganization agencyOrganization;
 
     @ManyToMany
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
@@ -175,12 +175,12 @@ public class User extends BizEntity{
         this.lastLoginDatetime = lastLoginDatetime;
     }
 
-    public AgencyOrgnization getAgencyOrgnization() {
-        return agencyOrgnization;
+    public AgencyOrganization getAgencyOrganization() {
+        return agencyOrganization;
     }
 
-    public void setAgencyOrgnization(AgencyOrgnization agencyOrgnization) {
-        this.agencyOrgnization = agencyOrgnization;
+    public void setAgencyOrganization(AgencyOrganization agencyOrganization) {
+        this.agencyOrganization = agencyOrganization;
     }
 
     public List<AgencyRole> getRoleList() {

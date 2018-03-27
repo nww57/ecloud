@@ -15,8 +15,9 @@ import java.util.*;
 @Table(name = "sys_ag_customer")
 public class AgencyCustomer extends BizEntity{
 
-
-    private UUID customerAgencyId;
+    @ManyToOne
+    @JoinColumn(name = "agId")
+    private Agency agency;
 
     /**
      * 名称
@@ -49,6 +50,13 @@ public class AgencyCustomer extends BizEntity{
     @Column(name = "leaderEmail")
     private String leaderEmail;
 
+    public Agency getAgency() {
+        return agency;
+    }
+
+    public void setAgency(Agency agency) {
+        this.agency = agency;
+    }
 
     public String getName() {
         return name;
@@ -98,11 +106,5 @@ public class AgencyCustomer extends BizEntity{
         this.leaderEmail = leaderEmail;
     }
 
-    public UUID getCustomerAgencyId() {
-        return customerAgencyId;
-    }
 
-    public void setCustomerAgencyId(UUID customerAgencyId) {
-        this.customerAgencyId = customerAgencyId;
-    }
 }
