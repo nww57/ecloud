@@ -3,6 +3,7 @@ package com.sunesoft.ecloud.admin.query;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.ListResult;
+import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.data.domain.Page;
 
 import java.util.UUID;
@@ -22,8 +23,15 @@ public interface UserQueryService {
 
     /**
      * 获取企业下所有用户信息
-     * @param id 企业id
+     * @param agId 企业id
      * @return 返回查询结果
      */
-    ListResult<UserDto> findAllUser(UUID id);
+    ListResult<UserDto> findAllUser(UUID agId);
+
+    /**
+     * 根据id查询用户信息
+     * @param id 用户id
+     * @return 返回查询结果
+     */
+    TResult<UserDto> findUserById(UUID id);
 }

@@ -2,7 +2,10 @@ package com.sunesoft.ecloud.admin.query;
 
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyCustomerCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
+import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.data.domain.Page;
+
+import java.util.UUID;
 
 /**
  * @Auther: niww
@@ -17,4 +20,11 @@ public interface AgencyCustomerQueryService {
      * @return 返回查询结果
      */
     Page<AgencyCustomerDto> findAgencyCustomerPaged(AgencyCustomerCriteria criteria);
+
+    /**
+     * 根据id查询客户信息
+     * @param id 客户id
+     * @return 返回查询结果
+     */
+    TResult<AgencyCustomerDto> findAgencyCustormerById(UUID id);
 }

@@ -3,6 +3,7 @@ package com.sunesoft.ecloud.admin.query;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyRoleCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyRoleDto;
 import com.sunesoft.ecloud.common.result.ListResult;
+import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.data.domain.Page;
 
 import java.util.UUID;
@@ -23,8 +24,16 @@ public interface AgencyRoleQueryService {
 
     /**
      * 查询企业下所有角色
-     * @param id 企业id
+     * @param agId 企业id
      * @return 返回查询结果
      */
-    ListResult<AgencyRoleDto> getAllAgencyRole(UUID id);
+    ListResult<AgencyRoleDto> getAllAgencyRole(UUID agId);
+
+
+    /**
+     * 根据id获取角色信息
+     * @param id 角色id
+     * @return 返回查询结果
+     */
+    TResult<AgencyRoleDto> getAgencyRoleById(UUID id);
 }
