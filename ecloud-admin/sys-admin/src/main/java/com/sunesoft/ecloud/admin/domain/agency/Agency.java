@@ -1,6 +1,8 @@
 package com.sunesoft.ecloud.admin.domain.agency;
 
-import com.sunesoft.ecloud.admin.domain.AgencyType;
+
+import com.sunesoft.ecloud.adminclient.AgencyType;
+import com.sunesoft.ecloud.adminclient.ServerStatusType;
 import com.sunesoft.ecloud.hibernate.IEntity;
 
 import javax.persistence.*;
@@ -31,6 +33,7 @@ public class Agency extends IEntity{
      * 机构类型（服务商/客户）
      */
     @Column(name = "agencyType")
+    @Enumerated(EnumType.STRING)
     private AgencyType agencyType;
     /**
      *所属国家
@@ -108,7 +111,8 @@ public class Agency extends IEntity{
      *服务状态
      */
     @Column(name = "serverStatus")
-    private String serverStatus;
+    @Enumerated(EnumType.STRING)
+    private ServerStatusType serverStatus;
     /**
      *服务起始时间
      */
@@ -122,6 +126,12 @@ public class Agency extends IEntity{
 
     @OneToMany(mappedBy = "agency")
     private List<AgencyCustomer> customers = new ArrayList<>();
+
+
+    public Agency() {
+        this.agencyType = AgencyType.ServiceAgency;
+        this.serverStatus = ServerStatusType.ENABLE;
+    }
 
     public String getCode() {
         return code;
@@ -216,11 +226,11 @@ public class Agency extends IEntity{
         this.websiteLogo = websiteLogo;
     }
 
-    public String getServerStatus() {
+    public ServerStatusType getServerStatus() {
         return serverStatus;
     }
 
-    public void setServerStatus(String serverStatus) {
+    public void setServerStatus(ServerStatusType serverStatus) {
         this.serverStatus = serverStatus;
     }
 

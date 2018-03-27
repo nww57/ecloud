@@ -2,8 +2,10 @@ package com.sunesoft.ecloud.adminclient.dtos;
 
 
 import com.sunesoft.ecloud.adminclient.AgencyType;
+import com.sunesoft.ecloud.adminclient.ServerStatusType;
 
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author: Zhouzh
@@ -33,7 +35,7 @@ public class AgencyDto {
     /**
      *注册时间
      */
-    private Date registerDate;
+    private String registerDate;
     /**
      * 地区code
      */
@@ -85,15 +87,15 @@ public class AgencyDto {
     /**
      *服务状态
      */
-    private String serverStatus;
+    private ServerStatusType serverStatus;
     /**
      *服务起始时间
      */
-    private Date serverStartDate;
+    private String serverStartDate;
     /**
      *服务结束时间
      */
-    private Date serverEndDate;
+    private String serverEndDate;
 
     private List<UUID> menuIds;
 
@@ -177,11 +179,11 @@ public class AgencyDto {
         this.country = country;
     }
 
-    public Date getRegisterDate() {
+    public String getRegisterDate() {
         return registerDate;
     }
 
-    public void setRegisterDate(Date registerDate) {
+    public void setRegisterDate(String registerDate) {
         this.registerDate = registerDate;
     }
 
@@ -241,27 +243,27 @@ public class AgencyDto {
         this.websiteLogo = websiteLogo;
     }
 
-    public String getServerStatus() {
+    public ServerStatusType getServerStatus() {
         return serverStatus;
     }
 
-    public void setServerStatus(String serverStatus) {
+    public void setServerStatus(ServerStatusType serverStatus) {
         this.serverStatus = serverStatus;
     }
 
-    public Date getServerStartDate() {
+    public String getServerStartDate() {
         return serverStartDate;
     }
 
-    public void setServerStartDate(Date serverStartDate) {
+    public void setServerStartDate(String serverStartDate) {
         this.serverStartDate = serverStartDate;
     }
 
-    public Date getServerEndDate() {
+    public String getServerEndDate() {
         return serverEndDate;
     }
 
-    public void setServerEndDate(Date serverEndDate) {
+    public void setServerEndDate(String serverEndDate) {
         this.serverEndDate = serverEndDate;
     }
 
