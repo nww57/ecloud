@@ -5,6 +5,7 @@ import com.sunesoft.ecloud.admin.query.UserQueryService;
 import com.sunesoft.ecloud.admin.repository.UserRepository;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
+import com.sunesoft.ecloud.adminclient.dtos.UserViewDto;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
@@ -12,7 +13,6 @@ import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -46,9 +46,15 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
     }
 
     @Override
-    public TResult<UserDto> findUserById(UUID id) {
+    public TResult<UserDto> findUserBasicById(UUID id) {
         return null;
     }
+
+    @Override
+    public TResult<UserViewDto> findUserFullById(UUID id) {
+        return null;
+    }
+
 
 
 }
