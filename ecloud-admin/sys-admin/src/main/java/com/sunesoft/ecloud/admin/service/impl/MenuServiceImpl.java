@@ -1,8 +1,13 @@
 package com.sunesoft.ecloud.admin.service.impl;
 
+import com.sunesoft.ecloud.admin.domain.menu.Menu;
+import com.sunesoft.ecloud.admin.repository.MenuRepository;
 import com.sunesoft.ecloud.admin.service.MenuService;
 import com.sunesoft.ecloud.adminclient.dtos.MenuDto;
 import com.sunesoft.ecloud.common.result.TResult;
+import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
+import com.sunesoft.ecloud.common.utils.BeanUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
 
@@ -12,14 +17,29 @@ import java.util.UUID;
  * -
  */
 public class MenuServiceImpl implements MenuService {
+
+    @Autowired
+    MenuRepository menuRepository;
+
     @Override
-    public TResult addOrUpdate(MenuDto menuDto) {
-        return null;
+    public TResult addOrUpdateMenu(MenuDto menuDto) {
+        Menu menu;
+        if(menuDto.getUuid()!=null){//修改
+            menu=menuRepository.getOne(menuDto.getUuid());
+            BeanUtil.copyPropertiesIgnoreNull(menuDto,menu);
+        }else{//新增
+            menu=new Menu();
+            BeanUtil.copyPropertiesIgnoreNull(menuDto,menu);
+        }
+        Menu save = menuRepository.save(menu);
+        return (TResult) ResultFactory.success(save);
     }
 
     @Override
     public TResult delete(UUID uuid) {
-        return null;
+        Menu menu = menuRepository.getOne(uuid);
+        if(menu!=null) menuRepository.delete(menu);
+        return (TResult) ResultFactory.success();
     }
 
 }

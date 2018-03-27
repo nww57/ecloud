@@ -16,10 +16,10 @@ public interface MenuFunctionService {
     /**
      * 新增修改菜单功能
      */
-    TResult addOrUpdateFunction(MenuFunctionDto menuFunctionDto);
+    TResult addOrUpdateFunction(MenuFunctionDto menuFunctionDto,UUID uuid);
 
     /**
      * 删除菜单功能
      */
-    TResult delete(List ids);
+    TResult delete(List<UUID> ids);
 }

@@ -14,7 +14,7 @@ public interface MenuService {
     /**
      * 新增修改菜单
      */
-    TResult addOrUpdate(MenuDto menuDto);
+    TResult addOrUpdateMenu(MenuDto menuDto);
 
     /**
      * 删除菜单
