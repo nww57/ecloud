@@ -1,13 +1,14 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
  *
  * @Author: niww
  * @Date: 2018/3/26
- * 客户dto
+ * 客户
  */
  public class AgencyCustomerDto {
 
@@ -47,6 +48,11 @@ import java.util.UUID;
      */
     private UUID consultantId;
 
+    /**
+     * 业务顾问名称
+     */
+    private String consultantName;
+
     public UUID getAgId() {
         return agId;
     }
@@ -71,10 +77,6 @@ import java.util.UUID;
         this.consultantName = consultantName;
     }
 
-    /**
-     * 业务顾问名称
-     */
-    private String consultantName;
 
     public UUID getId() {
         return id;
@@ -131,4 +133,5 @@ import java.util.UUID;
     public void setLeaderEmail(String leaderEmail) {
         this.leaderEmail = leaderEmail;
     }
+
 }

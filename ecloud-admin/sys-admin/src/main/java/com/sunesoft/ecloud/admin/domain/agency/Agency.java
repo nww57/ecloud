@@ -42,11 +42,33 @@ public class Agency extends IEntity{
      */
     @Column(name = "registerDate")
     private Date registerDate;
+
     /**
-     *企业地址
+     * 地区code
      */
-    @Column(name = "address")
-    private String address;
+    @Column(name = "addressCode")
+    private String addressCode;
+    /**
+     * 省
+     */
+    @Column(name = "province")
+    private String province;
+    /**
+     *市
+     */
+    @Column(name = "city")
+    private String city;
+    /**
+     *区
+     */
+    @Column(name = "district")
+    private String district;
+    /**
+     *街道
+     */
+    @Column(name = "street")
+    private String street;
+
     /**
      *邮编
      */
@@ -90,7 +112,7 @@ public class Agency extends IEntity{
     /**
      *服务起始时间
      */
-    @Column(name = "serverStartDate")
+    @Column(name = "serverEndDate")
     private Date serverStartDate;
     /**
      *服务结束时间
@@ -98,8 +120,7 @@ public class Agency extends IEntity{
     @Column(name = "serverEndDate")
     private Date serverEndDate;
 
-    @OneToMany
-    @JoinColumn(name = "customerId")
+
     private List<AgencyCustomer> customers;
 
     public String getCode() {
@@ -135,16 +156,6 @@ public class Agency extends IEntity{
     public void setRegisterDate(Date registerDate) {
         this.registerDate = registerDate;
     }
-
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
 
     public String getZipcode() {
         return zipcode;
@@ -229,6 +240,59 @@ public class Agency extends IEntity{
         this.serverEndDate = serverEndDate;
     }
 
+    public AgencyType getAgencyType() {
+        return agencyType;
+    }
 
+    public void setAgencyType(AgencyType agencyType) {
+        this.agencyType = agencyType;
+    }
 
+    public String getAddressCode() {
+        return addressCode;
+    }
+
+    public void setAddressCode(String addressCode) {
+        this.addressCode = addressCode;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public List<AgencyCustomer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<AgencyCustomer> customers) {
+        this.customers = customers;
+    }
 }

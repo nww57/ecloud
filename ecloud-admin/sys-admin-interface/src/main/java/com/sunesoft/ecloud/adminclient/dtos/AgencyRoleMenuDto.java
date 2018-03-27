@@ -1,7 +1,5 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
-import sun.plugin.util.UIUtil;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -9,7 +7,7 @@ import java.util.UUID;
  * Created by jzj on 2018/3/26.
  * 角色菜单权限
  */
-public class RoleMenuDto {
+public class AgencyRoleMenuDto {
 
     /**
      * 菜单id

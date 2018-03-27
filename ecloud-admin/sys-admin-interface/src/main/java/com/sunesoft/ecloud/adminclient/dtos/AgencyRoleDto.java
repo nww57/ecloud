@@ -7,16 +7,12 @@ import java.util.UUID;
  * Created by jzj on 2018/3/26.
  * 角色信息
  */
-public class AgencyRoleDto {
-
-    private UUID id;
-
-    private UUID agId;
+public class AgencyRoleDto extends  BasicDto{
 
     /**
-     * 角色名称
+     * 所属企业id
      */
-    private String name;
+    private UUID agId;
 
     /**
      * 角色描述
@@ -26,15 +22,8 @@ public class AgencyRoleDto {
     /**
      * 权限信息
      */
-    List<RoleMenuDto> authList;
+    private List<AgencyRoleMenuDto> authList;
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public UUID getAgId() {
         return agId;
@@ -42,14 +31,6 @@ public class AgencyRoleDto {
 
     public void setAgId(UUID agId) {
         this.agId = agId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDescription() {
@@ -60,11 +41,11 @@ public class AgencyRoleDto {
         this.description = description;
     }
 
-    public List<RoleMenuDto> getAuthList() {
+    public List<AgencyRoleMenuDto> getAuthList() {
         return authList;
     }
 
-    public void setAuthList(List<RoleMenuDto> authList) {
+    public void setAuthList(List<AgencyRoleMenuDto> authList) {
         this.authList = authList;
     }
 }

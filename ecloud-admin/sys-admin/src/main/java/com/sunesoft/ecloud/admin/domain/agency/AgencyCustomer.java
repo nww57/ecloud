@@ -15,6 +15,7 @@ import java.util.*;
 @Table(name = "sys_ag_customer")
 public class AgencyCustomer extends BizEntity{
 
+
     private UUID customerAgencyId;
 
     /**
@@ -47,7 +48,6 @@ public class AgencyCustomer extends BizEntity{
      */
     @Column(name = "leaderEmail")
     private String leaderEmail;
-
 
 
     public String getName() {

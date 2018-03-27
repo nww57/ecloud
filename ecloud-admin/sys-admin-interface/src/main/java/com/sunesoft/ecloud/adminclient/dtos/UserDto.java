@@ -6,9 +6,7 @@ import java.util.*;
  * @author: Zhouzh
  * @Date: 2018/3/23
  */
-public class UserDto {
-
-    private UUID Id;
+public class UserDto extends BasicDto{
 
     /**
      * 所属企业id
@@ -27,10 +25,7 @@ public class UserDto {
      *用户名
      */
     private String userName;
-    /**
-     *真实姓名
-     */
-    private String realName;
+
     /**
      *密码
      */
@@ -60,31 +55,31 @@ public class UserDto {
      */
     private String createDate;
 
+
+    /**
+     * 所属机构-id
+     */
+    private String organizationId;
+
     /**
      * 所属机构-名称
      */
     private String organizationName;
 
+    /**
+     *真实姓名
+     */
+    private String realName;
 
     /**
      * 角色Id
      */
     private List<UUID> roleIdList;
 
-
-
     /**
      * 角色名称
      */
     private List<String> roleNameList;
-
-    public UUID getId() {
-        return Id;
-    }
-
-    public void setId(UUID id) {
-        Id = id;
-    }
 
     public String getUserType() {
         return userType;
@@ -108,14 +103,6 @@ public class UserDto {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public String getRealName() {
-        return realName;
-    }
-
-    public void setRealName(String realName) {
-        this.realName = realName;
     }
 
     public String getPassword() {
@@ -197,5 +184,19 @@ public class UserDto {
         this.roleIdList = roleIdList;
     }
 
+    public String getOrganizationId() {
+        return organizationId;
+    }
 
+    public void setOrganizationId(String organizationId) {
+        this.organizationId = organizationId;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
 }

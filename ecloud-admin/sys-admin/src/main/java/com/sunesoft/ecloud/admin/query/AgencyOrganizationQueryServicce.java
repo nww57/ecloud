@@ -2,6 +2,7 @@ package com.sunesoft.ecloud.admin.query;
 
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyOrganizationCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyOrganizationDto;
+import com.sunesoft.ecloud.adminclient.dtos.AgencyOrganizationViewDto;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
 
@@ -27,5 +28,13 @@ public interface AgencyOrganizationQueryServicce {
      * @param id id
      * @return 返回查询结果
      */
-    TResult<AgencyOrganizationDto> findAgencyOrganizationById(UUID id);
+    TResult<AgencyOrganizationDto> findAgencyOrganizationBasicById(UUID id);
+
+
+    /**
+     * 根据id查询组织机构信息
+     * @param id id
+     * @return 返回查询结果
+     */
+    TResult<AgencyOrganizationViewDto> findAgencyOrganizationFullById(UUID id);
 }

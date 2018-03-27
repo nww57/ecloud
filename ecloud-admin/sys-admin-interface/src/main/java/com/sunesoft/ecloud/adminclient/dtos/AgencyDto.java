@@ -35,9 +35,25 @@ public class AgencyDto {
      */
     private Date registerDate;
     /**
-     *企业地址
+     * 地区code
      */
-    private String address;
+    private String addressCode;
+    /**
+     * 省
+     */
+    private String province;
+    /**
+     *市
+     */
+    private String city;
+    /**
+     *区
+     */
+    private String district;
+    /**
+     *街道
+     */
+    private String street;
     /**
      *邮编
      */
@@ -79,10 +95,47 @@ public class AgencyDto {
      */
     private Date serverEndDate;
 
-
-
     private List<UUID> menuIds;
 
+    public String getAddressCode() {
+        return addressCode;
+    }
+
+    public void setAddressCode(String addressCode) {
+        this.addressCode = addressCode;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
 
     public UUID getId() {
         return id;
@@ -130,14 +183,6 @@ public class AgencyDto {
 
     public void setRegisterDate(Date registerDate) {
         this.registerDate = registerDate;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getZipcode() {
@@ -227,4 +272,7 @@ public class AgencyDto {
     public void setMenuIds(List<UUID> menuIds) {
         this.menuIds = menuIds;
     }
+
+
+
 }
