@@ -1,9 +1,15 @@
 package com.sunesoft.ecloud.adminclient.cretirias;
 
+import com.sunesoft.ecloud.common.cretiria.TCretiria;
+
+import java.util.UUID;
+
 /**
- * Created by jzj on 2018/3/26.
+ * @author: Zhouzh
+ * @Date: 2018/3/26
  */
-public class AgencyRoleCretiria {
+public class AgencyCriteria extends TCretiria {
+
 
     /**
      * 关键字
@@ -17,4 +23,5 @@ public class AgencyRoleCretiria {
     public void setKeywords(String keywords) {
         this.keywords = keywords;
     }
+
 }

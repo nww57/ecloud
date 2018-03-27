@@ -11,9 +11,26 @@ import java.util.UUID;
  */
 public interface AgencyService {
 
+    /**
+     * 新增/修改 企业信息
+     * @param agencyDto 参数
+     * @return 返回操作结果
+     */
     TResult addOrUpdateAgency(AgencyDto agencyDto);
 
+    /**
+     * 删除企业信息
+     * @param id 企业id
+     * @return 返回操作结果
+     */
     TResult delete(UUID id);
+
+    /**
+     * 批量删除企业信息
+     * @param ids 企业id
+     * @return 返回操作结果
+     */
+    TResult deleteBatch(UUID... ids);
 
 
 

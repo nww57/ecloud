@@ -1,11 +1,10 @@
 package com.sunesoft.ecloud.admin.query.impl;
 
-import com.alibaba.druid.support.json.JSONUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sunesoft.ecloud.admin.query.UserQueryService;
 import com.sunesoft.ecloud.admin.service.UserService;
-import com.sunesoft.ecloud.adminclient.cretirias.UserCretiria;
+import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,9 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import static org.junit.Assert.*;
 
 /**
  * @author: Zhouzh
@@ -40,7 +36,6 @@ public class UserQueryServiceImplTest {
         userDto.setUserName("zhouzh");
         userDto.setPassword("12345678");
         userDto.setEmail("ss@qq.com");
-        userDto.setPhoneNo("123222222222");
         userDto.setRealName("zhouzh");
         userService.addOrUpdateUser(userDto);
     }
@@ -50,9 +45,9 @@ public class UserQueryServiceImplTest {
     {
 
         Pageable pageable = new PageRequest(1,10,null);
-        UserCretiria userCretiria = new UserCretiria();
-        userCretiria.setUserName("zhouzh");
-        Page<UserDto> userPaged = userQueryService.findUserPaged(pageable, userCretiria);
+        UserCriteria userCriteria = new UserCriteria();
+        userCriteria.setUserName("zhouzh");
+        Page<UserDto> userPaged = userQueryService.findUserPaged(userCriteria);
 
         System.out.println(userPaged);
 

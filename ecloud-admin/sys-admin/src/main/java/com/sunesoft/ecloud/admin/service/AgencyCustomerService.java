@@ -1,6 +1,5 @@
 package com.sunesoft.ecloud.admin.service;
 
-import com.sunesoft.ecloud.adminclient.cretirias.AgencyCustomerCretiria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
 import com.sunesoft.ecloud.common.result.TResult;
 

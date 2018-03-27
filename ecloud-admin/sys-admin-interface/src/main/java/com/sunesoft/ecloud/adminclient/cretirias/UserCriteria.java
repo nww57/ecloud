@@ -5,17 +5,24 @@ import com.sunesoft.ecloud.common.utils.StringUtil;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author: Zhouzh
  * @Date: 2018/3/23
  */
-public class UserCretiria extends TCretiria {
+public class UserCriteria extends TCretiria {
+
+    /**
+     * 企业Id
+     */
+    private UUID agId;
+
+    private String keywords;
 
     private String userName;
 
     private String realName;
-
 
     private String phoneNo;
 
@@ -59,4 +66,19 @@ public class UserCretiria extends TCretiria {
         return params;
     }
 
+    public UUID getAgId() {
+        return agId;
+    }
+
+    public void setAgId(UUID agId) {
+        this.agId = agId;
+    }
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
+    }
 }

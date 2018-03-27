@@ -1,10 +1,20 @@
 package com.sunesoft.ecloud.adminclient.cretirias;
 
+import com.sunesoft.ecloud.common.cretiria.TCretiria;
+
+import java.util.UUID;
+
 /**
  * Created by jzj on 2018/3/26.
  * 机构查询参数
  */
-public class AgencyOrganizationCretiria {
+public class AgencyOrganizationCriteria extends TCretiria {
+
+    /**
+     * 企业id
+     */
+    private UUID agId;
+
     /**
      * 关键字
      */
@@ -16,5 +26,13 @@ public class AgencyOrganizationCretiria {
 
     public void setKeywords(String keywords) {
         this.keywords = keywords;
+    }
+
+    public UUID getAgId() {
+        return agId;
+    }
+
+    public void setAgId(UUID agId) {
+        this.agId = agId;
     }
 }

@@ -1,7 +1,7 @@
 package com.sunesoft.ecloud.admin.api;
 
 import com.sunesoft.ecloud.admin.query.UserQueryService;
-import com.sunesoft.ecloud.adminclient.cretirias.UserCretiria;
+import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,9 +29,9 @@ public class UserController {
 
     public   Page<UserDto> index(){
         Pageable pageable = new PageRequest(0,10,null);
-        UserCretiria userCretiria = new UserCretiria();
-        userCretiria.setUserName("zhouzh");
-        Page<UserDto> userPaged = userQueryService.findUserPaged(pageable, userCretiria);
+        UserCriteria userCriteria = new UserCriteria();
+        userCriteria.setUserName("zhouzh");
+        Page<UserDto> userPaged = userQueryService.findUserPaged(pageable, userCriteria);
 
         return userPaged;
     }

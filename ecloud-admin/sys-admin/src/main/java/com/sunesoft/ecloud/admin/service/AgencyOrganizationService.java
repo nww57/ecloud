@@ -13,24 +13,24 @@ public interface AgencyOrganizationService {
 
     /**
      * 新增/修改 组织架构信息
-     * @param agencyOrganizationDto
-     * @return
+     * @param agencyOrganizationDto 参数
+     * @return 返回操作结果
      */
     TResult addOrUpdateOrganization(AgencyOrganizationDto agencyOrganizationDto);
 
 
     /**
      * 删除机构
-     * @param id
-     * @return
+     * @param id 机构id
+     * @return 返回操作结果
      */
-    TResult deleteOrganization(UUID id);
+    TResult delete(UUID id);
 
 
     /**
      * 批量删除机构
-     * @param id
-     * @return
+     * @param ids 机构id
+     * @return 返回操作结果
      */
-    TResult deleteOrganizationBatch(UUID... id);
+    TResult deleteBatch(UUID... ids);
 }
