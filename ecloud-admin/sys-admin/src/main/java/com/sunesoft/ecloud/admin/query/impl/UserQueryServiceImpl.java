@@ -6,6 +6,7 @@ import com.sunesoft.ecloud.admin.repository.UserRepository;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.ListResult;
+import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
@@ -24,6 +25,8 @@ import java.util.UUID;
 @SuppressWarnings("All")
 public class UserQueryServiceImpl extends GenericQuery implements UserQueryService {
 
+
+
     @Autowired
     UserRepository userRepository;
 
@@ -39,6 +42,11 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
 
     @Override
     public ListResult<UserDto> findAllUser(UUID id) {
+        return null;
+    }
+
+    @Override
+    public TResult<UserDto> findUserById(UUID id) {
         return null;
     }
 

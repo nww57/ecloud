@@ -34,7 +34,6 @@ public class Module extends IEntity{
     private String moduleDesc;
 
 
-    @Basic
     public String getModuleCode() {
         return moduleCode;
     }
@@ -43,7 +42,6 @@ public class Module extends IEntity{
         this.moduleCode = moduleCode;
     }
 
-    @Basic
     public String getModuleName() {
         return moduleName;
     }
@@ -52,7 +50,6 @@ public class Module extends IEntity{
         this.moduleName = moduleName;
     }
 
-    @Basic
     public String getModuleDesc() {
         return moduleDesc;
     }

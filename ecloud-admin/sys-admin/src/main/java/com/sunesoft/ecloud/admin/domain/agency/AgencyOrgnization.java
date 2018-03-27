@@ -40,7 +40,7 @@ public class AgencyOrgnization extends BizEntity{
     /**
      *子节点数
      */
-    @Column(name = "name")
+    @Column(name = "childCount")
     private Integer childCount;
 
     @ManyToOne

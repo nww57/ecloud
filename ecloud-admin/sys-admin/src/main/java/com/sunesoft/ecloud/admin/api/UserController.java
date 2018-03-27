@@ -31,7 +31,7 @@ public class UserController {
         Pageable pageable = new PageRequest(0,10,null);
         UserCriteria userCriteria = new UserCriteria();
         userCriteria.setUserName("zhouzh");
-        Page<UserDto> userPaged = userQueryService.findUserPaged(pageable, userCriteria);
+        Page<UserDto> userPaged = userQueryService.findUserPaged(userCriteria);
 
         return userPaged;
     }

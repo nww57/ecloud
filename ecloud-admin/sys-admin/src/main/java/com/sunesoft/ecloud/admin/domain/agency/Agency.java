@@ -90,7 +90,7 @@ public class Agency extends IEntity{
     /**
      *服务起始时间
      */
-    @Column(name = "serverEndDate")
+    @Column(name = "serverStartDate")
     private Date serverStartDate;
     /**
      *服务结束时间
@@ -98,6 +98,8 @@ public class Agency extends IEntity{
     @Column(name = "serverEndDate")
     private Date serverEndDate;
 
+    @OneToMany
+    @JoinColumn(name = "customerId")
     private List<AgencyCustomer> customers;
 
     public String getCode() {

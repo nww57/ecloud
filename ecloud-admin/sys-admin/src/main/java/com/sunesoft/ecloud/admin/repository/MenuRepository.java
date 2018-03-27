@@ -21,5 +21,5 @@ public interface MenuRepository extends BaseRepository<Menu, UUID> {
      * @param pageable
      * @return
      */
-    Page<Menu> findAll(Pageable pageable);
+//    Page<Menu> findAllBy(Pageable pageable);
 }

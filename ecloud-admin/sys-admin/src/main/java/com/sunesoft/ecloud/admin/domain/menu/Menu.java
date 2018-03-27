@@ -17,7 +17,7 @@ import java.util.List;
 public class Menu extends IEntity{
 
     @ManyToOne
-    @Column(name = "moduleId")
+    @JoinColumn(name = "moduleId")
     private Module module;
 
     /**
