@@ -5,6 +5,7 @@ import com.sunesoft.ecloud.hibernate.BizEntity;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @Author: niww
@@ -41,6 +42,12 @@ public class AgencyOrganization extends BizEntity{
      */
     @Column(name = "childCount")
     private Integer childCount;
+
+    /**
+     *负责人Id
+     */
+    @Column(name = "leaderId")
+    private UUID leaderId;
 
     @ManyToOne
     @JoinColumn(name = "agId")
@@ -117,5 +124,13 @@ public class AgencyOrganization extends BizEntity{
 
     public void setChildOrgList(List<AgencyOrganization> childOrgList) {
         this.childOrgList = childOrgList;
+    }
+
+    public UUID getLeaderId() {
+        return leaderId;
+    }
+
+    public void setLeaderId(UUID leaderId) {
+        this.leaderId = leaderId;
     }
 }

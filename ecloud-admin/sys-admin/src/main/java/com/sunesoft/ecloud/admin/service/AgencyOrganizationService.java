@@ -6,8 +6,9 @@ import com.sunesoft.ecloud.common.result.TResult;
 import java.util.UUID;
 
 /**
- * Created by jzj on 2018/3/26.
- * 组织架构
+ * @Auther: niww
+ * @Date: 2018/3/27/
+ * 组织架构Service
  */
 public interface AgencyOrganizationService {
 

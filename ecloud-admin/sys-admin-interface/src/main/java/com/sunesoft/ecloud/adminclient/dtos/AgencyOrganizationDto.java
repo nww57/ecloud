@@ -1,6 +1,5 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
-import java.util.List;
 import java.util.UUID;
 
 /**
