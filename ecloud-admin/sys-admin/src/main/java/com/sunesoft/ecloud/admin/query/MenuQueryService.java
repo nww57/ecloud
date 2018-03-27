@@ -10,7 +10,9 @@ import com.sunesoft.ecloud.common.result.TResult;
 public interface MenuQueryService {
 
     /**
-     * 查询菜单
+     * 查询菜单（所有）
      */
     TResult queryMenu();
+
+
 }

@@ -23,8 +23,4 @@ public class MenuFunctionServiceImpl implements MenuFunctionService {
         return null;
     }
 
-    @Override
-    public TResult queryMenuFunction(UUID uuid) {
-        return null;
-    }
 }

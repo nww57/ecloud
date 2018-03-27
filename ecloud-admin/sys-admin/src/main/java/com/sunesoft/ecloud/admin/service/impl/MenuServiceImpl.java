@@ -22,8 +22,4 @@ public class MenuServiceImpl implements MenuService {
         return null;
     }
 
-    @Override
-    public TResult queryMenu() {
-        return null;
-    }
 }
