@@ -1,7 +1,10 @@
 package com.sunesoft.ecloud.admin.query;
 
+import com.sunesoft.ecloud.adminclient.dtos.MenuFunctionDto;
+import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -12,7 +15,7 @@ import java.util.UUID;
 public interface MenuFunctionQueryService {
 
     /**
-     * 查询菜单功能
+     * 查询菜单功能（根据菜单ID）
      */
-    TResult queryMenuFunction(UUID uuid);
+    ListResult<MenuFunctionDto> queryMenuFunction(UUID uuid);
 }
