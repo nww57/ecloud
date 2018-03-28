@@ -2,6 +2,7 @@ package com.sunesoft.ecloud.admin.query.impl;
 
 import com.sunesoft.ecloud.admin.query.AgencyQueryService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyCriteria;
+import com.sunesoft.ecloud.adminclient.dtos.AgencyBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.junit.Test;
@@ -35,7 +36,7 @@ public class AgencyQueryServiceImplTest {
 
     @Test
     public void findAgencyBasicInfoById() throws Exception {
-        TResult<AgencyDto> result = agencyQueryService.findAgencyBasicInfoById(UUID.fromString("200e6946-70e3-4087-839a-0491c631caf1"));
+        TResult<AgencyBasicDto> result = agencyQueryService.findAgencyBasicInfoById(UUID.fromString("200e6946-70e3-4087-839a-0491c631caf1"));
         System.out.println(213);
     }
 

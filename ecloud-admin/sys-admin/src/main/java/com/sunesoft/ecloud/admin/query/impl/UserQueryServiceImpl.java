@@ -57,7 +57,7 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
 
 
     @Override
-    public ListResult<BasicDto> getUserIdName(UUID agId) {
+    public ListResult<BasicDto> getUserIdName() {
         //获取所有负责人
         SqlBuilder<BasicDto> userBuilder = HSqlBuilder.hFrom(User.class,"user")
                 .setFieldValue("user.realName","name");

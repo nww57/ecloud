@@ -35,8 +35,7 @@ public interface UserQueryService {
 
     /**
      * 获取企业下所有用户的id，name
-     * @param agId 企业id
      * @return 返回查询结果
      */
-    ListResult<BasicDto> getUserIdName(UUID agId);
+    ListResult<BasicDto> getUserIdName();
 }

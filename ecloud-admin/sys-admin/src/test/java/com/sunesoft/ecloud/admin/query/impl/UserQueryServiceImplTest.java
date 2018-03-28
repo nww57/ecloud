@@ -5,7 +5,9 @@ import com.google.gson.GsonBuilder;
 import com.sunesoft.ecloud.admin.query.UserQueryService;
 import com.sunesoft.ecloud.admin.service.UserService;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
+import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
+import com.sunesoft.ecloud.common.result.ListResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import javax.transaction.Transactional;
 
 /**
  * @author: Zhouzh
@@ -42,8 +46,12 @@ public class UserQueryServiceImplTest {
 
         System.out.println(userPaged);
 
+    }
 
-
+    @Test
+    public void getUserIdName(){
+        ListResult<BasicDto> result= userQueryService.getUserIdName();
+        System.out.println(23);
     }
 
 
