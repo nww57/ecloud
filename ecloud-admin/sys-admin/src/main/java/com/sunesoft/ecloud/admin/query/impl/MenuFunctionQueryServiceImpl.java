@@ -6,6 +6,9 @@ import com.sunesoft.ecloud.admin.repository.MenuFunctionRepository;
 import com.sunesoft.ecloud.adminclient.dtos.MenuFunctionDto;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
+import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
+import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
+import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +21,7 @@ import java.util.UUID;
  * -
  */
 @Service
-public class MenuFunctionQueryServiceImpl implements MenuFunctionQueryService {
+public class MenuFunctionQueryServiceImpl extends GenericQuery implements MenuFunctionQueryService {
 
     @Autowired
     MenuFunctionRepository menuFunctionRepository;
@@ -26,7 +29,10 @@ public class MenuFunctionQueryServiceImpl implements MenuFunctionQueryService {
 
     @Override
     public ListResult<MenuFunctionDto> queryMenuFunction(UUID uuid) {
-        ListResult<MenuFunctionDto> menuFunctionDtoListResult = menuFunctionRepository.findMenuFunctionsByMenuId(uuid);
-        return menuFunctionDtoListResult;
+
+
+        return null;
+//        ListResult<MenuFunctionDto> menuFunctionDtoListResult = menuFunctionRepository.findByMenu(uuid);
+//        return menuFunctionDtoListResult;
     }
 }

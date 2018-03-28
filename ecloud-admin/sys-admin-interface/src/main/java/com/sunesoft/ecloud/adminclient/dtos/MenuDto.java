@@ -72,6 +72,12 @@ public class MenuDto {
      */
     private MenuDto parentMenu;
 
+    /**
+     * 菜单功能
+     */
+    private List<MenuFunctionDto> menuFunctions;
+
+
     public UUID getId() {
         return id;
     }
@@ -176,4 +182,11 @@ public class MenuDto {
         this.parentMenu = parentMenu;
     }
 
+    public List<MenuFunctionDto> getMenuFunctions() {
+        return menuFunctions;
+    }
+
+    public void setMenuFunctions(List<MenuFunctionDto> menuFunctions) {
+        this.menuFunctions = menuFunctions;
+    }
 }

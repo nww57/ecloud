@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "sys_menu", schema = "ecloud", catalog = "")
-public class Menu extends IEntity{
+public class Menu extends IEntity {
 
     @ManyToOne
     @JoinColumn(name = "moduleId")
@@ -33,19 +33,19 @@ public class Menu extends IEntity{
     private String routeCode;
 
     /**
-     *菜单名称
+     * 菜单名称
      */
     @Column(name = "name")
     private String name;
 
     /**
-     *路径资源
+     * 路径资源
      */
     @Column(name = "url")
     private String url;
 
     /**
-     *菜单类型
+     * 菜单类型
      */
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
@@ -53,31 +53,31 @@ public class Menu extends IEntity{
 
 
     /**
-     *排序
+     * 排序
      */
     @Column(name = "sort")
     private Integer sort;
 
     /**
-     *描述
+     * 描述
      */
     @Column(name = "description")
     private String description;
 
     /**
-     *前段组件
+     * 前段组件
      */
     @Column(name = "frontDisc")
     private String frontDisc;
 
     /**
-     *图标
+     * 图标
      */
     @Column(name = "icon")
     private String icon;
 
     /**
-     *子节点数
+     * 子节点数
      */
     @Column(name = "childCount")
     private Integer childCount;
@@ -86,11 +86,11 @@ public class Menu extends IEntity{
     @JoinColumn(name = "pid")
     private Menu parentMenu;
 
-    @OneToMany(targetEntity = Menu.class, cascade = { CascadeType.ALL }, mappedBy = "parentMenu")
+    @OneToMany(targetEntity = Menu.class, cascade = {CascadeType.ALL}, mappedBy = "parentMenu")
     private List<Menu> childMenuList = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "menu")
+    @OneToMany(mappedBy = "menu", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private List<MenuFunction> menuFunctions = new ArrayList<>();
 
 

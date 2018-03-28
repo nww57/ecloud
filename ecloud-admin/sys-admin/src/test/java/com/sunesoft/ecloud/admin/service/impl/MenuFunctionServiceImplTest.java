@@ -29,10 +29,10 @@ public class MenuFunctionServiceImplTest {
     @Test
     public void addOrUpdateFunction() throws Exception {
         MenuFunctionDto menuFunctionDto=new MenuFunctionDto();
-        menuFunctionDto.setName("Function啊");
-        menuFunctionDto.setDescription("asdadsadsadsadsasdas");
-        menuFunctionDto.setResName("qweqweqwe");
-        menuFunctionDto.setResUrl("qwwwwwwwwwwwwww");
+        menuFunctionDto.setName("Function4啊");
+        menuFunctionDto.setDescription("bbbbbb");
+        menuFunctionDto.setResName("bbbbb");
+        menuFunctionDto.setResUrl("bbbbbb");
         TResult tResult = menuFunctionService.addOrUpdateFunction(menuFunctionDto, UUID.fromString("8c831c8f-9ffc-42af-b40d-46dce4218fec"));
         System.out.println(tResult);
 

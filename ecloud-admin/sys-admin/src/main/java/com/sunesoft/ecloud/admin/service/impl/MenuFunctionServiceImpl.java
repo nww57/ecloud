@@ -1,7 +1,9 @@
 package com.sunesoft.ecloud.admin.service.impl;
 
+import com.sunesoft.ecloud.admin.domain.menu.Menu;
 import com.sunesoft.ecloud.admin.domain.menu.MenuFunction;
 import com.sunesoft.ecloud.admin.repository.MenuFunctionRepository;
+import com.sunesoft.ecloud.admin.repository.MenuRepository;
 import com.sunesoft.ecloud.admin.service.MenuFunctionService;
 import com.sunesoft.ecloud.adminclient.dtos.MenuFunctionDto;
 import com.sunesoft.ecloud.common.result.TResult;
@@ -24,9 +26,16 @@ public class MenuFunctionServiceImpl implements MenuFunctionService {
     @Autowired
     MenuFunctionRepository menuFunctionRepository;
 
+    @Autowired
+    MenuRepository menuRepository;
+
     @Override
     public TResult addOrUpdateFunction(MenuFunctionDto menuFunctionDto ,UUID uuid) {
         if(uuid!=null){
+            Menu menu = menuRepository.getOne(uuid);
+            if(menu==null){
+
+            }
             MenuFunction menuFunction;
             if(menuFunctionDto.getId()!=null){//修改
                 menuFunction=menuFunctionRepository.getOne(menuFunctionDto.getId());
@@ -35,6 +44,7 @@ public class MenuFunctionServiceImpl implements MenuFunctionService {
                 menuFunction=new MenuFunction();
                 BeanUtil.copyPropertiesIgnoreNull(menuFunctionDto,menuFunction);
             }
+            menuFunction.setMenu(menuRepository.getOne(uuid));
             MenuFunction save = menuFunctionRepository.save(menuFunction);
             return (TResult) ResultFactory.success(save);
         }

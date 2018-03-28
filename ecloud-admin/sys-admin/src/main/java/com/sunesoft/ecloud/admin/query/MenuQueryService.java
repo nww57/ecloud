@@ -1,6 +1,7 @@
 package com.sunesoft.ecloud.admin.query;
 
 import com.sunesoft.ecloud.adminclient.dtos.MenuDto;
+import com.sunesoft.ecloud.adminclient.dtos.MenuFunctionDto;
 import com.sunesoft.ecloud.adminclient.dtos.MenuSimpleDto;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
@@ -28,5 +29,11 @@ public interface MenuQueryService {
      * 根据菜单ID查询菜单详情
      */
     TResult<MenuDto> findMenuByID(UUID uuid);
+
+
+    /**
+     * 根据菜单ID查询菜单功能详情
+     */
+    TResult<MenuFunctionDto> findMenuFunctionsByID(UUID uuid);
 
 }

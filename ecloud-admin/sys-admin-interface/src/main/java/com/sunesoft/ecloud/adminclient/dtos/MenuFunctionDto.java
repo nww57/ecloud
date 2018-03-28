@@ -15,6 +15,11 @@ public class MenuFunctionDto {
     private UUID id;
 
     /**
+     * 所属菜单id
+     */
+    private UUID menuId;
+
+    /**
      * 权限名称
      */
     private String name;
@@ -49,10 +54,6 @@ public class MenuFunctionDto {
      */
     private String description;
 
-    /**
-     * 所属菜单id
-     */
-    private UUID menuId;
 
     public UUID getId() {
         return id;
