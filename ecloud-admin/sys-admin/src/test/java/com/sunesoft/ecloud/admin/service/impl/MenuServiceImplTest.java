@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.UUID;
+
 import static org.junit.Assert.*;
 
 /**
@@ -26,9 +28,10 @@ public class MenuServiceImplTest {
     @Test
     public void addOrUpdateMenu() throws Exception {
         MenuDto menuDto=new MenuDto();
-        menuDto.setName("test");
-        menuDto.setSort(1);
-        menuDto.setDescription("asdasdasd");
+        menuDto.setId(UUID.fromString("52996c7b-ba83-4af0-ad92-04084b4fac52"));
+        menuDto.setName("test2");
+        menuDto.setSort(11);
+        menuDto.setDescription("asdasdasd1");
         TResult tResult = menuService.addOrUpdateMenu(menuDto);
         System.out.println(tResult);
     }

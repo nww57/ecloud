@@ -82,15 +82,15 @@ public class Menu extends IEntity {
     @Column(name = "childCount")
     private Integer childCount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "pid")
     private Menu parentMenu;
 
-    @OneToMany(targetEntity = Menu.class, cascade = {CascadeType.ALL}, mappedBy = "parentMenu")
+    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "parentMenu")
     private List<Menu> childMenuList = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "menu", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "menu")
     private List<MenuFunction> menuFunctions = new ArrayList<>();
 
 

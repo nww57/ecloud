@@ -9,7 +9,9 @@ import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.beans.Transient;
 import java.util.UUID;
 
 /**
@@ -23,6 +25,7 @@ public class MenuServiceImpl implements MenuService {
     @Autowired
     MenuRepository menuRepository;
 
+    @Transactional
     @Override
     public TResult addOrUpdateMenu(MenuDto menuDto) {
         Menu menu;

@@ -11,6 +11,7 @@ import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -30,11 +31,12 @@ public class MenuFunctionServiceImpl implements MenuFunctionService {
     MenuRepository menuRepository;
 
     @Override
+    @Transactional
     public TResult addOrUpdateFunction(MenuFunctionDto menuFunctionDto ,UUID uuid) {
         if(uuid!=null){
-            Menu menu = menuRepository.getOne(uuid);
+            Menu menu = menuRepository.findOne(uuid);
             if(menu==null){
-
+                return (TResult) ResultFactory.error("操作失败，菜单无效！");
             }
             MenuFunction menuFunction;
             if(menuFunctionDto.getId()!=null){//修改
@@ -43,8 +45,10 @@ public class MenuFunctionServiceImpl implements MenuFunctionService {
             }else{//新增
                 menuFunction=new MenuFunction();
                 BeanUtil.copyPropertiesIgnoreNull(menuFunctionDto,menuFunction);
+                menu.getMenuFunctions().add(menuFunction);
             }
-            menuFunction.setMenu(menuRepository.getOne(uuid));
+            menuFunction.setMenu(menu);
+            menuRepository.save(menu);
             MenuFunction save = menuFunctionRepository.save(menuFunction);
             return (TResult) ResultFactory.success(save);
         }
