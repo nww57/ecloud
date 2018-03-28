@@ -19,6 +19,7 @@ import java.util.UUID;
  * 企业接口实现
  */
 @Service
+@Transactional
 public class AgencyServiceImpl implements AgencyService{
 
     @Autowired
@@ -35,16 +36,13 @@ public class AgencyServiceImpl implements AgencyService{
         if(null == id){//新增
             agency = new Agency();
         }else{//修改
-            agency = agencyRepository.getOne(id);
+            agency = agencyRepository.findOne(id);
         }
         BeanUtil.copyProperties(agencyDto,agency,new String[]{"agencyType","serverStatus"});
         try{
             agency.setServerEndDate(DateUtils.parseDate(agencyDto.getServerEndDate(),new String[]{"yyyy-MM-dd"}));
         }catch (Exception e){
             e.printStackTrace();
-        }
-        if(null == id){
-            agencyDto.setId(agency.getId());
         }
         //todo 配置菜单
         agencyRepository.saveAndFlush(agency);

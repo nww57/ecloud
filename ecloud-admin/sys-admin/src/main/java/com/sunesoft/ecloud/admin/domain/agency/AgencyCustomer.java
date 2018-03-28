@@ -1,6 +1,7 @@
 package com.sunesoft.ecloud.admin.domain.agency;
 
 import com.sunesoft.ecloud.hibernate.BizEntity;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.*;
@@ -25,10 +26,30 @@ public class AgencyCustomer extends BizEntity{
     @Column(name = "name")
     private String name;
     /**
-     *地址
+     * 地区code
      */
-    @Column(name = "address")
-    private String address;
+    @Column(name = "addressCode")
+    private String addressCode;
+    /**
+     * 省
+     */
+    @Column(name = "province")
+    private String province;
+    /**
+     *市
+     */
+    @Column(name = "city")
+    private String city;
+    /**
+     *区
+     */
+    @Column(name = "district")
+    private String district;
+    /**
+     *街道
+     */
+    @Column(name = "street")
+    private String street;
     /**
      *签约时间
      */
@@ -50,6 +71,13 @@ public class AgencyCustomer extends BizEntity{
     @Column(name = "leaderEmail")
     private String leaderEmail;
 
+    /**
+     * 业务顾问Id
+     */
+    @Column(name = "consultantId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
+    private UUID consultantId;
+
     public Agency getAgency() {
         return agency;
     }
@@ -66,12 +94,44 @@ public class AgencyCustomer extends BizEntity{
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getAddressCode() {
+        return addressCode;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAddressCode(String addressCode) {
+        this.addressCode = addressCode;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public Date getSignDate() {
@@ -106,5 +166,11 @@ public class AgencyCustomer extends BizEntity{
         this.leaderEmail = leaderEmail;
     }
 
+    public UUID getConsultantId() {
+        return consultantId;
+    }
 
+    public void setConsultantId(UUID consultantId) {
+        this.consultantId = consultantId;
+    }
 }

@@ -1,15 +1,17 @@
 package com.sunesoft.ecloud.admin.service.impl;
 
-import com.netflix.discovery.converters.Auto;
 import com.sunesoft.ecloud.admin.domain.agency.Agency;
 import com.sunesoft.ecloud.admin.domain.agency.AgencyOrganization;
 import com.sunesoft.ecloud.admin.repository.AgencyOrganizationRepository;
 import com.sunesoft.ecloud.admin.repository.AgencyRepository;
 import com.sunesoft.ecloud.admin.service.AgencyOrganizationService;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyOrganizationDto;
+import com.sunesoft.ecloud.common.cretiria.OrderTurn;
 import com.sunesoft.ecloud.common.result.TResult;
+import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -19,6 +21,7 @@ import java.util.UUID;
  * 组织架构ServiceImpl
  */
 @Service
+@Transactional
 public class AgencyOrganizationServiceImpl implements AgencyOrganizationService {
 
     @Autowired
@@ -30,41 +33,47 @@ public class AgencyOrganizationServiceImpl implements AgencyOrganizationService 
     public TResult addOrUpdateOrganization(AgencyOrganizationDto agencyOrganizationDto) {
 
         UUID agId = agencyOrganizationDto.getAgId();
-        Agency agency = agencyRepository.getOne(agId);
-        if(null ==  agency){
-            throw new IllegalArgumentException("无效的企业id");
-        }
-
         UUID parentId = agencyOrganizationDto.getParentId();
-        AgencyOrganization parentOrg = orgRepository.getOne(parentId);
-        if(null == parentOrg){
-            throw new IllegalArgumentException("无效的上级id");
-        }
-
         UUID id = agencyOrganizationDto.getId();
         AgencyOrganization org ;
         if(null == id){//新增
             org = new AgencyOrganization();
         }else{//修改
-            org = orgRepository.getOne(id);
+            org = orgRepository.findOne(id);
         }
-        org.setAgency(agency);
+        //基础信息
         org.setName(agencyOrganizationDto.getName());
         org.setCode(agencyOrganizationDto.getCode());
         org.setDescription(agencyOrganizationDto.getDescription());
+        //设置所属企业
+        Agency agency = agencyRepository.getOne(agId);
+        if(null ==  agency){
+            throw new IllegalArgumentException("无效的企业id");
+        }
+        org.setAgency(agency);
+        //设置上级部门
+        if(parentId != null){
+            AgencyOrganization parentOrg = orgRepository.getOne(parentId);
+            if(null == parentOrg){
+                throw new IllegalArgumentException("无效的上级id");
+            }
+            org.setParentOrg(parentOrg);
+        }
+        //设置负责人
         org.setLeaderId(agencyOrganizationDto.getLeaderId());
-        org.setParentOrg(parentOrg);
         orgRepository.saveAndFlush(org);
         return new TResult<>(agencyOrganizationDto);
     }
 
     @Override
     public TResult delete(UUID id) {
-        return null;
+        orgRepository.delete(id);
+        return (TResult) ResultFactory.success();
     }
 
     @Override
     public TResult deleteBatch(UUID... ids) {
-        return null;
+        orgRepository.deleteBatch(ids);
+        return (TResult) ResultFactory.success();
     }
 }

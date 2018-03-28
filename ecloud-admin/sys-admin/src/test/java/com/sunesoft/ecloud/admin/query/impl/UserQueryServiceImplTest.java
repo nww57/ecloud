@@ -30,15 +30,6 @@ public class UserQueryServiceImplTest {
 
     Gson gson = new GsonBuilder().create();
 
-    @Test
-    public void addUserTest(){
-        UserDto userDto = new UserDto();
-        userDto.setUserName("zhouzh");
-        userDto.setPassword("12345678");
-        userDto.setEmail("ss@qq.com");
-        userDto.setRealName("zhouzh");
-        userService.addOrUpdateUser(userDto);
-    }
 
     @Test
     public void findUserPagedTest()

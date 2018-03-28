@@ -35,7 +35,7 @@ public class AgencyQueryServiceImplTest {
 
     @Test
     public void findAgencyBasicInfoById() throws Exception {
-        TResult<AgencyDto> result = agencyQueryService.findAgencyBasicInfoById(UUID.fromString("faa8cdeb-6ffd-4bbe-a9e1-c87398b54c1b"));
+        TResult<AgencyDto> result = agencyQueryService.findAgencyBasicInfoById(UUID.fromString("200e6946-70e3-4087-839a-0491c631caf1"));
         System.out.println(213);
     }
 

@@ -7,32 +7,19 @@ import java.util.UUID;
  * Created by jzj on 2018/3/26.
  * 角色菜单权限
  */
-public class AgencyRoleMenuDto {
+public class AgencyRoleMenuDto extends BasicDto{
 
-    /**
-     * 菜单id
-     */
-    private UUID menuId;
 
     /**
      * 功能id
      */
-    private List<UUID> funcId;
+    private List<BasicDto> funcId;
 
-    public UUID getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(UUID menuId) {
-        this.menuId = menuId;
-    }
-
-    public List<UUID> getFuncId() {
+    public List<BasicDto> getFuncId() {
         return funcId;
     }
 
-    public void setFuncId(List<UUID> funcId) {
+    public void setFuncId(List<BasicDto> funcId) {
         this.funcId = funcId;
     }
-
 }
