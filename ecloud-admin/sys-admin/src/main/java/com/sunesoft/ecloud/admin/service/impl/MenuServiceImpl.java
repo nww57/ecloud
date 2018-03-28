@@ -8,6 +8,7 @@ import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
@@ -16,6 +17,7 @@ import java.util.UUID;
  * @date: 2018/3/26 下午7:41
  * -
  */
+@Service
 public class MenuServiceImpl implements MenuService {
 
     @Autowired
@@ -24,8 +26,8 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public TResult addOrUpdateMenu(MenuDto menuDto) {
         Menu menu;
-        if(menuDto.getUuid()!=null){//修改
-            menu=menuRepository.getOne(menuDto.getUuid());
+        if(menuDto.getId()!=null){//修改
+            menu=menuRepository.getOne(menuDto.getId());
             BeanUtil.copyPropertiesIgnoreNull(menuDto,menu);
         }else{//新增
             menu=new Menu();

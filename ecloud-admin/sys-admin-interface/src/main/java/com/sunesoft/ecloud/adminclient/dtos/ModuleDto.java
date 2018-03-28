@@ -9,7 +9,7 @@ import java.util.UUID;
  */
 public class ModuleDto {
 
-    private UUID uuid;
+    private UUID id;
 
     /**
      * 模块代码
@@ -26,12 +26,12 @@ public class ModuleDto {
      */
     private String moduleDesc;
 
-    public UUID getUuid() {
-        return uuid;
+    public UUID getId() {
+        return id;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getModuleCode() {

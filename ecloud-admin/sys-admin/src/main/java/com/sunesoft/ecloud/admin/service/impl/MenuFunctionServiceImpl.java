@@ -8,6 +8,7 @@ import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,6 +18,7 @@ import java.util.UUID;
  * @date: 2018/3/26 下午7:09
  * -
  */
+@Service
 public class MenuFunctionServiceImpl implements MenuFunctionService {
 
     @Autowired
@@ -26,8 +28,8 @@ public class MenuFunctionServiceImpl implements MenuFunctionService {
     public TResult addOrUpdateFunction(MenuFunctionDto menuFunctionDto ,UUID uuid) {
         if(uuid!=null){
             MenuFunction menuFunction;
-            if(menuFunctionDto.getUuid()!=null){//修改
-                menuFunction=menuFunctionRepository.getOne(menuFunctionDto.getUuid());
+            if(menuFunctionDto.getId()!=null){//修改
+                menuFunction=menuFunctionRepository.getOne(menuFunctionDto.getId());
                 BeanUtil.copyPropertiesIgnoreNull(menuFunctionDto,menuFunction);
             }else{//新增
                 menuFunction=new MenuFunction();
