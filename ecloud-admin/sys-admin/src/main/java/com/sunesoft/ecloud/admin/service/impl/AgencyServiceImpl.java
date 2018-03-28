@@ -3,6 +3,7 @@ package com.sunesoft.ecloud.admin.service.impl;
 import com.sunesoft.ecloud.admin.domain.agency.Agency;
 import com.sunesoft.ecloud.admin.repository.AgencyRepository;
 import com.sunesoft.ecloud.admin.service.AgencyService;
+import com.sunesoft.ecloud.adminclient.dtos.AgencyBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
@@ -24,6 +25,8 @@ public class AgencyServiceImpl implements AgencyService{
 
     @Autowired
     AgencyRepository agencyRepository;
+
+
 
     @Override
     public TResult addOrUpdateAgency(AgencyDto agencyDto) {
@@ -48,6 +51,16 @@ public class AgencyServiceImpl implements AgencyService{
         agencyRepository.saveAndFlush(agency);
         return new TResult<>(agencyDto);
     }
+
+    @Override
+    public TResult updateAgencyBasicInfo(AgencyBasicDto AgencyBasicDto) {
+        UUID id = AgencyBasicDto.getId();
+        Agency agency = agencyRepository.findOne(id);
+        BeanUtil.copyProperties(AgencyBasicDto,agency,new String[]{"serverStatus"});
+        agencyRepository.saveAndFlush(agency);
+        return new TResult<>(AgencyBasicDto);
+    }
+
 
     @Override
     public TResult delete(UUID id) {
