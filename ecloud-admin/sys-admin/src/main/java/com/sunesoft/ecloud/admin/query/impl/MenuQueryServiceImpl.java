@@ -60,7 +60,9 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
         SqlBuilder sqlBuilder = HSqlBuilder.hFrom(Menu.class, "m")
                 .select(MenuSimpleDto.class);
         List<MenuSimpleDto> list = this.queryList(sqlBuilder);
-        return new ListResult(list);
+        //这里要处理好父子级
+        List<MenuSimpleDto> listResult = this.transformationTree(list);
+        return new ListResult(listResult);
     }
 
     @Override
@@ -116,4 +118,39 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
         List<MenuFunctionDto> list = this.queryList(sqlBuilder);
         return new ListResult(list);
     }
+
+
+    /**
+     * 将list转成树形结构
+     * 使用递归方法建树
+     */
+    public static List<MenuSimpleDto> transformationTree(List<MenuSimpleDto> list) {
+        List<MenuSimpleDto> trees = new ArrayList<MenuSimpleDto>();
+        for (MenuSimpleDto treeNode : list) {//找到根节点
+            if (treeNode.getParentMenu()==null) {
+                trees.add(findChildren(treeNode,list));
+            }
+        }
+        return trees;
+    }
+    /**
+     * 递归查找子节点
+     */
+    public static MenuSimpleDto findChildren(MenuSimpleDto treeNode,List<MenuSimpleDto> list) {
+        for (MenuSimpleDto it : list) {
+            if(treeNode.getId().equals(it.getParentMenu().getId())) {//查到的节点是当前节点treeNode的子节点
+//                if (treeNode.getChiledrenMenu() == null) {
+//                    treeNode.setChiledrenMenu(new ArrayList<MenuSimpleDto>());
+//                }
+                treeNode.getChiledrenMenu().add(findChildren(it,list));
+            }
+        }
+        return treeNode;
+    }
+
+
+
+
+
+
 }

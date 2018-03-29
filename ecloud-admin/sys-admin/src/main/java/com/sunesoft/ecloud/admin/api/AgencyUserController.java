@@ -30,7 +30,7 @@ public class AgencyUserController {
      * @return
      */
     @GetMapping("search")
-    public Page<UserDto> search (@RequestBody UserCriteria userCriteria) {
+    public Page<UserDto> search (UserCriteria userCriteria) {
         return userQueryService.findUserPaged(userCriteria);
     }
 

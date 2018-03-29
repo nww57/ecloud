@@ -1,6 +1,6 @@
 package com.sunesoft.ecloud.admin.api;
 
-import com.sunesoft.ecloud.admin.query.AgencyOrganizationQueryServicce;
+import com.sunesoft.ecloud.admin.query.AgencyOrganizationQueryService;
 import com.sunesoft.ecloud.admin.service.AgencyOrganizationService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyOrganizationCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyOrganizationDto;
@@ -17,7 +17,7 @@ import java.util.UUID;
 public class AgencyOrgController {
 
     @Autowired
-    AgencyOrganizationQueryServicce organizationQueryServicce;
+    AgencyOrganizationQueryService organizationQueryServicce;
 
     @Autowired
     AgencyOrganizationService organizationService;
