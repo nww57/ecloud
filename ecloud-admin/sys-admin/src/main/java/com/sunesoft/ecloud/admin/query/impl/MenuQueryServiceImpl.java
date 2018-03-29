@@ -25,6 +25,7 @@ import java.util.UUID;
  * -
  */
 @Service
+@SuppressWarnings("All")
 public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryService {
 
     @Autowired

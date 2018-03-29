@@ -28,7 +28,7 @@ public class MenuFunctionQueryServiceImplTest {
 
     @Test
     public void queryMenuFunction() throws Exception {
-        ListResult<MenuFunctionDto> menuFunctionDtoListResult = menuFunctionQueryService.queryMenuFunction(UUID.fromString("8c831c8f-9ffc-42af-b40d-46dce4218fec"));
+        ListResult<MenuFunctionDto> menuFunctionDtoListResult = menuFunctionQueryService.queryMenuFunction(UUID.fromString("b0da86c4-1e6a-49c4-8883-352b9384cacc"));
         System.out.println(menuFunctionDtoListResult);
     }
 

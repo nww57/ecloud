@@ -1,8 +1,10 @@
 package com.sunesoft.ecloud.admin.query.impl;
 
+import com.sunesoft.ecloud.admin.domain.menu.Menu;
 import com.sunesoft.ecloud.admin.domain.menu.MenuFunction;
 import com.sunesoft.ecloud.admin.query.MenuFunctionQueryService;
 import com.sunesoft.ecloud.admin.repository.MenuFunctionRepository;
+import com.sunesoft.ecloud.admin.repository.MenuRepository;
 import com.sunesoft.ecloud.adminclient.dtos.MenuFunctionDto;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
@@ -21,18 +23,22 @@ import java.util.UUID;
  * -
  */
 @Service
+@SuppressWarnings("All")
 public class MenuFunctionQueryServiceImpl extends GenericQuery implements MenuFunctionQueryService {
 
     @Autowired
     MenuFunctionRepository menuFunctionRepository;
 
+    @Autowired
+    MenuRepository menuRepository;
+
 
     @Override
     public ListResult<MenuFunctionDto> queryMenuFunction(UUID uuid) {
-
-
-        return null;
-//        ListResult<MenuFunctionDto> menuFunctionDtoListResult = menuFunctionRepository.findByMenu(uuid);
-//        return menuFunctionDtoListResult;
+        SqlBuilder sqlBuilder = HSqlBuilder.hFrom(MenuFunction.class, "f")
+                .where("f.menuId",uuid)
+                .select(MenuFunctionDto.class);
+        List<MenuFunctionDto> list = this.queryList(sqlBuilder);
+        return new ListResult(list);
     }
 }

@@ -28,16 +28,19 @@ public class MenuServiceImplTest {
     @Test
     public void addOrUpdateMenu() throws Exception {
         MenuDto menuDto=new MenuDto();
-        menuDto.setId(UUID.fromString("52996c7b-ba83-4af0-ad92-04084b4fac52"));
-        menuDto.setName("test2");
-        menuDto.setSort(11);
-        menuDto.setDescription("asdasdasd1");
+//        menuDto.setId(UUID.fromString("52996c7b-ba83-4af0-ad92-04084b4fac52"));
+        menuDto.setName("bbbb");
+        menuDto.setSort(2);
+        menuDto.setDescription("bbbbbb");
         TResult tResult = menuService.addOrUpdateMenu(menuDto);
         System.out.println(tResult);
     }
 
     @Test
     public void delete() throws Exception {
+        TResult delete = menuService.delete(UUID.fromString("f0045d9e-e2a0-4bad-afcc-240864e65a39"));
+        System.out.println(delete);
+
     }
 
 }

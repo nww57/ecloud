@@ -90,7 +90,7 @@ public class Menu extends IEntity {
     private List<Menu> childMenuList = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "menu")
+    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "menu")
     private List<MenuFunction> menuFunctions = new ArrayList<>();
 
 

@@ -43,7 +43,7 @@ public class MenuQueryServiceImplTest {
 
     @Test
     public void findMenuByID() throws Exception {
-        UUID uuid=UUID.fromString("8c831c8f-9ffc-42af-b40d-46dce4218fec");
+        UUID uuid=UUID.fromString("f0045d9e-e2a0-4bad-afcc-240864e65a39");
         TResult<MenuDto> menuByID = menuQueryService.findMenuByID(uuid);
         System.out.println(menuByID.getResult().getName());
     }

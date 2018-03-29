@@ -42,9 +42,14 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public TResult delete(UUID uuid) {
-        Menu menu = menuRepository.getOne(uuid);
-        if(menu!=null) menuRepository.delete(menu);
-        return (TResult) ResultFactory.success();
+        Menu menu = menuRepository.findOne(uuid);
+        if(menu!=null){
+            //这里应该先判断下该菜单下有没有功能吗？
+            menuRepository.delete(menu);
+            return (TResult) ResultFactory.success();
+        }
+        return (TResult) ResultFactory.error("删除失败！");
+
     }
 
 }
