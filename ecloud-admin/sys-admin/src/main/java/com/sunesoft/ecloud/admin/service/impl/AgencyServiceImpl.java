@@ -1,7 +1,11 @@
 package com.sunesoft.ecloud.admin.service.impl;
 
 import com.sunesoft.ecloud.admin.domain.agency.Agency;
+import com.sunesoft.ecloud.admin.domain.agency.AgencyAuthorizedMenu;
+import com.sunesoft.ecloud.admin.domain.menu.Menu;
+import com.sunesoft.ecloud.admin.repository.AgencyAuthorizedMenuRepository;
 import com.sunesoft.ecloud.admin.repository.AgencyRepository;
+import com.sunesoft.ecloud.admin.repository.MenuRepository;
 import com.sunesoft.ecloud.admin.service.AgencyService;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyDto;
@@ -12,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -25,6 +31,10 @@ public class AgencyServiceImpl implements AgencyService{
 
     @Autowired
     AgencyRepository agencyRepository;
+    @Autowired
+    AgencyAuthorizedMenuRepository agMenuRepository;
+    @Autowired
+    MenuRepository menuRepository;
 
 
 
@@ -36,6 +46,7 @@ public class AgencyServiceImpl implements AgencyService{
         //todo :验证参数
         UUID id = agencyDto.getId();
         Agency agency ;
+        List<AgencyAuthorizedMenu> agencyMenu;
         if(null == id){//新增
             agency = new Agency();
         }else{//修改
@@ -47,8 +58,19 @@ public class AgencyServiceImpl implements AgencyService{
         }catch (Exception e){
             e.printStackTrace();
         }
-        //todo 配置菜单
-        agencyRepository.saveAndFlush(agency);
+        // 配置菜单
+        List<UUID> menuIds = agencyDto.getMenuIds();
+        List<Menu> menuList = menuRepository.findAll(menuIds);
+        agency = agencyRepository.saveAndFlush(agency);
+        UUID agId = agency.getId();
+        List<AgencyAuthorizedMenu> agMenuList = new ArrayList<>();
+        menuList.forEach(menu->{
+            AgencyAuthorizedMenu agMenu = new AgencyAuthorizedMenu();
+            agMenu.setAgencyId(agId);
+            agMenu.setMenu(menu);
+            agMenuList.add(agMenu);
+        });
+        agMenuRepository.save(agMenuList);
         return new TResult<>(agencyDto);
     }
 
@@ -71,7 +93,9 @@ public class AgencyServiceImpl implements AgencyService{
     @Override
     @Transactional
     public TResult deleteBatch(UUID... ids) {
-        agencyRepository.deleteBatch(ids);
+        for (UUID id : ids) {
+            agencyRepository.delete(id);
+        }
         return new TResult<>(true);
     }
 }

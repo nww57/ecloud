@@ -40,9 +40,9 @@ public class MenuServiceImplTest {
         menuDto.setSort(3);
         menuDto.setDescription("ccccccc");
 
-        MenuSimpleDto menuSimpleDto=new MenuSimpleDto();
-        menuSimpleDto.setId(UUID.fromString("56cfb947-2cda-4216-b1e8-92bd804d4a89"));
-        menuDto.setParentSimpleMenu(menuSimpleDto);
+//        MenuSimpleDto menuSimpleDto=new MenuSimpleDto();
+//        menuSimpleDto.setId(UUID.fromString("56cfb947-2cda-4216-b1e8-92bd804d4a89"));
+//        menuDto.setParentSimpleMenu(menuSimpleDto);
 
         TResult tResult = menuService.addOrUpdateMenu(menuDto);
         System.out.println(tResult);

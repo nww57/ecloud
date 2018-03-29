@@ -13,13 +13,13 @@ public class AgencyRoleMenuDto extends BasicDto{
     /**
      * 功能id
      */
-    private List<BasicDto> funcId;
+    private List<BasicDto> funcList;
 
-    public List<BasicDto> getFuncId() {
-        return funcId;
+    public List<BasicDto> getFuncList() {
+        return funcList;
     }
 
-    public void setFuncId(List<BasicDto> funcId) {
-        this.funcId = funcId;
+    public void setFuncList(List<BasicDto> funcList) {
+        this.funcList = funcList;
     }
 }

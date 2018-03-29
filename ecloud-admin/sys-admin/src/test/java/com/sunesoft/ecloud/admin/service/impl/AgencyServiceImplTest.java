@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
@@ -27,8 +29,8 @@ public class AgencyServiceImplTest {
     @Test
     public void addOrUpdateAgency() throws Exception {
             AgencyDto dto = new AgencyDto();
-            dto.setId(UUID.fromString("200e6946-70e3-4087-839a-0491c631caf1"));
-            dto.setName("asdfasdfa");
+//            dto.setId(UUID.fromString("c5accfc4-7e7f-488d-8c04-a6ce4894401d"));
+            dto.setName("测试菜单能不能加");
             dto.setCode("DW00232");
             dto.setCountry("Chinasadfa");
             dto.setRegisterDate("2018-3-27");
@@ -42,6 +44,13 @@ public class AgencyServiceImplTest {
             dto.setStreet("科教称adf");
             dto.setZipcode("21000adfad");
             dto.setServerEndDate("2019-3-27");
+
+            List<UUID> menuList = new ArrayList<>();
+            menuList.add(UUID.fromString("630bbc4e-cec3-4efd-af5b-e13ced9d92f9"));
+            dto.setMenuIds(menuList);
+
+
+
             TResult dto2 = agencyService.addOrUpdateAgency(dto);
 
 //        for (int i = 2; i < 15; i++) {
@@ -67,16 +76,15 @@ public class AgencyServiceImplTest {
 
     @Test
     public void delete() throws Exception {
-        UUID u1 = UUID.fromString("0a3ddcb3-d39c-4cf6-acf9-974d19141219");
+        UUID u1 = UUID.fromString("0486ce7e-8abd-4b59-bb41-deadba759805");
         TResult result = agencyService.delete(u1);
         System.out.println(23);
     }
 
     @Test
     public void deleteBatch() throws Exception {
-        UUID u1 = UUID.fromString("0a3ddcb3-d39c-4cf6-acf9-974d19141219");
-        UUID u2 = UUID.fromString("9e057d79-c2db-4ed7-996c-b481f7865df2");
-        UUID[] s = new UUID[]{u1, u2};
+        UUID u1 = UUID.fromString("4a98324d-dedc-4c4f-afce-daa87cf499b0");
+        UUID[] s = new UUID[]{u1};
         TResult result = agencyService.deleteBatch(s);
         System.out.println(23);
     }

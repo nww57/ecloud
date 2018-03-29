@@ -43,7 +43,7 @@ public class MenuServiceImpl implements MenuService {
         }else{
             menuDto.setMenuIndex(save.getId()+"");
         }
-        menu.setParentMenu(menuRepository.findOne(menuDto.getParentSimpleMenu().getId()));
+//        menu.setParentMenu(menuRepository.findOne(menuDto.getParentSimpleMenu().getId()));
         Menu result = menuRepository.save(menu);
         return (TResult) ResultFactory.success(result);
     }

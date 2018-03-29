@@ -39,9 +39,8 @@ public class UserQueryServiceImplTest {
     public void findUserPagedTest()
     {
 
-        Pageable pageable = new PageRequest(1,10,null);
+
         UserCriteria userCriteria = new UserCriteria();
-        userCriteria.setUserName("zhouzh");
         Page<UserDto> userPaged = userQueryService.findUserPaged(userCriteria);
 
         System.out.println(userPaged);

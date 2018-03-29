@@ -20,5 +20,5 @@ public interface MenuFunctionRepository extends BaseRepository<MenuFunction, UUI
     /**
      * 根据菜单ID查询相应操作功能
      */
-    ListResult<MenuFunctionDto> findByMenu(UUID uuid);
+//    ListResult<MenuFunctionDto> findByMenu(UUID uuid);
 }

@@ -4,6 +4,8 @@ package com.sunesoft.ecloud.admin.domain.agency;
 import com.sunesoft.ecloud.adminclient.AgencyType;
 import com.sunesoft.ecloud.adminclient.ServerStatusType;
 import com.sunesoft.ecloud.hibernate.IEntity;
+import org.hibernate.action.internal.OrphanRemovalAction;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -305,4 +307,6 @@ public class Agency extends IEntity{
     public void setCustomers(List<AgencyCustomer> customers) {
         this.customers = customers;
     }
+
+
 }
