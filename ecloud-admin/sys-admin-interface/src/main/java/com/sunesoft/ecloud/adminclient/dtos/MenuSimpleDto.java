@@ -1,17 +1,21 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
-import com.sun.tools.javac.util.List;
-import com.sunesoft.ecloud.adminclient.MenuType;
 
+import com.sunesoft.ecloud.adminclient.MenuType;
+import com.sunesoft.ecloud.common.TreeEntity;
+import com.sunesoft.ecloud.common.sqlBuilderTool.annotations.AliasName;
+import com.sunesoft.ecloud.common.sqlBuilderTool.annotations.FieldWithoutCheck;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
  * @author: Zhouzh
  * @Date: 2018/3/26
  */
-public class MenuSimpleDto {
+public class MenuSimpleDto extends TreeEntity {
 
-    private UUID id;
 
     /**
      * 索引
@@ -28,23 +32,12 @@ public class MenuSimpleDto {
      */
     private Integer sort;
 
-    /**
-     * 父级节点菜单
-     */
-    private MenuSimpleDto parentMenu;
 
     /**
      * 子级节点菜单
      */
-    private List<MenuSimpleDto> chiledrenMenu;
+    private List<MenuSimpleDto> chiledren= new ArrayList<>();
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public String getMenuIndex() {
         return menuIndex;
@@ -70,19 +63,12 @@ public class MenuSimpleDto {
         this.sort = sort;
     }
 
-    public MenuSimpleDto getParentMenu() {
-        return parentMenu;
+    public List<MenuSimpleDto> getChiledren() {
+        return chiledren;
     }
 
-    public void setParentMenu(MenuSimpleDto parentMenu) {
-        this.parentMenu = parentMenu;
+    public void setChiledren(List list) {
+        this.chiledren = list;
     }
 
-    public List<MenuSimpleDto> getChiledrenMenu() {
-        return chiledrenMenu;
-    }
-
-    public void setChiledrenMenu(List<MenuSimpleDto> chiledrenMenu) {
-        this.chiledrenMenu = chiledrenMenu;
-    }
 }

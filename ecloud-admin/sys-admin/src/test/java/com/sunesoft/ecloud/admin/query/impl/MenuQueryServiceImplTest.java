@@ -1,5 +1,7 @@
 package com.sunesoft.ecloud.admin.query.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sunesoft.ecloud.admin.query.MenuQueryService;
 import com.sunesoft.ecloud.adminclient.dtos.MenuDto;
 import com.sunesoft.ecloud.adminclient.dtos.MenuSimpleDto;
@@ -32,13 +34,27 @@ public class MenuQueryServiceImplTest {
     @Test
     public void findAllMenu() throws Exception {
         ListResult<MenuDto> allMenu = menuQueryService.findAllMenu();
-        System.out.println(allMenu.getResult().get(0));
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(allMenu);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        System.out.println(json);
     }
 
     @Test
     public void findAllSimpleMenu() throws Exception {
         ListResult<MenuSimpleDto> allSimpleMenu = menuQueryService.findAllSimpleMenu();
-        System.out.println(allSimpleMenu.getResult().get(0));
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(allSimpleMenu);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        System.out.println(json);
     }
 
     @Test

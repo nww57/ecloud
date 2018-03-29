@@ -1,6 +1,7 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
 import com.sunesoft.ecloud.adminclient.MenuType;
+import com.sunesoft.ecloud.common.TreeEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +11,8 @@ import java.util.UUID;
  * @author: Zhouzh
  * @Date: 2018/3/26
  */
-public class MenuDto {
+public class MenuDto  extends TreeEntity {
 
-    private UUID id;
 
     private ModuleDto module;
 
@@ -76,21 +76,12 @@ public class MenuDto {
     /**
      * 子级节点菜单
      */
-    private List<MenuDto> childMenuList;
+    private List<MenuDto> chiledren= new ArrayList<>();
 
     /**
      * 菜单功能
      */
     private List<MenuFunctionDto> menuFunctions;
-
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public ModuleDto getModule() {
         return module;
@@ -188,12 +179,12 @@ public class MenuDto {
         this.parentSimpleMenu = parentSimpleMenu;
     }
 
-    public List<MenuDto> getChildMenuList() {
-        return childMenuList;
+    public List<MenuDto> getChiledren() {
+        return chiledren;
     }
 
-    public void setChildMenuList(List<MenuDto> childMenuList) {
-        this.childMenuList = childMenuList;
+    public void setChiledren(List list) {
+        this.chiledren = list;
     }
 
     public List<MenuFunctionDto> getMenuFunctions() {

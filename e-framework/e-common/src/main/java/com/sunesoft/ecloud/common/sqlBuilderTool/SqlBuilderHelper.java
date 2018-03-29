@@ -2,6 +2,7 @@ package com.sunesoft.ecloud.common.sqlBuilderTool;
 
 
 
+import com.sunesoft.ecloud.common.sqlBuilderTool.annotations.FieldWithoutCheck;
 import com.sunesoft.ecloud.common.sqlBuilderTool.annotations.AliasName;
 import com.sunesoft.ecloud.common.sqlBuilderTool.annotations.SqlIgnore;
 import com.sunesoft.ecloud.common.sqlBuilderTool.annotations.TableName;
@@ -68,6 +69,11 @@ public class SqlBuilderHelper {
                 AliasName annotation = (AliasName)field.getAnnotation(AliasName.class);
                 if (annotation != null) {
                     name = annotation.value();
+                    aliseName = property.getName();
+                }
+                FieldWithoutCheck fieldWithoutCheck = (FieldWithoutCheck)field.getAnnotation(FieldWithoutCheck.class);
+                if (fieldWithoutCheck != null) {
+                    name = "FieldWithoutCheck";
                     aliseName = property.getName();
                 }
             } catch (Exception var13) {
