@@ -1,6 +1,6 @@
 package com.sunesoft.ecloud.admin.repository;
 
-import com.sunesoft.ecloud.admin.domain.agency.AgencyOrganization;
+import com.sunesoft.ecloud.admin.domain.agency.AgencyRole;
 import com.sunesoft.ecloud.hibernate.repository.BaseRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,12 +11,13 @@ import java.util.UUID;
 
 /**
  * @Auther: niww
- * @Date: 2018/3/27/027
+ * @Date: 2018/3/28/028
  */
 @Repository
-public interface AgencyOrganizationRepository extends BaseRepository<AgencyOrganization,UUID> {
+public interface AgencyRoleRepository extends BaseRepository<AgencyRole,UUID>{
 
     @Modifying
-    @Query(value = "delete from AgencyOrganization where id in :ids")
+    @Query(value = "delete from AgencyRole  where id in :ids")
     void deleteBatch(@Param("ids") UUID... ids);
+
 }

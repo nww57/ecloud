@@ -1,15 +1,25 @@
 package com.sunesoft.ecloud.admin.service.impl;
 
+import com.alibaba.druid.sql.dialect.oracle.ast.stmt.OracleCreateTableStatement;
+import com.sunesoft.ecloud.admin.domain.agency.AgencyOrganization;
+import com.sunesoft.ecloud.admin.domain.agency.AgencyRole;
 import com.sunesoft.ecloud.admin.domain.agency.User;
+import com.sunesoft.ecloud.admin.repository.AgencyOrganizationRepository;
+import com.sunesoft.ecloud.admin.repository.AgencyRoleRepository;
 import com.sunesoft.ecloud.admin.repository.UserRepository;
+import com.sunesoft.ecloud.admin.service.AgencyOrganizationService;
 import com.sunesoft.ecloud.admin.service.UserService;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -17,10 +27,16 @@ import java.util.UUID;
  * @Date: 2018/3/23
  */
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    AgencyOrganizationRepository orgRepository;
+    @Autowired
+    AgencyRoleRepository roleRepository;
+
     /**
      * 新增修改密码
      *
@@ -29,21 +45,46 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public TResult addOrUpdateUser(UserDto userDto) {
-        User user = new User();
-        BeanUtil.copyPropertiesIgnoreNull(userDto,user);
-        userRepository.save(user);
-        return (TResult)ResultFactory.success();
+
+        UUID id = userDto.getId();
+        //todo 检查用户名是否存在
+        String userName = userDto.getUserName();
+        UUID structureId = userDto.getOrganizationId();
+        List<UUID> roleList = userDto.getRoleIdList();
+        User user;
+        if (null == id) {
+            user = new User();
+        } else {
+            user = userRepository.findOne(id);
+        }
+        //设置组织机构
+        if (null != structureId) {
+            AgencyOrganization org = orgRepository.findOne(structureId);
+            if (null == org) {
+                return new TResult("组织机构不存在");
+            }
+            user.setAgencyOrganization(org);
+        }
+        //设置角色
+        if (null != roleList && roleList.size() > 0) {
+            List<AgencyRole> roleListEntity = roleRepository.findAll(roleList);
+            user.setRoleList(roleListEntity);
+        }
+        BeanUtil.copyPropertiesIgnoreNull(userDto, user);
+        userRepository.saveAndFlush(user);
+        return (TResult) ResultFactory.success();
     }
 
     /**
      * 删除用户
      *
-     * @param uuid
+     * @param id
      * @return
      */
     @Override
-    public TResult deleteUser(UUID uuid) {
-        return null;
+    public TResult deleteUser(UUID id) {
+        userRepository.delete(id);
+        return (TResult) ResultFactory.success();
     }
 
     /**
@@ -53,8 +94,9 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public TResult deleteUserBatch(UUID[] ids) {
-        return null;
+    public TResult deleteUserBatch(UUID... ids) {
+        userRepository.deleteBatch(ids);
+        return (TResult) ResultFactory.success();
     }
 
     /**
@@ -67,16 +109,25 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public TResult changePassword(UUID id, String oldPassword, String newPassword) {
-        return null;
+
+        setPassword(id, newPassword);
+        return (TResult) ResultFactory.success();
     }
 
     /**
+     * 设置密码
+     *
      * @param id
      * @param newPassword
      * @return
      */
     @Override
     public TResult setPassword(UUID id, String newPassword) {
-        return null;
+        boolean exist = userRepository.exists(id);
+        if (!exist) {
+            return new TResult<>("用户id不存在");
+        }
+        userRepository.updatePassword(id, newPassword);
+        return (TResult) ResultFactory.success();
     }
 }

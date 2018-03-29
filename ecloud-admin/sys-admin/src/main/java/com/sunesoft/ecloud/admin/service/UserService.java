@@ -19,10 +19,10 @@ public interface UserService {
 
     /**
      * 删除用户
-     * @param uuid
+     * @param id
      * @return
      */
-    TResult deleteUser(UUID uuid);
+    TResult deleteUser(UUID id);
 
 
     /**
@@ -36,11 +36,11 @@ public interface UserService {
     /**
      * 修改密码
      * @param id
+     * @param oldPassword
      * @param newPassword
-     * @param confirmPassword
      * @return
      */
-    TResult changePassword(UUID id,String newPassword,String confirmPassword);
+    TResult changePassword(UUID id,String oldPassword,String newPassword);
 
     /**
      *设置密码
