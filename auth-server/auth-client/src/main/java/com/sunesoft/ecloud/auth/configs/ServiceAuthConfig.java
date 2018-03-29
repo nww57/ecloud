@@ -1,4 +1,4 @@
-package com.sunesoft.ecloud.core.auth.config;
+package com.sunesoft.ecloud.auth.configs;
 
 import org.springframework.beans.factory.annotation.Value;
 

@@ -1,4 +1,4 @@
-package com.sunesoft.ecloud.core.auth.utils;
+package com.sunesoft.ecloud.auth.utils;
 
 /**
  * @author: Zhouzh

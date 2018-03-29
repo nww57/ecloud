@@ -1,8 +1,6 @@
-package com.sunesoft.ecloud.core.auth;
+package com.sunesoft.ecloud.auth;
 
-import com.sunesoft.ecloud.core.auth.utils.StringHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.sunesoft.ecloud.auth.utils.StringHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,12 +41,14 @@ public class UserContext {
         return returnObjectValue(value);
     }
 
-
     public static String getName(){
         Object value = get(CommonConstants.CONTEXT_KEY_USER_NAME);
         return StringHelper.getObjectValue(value);
     }
-
+    public static String getAgencyId(){
+        Object value = get(CommonConstants.CONTEXT_KEY_AGENCY_ID);
+        return StringHelper.getObjectValue(value);
+    }
     public static String getToken(){
         Object value = get(CommonConstants.CONTEXT_KEY_USER_TOKEN);
         return StringHelper.getObjectValue(value);
