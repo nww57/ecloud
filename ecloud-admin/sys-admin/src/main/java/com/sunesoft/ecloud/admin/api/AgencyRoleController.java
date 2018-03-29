@@ -5,6 +5,7 @@ import com.sunesoft.ecloud.admin.query.MenuQueryService;
 import com.sunesoft.ecloud.admin.service.AgencyRoleService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyRoleCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyRoleDto;
+import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.MenuDto;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
@@ -35,6 +36,15 @@ public class AgencyRoleController {
     @GetMapping("search")
     public Page<AgencyRoleDto> search (AgencyRoleCriteria agencyRoleCriteria) {
        return agencyRoleQueryService.findAgencyRolePaged(agencyRoleCriteria);
+    }
+
+    /**
+     * 获取角色列表
+     * @return
+     */
+    @GetMapping("collection")
+    public ListResult<BasicDto> collection () {
+        return agencyRoleQueryService.getAgencyRoleIdName();
     }
 
     /**
