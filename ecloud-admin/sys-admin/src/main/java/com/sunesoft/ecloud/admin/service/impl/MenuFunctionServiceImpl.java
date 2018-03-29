@@ -22,6 +22,7 @@ import java.util.UUID;
  * -
  */
 @Service
+@Transactional
 public class MenuFunctionServiceImpl implements MenuFunctionService {
 
     @Autowired
@@ -31,7 +32,6 @@ public class MenuFunctionServiceImpl implements MenuFunctionService {
     MenuRepository menuRepository;
 
     @Override
-    @Transactional
     public TResult addOrUpdateFunction(MenuFunctionDto menuFunctionDto ,UUID uuid) {
         if(uuid!=null){
             Menu menu = menuRepository.findOne(uuid);
