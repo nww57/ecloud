@@ -26,6 +26,14 @@ public interface UserQueryService {
 
     /**
      * 根据id查询用户信息
+     * @return 返回用户基本信息
+     */
+    TResult<UserDto> getUserInfo();
+
+
+
+    /**
+     * 根据id查询用户信息
      * @param id 用户id
      * @return 返回用户基本信息
      */
