@@ -3,6 +3,7 @@ package com.sunesoft.ecloud.admin.service.impl;
 import com.sunesoft.ecloud.admin.domain.agency.Agency;
 import com.sunesoft.ecloud.admin.repository.AgencyRepository;
 import com.sunesoft.ecloud.admin.service.AgencyService;
+import com.sunesoft.ecloud.adminclient.dtos.AgencyBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
@@ -19,10 +20,13 @@ import java.util.UUID;
  * 企业接口实现
  */
 @Service
+@Transactional
 public class AgencyServiceImpl implements AgencyService{
 
     @Autowired
     AgencyRepository agencyRepository;
+
+
 
     @Override
     public TResult addOrUpdateAgency(AgencyDto agencyDto) {
@@ -35,7 +39,7 @@ public class AgencyServiceImpl implements AgencyService{
         if(null == id){//新增
             agency = new Agency();
         }else{//修改
-            agency = agencyRepository.getOne(id);
+            agency = agencyRepository.findOne(id);
         }
         BeanUtil.copyProperties(agencyDto,agency,new String[]{"agencyType","serverStatus"});
         try{
@@ -43,13 +47,20 @@ public class AgencyServiceImpl implements AgencyService{
         }catch (Exception e){
             e.printStackTrace();
         }
-        if(null == id){
-            agencyDto.setId(agency.getId());
-        }
         //todo 配置菜单
         agencyRepository.saveAndFlush(agency);
         return new TResult<>(agencyDto);
     }
+
+    @Override
+    public TResult updateAgencyBasicInfo(AgencyBasicDto AgencyBasicDto) {
+        UUID id = AgencyBasicDto.getId();
+        Agency agency = agencyRepository.findOne(id);
+        BeanUtil.copyProperties(AgencyBasicDto,agency,new String[]{"serverStatus"});
+        agencyRepository.saveAndFlush(agency);
+        return new TResult<>(AgencyBasicDto);
+    }
+
 
     @Override
     public TResult delete(UUID id) {

@@ -63,7 +63,7 @@ public class MenuFunction extends IEntity{
     /**
      * 所属菜单
      */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="menuId")
     private Menu menu;
 

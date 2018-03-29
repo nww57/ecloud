@@ -1,6 +1,7 @@
 package com.sunesoft.ecloud.admin.domain.agency;
 
 import com.sunesoft.ecloud.hibernate.BizEntity;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -46,7 +47,8 @@ public class AgencyOrganization extends BizEntity{
     /**
      *负责人Id
      */
-    @Column(name = "leaderId")
+    @Column(name = "leaderId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
     private UUID leaderId;
 
     @ManyToOne
@@ -55,7 +57,7 @@ public class AgencyOrganization extends BizEntity{
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pid")
+    @JoinColumn(name = "parentId")
     private AgencyOrganization parentOrg;
 
     @OneToMany(targetEntity = AgencyOrganization.class, cascade = { CascadeType.ALL }, mappedBy = "parentOrg")

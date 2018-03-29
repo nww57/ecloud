@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -53,7 +54,10 @@ public class AgencyOrganizationDto {
      */
     private String leaderName;
 
-
+    /**
+     * 下级机构
+     */
+    private List<AgencyOrganizationDto> childList;
 
     public UUID getId() {
         return id;
@@ -127,5 +131,13 @@ public class AgencyOrganizationDto {
 
     public void setLeaderId(UUID leaderId) {
         this.leaderId = leaderId;
+    }
+
+    public List<AgencyOrganizationDto> getChildList() {
+        return childList;
+    }
+
+    public void setChildList(List<AgencyOrganizationDto> childList) {
+        this.childList = childList;
     }
 }

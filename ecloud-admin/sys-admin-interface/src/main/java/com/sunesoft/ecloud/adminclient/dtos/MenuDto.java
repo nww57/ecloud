@@ -12,7 +12,7 @@ import java.util.UUID;
  */
 public class MenuDto {
 
-    private UUID uuid;
+    private UUID id;
 
     private ModuleDto module;
 
@@ -72,13 +72,18 @@ public class MenuDto {
      */
     private MenuDto parentMenu;
 
+    /**
+     * 菜单功能
+     */
+    private List<MenuFunctionDto> menuFunctions;
 
-    public UUID getUuid() {
-        return uuid;
+
+    public UUID getId() {
+        return id;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public ModuleDto getModule() {
@@ -177,4 +182,11 @@ public class MenuDto {
         this.parentMenu = parentMenu;
     }
 
+    public List<MenuFunctionDto> getMenuFunctions() {
+        return menuFunctions;
+    }
+
+    public void setMenuFunctions(List<MenuFunctionDto> menuFunctions) {
+        this.menuFunctions = menuFunctions;
+    }
 }

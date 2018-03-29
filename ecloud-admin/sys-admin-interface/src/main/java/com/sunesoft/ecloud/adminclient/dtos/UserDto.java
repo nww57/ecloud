@@ -17,10 +17,7 @@ public class UserDto extends BasicDto{
      *用户类型
      */
     private String userType;
-    /**
-     *用户编号
-     */
-    private String userCode;
+
     /**
      *用户名
      */
@@ -59,7 +56,7 @@ public class UserDto extends BasicDto{
     /**
      * 所属机构-id
      */
-    private String organizationId;
+    private UUID organizationId;
 
     /**
      * 所属机构-名称
@@ -89,13 +86,6 @@ public class UserDto extends BasicDto{
         this.userType = userType;
     }
 
-    public String getUserCode() {
-        return userCode;
-    }
-
-    public void setUserCode(String userCode) {
-        this.userCode = userCode;
-    }
 
     public String getUserName() {
         return userName;
@@ -184,11 +174,11 @@ public class UserDto extends BasicDto{
         this.roleIdList = roleIdList;
     }
 
-    public String getOrganizationId() {
+    public UUID getOrganizationId() {
         return organizationId;
     }
 
-    public void setOrganizationId(String organizationId) {
+    public void setOrganizationId(UUID organizationId) {
         this.organizationId = organizationId;
     }
 

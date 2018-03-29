@@ -8,7 +8,10 @@ import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.beans.Transient;
 import java.util.UUID;
 
 /**
@@ -16,30 +19,43 @@ import java.util.UUID;
  * @date: 2018/3/26 下午7:41
  * -
  */
+@Service
 public class MenuServiceImpl implements MenuService {
 
     @Autowired
     MenuRepository menuRepository;
 
+    @Transactional
     @Override
     public TResult addOrUpdateMenu(MenuDto menuDto) {
         Menu menu;
-        if(menuDto.getUuid()!=null){//修改
-            menu=menuRepository.getOne(menuDto.getUuid());
+        if(menuDto.getId()!=null){//修改
+            menu=menuRepository.getOne(menuDto.getId());
             BeanUtil.copyPropertiesIgnoreNull(menuDto,menu);
         }else{//新增
             menu=new Menu();
             BeanUtil.copyPropertiesIgnoreNull(menuDto,menu);
+
         }
         Menu save = menuRepository.save(menu);
+        if(menuDto.getParentMenu()!=null){
+            menuDto.setMenuIndex(menuDto.getParentMenu().getMenuIndex()+"."+save.getId());
+        }else{
+            menuDto.setMenuIndex(save.getId()+"");
+        }
         return (TResult) ResultFactory.success(save);
     }
 
     @Override
     public TResult delete(UUID uuid) {
-        Menu menu = menuRepository.getOne(uuid);
-        if(menu!=null) menuRepository.delete(menu);
-        return (TResult) ResultFactory.success();
+        Menu menu = menuRepository.findOne(uuid);
+        if(menu!=null){
+            //这里应该先判断下该菜单下有没有功能吗？
+            menuRepository.delete(menu);
+            return (TResult) ResultFactory.success();
+        }
+        return (TResult) ResultFactory.error("删除失败！");
+
     }
 
 }

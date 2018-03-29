@@ -11,18 +11,7 @@ import java.util.UUID;
  * @author: Zhouzh
  * @Date: 2018/3/26
  */
-public class AgencyDto {
-
-    private UUID id;
-
-    /**
-     *企业机构代码
-     */
-    private String code;
-    /**
-     *企业名称
-     */
-    private String name;
+public class AgencyDto extends AgencyBasicDto{
 
     /**
      * 机构类型（服务商/客户）
@@ -76,26 +65,8 @@ public class AgencyDto {
      *传真
      */
     private String fax;
-    /**
-     *网站名
-     */
-    private String websiteName;
-    /**
-     *网站logo
-     */
-    private String websiteLogo;
-    /**
-     *服务状态
-     */
-    private ServerStatusType serverStatus;
-    /**
-     *服务起始时间
-     */
-    private String serverStartDate;
-    /**
-     *服务结束时间
-     */
-    private String serverEndDate;
+
+
 
     private List<UUID> menuIds;
 
@@ -139,29 +110,6 @@ public class AgencyDto {
         this.street = street;
     }
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public AgencyType getAgencyType() {
         return agencyType;
@@ -225,46 +173,6 @@ public class AgencyDto {
 
     public void setFax(String fax) {
         this.fax = fax;
-    }
-
-    public String getWebsiteName() {
-        return websiteName;
-    }
-
-    public void setWebsiteName(String websiteName) {
-        this.websiteName = websiteName;
-    }
-
-    public String getWebsiteLogo() {
-        return websiteLogo;
-    }
-
-    public void setWebsiteLogo(String websiteLogo) {
-        this.websiteLogo = websiteLogo;
-    }
-
-    public ServerStatusType getServerStatus() {
-        return serverStatus;
-    }
-
-    public void setServerStatus(ServerStatusType serverStatus) {
-        this.serverStatus = serverStatus;
-    }
-
-    public String getServerStartDate() {
-        return serverStartDate;
-    }
-
-    public void setServerStartDate(String serverStartDate) {
-        this.serverStartDate = serverStartDate;
-    }
-
-    public String getServerEndDate() {
-        return serverEndDate;
-    }
-
-    public void setServerEndDate(String serverEndDate) {
-        this.serverEndDate = serverEndDate;
     }
 
     public List<UUID> getMenuIds() {

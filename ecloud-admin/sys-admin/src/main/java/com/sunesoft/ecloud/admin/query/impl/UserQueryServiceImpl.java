@@ -1,20 +1,24 @@
 package com.sunesoft.ecloud.admin.query.impl;
 
+import com.sunesoft.ecloud.admin.domain.agency.AgencyOrganization;
+import com.sunesoft.ecloud.admin.domain.agency.AgencyRole;
 import com.sunesoft.ecloud.admin.domain.agency.User;
 import com.sunesoft.ecloud.admin.query.UserQueryService;
 import com.sunesoft.ecloud.admin.repository.UserRepository;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
+import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
-import com.sunesoft.ecloud.adminclient.dtos.UserViewDto;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
+import com.sunesoft.ecloud.common.utils.BeanUtil;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -37,24 +41,30 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
                 .pagging(1, 2)
                 .select(UserDto.class);
         return this.queryPaged(builder);
-
-    }
-
-    @Override
-    public ListResult<UserDto> findAllUser(UUID id) {
-        return null;
     }
 
     @Override
     public TResult<UserDto> findUserBasicById(UUID id) {
-        return null;
+        SqlBuilder<UserDto> builder = HSqlBuilder.hFrom(User.class, "user")
+                .leftJoin(AgencyOrganization.class,"org")
+                .on("user.structureId = org.id")
+                .where("id",id)
+                .setFieldValue("org.id","organizationId")
+                .setFieldValue("org.name","organizationName")
+                .select(UserDto.class);
+        return new TResult<>(queryForObject(builder));
     }
+
 
     @Override
-    public TResult<UserViewDto> findUserFullById(UUID id) {
-        return null;
+    public ListResult<BasicDto> getUserIdName() {
+        //获取所有负责人
+        SqlBuilder<BasicDto> userBuilder = HSqlBuilder.hFrom(User.class,"user")
+                .setFieldValue("name","user.realName")
+                .pagging(1,10);
+        List<BasicDto> userList = queryList(userBuilder);
+        return new ListResult<>(userList);
     }
-
 
 
 }

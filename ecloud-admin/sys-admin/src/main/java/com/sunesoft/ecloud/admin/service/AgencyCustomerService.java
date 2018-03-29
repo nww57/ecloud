@@ -15,7 +15,7 @@ public interface AgencyCustomerService {
      * @param agencyCustomerDto 参数
      * @return 返回操作结果
      */
-    TResult addOrUpdateAgencyCustoemr(AgencyCustomerDto agencyCustomerDto);
+    TResult addOrUpdateAgencyCustomer(AgencyCustomerDto agencyCustomerDto);
 
     /**
      * 删除操作
