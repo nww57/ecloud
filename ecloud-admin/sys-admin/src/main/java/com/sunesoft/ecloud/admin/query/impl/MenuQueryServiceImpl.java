@@ -49,7 +49,7 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
     }
 
     @Override
-    public ListResult<MenuSimpleDto> findAgAllSimpleMenu() {
+    public ListResult<MenuDto> findAgAllMenu() {
         return null;
     }
 
