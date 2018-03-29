@@ -13,7 +13,7 @@ import com.sunesoft.ecloud.adminclient.dtos.MenuSimpleDto;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
-import com.sunesoft.ecloud.core.auth.UserContext;
+import com.sunesoft.ecloud.auth.UserContext;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
 import org.springframework.beans.factory.annotation.Autowired;
