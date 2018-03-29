@@ -20,12 +20,12 @@ import java.util.UUID;
  * -
  */
 @Service
+@Transactional
 public class MenuServiceImpl implements MenuService {
 
     @Autowired
     MenuRepository menuRepository;
 
-    @Transactional
     @Override
     public TResult addOrUpdateMenu(MenuDto menuDto) {
         Menu menu;
