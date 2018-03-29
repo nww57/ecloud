@@ -17,7 +17,8 @@ import java.util.UUID;
  * @author: Zhouzh
  * @Date: 2018/3/21
  */
-@RestController(value = "/user")
+@RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -31,7 +32,6 @@ public class UserController {
      * @return
      */
     @GetMapping("/{id}")
-    @ResponseBody
     public TResult<UserDto> getUserInfo (@PathVariable UUID id) {
         return userQueryService.findUserBasicById(id);
     }
@@ -42,7 +42,6 @@ public class UserController {
      * @return
      */
     @PostMapping()
-    @ResponseBody
     public TResult addUserInfo (@RequestBody UserDto userDto) {
         return userService.addOrUpdateUser(userDto);
     }
@@ -67,7 +66,6 @@ public class UserController {
      * @return
      */
     @PutMapping(value = "/changepw/{id}")
-    @ResponseBody
     public TResult changepw (@PathVariable UUID id, String oldPw, String newPw) {
         return userService.changePassword(id, oldPw, newPw);
     }

@@ -5,7 +5,9 @@ import com.sunesoft.ecloud.admin.api.model.ChangePassword;
 import com.sunesoft.ecloud.admin.query.UserQueryService;
 import com.sunesoft.ecloud.admin.service.UserService;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
+import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
+import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,7 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-@RestController(value = "/agency/user")
+@RestController
+@RequestMapping("/agency/user")
 public class AgencyUserController {
 
     @Autowired
@@ -27,9 +30,17 @@ public class AgencyUserController {
      * @return
      */
     @GetMapping("search")
-    @ResponseBody
     public Page<UserDto> search (@RequestBody UserCriteria userCriteria) {
         return userQueryService.findUserPaged(userCriteria);
+    }
+
+    /**
+     * 获取用户集合
+     * @return
+     */
+    @GetMapping("collection")
+    public ListResult<BasicDto> getList () {
+        return userQueryService.getUserIdName();
     }
 
     /**
@@ -38,7 +49,6 @@ public class AgencyUserController {
      * @return
      */
     @GetMapping("{id}")
-    @ResponseBody
     public TResult<UserDto> getUserInfo (@PathVariable UUID id) {
         return userQueryService.findUserBasicById(id);
     }
@@ -48,7 +58,6 @@ public class AgencyUserController {
      * @param userDto
      */
     @PostMapping("")
-    @ResponseBody
     public TResult addUserInfo (@RequestBody UserDto userDto) {
         return userService.addOrUpdateUser(userDto);
     }
@@ -59,7 +68,6 @@ public class AgencyUserController {
      * @param id
      */
     @PutMapping("{id}")
-    @ResponseBody
     public TResult updateUserInfo (@RequestBody UserDto userDto, @PathVariable UUID id) {
         userDto.setId(id);
         return userService.addOrUpdateUser(userDto);
@@ -72,7 +80,6 @@ public class AgencyUserController {
      * @return
      */
     @PutMapping("resetpw/{id}")
-    @ResponseBody
     public TResult resetpw (@PathVariable UUID id, @RequestBody ChangePassword changePassword) {
         return userService.setPassword(id, changePassword.getNewPw());
     }
@@ -83,8 +90,8 @@ public class AgencyUserController {
      * @return
      */
     @DeleteMapping("")
-    @ResponseBody
     public TResult delete (@RequestParam UUID... ids) {
         return userService.deleteUserBatch(ids);
     }
+
 }
