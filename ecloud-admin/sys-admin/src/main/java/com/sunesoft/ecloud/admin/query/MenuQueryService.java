@@ -25,6 +25,12 @@ public interface MenuQueryService {
      */
     ListResult<MenuSimpleDto> findAllSimpleMenu();
 
+
+    /**
+     * 查询企业下所有菜单
+     */
+    ListResult<MenuSimpleDto> findAgAllSimpleMenu();
+
     /**
      * 根据菜单ID查询菜单详情
      */

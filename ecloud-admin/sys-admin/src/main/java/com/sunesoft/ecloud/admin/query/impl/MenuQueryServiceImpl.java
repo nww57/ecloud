@@ -49,6 +49,11 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
     }
 
     @Override
+    public ListResult<MenuSimpleDto> findAgAllSimpleMenu() {
+        return null;
+    }
+
+    @Override
     public TResult<MenuDto> findMenuByID(UUID uuid) {
         SqlBuilder sqlBuilder = HSqlBuilder.hFrom(Menu.class, "m")
                 .where("id", uuid)
