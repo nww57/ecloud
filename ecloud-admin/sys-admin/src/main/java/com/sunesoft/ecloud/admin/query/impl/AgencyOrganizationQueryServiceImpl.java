@@ -30,8 +30,13 @@ public class AgencyOrganizationQueryServiceImpl extends GenericQuery implements 
     @Override
     public ListResult<AgencyOrganizationDto> findAgencyOrganization(AgencyOrganizationCriteria criteria) {
         SqlBuilder<AgencyOrganizationDto> builder = HSqlBuilder.hFrom(AgencyOrganization.class, "org")
-                .where("org.agId",criteria.getAgId())
-                .select(AgencyOrganizationDto.class);
+                .leftJoin(User.class,"user")
+                .on("org.leaderId = user.id")
+//            todo    .where("org.agId",criteria.getAgId())
+                .select(AgencyOrganizationDto.class)
+                .setFieldValue("parentId","org.parentId")
+                .setFieldValue("leaderName","user.realName")
+                .setFieldValue("leaderId","user.id");
         List<AgencyOrganizationDto> allOrg = this.queryList(builder);
         return new ListResult<>(buildTree(allOrg));
     }
@@ -41,15 +46,23 @@ public class AgencyOrganizationQueryServiceImpl extends GenericQuery implements 
         SqlBuilder<AgencyOrganizationDto> builder = HSqlBuilder.hFrom(AgencyOrganization.class,"org")
                 .leftJoin(User.class,"user")
                 .on("org.leaderId = user.id")
+                .leftJoin(AgencyOrganization.class,"parent")
+                .on("org.parentId = parent.id")
                 .where("org.id",id)
                 .select(AgencyOrganizationDto.class)
-                .setFieldValue("leaderName","user.realName");
+                .setFieldValue("leaderId","user.Id")
+                .setFieldValue("leaderName","user.realName")
+                .setFieldValue("parentId","parent.id")
+                .setFieldValue("parentName","parent.name");
         return new TResult<>(this.queryForObject(builder));
     }
 
     @Override
     public ListResult<BasicDto> getOrganizationIdName() {
-        return null;
+        SqlBuilder<BasicDto> userBuilder = HSqlBuilder.hFrom(AgencyOrganization.class,"org")
+                .select(BasicDto.class);
+        List<BasicDto> orgList = queryList(userBuilder);
+        return new ListResult<>(orgList);
     }
 
 

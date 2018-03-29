@@ -44,6 +44,13 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
     }
 
     @Override
+    public TResult<UserDto> getUserInfo() {
+        //todo 先获取用户id
+
+        return null;
+    }
+
+    @Override
     public TResult<UserDto> findUserBasicById(UUID id) {
         SqlBuilder<UserDto> builder = HSqlBuilder.hFrom(User.class, "user")
                 .leftJoin(AgencyOrganization.class,"org")
@@ -58,10 +65,9 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
 
     @Override
     public ListResult<BasicDto> getUserIdName() {
-        //获取所有负责人
         SqlBuilder<BasicDto> userBuilder = HSqlBuilder.hFrom(User.class,"user")
-                .setFieldValue("name","user.realName")
-                .pagging(1,10);
+                .select(BasicDto.class)
+                .setFieldValue("name", "user.realName");
         List<BasicDto> userList = queryList(userBuilder);
         return new ListResult<>(userList);
     }
