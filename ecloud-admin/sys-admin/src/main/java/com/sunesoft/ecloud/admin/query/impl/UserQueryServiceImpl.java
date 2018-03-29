@@ -38,7 +38,7 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
     public Page<UserDto> findUserPaged(UserCriteria cretiria) {
         SqlBuilder builder = HSqlBuilder.hFrom(User.class, "u")
                 .where(cretiria.getParams())
-                .pagging(1, 2)
+                .pagging(cretiria.getPageIndex(),cretiria.getPageSize())
                 .select(UserDto.class);
         return this.queryPaged(builder);
     }
