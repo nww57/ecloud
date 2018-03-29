@@ -73,6 +73,16 @@ public class MenuController {
     }
 
     /**
+     * 删除菜单
+     * @param id
+     * @return
+     */
+    @DeleteMapping("{id}")
+    public TResult delete (@PathVariable UUID id) {
+        return menuService.delete(id);
+    }
+
+    /**
      * 获取菜单操作功能
      * @param id
      */
