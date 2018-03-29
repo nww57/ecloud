@@ -1,5 +1,7 @@
 package com.sunesoft.ecloud.admin.api;
 
+
+import com.sunesoft.ecloud.admin.api.model.ChangePassword;
 import com.sunesoft.ecloud.admin.query.UserQueryService;
 import com.sunesoft.ecloud.admin.service.UserService;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
@@ -7,18 +9,12 @@ import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-/**
- * @author: Zhouzh
- * @Date: 2018/3/21
- */
-@RestController(value = "/user")
-public class UserController {
+@RestController(value = "/agency/user")
+public class AgencyUserController {
 
     @Autowired
     UserQueryService userQueryService;
@@ -27,10 +23,21 @@ public class UserController {
     UserService userService;
 
     /**
-     * 用户基本信息
+     * 查询员工列表
      * @return
      */
-    @GetMapping("/{id}")
+    @GetMapping("search")
+    @ResponseBody
+    public Page<UserDto> search (@RequestBody UserCriteria userCriteria) {
+        return userQueryService.findUserPaged(userCriteria);
+    }
+
+    /**
+     * 获取用户信息
+     * @param id
+     * @return
+     */
+    @GetMapping("{id}")
     @ResponseBody
     public TResult<UserDto> getUserInfo (@PathVariable UUID id) {
         return userQueryService.findUserBasicById(id);
@@ -39,9 +46,8 @@ public class UserController {
     /**
      * 新增用户信息
      * @param userDto
-     * @return
      */
-    @PostMapping()
+    @PostMapping("")
     @ResponseBody
     public TResult addUserInfo (@RequestBody UserDto userDto) {
         return userService.addOrUpdateUser(userDto);
@@ -49,42 +55,36 @@ public class UserController {
 
     /**
      * 修改用户信息
-     * @param id
      * @param userDto
-     * @return
+     * @param id
      */
-    @PutMapping(value = "/{id}")
-    public TResult updateUserInfo (@PathVariable UUID id, @RequestBody UserDto userDto) {
+    @PutMapping("{id}")
+    @ResponseBody
+    public TResult updateUserInfo (@RequestBody UserDto userDto, @PathVariable UUID id) {
         userDto.setId(id);
         return userService.addOrUpdateUser(userDto);
     }
 
     /**
-     * 修改密码
+     * 重置密码
      * @param id
-     * @param oldPw
-     * @param newPw
+     * @param changePassword
      * @return
      */
-    @PutMapping(value = "/changepw/{id}")
+    @PutMapping("resetpw/{id}")
     @ResponseBody
-    public TResult changepw (@PathVariable UUID id, String oldPw, String newPw) {
-        return userService.changePassword(id, oldPw, newPw);
+    public TResult resetpw (@PathVariable UUID id, @RequestBody ChangePassword changePassword) {
+        return userService.setPassword(id, changePassword.getNewPw());
     }
 
-
-    @RequestMapping(value = "/str", method = RequestMethod.GET)
-    public String getString(){
-        return "this is a figgen test";
-    }
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
-
-    public   Page<UserDto> index(){
-        Pageable pageable = new PageRequest(0,10,null);
-        UserCriteria userCriteria = new UserCriteria();
-        userCriteria.setUserName("zhouzh");
-        Page<UserDto> userPaged = userQueryService.findUserPaged(userCriteria);
-
-        return userPaged;
+    /**
+     * 删除用户
+     * @param ids
+     * @return
+     */
+    @DeleteMapping("")
+    @ResponseBody
+    public TResult delete (@RequestParam UUID... ids) {
+        return userService.deleteUserBatch(ids);
     }
 }
