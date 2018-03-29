@@ -68,9 +68,15 @@ public class MenuDto {
     private Integer childCount;
 
     /**
-     * 父级节点菜单
+     * 父级节点
      */
-    private MenuDto parentMenu;
+    private MenuSimpleDto parentSimpleMenu;
+
+
+    /**
+     * 子级节点菜单
+     */
+    private List<MenuDto> childMenuList;
 
     /**
      * 菜单功能
@@ -174,12 +180,20 @@ public class MenuDto {
         this.childCount = childCount;
     }
 
-    public MenuDto getParentMenu() {
-        return parentMenu;
+    public MenuSimpleDto getParentSimpleMenu() {
+        return parentSimpleMenu;
     }
 
-    public void setParentMenu(MenuDto parentMenu) {
-        this.parentMenu = parentMenu;
+    public void setParentSimpleMenu(MenuSimpleDto parentSimpleMenu) {
+        this.parentSimpleMenu = parentSimpleMenu;
+    }
+
+    public List<MenuDto> getChildMenuList() {
+        return childMenuList;
+    }
+
+    public void setChildMenuList(List<MenuDto> childMenuList) {
+        this.childMenuList = childMenuList;
     }
 
     public List<MenuFunctionDto> getMenuFunctions() {

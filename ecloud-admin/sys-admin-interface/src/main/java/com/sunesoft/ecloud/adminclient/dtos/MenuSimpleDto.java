@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
+import com.sun.tools.javac.util.List;
 import com.sunesoft.ecloud.adminclient.MenuType;
 
 import java.util.UUID;
@@ -11,6 +12,11 @@ import java.util.UUID;
 public class MenuSimpleDto {
 
     private UUID id;
+
+    /**
+     * 索引
+     */
+    private String menuIndex;
 
     /**
      *菜单名称
@@ -27,12 +33,25 @@ public class MenuSimpleDto {
      */
     private MenuSimpleDto parentMenu;
 
+    /**
+     * 子级节点菜单
+     */
+    private List<MenuSimpleDto> chiledrenMenu;
+
     public UUID getId() {
         return id;
     }
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public String getMenuIndex() {
+        return menuIndex;
+    }
+
+    public void setMenuIndex(String menuIndex) {
+        this.menuIndex = menuIndex;
     }
 
     public String getName() {
@@ -59,4 +78,11 @@ public class MenuSimpleDto {
         this.parentMenu = parentMenu;
     }
 
+    public List<MenuSimpleDto> getChiledrenMenu() {
+        return chiledrenMenu;
+    }
+
+    public void setChiledrenMenu(List<MenuSimpleDto> chiledrenMenu) {
+        this.chiledrenMenu = chiledrenMenu;
+    }
 }

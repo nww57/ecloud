@@ -21,6 +21,7 @@ import java.util.UUID;
  */
 @Service
 @Transactional
+
 public class MenuServiceImpl implements MenuService {
 
     @Autowired
@@ -30,20 +31,21 @@ public class MenuServiceImpl implements MenuService {
     public TResult addOrUpdateMenu(MenuDto menuDto) {
         Menu menu;
         if(menuDto.getId()!=null){//修改
-            menu=menuRepository.getOne(menuDto.getId());
+            menu=menuRepository.findOne(menuDto.getId());
             BeanUtil.copyPropertiesIgnoreNull(menuDto,menu);
         }else{//新增
             menu=new Menu();
             BeanUtil.copyPropertiesIgnoreNull(menuDto,menu);
-
         }
         Menu save = menuRepository.save(menu);
-        if(menuDto.getParentMenu()!=null){
-            menuDto.setMenuIndex(menuDto.getParentMenu().getMenuIndex()+"."+save.getId());
+        if(menuDto.getParentSimpleMenu()!=null){
+            menuDto.setMenuIndex(menuDto.getParentSimpleMenu().getMenuIndex()+"."+save.getId());
         }else{
             menuDto.setMenuIndex(save.getId()+"");
         }
-        return (TResult) ResultFactory.success(save);
+        menu.setParentMenu(menuRepository.findOne(menuDto.getParentSimpleMenu().getId()));
+        Menu result = menuRepository.save(menu);
+        return (TResult) ResultFactory.success(result);
     }
 
     @Override
