@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
@@ -27,7 +29,7 @@ public class AgencyServiceImplTest {
     @Test
     public void addOrUpdateAgency() throws Exception {
             AgencyDto dto = new AgencyDto();
-            dto.setId(UUID.fromString("200e6946-70e3-4087-839a-0491c631caf1"));
+            dto.setId(UUID.fromString("074a3949-9986-4b39-bf3c-aea94324eca3"));
             dto.setName("asdfasdfa");
             dto.setCode("DW00232");
             dto.setCountry("Chinasadfa");
@@ -42,6 +44,11 @@ public class AgencyServiceImplTest {
             dto.setStreet("科教称adf");
             dto.setZipcode("21000adfad");
             dto.setServerEndDate("2019-3-27");
+        List<UUID> uuidList = new ArrayList<UUID>(){{
+                add(UUID.fromString("0bd1dacb-18a6-46ca-a2ea-bf95d3f974ee"));
+            add(UUID.fromString("35da891e-ecf7-4dd0-a5c2-28b1761e60c0"));
+        }} ;
+        dto.setMenuIds(uuidList);
             TResult dto2 = agencyService.addOrUpdateAgency(dto);
 
 //        for (int i = 2; i < 15; i++) {

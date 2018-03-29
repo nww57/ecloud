@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import sun.java2d.pipe.SpanIterator;
 
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -27,9 +27,14 @@ public class AgencyRoleServiceImplTest {
     @Test
     public void addOrUpdateRole() throws Exception {
         AgencyRoleDto dto = new AgencyRoleDto();
-        dto.setAgId(UUID.fromString("200e6946-70e3-4087-839a-0491c631caf1"));
         dto.setName("业务顾问");
         dto.setDescription("这是个业务顾问XXx");
+        Map<UUID,List<UUID>> map = new HashMap<>();
+        List<UUID> func = new ArrayList<UUID>(){{
+            add(UUID.fromString("6529eb3a-ce3a-4412-8430-263b3713c0ae"));
+        }};
+        map.put(UUID.fromString("0bd1dacb-18a6-46ca-a2ea-bf95d3f974ee"),func);
+        dto.setAuthList(map);
         roleService.addOrUpdateRole(dto);
         System.out.println(23);
     }

@@ -1,6 +1,7 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -9,10 +10,6 @@ import java.util.UUID;
  */
 public class AgencyRoleDto extends  BasicDto{
 
-    /**
-     * 所属企业id
-     */
-    private UUID agId;
 
     /**
      * 角色描述
@@ -22,16 +19,8 @@ public class AgencyRoleDto extends  BasicDto{
     /**
      * 权限信息
      */
-    private List<AgencyRoleMenuDto> authList;
+    private Map<UUID,List<UUID>> authList;
 
-
-    public UUID getAgId() {
-        return agId;
-    }
-
-    public void setAgId(UUID agId) {
-        this.agId = agId;
-    }
 
     public String getDescription() {
         return description;
@@ -41,11 +30,11 @@ public class AgencyRoleDto extends  BasicDto{
         this.description = description;
     }
 
-    public List<AgencyRoleMenuDto> getAuthList() {
+    public Map<UUID, List<UUID>> getAuthList() {
         return authList;
     }
 
-    public void setAuthList(List<AgencyRoleMenuDto> authList) {
+    public void setAuthList(Map<UUID, List<UUID>> authList) {
         this.authList = authList;
     }
 }

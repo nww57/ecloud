@@ -49,7 +49,9 @@ public class AgencyOrganizationQueryServiceImpl extends GenericQuery implements 
 
     @Override
     public ListResult<BasicDto> getOrganizationIdName() {
-        return null;
+        SqlBuilder<BasicDto> builder = HSqlBuilder.hFrom(AgencyOrganization.class,"org")
+                .select(BasicDto.class);
+        return new ListResult<>(queryList(builder));
     }
 
 

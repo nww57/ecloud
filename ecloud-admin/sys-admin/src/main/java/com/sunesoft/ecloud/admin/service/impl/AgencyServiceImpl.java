@@ -1,7 +1,11 @@
 package com.sunesoft.ecloud.admin.service.impl;
 
 import com.sunesoft.ecloud.admin.domain.agency.Agency;
+import com.sunesoft.ecloud.admin.domain.agency.AgencyAuthorizedMenu;
+import com.sunesoft.ecloud.admin.domain.menu.Menu;
+import com.sunesoft.ecloud.admin.repository.AgencyAuthorizedMenuRepository;
 import com.sunesoft.ecloud.admin.repository.AgencyRepository;
+import com.sunesoft.ecloud.admin.repository.MenuRepository;
 import com.sunesoft.ecloud.admin.service.AgencyService;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyDto;
@@ -12,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -26,7 +32,11 @@ public class AgencyServiceImpl implements AgencyService{
     @Autowired
     AgencyRepository agencyRepository;
 
+    @Autowired
+    MenuRepository  menuRepository;
 
+    @Autowired
+    AgencyAuthorizedMenuRepository authMenuRepository;
 
     @Override
     public TResult addOrUpdateAgency(AgencyDto agencyDto) {
@@ -48,7 +58,23 @@ public class AgencyServiceImpl implements AgencyService{
             e.printStackTrace();
         }
         //todo 配置菜单
-        agencyRepository.saveAndFlush(agency);
+        agency = agencyRepository.saveAndFlush(agency);
+        List<UUID> menuIds = agencyDto.getMenuIds();
+        if(null!=menuIds && menuIds.size()>0){
+            UUID agId = agency.getId();
+
+            List<Menu> menus = menuRepository.findAll(menuIds);
+
+            List<AgencyAuthorizedMenu> authMenuList = new ArrayList<>();
+            AgencyAuthorizedMenu authMenu;
+            for (Menu menu : menus) {
+                authMenu = new AgencyAuthorizedMenu();
+                authMenu.setAgencyId(agId);
+                authMenu.setMenu(menu);
+                authMenuList.add(authMenu);
+            }
+            authMenuRepository.save(authMenuList);
+        }
         return new TResult<>(agencyDto);
     }
 

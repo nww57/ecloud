@@ -33,7 +33,7 @@ public class UserServiceImplTest {
             userDto.setCallphone("23231324");
             userDto.setEmail("1233@qq.com");
             userDto.setWorkon(true);
-            userDto.setOrganizationId(UUID.fromString("f5c3aaa2-24aa-4479-9bc6-d3af988c604a"));
+            userDto.setOrganizationId(UUID.fromString("8375a551-8759-4bc4-9e3c-59fd12d8ebb4"));
             userService.addOrUpdateUser(userDto);
         }
 //        UserDto userDto = new UserDto();

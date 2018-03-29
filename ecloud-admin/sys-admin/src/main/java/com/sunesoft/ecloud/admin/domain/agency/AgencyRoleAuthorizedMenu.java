@@ -22,8 +22,8 @@ public class AgencyRoleAuthorizedMenu extends IEntity {
     @JoinColumn(name = "menuId", referencedColumnName = "menuId")
     private AgencyAuthorizedMenu agencyMenu;
 
-    @OneToMany
-    @JoinColumn(name = "roleMenuId")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "roleMenuId",referencedColumnName = "menuId")
     private List<AgencyMenuAuthorizedFunction> roleMenuFunctionEntities;
 
     public AgencyRole getRole() {

@@ -28,10 +28,10 @@ public class MenuServiceImplTest {
     @Test
     public void addOrUpdateMenu() throws Exception {
         MenuDto menuDto=new MenuDto();
-        menuDto.setId(UUID.fromString("52996c7b-ba83-4af0-ad92-04084b4fac52"));
-        menuDto.setName("test2");
-        menuDto.setSort(11);
-        menuDto.setDescription("asdasdasd1");
+//        menuDto.setId(UUID.fromString("52996c7b-ba83-4af0-ad92-04084b4fac52"));
+        menuDto.setName("test3");
+        menuDto.setSort(1);
+        menuDto.setDescription("asdf23424");
         TResult tResult = menuService.addOrUpdateMenu(menuDto);
         System.out.println(tResult);
     }

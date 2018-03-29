@@ -1,11 +1,14 @@
 package com.sunesoft.ecloud.admin.query.impl;
 
+import com.sunesoft.ecloud.admin.domain.agency.AgencyMenuAuthorizedFunction;
 import com.sunesoft.ecloud.admin.domain.agency.AgencyRole;
+import com.sunesoft.ecloud.admin.domain.agency.AgencyRoleAuthorizedMenu;
 import com.sunesoft.ecloud.admin.query.AgencyRoleQueryService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyRoleCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyRoleDto;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyRoleViewDto;
 import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
+import com.sunesoft.ecloud.adminclient.dtos.MenuFuncIdDto;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
@@ -14,13 +17,15 @@ import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Auther: niww
  * @Date: 2018/3/28/028
  */
 @Service
+@SuppressWarnings("ALL")
 public class AgencyRoleQueryServiceImpl extends GenericQuery implements AgencyRoleQueryService {
 
 
@@ -40,7 +45,32 @@ public class AgencyRoleQueryServiceImpl extends GenericQuery implements AgencyRo
         SqlBuilder<AgencyRoleDto> dtoBuilder = HSqlBuilder.hFrom(AgencyRole.class, "role")
                 .where("id",id)
                 .select(AgencyRoleDto.class);
+        dto = queryForObject(dtoBuilder);
         //todo 查询菜单
+        SqlBuilder<BasicDto> roleMenuList = HSqlBuilder.hFrom(AgencyRoleAuthorizedMenu.class, "roleMenu")
+                .where("roleMenu.roleId",id)
+                .select(BasicDto.class)
+                .selectField("roleMenu.menuId","id");
+        List<UUID> roleMenuListId = queryList(roleMenuList).stream().map(BasicDto::getId).collect(Collectors.toList());
+        //获取功能 todo in roleMenuListId
+        SqlBuilder<MenuFuncIdDto> funcList = HSqlBuilder.hFrom(AgencyMenuAuthorizedFunction.class, "roleMenuFunc")
+                .where("roleMenuFunc.roleMenuId",roleMenuListId)
+                .select(MenuFuncIdDto.class)
+                .setFieldValue("menuId","roleMenuFunc.roleMenuId")
+                .setFieldValue("funcId","roleMenuFunc.funcId");
+        List<MenuFuncIdDto> menuFuncDtoList = queryList(funcList);
+        Map<UUID,List<UUID>> map = new HashMap<>();
+        roleMenuListId.forEach(menuId->{
+            if(null == map.get(menuId)){
+                map.put(menuId,new ArrayList<>());
+            }
+            menuFuncDtoList.forEach(menuFunc->{
+                if(Objects.equals(menuFunc.getMenuId(),menuId)){
+                    map.get(menuId).add(menuFunc.getFuncId());
+                }
+            });
+        });
+        dto.setAuthList(map);
         return new TResult<>(dto);
     }
 
@@ -60,4 +90,6 @@ public class AgencyRoleQueryServiceImpl extends GenericQuery implements AgencyRo
                 .select(AgencyRoleViewDto.class);
         return null;
     }
+
+
 }

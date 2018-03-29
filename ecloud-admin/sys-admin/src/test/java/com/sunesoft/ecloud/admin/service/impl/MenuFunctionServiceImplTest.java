@@ -29,12 +29,12 @@ public class MenuFunctionServiceImplTest {
     @Test
     public void addOrUpdateFunction() throws Exception {
         MenuFunctionDto menuFunctionDto=new MenuFunctionDto();
-        menuFunctionDto.setId(UUID.fromString("ca7c25cb-896d-411a-93c8-97c8f8921a48"));
-        menuFunctionDto.setName("Function5啊");
+//        menuFunctionDto.setId(UUID.fromString("ca7c25cb-896d-411a-93c8-97c8f8921a48"));
+        menuFunctionDto.setName("新增");
         menuFunctionDto.setDescription("cccccc");
         menuFunctionDto.setResName("ccccc");
         menuFunctionDto.setResUrl("cccccc");
-        TResult tResult = menuFunctionService.addOrUpdateFunction(menuFunctionDto, UUID.fromString("52996c7b-ba83-4af0-ad92-04084b4fac52"));
+        TResult tResult = menuFunctionService.addOrUpdateFunction(menuFunctionDto, UUID.fromString("0bd1dacb-18a6-46ca-a2ea-bf95d3f974ee"));
         System.out.println(tResult);
 
     }
