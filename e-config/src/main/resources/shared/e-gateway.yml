@@ -10,8 +10,15 @@ ribbon:
   ReadTimeout: 20000
   ConnectTimeout: 20000
 
+jwt:
+  header: Authorization
+  secret: mySecret
+  expiration: 604800
+
 zuul:
   ignoredServices: '*'
+  sensitive-headers:
+  prefix: /api #为zuul设置一个公共的前缀
   host:
     connect-timeout-millis: 20000
     socket-timeout-millis: 20000
@@ -22,8 +29,15 @@ zuul:
         url: http://localhost:5000
         stripPrefix: false
         sensitiveHeaders:
+    admin-service:
+            path: /admin/**
+            url: http://localhost:5010
+            stripPrefix: false
+            sensitiveHeaders:
 
-
+gate:
+  ignore:
+    startWith: /uaa
 
 server:
   port: 4000

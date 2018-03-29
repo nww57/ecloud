@@ -27,7 +27,7 @@ $(function () {
 
     function doLogin(loginData) {
         $.ajax({
-            url: "/uaa/auth",
+            url: "/api/uaa/auth",
             type: "POST",
             data: JSON.stringify(loginData),
             contentType: "application/json; charset=utf-8",
@@ -76,7 +76,7 @@ $(function () {
 
     function showUserInformation() {
         $.ajax({
-            url: "/uaa/user",
+            url: "/api/uaa/user",
             type: "GET",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -149,7 +149,7 @@ $(function () {
 
     $("#exampleServiceBtn").click(function () {
         $.ajax({
-            url: "/uaa/persons",
+            url: "/api/uaa/persons",
             type: "GET",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -165,7 +165,7 @@ $(function () {
 
     $("#adminServiceBtn").click(function () {
         $.ajax({
-            url: "/uaa/protected",
+            url: "/api/uaa/protected",
             type: "GET",
             contentType: "application/json; charset=utf-8",
             headers: createAuthorizationTokenHeader(),

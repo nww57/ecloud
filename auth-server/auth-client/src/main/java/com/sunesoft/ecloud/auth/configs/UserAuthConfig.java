@@ -1,4 +1,4 @@
-package com.sunesoft.ecloud.core.auth.config;
+package com.sunesoft.ecloud.auth.configs;
 
 import org.springframework.beans.factory.annotation.Value;
 
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class UserAuthConfig {
 
-    @Value("${auth.user.token-header}")
+    @Value("${jwt.header}")
     private String tokenHeader;
 
     private byte[] pubKeyByte;
