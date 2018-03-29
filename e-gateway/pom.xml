@@ -74,6 +74,11 @@
 			<groupId>org.jolokia</groupId>
 			<artifactId>jolokia-core</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.sunesoft.ecloud</groupId>
+			<artifactId>auth-client</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

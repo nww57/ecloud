@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-@RestController("/agency/org")
+@RestController
+@RequestMapping("/agency/org")
 public class AgencyOrgController {
 
     @Autowired
@@ -26,8 +27,7 @@ public class AgencyOrgController {
      * @return
      */
     @GetMapping("search")
-    @ResponseBody
-    public ListResult<AgencyOrganizationDto> search (@RequestParam AgencyOrganizationCriteria criteria) {
+    public ListResult<AgencyOrganizationDto> search (AgencyOrganizationCriteria criteria) {
         return organizationQueryServicce.findAgencyOrganization(criteria);
     }
 
@@ -37,7 +37,6 @@ public class AgencyOrgController {
      * @return
      */
     @GetMapping("{id}")
-    @ResponseBody
     public TResult<AgencyOrganizationDto> getInfo (@PathVariable UUID id) {
         return organizationQueryServicce.findAgencyOrganizationBasicById(id);
     }
@@ -47,8 +46,7 @@ public class AgencyOrgController {
      * @param agencyOrganizationDto
      * @return
      */
-    @PostMapping()
-    @ResponseBody
+    @PostMapping("")
     public TResult addInfo (@RequestBody AgencyOrganizationDto agencyOrganizationDto) {
         return organizationService.addOrUpdateOrganization(agencyOrganizationDto);
     }
@@ -60,10 +58,19 @@ public class AgencyOrgController {
      * @return
      */
     @PutMapping("{id}")
-    @ResponseBody
     public TResult updateInfo (@PathVariable UUID id, @RequestBody AgencyOrganizationDto agencyOrganizationDto) {
         agencyOrganizationDto.setId(id);
         return organizationService.addOrUpdateOrganization(agencyOrganizationDto);
+    }
+
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    @DeleteMapping
+    public TResult batchDel (@RequestParam UUID... ids) {
+        return organizationService.deleteBatch(ids);
     }
 
 }

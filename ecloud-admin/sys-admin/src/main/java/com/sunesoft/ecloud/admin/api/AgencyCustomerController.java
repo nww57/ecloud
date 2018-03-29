@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-@RestController("agency/customer")
+@RestController
+@RequestMapping("/agency/customer")
 public class AgencyCustomerController {
 
     @Autowired
@@ -24,8 +25,7 @@ public class AgencyCustomerController {
      * 客户查询
      */
     @GetMapping("search")
-    @ResponseBody
-    public Page<AgencyCustomerDto> search (@RequestBody AgencyCustomerCriteria agencyCustomerCriteria) {
+    public Page<AgencyCustomerDto> search (AgencyCustomerCriteria agencyCustomerCriteria) {
         return agencyCustomerQueryService.findAgencyCustomerPaged(agencyCustomerCriteria);
     }
 
@@ -34,7 +34,6 @@ public class AgencyCustomerController {
      * @param id
      */
     @GetMapping("{id}")
-    @ResponseBody
     public TResult<AgencyCustomerDto> getInfo (@PathVariable UUID id) {
         return agencyCustomerQueryService.findAgencyCustomerBasicById(id);
     }
@@ -44,8 +43,7 @@ public class AgencyCustomerController {
      * @param agencyCustomerDto
      * @return
      */
-    @PostMapping()
-    @ResponseBody
+    @PostMapping("")
     public TResult addInfo (@RequestBody AgencyCustomerDto agencyCustomerDto) {
         return agencyCustomerService.addOrUpdateAgencyCustomer(agencyCustomerDto);
     }
@@ -55,7 +53,6 @@ public class AgencyCustomerController {
      * @param id
      */
     @PutMapping("{id}")
-    @ResponseBody
     public TResult updateInfo (@PathVariable UUID id, @RequestBody AgencyCustomerDto agencyCustomerDto) {
         agencyCustomerDto.setId(id);
         return agencyCustomerService.addOrUpdateAgencyCustomer(agencyCustomerDto);
@@ -66,7 +63,6 @@ public class AgencyCustomerController {
      * @param ids
      */
     @DeleteMapping("")
-    @ResponseBody
     public void deleteCustomer (@RequestParam UUID... ids) {
         agencyCustomerService.deleteBatch(ids);
     }

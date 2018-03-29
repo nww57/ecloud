@@ -12,9 +12,11 @@ import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
-@RestController("menu")
+@RestController
+@RequestMapping("/menu")
 public class MenuController {
 
     @Autowired
@@ -34,7 +36,6 @@ public class MenuController {
      * @return
      */
     @GetMapping("search")
-    @ResponseBody
     public ListResult<MenuSimpleDto> search () {
         return menuQueryService.findAllSimpleMenu();
     }
@@ -45,7 +46,6 @@ public class MenuController {
      * @return
      */
     @GetMapping("{id}")
-    @ResponseBody
     public TResult<MenuDto> getInfo (@PathVariable UUID id) {
         return menuQueryService.findMenuByID(id);
     }
@@ -55,8 +55,7 @@ public class MenuController {
      * @param menuDto
      * @return
      */
-    @PostMapping()
-    @ResponseBody
+    @PostMapping("")
     public TResult addInfo (@RequestBody MenuDto menuDto) {
        return menuService.addOrUpdateMenu(menuDto);
     }
@@ -68,7 +67,6 @@ public class MenuController {
      * @return
      */
     @PutMapping("{id}")
-    @ResponseBody
     public TResult updateInfo (@PathVariable UUID id, @RequestBody MenuDto menuDto) {
         menuDto.setId(id);
         return menuService.addOrUpdateMenu(menuDto);
@@ -79,7 +77,6 @@ public class MenuController {
      * @param id
      */
     @GetMapping("{id}/function")
-    @ResponseBody
     public ListResult<MenuFunctionDto> searchFunction (@PathVariable UUID id) {
         return functionQueryService.queryMenuFunction(id);
     }
@@ -91,7 +88,6 @@ public class MenuController {
      * @return
      */
     @PostMapping("{mid}/function")
-    @ResponseBody
     public TResult addFunction (@RequestBody MenuFunctionDto menuFunctionDto, @PathVariable UUID mid) {
         return menuFunctionService.addOrUpdateFunction(menuFunctionDto, mid);
     }
@@ -104,11 +100,20 @@ public class MenuController {
      * @return
      */
     @PutMapping("{mid}/function/{fid}")
-    @ResponseBody
     public TResult updateFunction (@RequestBody MenuFunctionDto menuFunctionDto,
                                    @PathVariable UUID mid,
                                    @PathVariable UUID fid) {
         menuFunctionDto.setId(fid);
         return menuFunctionService.addOrUpdateFunction(menuFunctionDto, mid);
+    }
+
+    /**
+     * 删除菜单功能
+     * @param ids
+     * @return
+     */
+    @DeleteMapping("{id}/function")
+    public TResult delFunction (@PathVariable UUID id, @RequestParam List<UUID> ids) {
+        return menuFunctionService.delete(ids);
     }
 }

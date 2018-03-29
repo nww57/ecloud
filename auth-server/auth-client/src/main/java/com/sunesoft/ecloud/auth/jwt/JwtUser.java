@@ -1,48 +1,41 @@
-package com.sunesoft.ecloud.core.auth.jwt;
+package com.sunesoft.ecloud.auth.jwt;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
  * @author: Zhouzh
  * @Date: 2018/3/24
  */
-public class JwtUser{
+public class JwtUser {
 
     private final UUID id;
-    private final UUID corpId;
+    private final UUID agencyid;
     private final String username;
-    private final String firstname;
-    private final String lastname;
-    private final String password;
-    private final String email;
-    private final Collection<String> authorities;
+    private final String realname;
+    private final List<String> authorities;
     private final boolean enabled;
     private final Date lastPasswordResetDate;
 
     public JwtUser(
-          UUID id,
-          String username,
-          String firstname,
-          String lastname,
-          String email,
-          String password, Collection<String> authorities,
-          boolean enabled,
-          UUID corpid,
-          Date lastPasswordResetDate
+            String username,
+            UUID id,
+            UUID agencyid,
+            String realname,
+            List<String> roles,
+            boolean enabled,
+            Date lastPasswordResetDate
     ) {
         this.id = id;
         this.username = username;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.email = email;
-        this.password = password;
-        this.authorities = authorities;
+        this.realname = realname;
+        this.authorities = roles;
         this.enabled = enabled;
-        this.corpId= corpid;
+        this.agencyid = agencyid;
         this.lastPasswordResetDate = lastPasswordResetDate;
     }
 
@@ -50,9 +43,10 @@ public class JwtUser{
     public UUID getId() {
         return id;
     }
-    @JsonIgnore
-    public UUID getCorpId() {
-        return corpId;
+
+
+    public UUID getAgencyid() {
+        return agencyid;
     }
 
     public String getUsername() {
@@ -74,21 +68,8 @@ public class JwtUser{
         return true;
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    @JsonIgnore
-    public String getPassword() {
-        return password;
+    public String getRealname() {
+        return realname;
     }
 
 

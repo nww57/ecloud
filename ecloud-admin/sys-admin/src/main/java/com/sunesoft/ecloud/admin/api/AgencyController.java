@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-@RestController("/agency")
+@RestController
+@RequestMapping("/agency")
 public class AgencyController {
     @Autowired
     AgencyService agencyService;
@@ -25,8 +26,7 @@ public class AgencyController {
      * @param agencyCriteria
      */
     @GetMapping("search")
-    @ResponseBody
-    public Page<AgencyDto> search (@RequestBody AgencyCriteria agencyCriteria) {
+    public Page<AgencyDto> search (AgencyCriteria agencyCriteria) {
         return agencyQueryService.findAgencyPaged(agencyCriteria);
     }
 
@@ -36,7 +36,6 @@ public class AgencyController {
      * @return
      */
     @GetMapping("basic/{id}")
-    @ResponseBody
     public TResult<AgencyBasicDto> getBasicInfo (@PathVariable UUID id) {
         return agencyQueryService.findAgencyBasicInfoById(id);
     }
@@ -48,7 +47,6 @@ public class AgencyController {
      * @return
      */
     @PutMapping("basic/{id}")
-    @ResponseBody
     public TResult updateBasicInfo (@RequestBody AgencyBasicDto agencyBasicDto, @PathVariable UUID id) {
         agencyBasicDto.setId(id);
         return agencyService.updateAgencyBasicInfo(agencyBasicDto);
@@ -60,7 +58,6 @@ public class AgencyController {
      * @return
      */
     @GetMapping("{id}")
-    @ResponseBody
     public TResult getInfo (@PathVariable UUID id) {
         return agencyQueryService.findAgencyDetailInfoById(id);
     }
@@ -71,7 +68,6 @@ public class AgencyController {
      * @return
      */
     @PostMapping("")
-    @ResponseBody
     public TResult addInfo (@RequestBody AgencyDto agencyDto) {
         return agencyService.addOrUpdateAgency(agencyDto);
     }
@@ -83,7 +79,6 @@ public class AgencyController {
      * @return
      */
     @PutMapping("{id}")
-    @ResponseBody
     public TResult updateInfo (@RequestBody AgencyDto agencyDto, @PathVariable UUID id) {
         agencyDto.setId(id);
         return agencyService.addOrUpdateAgency(agencyDto);
@@ -96,7 +91,6 @@ public class AgencyController {
      * @return
      */
     @DeleteMapping()
-    @ResponseBody
     public TResult delete (@RequestParam UUID... ids) {
         return agencyService.deleteBatch(ids);
     }

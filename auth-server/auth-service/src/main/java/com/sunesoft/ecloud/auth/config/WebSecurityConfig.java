@@ -1,7 +1,6 @@
 package com.sunesoft.ecloud.auth.config;
 
 import com.sunesoft.ecloud.auth.security.JwtAuthenticationEntryPoint;
-import com.sunesoft.ecloud.auth.security.JwtAuthorizationTokenFilter;
 import com.sunesoft.ecloud.auth.security.JwtTokenUtil;
 import com.sunesoft.ecloud.auth.security.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;

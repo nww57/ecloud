@@ -1,6 +1,6 @@
-package com.sunesoft.ecloud.core.auth.config;
+package com.sunesoft.ecloud.auth.configs;
 
-import com.sunesoft.ecloud.core.auth.interceptor.OkHttpTokenInterceptor;
+import com.sunesoft.ecloud.auth.interceptor.OkHttpTokenInterceptor;
 import feign.Feign;
 import okhttp3.ConnectionPool;
 import org.springframework.beans.factory.annotation.Autowired;
