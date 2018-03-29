@@ -2,7 +2,7 @@ package com.sunesoft.ecloud.admin.query.impl;
 
 import com.sunesoft.ecloud.admin.domain.agency.AgencyOrganization;
 import com.sunesoft.ecloud.admin.domain.agency.User;
-import com.sunesoft.ecloud.admin.query.AgencyOrganizationQueryServicce;
+import com.sunesoft.ecloud.admin.query.AgencyOrganizationQueryService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyOrganizationCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyOrganizationDto;
 import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
@@ -24,7 +24,7 @@ import java.util.UUID;
  */
 @Service
 @SuppressWarnings("All")
-public class AgencyOrganizationQueryServiceImpl extends GenericQuery implements AgencyOrganizationQueryServicce {
+public class AgencyOrganizationQueryServiceImpl extends GenericQuery implements AgencyOrganizationQueryService {
 
 
     @Override
