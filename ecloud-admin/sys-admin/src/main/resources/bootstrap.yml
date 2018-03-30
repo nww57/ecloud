@@ -13,3 +13,6 @@ eureka:
       statusPageUrlPath: /sysamdin/info
       metadata-map:
         management.context-path: /sysamdin
+
+ecloud:
+   agId: d2d512f3-0a6c-4373-9ab2-a348fb616d7a

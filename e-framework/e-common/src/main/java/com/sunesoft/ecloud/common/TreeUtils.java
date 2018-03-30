@@ -32,11 +32,11 @@ public class TreeUtils {
         for (T it : list) {
             if (it.getPid() == null)//如果是顶级节点
                 continue;
-            if (treeNode.getChiledren() == null) {
-                treeNode.setChiledren(new ArrayList<T>());
+            if (treeNode.getChildren() == null) {
+                treeNode.setChildren(new ArrayList<T>());
             }
             if (treeNode.getId().equals(it.getPid())) {//查到的节点是当前节点treeNode的子节点
-                treeNode.getChiledren().add(findChildren(it, list));
+                treeNode.getChildren().add(findChildren(it, list));
             }
 
         }

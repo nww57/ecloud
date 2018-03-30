@@ -9,6 +9,7 @@ import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -21,14 +22,17 @@ import java.util.UUID;
 @Service
 public class AgencyCustomerQueryServiceImpl extends GenericQuery implements AgencyCustomerQueryService {
 
-    public static final UUID agId = UUID.fromString("200e6946-70e3-4087-839a-0491c631caf1");
+//    public static final UUID agId = UUID.fromString("200e6946-70e3-4087-839a-0491c631caf1");
+
+    @Value("${ecloud.agId}")
+    private UUID agId;
 
     @Override
     public Page<AgencyCustomerDto> findAgencyCustomerPaged(AgencyCustomerCriteria criteria) {
         SqlBuilder<AgencyCustomerDto> dtoBuilder = HSqlBuilder.hFrom(AgencyCustomer.class, "c")
                 .leftJoin(User.class,"u")
                 .on("c.consultantId = u.id")
-                .where("c.agId",agId)
+                //.where("c.agId",agId)
                 .pagging(criteria.getPageIndex(),criteria.getPageSize())
                 .select(AgencyCustomerDto.class)
                 .setFieldValue("consultantId","u.id")

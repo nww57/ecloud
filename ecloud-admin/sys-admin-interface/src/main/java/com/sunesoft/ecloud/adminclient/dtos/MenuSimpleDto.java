@@ -36,7 +36,7 @@ public class MenuSimpleDto extends TreeEntity {
     /**
      * 子级节点菜单
      */
-    private List<MenuSimpleDto> chiledren= new ArrayList<>();
+    private List<MenuSimpleDto> children= new ArrayList<>();
 
 
     public String getMenuIndex() {
@@ -63,12 +63,11 @@ public class MenuSimpleDto extends TreeEntity {
         this.sort = sort;
     }
 
-    public List<MenuSimpleDto> getChiledren() {
-        return chiledren;
+    public List<MenuSimpleDto> getChildren() {
+        return children;
     }
 
-    public void setChiledren(List list) {
-        this.chiledren = list;
+    public void setChildren(List children) {
+        this.children = children;
     }
-
 }

@@ -41,7 +41,7 @@ public class MenuServiceImpl implements MenuService {
         if(menuDto.getParentSimpleMenu()!=null){
             Menu one = menuRepository.findOne(menuDto.getParentSimpleMenu().getId());//父级菜单
             if(one!=null){
-                one.getChiledren().add(menu);
+                one.getChildren().add(menu);
                 menu.setParentMenu(one);
                 menu.setMenuIndex(one.getMenuIndex()+"."+save.getId());
             }
