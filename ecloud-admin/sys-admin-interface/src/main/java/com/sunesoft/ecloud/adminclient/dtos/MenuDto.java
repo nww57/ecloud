@@ -14,7 +14,7 @@ import java.util.UUID;
 public class MenuDto  extends TreeEntity {
 
 
-    private ModuleDto module;
+    private ModuleDto moduleDto;
 
     /**
      * 索引
@@ -83,12 +83,12 @@ public class MenuDto  extends TreeEntity {
      */
     private List<MenuFunctionDto> menuFunctions;
 
-    public ModuleDto getModule() {
-        return module;
+    public ModuleDto getModuleDto() {
+        return moduleDto;
     }
 
-    public void setModule(ModuleDto module) {
-        this.module = module;
+    public void setModuleDto(ModuleDto moduleDto) {
+        this.moduleDto = moduleDto;
     }
 
     public String getMenuIndex() {

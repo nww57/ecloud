@@ -35,9 +35,9 @@ public class MenuServiceImplTest {
     @Test
     public void addOrUpdateMenu() throws Exception {
         MenuDto menuDto=new MenuDto();
-//        menuDto.setId(UUID.fromString("52996c7b-ba83-4af0-ad92-04084b4fac52"));
+        menuDto.setId(UUID.fromString("f28586a2-9e12-47e0-88a5-f9b14b98f0d7"));
 
-        menuDto.setName("测试2");
+        menuDto.setName("测试2修改");
         menuDto.setSort(1);
         menuDto.setDescription("测试啊");
 
