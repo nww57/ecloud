@@ -68,7 +68,7 @@ public class AgencyServiceImpl implements AgencyService{
         if(null!=menuIds && menuIds.size()>0){
             UUID agId = agency.getId();
             //找出原有的菜单，跟新的匹配，去掉旧的，添加新的
-            List<UUID> preAuthMenuList = agMenuRepository.getMenuId(agId);
+            List<UUID> preAuthMenuList = agMenuRepository.getMenuId(agId.toString());
 
             List<UUID> addMenuIds = new ArrayList<>();
             List<UUID> deleteMenuIds = new ArrayList<>();
@@ -109,7 +109,7 @@ public class AgencyServiceImpl implements AgencyService{
             }
         }
 
-        //todo :创建默认用户
+        //todo :
 
         return new TResult<>(agencyDto);
     }

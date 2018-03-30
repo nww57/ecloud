@@ -39,9 +39,9 @@ public class AgencyRoleServiceImplTest {
 
         Map<UUID,List<UUID>> map = new HashMap<>();
         List<UUID> func = new ArrayList<UUID>(){{
-            add(UUID.fromString("55997ad9-2645-492e-b811-e96d3e3d7ccc"));
+            add(UUID.fromString("254185e2-28d9-4400-bb16-9c5ef5a057f4"));
         }};
-        map.put(UUID.fromString("1d4597c4-fa81-41a9-ae98-0af2cb20d261"),func);
+        map.put(UUID.fromString("33e1731d-a27c-4a95-bbb9-2b956e7e3b3e"),func);
         dto.setAuthList(map);
 
         roleService.addOrUpdateRole(dto);

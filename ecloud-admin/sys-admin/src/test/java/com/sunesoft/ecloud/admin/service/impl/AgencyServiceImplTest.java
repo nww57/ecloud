@@ -30,8 +30,8 @@ public class AgencyServiceImplTest {
     public void addOrUpdateAgency() throws Exception {
             AgencyDto dto = new AgencyDto();
 
-            dto.setId(UUID.fromString("cf2c49a1-12a9-4219-938e-af99047ab575"));
-            dto.setName("asdfasdfa");
+            dto.setId(UUID.fromString("d2d512f3-0a6c-4373-9ab2-a348fb616d7a"));
+            dto.setName("ddd");
             dto.setCode("DW00232");
             dto.setCountry("Chinasadfa");
             dto.setRegisterDate("2018-3-27");
@@ -48,9 +48,9 @@ public class AgencyServiceImplTest {
 
         List<UUID> uuidList = new ArrayList<UUID>(){{
 
-//            add(UUID.fromString("1d4597c4-fa81-41a9-ae98-0af2cb20d261"));
-//            add(UUID.fromString("e1014027-32a6-4418-8573-b39c3f517379"));
-            add(UUID.fromString("ea5313a4-bbcf-4e72-b7cc-e4730c929378"));
+            add(UUID.fromString("56cfb947-2cda-4216-b1e8-92bd804d4a89"));
+            add(UUID.fromString("5612c844-5d55-4a26-916d-51ce17efc0c7"));
+            add(UUID.fromString("33e1731d-a27c-4a95-bbb9-2b956e7e3b3e"));
 
         }} ;
         dto.setMenuIds(uuidList);

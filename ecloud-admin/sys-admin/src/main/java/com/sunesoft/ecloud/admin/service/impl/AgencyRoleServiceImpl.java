@@ -8,6 +8,7 @@ import com.sunesoft.ecloud.adminclient.dtos.AgencyRoleDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
+import com.sunesoft.ecloud.common.utils.ConvertUtil;
 import com.sunesoft.ecloud.common.utils.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -68,7 +69,8 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
                 });
             }
             //todo:这里要修改 菜单id 查询
-            List<AgencyAuthorizedMenu> agencyMenuList = agencyMenuRepository.findAll();
+            List<String> me = ConvertUtil.convert(menuList,String.class);
+            List<AgencyAuthorizedMenu> agencyMenuList = agencyMenuRepository.getAgencyAurhMenu(me);
             if(null !=agencyMenuList && agencyMenuList.size()>0){
                 List<MenuFunction> functionList = menuFuncRepository.findAll(funcList);
                 List<AgencyRoleAuthorizedMenu> roleMenuList = new ArrayList<>();

@@ -8,7 +8,5 @@ import java.util.UUID;
 /**
  * Created by stephan on 20.03.16.
  */
-@Repository
 public interface OrgnizationRepository extends BaseRepository<Orgnization, UUID> {
-
 }
