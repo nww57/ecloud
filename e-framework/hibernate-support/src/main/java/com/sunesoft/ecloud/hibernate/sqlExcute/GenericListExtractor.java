@@ -38,8 +38,8 @@ public class GenericListExtractor<T extends Collection> implements ResultSetExtr
                 BeanMap beanMap = BeanMap.create(obj);
                 //将每一个字段取出进行赋值
                 for (int i = 1; i <= colCount; i++) {
-                    if (beanMap.getPropertyType(rsmd.getColumnName(i)) != null) {
-                        beanMap.put(rsmd.getColumnName(i), getObject(beanMap.getPropertyType(rsmd.getColumnName(i)), rs, i));
+                    if (beanMap.getPropertyType(rsmd.getColumnLabel(i)) != null) {
+                        beanMap.put(rsmd.getColumnLabel(i), getObject(beanMap.getPropertyType(rsmd.getColumnLabel(i)), rs, i));
                     }
                 }
                 list.add(obj);
