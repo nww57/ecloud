@@ -22,7 +22,7 @@ public class AgencyRoleAuthorizedMenu extends IEntity {
     @JoinColumn(name = "menuId")
     private AgencyAuthorizedMenu agencyMenu;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name = "roleMenuId")
     private List<AgencyMenuAuthorizedFunction> roleMenuFunctionEntities;
 

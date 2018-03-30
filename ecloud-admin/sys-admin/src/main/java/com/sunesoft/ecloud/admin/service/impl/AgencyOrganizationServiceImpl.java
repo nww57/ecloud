@@ -10,6 +10,7 @@ import com.sunesoft.ecloud.common.cretiria.OrderTurn;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,11 +29,11 @@ public class AgencyOrganizationServiceImpl implements AgencyOrganizationService 
     AgencyOrganizationRepository orgRepository;
     @Autowired
     AgencyRepository agencyRepository;
-
+    @Value("${ecloud.agId}")
+    private UUID agId;
     @Override
     public TResult addOrUpdateOrganization(AgencyOrganizationDto agencyOrganizationDto) {
 
-        UUID agId = agencyOrganizationDto.getAgId();
         UUID parentId = agencyOrganizationDto.getParentId();
         UUID id = agencyOrganizationDto.getId();
         AgencyOrganization org ;

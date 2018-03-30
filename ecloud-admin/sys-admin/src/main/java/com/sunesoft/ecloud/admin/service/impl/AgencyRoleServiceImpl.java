@@ -10,6 +10,7 @@ import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import com.sunesoft.ecloud.common.utils.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -34,10 +35,11 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
     AgencyAuthorizedMenuRepository agencyMenuRepository;
     @Autowired
     MenuFunctionRepository menuFuncRepository;
-
+    @Value("${ecloud.agId}")
+    private UUID agId;
     @Override
     public TResult addOrUpdateRole(AgencyRoleDto agencyRoleDto) {
-        UUID agId = UUID.fromString("200e6946-70e3-4087-839a-0491c631caf1");
+
         UUID id  = agencyRoleDto.getId();
         AgencyRole role;
         if(null == id){
@@ -50,13 +52,23 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
         roleRepository.saveAndFlush(role);
         //设置权限
         Map<UUID,List<UUID>> authList = agencyRoleDto.getAuthList();
+
         List<UUID> menuList = new ArrayList<>();
         List<UUID> funcList = new ArrayList<>();
         authList.forEach((key,value)->{
             menuList.add(key);
             funcList.addAll(value);
         });
-        //todo:修改
+        //先删除，在添加
+        //根据menuId查找已经存在的记录
+        List<UUID> uuidList = roleMenuRepository.getIdByMenuId(menuList);
+        if(null!=uuidList&& uuidList.size()>0){
+            uuidList.forEach(uuid -> {
+                roleMenuRepository.delete(uuid);
+            });
+        }
+
+        //todo:这里要修改 菜单id 查询
         List<AgencyAuthorizedMenu> agencyMenuList = agencyMenuRepository.findAll();
         List<MenuFunction> functionList = menuFuncRepository.findAll(funcList);
 

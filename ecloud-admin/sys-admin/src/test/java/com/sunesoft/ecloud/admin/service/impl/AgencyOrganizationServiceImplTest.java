@@ -5,6 +5,7 @@ import com.sunesoft.ecloud.adminclient.dtos.AgencyOrganizationDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -20,6 +21,8 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class AgencyOrganizationServiceImplTest {
 
+
+
     @Autowired
     AgencyOrganizationService organizationService;
 
@@ -27,7 +30,7 @@ public class AgencyOrganizationServiceImplTest {
     public void addOrUpdateOrganization() throws Exception {
         AgencyOrganizationDto dto = new AgencyOrganizationDto();
 //        dto.setParentId(UUID.fromString("cad1d2ae-f872-4e95-ae8e-656d5945563d"));
-        dto.setAgId(UUID.fromString("1326723e-9532-4ec0-9d2f-6bad0a65db3b"));
+//        dto.setAgId(UUID.fromString("1326723e-9532-4ec0-9d2f-6bad0a65db3b"));
         dto.setName("策划部");
         dto.setDescription("");
         dto.setCode("02");
