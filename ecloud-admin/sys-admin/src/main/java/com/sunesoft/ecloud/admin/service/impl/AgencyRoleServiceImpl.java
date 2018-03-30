@@ -52,45 +52,49 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
         roleRepository.saveAndFlush(role);
         //设置权限
         Map<UUID,List<UUID>> authList = agencyRoleDto.getAuthList();
-
-        List<UUID> menuList = new ArrayList<>();
-        List<UUID> funcList = new ArrayList<>();
-        authList.forEach((key,value)->{
-            menuList.add(key);
-            funcList.addAll(value);
-        });
-        //先删除，在添加
-        //根据menuId查找已经存在的记录
-        List<UUID> uuidList = roleMenuRepository.getIdByMenuId(menuList);
-        if(null!=uuidList&& uuidList.size()>0){
-            uuidList.forEach(uuid -> {
-                roleMenuRepository.delete(uuid);
+        if(null!=authList && authList.size()>0){
+            List<UUID> menuList = new ArrayList<>();
+            List<UUID> funcList = new ArrayList<>();
+            authList.forEach((key,value)->{
+                menuList.add(key);
+                funcList.addAll(value);
             });
-        }
-
-        //todo:这里要修改 菜单id 查询
-        List<AgencyAuthorizedMenu> agencyMenuList = agencyMenuRepository.findAll();
-        List<MenuFunction> functionList = menuFuncRepository.findAll(funcList);
-
-        List<AgencyRoleAuthorizedMenu> roleMenuList = new ArrayList<>();
-        AgencyRoleAuthorizedMenu roleMenu;
-        List<AgencyMenuAuthorizedFunction> menuFuncList;
-        AgencyMenuAuthorizedFunction menuFunc;
-        for(Map.Entry<UUID,List<UUID>> map:authList.entrySet()){
-            roleMenu = new AgencyRoleAuthorizedMenu();
-            menuFuncList = new ArrayList<>();
-            roleMenu.setRole(role);
-            roleMenu.setAgencyMenu(agencyMenuList.stream().filter(f-> Objects.equals(f.getMenu().getId(),map.getKey())).findAny().get());
-            List<MenuFunction> functions  = functionList.stream().filter(f->map.getValue().contains(f.getId())).collect(Collectors.toList());
-            for (MenuFunction function : functions) {
-                menuFunc = new AgencyMenuAuthorizedFunction();
-                menuFunc.setMenuFunction(function);
-                menuFuncList.add(menuFunc);
+            //先删除，在添加
+            //根据menuId查找已经存在的记录
+            List<UUID> uuidList = roleMenuRepository.getIdByMenuId(menuList);
+            if(null!=uuidList&& uuidList.size()>0){
+                uuidList.forEach(uuid -> {
+                    roleMenuRepository.delete(uuid);
+                });
             }
-            roleMenu.setRoleMenuFunctionEntities(menuFuncList);
-            roleMenuList.add(roleMenu);
+            //todo:这里要修改 菜单id 查询
+            List<AgencyAuthorizedMenu> agencyMenuList = agencyMenuRepository.findAll();
+            if(null !=agencyMenuList && agencyMenuList.size()>0){
+                List<MenuFunction> functionList = menuFuncRepository.findAll(funcList);
+                List<AgencyRoleAuthorizedMenu> roleMenuList = new ArrayList<>();
+                AgencyRoleAuthorizedMenu roleMenu;
+                List<AgencyMenuAuthorizedFunction> menuFuncList;
+                AgencyMenuAuthorizedFunction menuFunc;
+                for(Map.Entry<UUID,List<UUID>> map:authList.entrySet()){
+                    roleMenu = new AgencyRoleAuthorizedMenu();
+                    menuFuncList = new ArrayList<>();
+                    roleMenu.setRole(role);
+                    roleMenu.setAgencyMenu(agencyMenuList.stream().filter(f-> Objects.equals(f.getMenu().getId(),map.getKey())).findAny().get());
+                    List<MenuFunction> functions  = functionList.stream().filter(f->map.getValue().contains(f.getId())).collect(Collectors.toList());
+                    for (MenuFunction function : functions) {
+                        menuFunc = new AgencyMenuAuthorizedFunction();
+                        menuFunc.setMenuFunction(function);
+                        menuFuncList.add(menuFunc);
+                    }
+                    roleMenu.setRoleMenuFunctionEntities(menuFuncList);
+                    roleMenuList.add(roleMenu);
+                }
+                roleMenuRepository.save(roleMenuList);
+            }
         }
-        roleMenuRepository.save(roleMenuList);
+
+
+
         return new TResult<>(agencyRoleDto);
     }
 
