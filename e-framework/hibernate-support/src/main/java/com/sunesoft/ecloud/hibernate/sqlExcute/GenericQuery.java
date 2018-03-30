@@ -23,7 +23,7 @@ public class GenericQuery {
     private NamedParameterJdbcTemplate namedJdbcTemplate;
 
     public <E> Page<E> queryPaged(Pageable pageable, String sql, Map<String, Object> params, Class<E> clazz) {
-        String pageSql = sql + " limit " + (pageable.getPageNumber()-1) * pageable.getPageSize() + "," + pageable.getPageSize();
+        String pageSql = sql + " limit " + pageable.getPageNumber() * pageable.getPageSize() + "," + pageable.getPageSize();
         List<E> result = namedJdbcTemplate.query(pageSql, params, new GenericListExtractor<List<E>>(clazz));
         int total = queryCount(sql, params);
         Page<E> page = new PageImpl<E>(result, pageable, total);

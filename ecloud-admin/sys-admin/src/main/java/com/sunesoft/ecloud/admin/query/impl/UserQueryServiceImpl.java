@@ -50,8 +50,8 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
     @Override
     public TResult<UserDto> getUserInfo() {
         //todo 先获取用户id
-
-        return null;
+        UUID id = UUID.fromString("26ff304d-d8b1-47f6-bd29-15a92ad590a4");
+        return findUserBasicById(id);
     }
 
     @Override

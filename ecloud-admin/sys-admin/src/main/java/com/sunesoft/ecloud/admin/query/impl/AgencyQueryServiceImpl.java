@@ -37,6 +37,13 @@ public class AgencyQueryServiceImpl extends GenericQuery implements AgencyQueryS
     }
 
     @Override
+    public TResult<AgencyBasicDto> findAgencyBasicInfo() {
+        UUID agId = UUID.fromString("200e6946-70e3-4087-839a-0491c631caf1");
+
+        return findAgencyBasicInfoById(agId);
+    }
+
+    @Override
     public TResult<AgencyBasicDto> findAgencyBasicInfoById(UUID id) {
         SqlBuilder<AgencyBasicDto> builder = HSqlBuilder.hFrom(Agency.class,"agency").where("id",id).select(AgencyBasicDto.class);
         AgencyBasicDto dto = queryForObject(builder);
