@@ -11,6 +11,7 @@ import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,15 +27,17 @@ import java.util.UUID;
 @SuppressWarnings("All")
 public class AgencyOrganizationQueryServiceImpl extends GenericQuery implements AgencyOrganizationQueryService {
 
+    @Value("${ecloud.agId}")
+    private UUID agId;
 
     @Override
     public ListResult<AgencyOrganizationDto> findAgencyOrganization(AgencyOrganizationCriteria criteria) {
         SqlBuilder<AgencyOrganizationDto> builder = HSqlBuilder.hFrom(AgencyOrganization.class, "org")
                 .leftJoin(User.class,"user")
                 .on("org.leaderId = user.id")
-//            todo    .where("org.agId",criteria.getAgId())
+                .where("org.agId",agId)
                 .select(AgencyOrganizationDto.class)
-                .setFieldValue("parentId","org.parentId")
+                .setFieldValue("pid","org.parentId")
                 .setFieldValue("leaderName","user.realName")
                 .setFieldValue("leaderId","user.id");
         List<AgencyOrganizationDto> allOrg = this.queryList(builder);
