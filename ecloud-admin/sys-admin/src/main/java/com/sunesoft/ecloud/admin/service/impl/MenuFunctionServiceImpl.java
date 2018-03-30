@@ -40,7 +40,7 @@ public class MenuFunctionServiceImpl implements MenuFunctionService {
             }
             MenuFunction menuFunction;
             if(menuFunctionDto.getId()!=null){//修改
-                menuFunction=menuFunctionRepository.getOne(menuFunctionDto.getId());
+                menuFunction=menuFunctionRepository.findOne(menuFunctionDto.getId());
                 BeanUtil.copyPropertiesIgnoreNull(menuFunctionDto,menuFunction);
             }else{//新增
                 menuFunction=new MenuFunction();

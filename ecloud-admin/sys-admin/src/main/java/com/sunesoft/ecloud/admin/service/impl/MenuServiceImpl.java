@@ -39,9 +39,14 @@ public class MenuServiceImpl implements MenuService {
         }
         Menu save = menuRepository.save(menu);
         if(menuDto.getParentSimpleMenu()!=null){
-            menuDto.setMenuIndex(menuDto.getParentSimpleMenu().getMenuIndex()+"."+save.getId());
+            Menu one = menuRepository.findOne(menuDto.getParentSimpleMenu().getId());//父级菜单
+            if(one!=null){
+                one.getChiledren().add(menu);
+                menu.setParentMenu(one);
+                menu.setMenuIndex(one.getMenuIndex()+"."+save.getId());
+            }
         }else{
-            menuDto.setMenuIndex(save.getId()+"");
+            menu.setMenuIndex(save.getId()+"");
         }
 //        menu.setParentMenu(menuRepository.findOne(menuDto.getParentSimpleMenu().getId()));
         Menu result = menuRepository.save(menu);
