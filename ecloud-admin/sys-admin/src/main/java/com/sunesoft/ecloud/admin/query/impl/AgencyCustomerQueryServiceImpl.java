@@ -32,7 +32,7 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
         SqlBuilder<AgencyCustomerDto> dtoBuilder = HSqlBuilder.hFrom(AgencyCustomer.class, "c")
                 .leftJoin(User.class,"u")
                 .on("c.consultantId = u.id")
-                .where("c.agId",agId)
+                //.where("c.agId",agId)
                 .pagging(criteria.getPageIndex(),criteria.getPageSize())
                 .select(AgencyCustomerDto.class)
                 .setFieldValue("consultantId","u.id")

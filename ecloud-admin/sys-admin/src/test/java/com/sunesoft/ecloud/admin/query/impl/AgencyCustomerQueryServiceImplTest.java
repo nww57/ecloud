@@ -29,6 +29,7 @@ public class AgencyCustomerQueryServiceImplTest {
     @Test
     public void findAgencyCustomerPaged() throws Exception {
         AgencyCustomerCriteria customerCriteria = new AgencyCustomerCriteria();
+        customerCriteria.setPageIndex(0);
         Page<AgencyCustomerDto> s = queryService.findAgencyCustomerPaged(customerCriteria);
         System.out.println(23);
     }
