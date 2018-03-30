@@ -37,9 +37,13 @@ public class MenuServiceImplTest {
         MenuDto menuDto=new MenuDto();
 //        menuDto.setId(UUID.fromString("52996c7b-ba83-4af0-ad92-04084b4fac52"));
 
-        menuDto.setName("系统管理");
+        menuDto.setName("测试2");
         menuDto.setSort(1);
-        menuDto.setDescription("asdf23424");
+        menuDto.setDescription("测试啊");
+
+        MenuSimpleDto menuSimpleDto=new MenuSimpleDto();
+        menuSimpleDto.setId(UUID.fromString("d22222bf-c28f-4d00-8682-f445f64460ba"));
+        menuDto.setParentSimpleMenu(menuSimpleDto);
 
         TResult tResult = menuService.addOrUpdateMenu(menuDto);
         System.out.println(tResult);
