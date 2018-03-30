@@ -1,7 +1,7 @@
 package com.sunesoft.ecloud.admin.domain.menu;
 
-import com.sunesoft.ecloud.admin.domain.ResourcesRequestType;
-import com.sunesoft.ecloud.admin.domain.ResourcesType;
+import com.sunesoft.ecloud.adminclient.ResourcesRequestType;
+import com.sunesoft.ecloud.adminclient.ResourcesType;
 import com.sunesoft.ecloud.hibernate.IEntity;
 
 import javax.persistence.*;

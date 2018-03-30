@@ -39,7 +39,7 @@ public class MenuDto  extends TreeEntity {
     /**
      *菜单类型
      */
-    private MenuType type;
+    private MenuType type =MenuType.Link;
 
 
     /**
