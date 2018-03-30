@@ -2,10 +2,12 @@ package com.sunesoft.ecloud.admin.domain.agency;
 
 import com.sunesoft.ecloud.hibernate.BizEntity;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @Author: niww
@@ -32,9 +34,9 @@ public class AgencyRole extends BizEntity {
     @Column(name="description")
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "agId")
-    private Agency agency;
+    @Column(name = "agId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
+    private UUID agencyId;
 
     public String getName() {
         return name;
@@ -60,11 +62,11 @@ public class AgencyRole extends BizEntity {
         this.description = description;
     }
 
-    public Agency getAgency() {
-        return agency;
+    public UUID getAgencyId() {
+        return agencyId;
     }
 
-    public void setAgency(Agency agency) {
-        this.agency = agency;
+    public void setAgencyId(UUID agencyId) {
+        this.agencyId = agencyId;
     }
 }

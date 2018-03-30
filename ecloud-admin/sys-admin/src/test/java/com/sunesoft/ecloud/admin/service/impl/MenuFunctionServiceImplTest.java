@@ -37,7 +37,7 @@ public class MenuFunctionServiceImplTest {
         menuFunctionDto.setDescription("cccccc");
         menuFunctionDto.setResName("ccccc");
         menuFunctionDto.setResUrl("cccccc");
-        TResult tResult = menuFunctionService.addOrUpdateFunction(menuFunctionDto, UUID.fromString("0bd1dacb-18a6-46ca-a2ea-bf95d3f974ee"));
+        TResult tResult = menuFunctionService.addOrUpdateFunction(menuFunctionDto, UUID.fromString("1d4597c4-fa81-41a9-ae98-0af2cb20d261"));
 
         System.out.println(tResult);
 

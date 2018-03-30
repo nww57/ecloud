@@ -38,7 +38,6 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
     @Override
     public TResult addOrUpdateRole(AgencyRoleDto agencyRoleDto) {
         UUID agId = UUID.fromString("200e6946-70e3-4087-839a-0491c631caf1");
-        Agency agency = agencyRepository.findOne(agId);
         UUID id  = agencyRoleDto.getId();
         AgencyRole role;
         if(null == id){
@@ -47,7 +46,7 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
             role = roleRepository.findOne(id);
         }
         BeanUtil.copyPropertiesIgnoreNull(agencyRoleDto,role);
-        role.setAgency(agency);
+        role.setAgencyId(agId);
         roleRepository.saveAndFlush(role);
         //设置权限
         Map<UUID,List<UUID>> authList = agencyRoleDto.getAuthList();

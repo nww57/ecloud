@@ -41,6 +41,7 @@ public class UserQueryServiceImplTest {
 
 
         UserCriteria userCriteria = new UserCriteria();
+        userCriteria.setPageIndex(0);
         Page<UserDto> userPaged = userQueryService.findUserPaged(userCriteria);
 
         System.out.println(userPaged);

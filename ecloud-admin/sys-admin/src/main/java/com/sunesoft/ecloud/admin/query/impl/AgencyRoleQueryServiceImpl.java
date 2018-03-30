@@ -1,8 +1,10 @@
 package com.sunesoft.ecloud.admin.query.impl;
 
+import com.sunesoft.ecloud.admin.domain.agency.AgencyAuthorizedMenu;
 import com.sunesoft.ecloud.admin.domain.agency.AgencyMenuAuthorizedFunction;
 import com.sunesoft.ecloud.admin.domain.agency.AgencyRole;
 import com.sunesoft.ecloud.admin.domain.agency.AgencyRoleAuthorizedMenu;
+import com.sunesoft.ecloud.admin.domain.menu.MenuFunction;
 import com.sunesoft.ecloud.admin.query.AgencyRoleQueryService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyRoleCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyRoleDto;
@@ -46,18 +48,24 @@ public class AgencyRoleQueryServiceImpl extends GenericQuery implements AgencyRo
                 .where("id",id)
                 .select(AgencyRoleDto.class);
         dto = queryForObject(dtoBuilder);
-        //todo 查询菜单
+        //查询菜单id
         SqlBuilder<BasicDto> roleMenuList = HSqlBuilder.hFrom(AgencyRoleAuthorizedMenu.class, "roleMenu")
+                .leftJoin(AgencyAuthorizedMenu.class,"agMenu")
+                .on("agMenu.id = roleMenu.menuId")
                 .where("roleMenu.roleId",id)
                 .select(BasicDto.class)
-                .selectField("roleMenu.menuId","id");
+                .selectField("agMenu.menuId","id");
         List<UUID> roleMenuListId = queryList(roleMenuList).stream().map(BasicDto::getId).collect(Collectors.toList());
         //获取功能 todo in roleMenuListId
-        SqlBuilder<MenuFuncIdDto> funcList = HSqlBuilder.hFrom(AgencyMenuAuthorizedFunction.class, "roleMenuFunc")
-                .where("roleMenuFunc.roleMenuId",roleMenuListId)
+        SqlBuilder<MenuFuncIdDto> funcList = HSqlBuilder.hFrom(AgencyRoleAuthorizedMenu.class, "roleMenu")
+                .leftJoin(AgencyMenuAuthorizedFunction.class,"roleMenuFunc")
+                .on("roleMenu.id = roleMenuFunc.roleMenuId")
+                .leftJoin(MenuFunction.class,"func")
+                .on("func.id = roleMenuFunc.funcId")
+                .where("roleMenu.roleId",id)
                 .select(MenuFuncIdDto.class)
-                .setFieldValue("menuId","roleMenuFunc.roleMenuId")
-                .setFieldValue("funcId","roleMenuFunc.funcId");
+                .setFieldValue("menuId","func.menuId")
+                .setFieldValue("funcId","func.id");
         List<MenuFuncIdDto> menuFuncDtoList = queryList(funcList);
         Map<UUID,List<UUID>> map = new HashMap<>();
         roleMenuListId.forEach(menuId->{

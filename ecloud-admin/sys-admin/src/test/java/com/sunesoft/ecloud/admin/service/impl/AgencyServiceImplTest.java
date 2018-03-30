@@ -46,15 +46,15 @@ public class AgencyServiceImplTest {
             dto.setZipcode("21000adfad");
             dto.setServerEndDate("2019-3-27 13:23:23");
 
-//        List<UUID> uuidList = new ArrayList<UUID>(){{
-//
-//            add(UUID.fromString("56cfb947-2cda-4216-b1e8-92bd804d4a89"));
+        List<UUID> uuidList = new ArrayList<UUID>(){{
+
+            add(UUID.fromString("1d4597c4-fa81-41a9-ae98-0af2cb20d261"));
 //            add(UUID.fromString("5b1a19e5-f757-4034-8375-d01d539bae0b"));
 //            add(UUID.fromString("78ef2cfe-b5ea-46cb-bf52-e4cd37f1ffba"));
-////            add(UUID.fromString("f28586a2-9e12-47e0-88a5-f9b14b98f0d7"));
-////            add(UUID.fromString("fb4a45ed-1142-4c6c-b296-f8c89474c65e"));
-//        }} ;
-//        dto.setMenuIds(uuidList);
+//            add(UUID.fromString("f28586a2-9e12-47e0-88a5-f9b14b98f0d7"));
+//            add(UUID.fromString("fb4a45ed-1142-4c6c-b296-f8c89474c65e"));
+        }} ;
+        dto.setMenuIds(uuidList);
 
             TResult dto2 = agencyService.addOrUpdateAgency(dto);
 
