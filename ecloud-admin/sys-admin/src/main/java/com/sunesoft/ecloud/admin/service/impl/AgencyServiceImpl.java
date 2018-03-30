@@ -5,6 +5,7 @@ import com.sunesoft.ecloud.admin.domain.agency.AgencyAuthorizedMenu;
 import com.sunesoft.ecloud.admin.domain.menu.Menu;
 import com.sunesoft.ecloud.admin.repository.AgencyAuthorizedMenuRepository;
 import com.sunesoft.ecloud.admin.repository.AgencyRepository;
+import com.sunesoft.ecloud.admin.repository.AgencyRoleAuthorizedMenuRepository;
 import com.sunesoft.ecloud.admin.repository.MenuRepository;
 import com.sunesoft.ecloud.admin.service.AgencyService;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyBasicDto;
@@ -33,12 +34,12 @@ public class AgencyServiceImpl implements AgencyService{
     AgencyRepository agencyRepository;
     @Autowired
     AgencyAuthorizedMenuRepository agMenuRepository;
-
     @Autowired
     MenuRepository  menuRepository;
-
     @Autowired
     AgencyAuthorizedMenuRepository authMenuRepository;
+    @Autowired
+    AgencyRoleAuthorizedMenuRepository roleMenuRepository;
 
     @Override
     public TResult addOrUpdateAgency(AgencyDto agencyDto) {
@@ -66,18 +67,46 @@ public class AgencyServiceImpl implements AgencyService{
         List<UUID> menuIds = agencyDto.getMenuIds();
         if(null!=menuIds && menuIds.size()>0){
             UUID agId = agency.getId();
-            //先删除原有的配置，再重新添加
-//            agMenuRepository.deleteByAgencyId(agId);
-            List<Menu> menus = menuRepository.findAll(menuIds);
-            List<AgencyAuthorizedMenu> authMenuList = new ArrayList<>();
-            AgencyAuthorizedMenu authMenu;
-            for (Menu menu : menus) {
-                authMenu = new AgencyAuthorizedMenu();
-                authMenu.setAgencyId(agId);
-                authMenu.setMenu(menu);
-                authMenuList.add(authMenu);
+            //找出原有的菜单，跟新的匹配，去掉旧的，添加新的
+            List<UUID> preAuthMenuList = agMenuRepository.getMenuId(agId);
+
+            List<UUID> addMenuIds = new ArrayList<>();
+            List<UUID> deleteMenuIds = new ArrayList<>();
+            preAuthMenuList.forEach(pre->{
+                if(!menuIds.contains(pre)){
+                    deleteMenuIds.add(pre);
+                }
+            });
+            menuIds.forEach(m->{
+                if(!preAuthMenuList.contains(m)){
+                    addMenuIds.add(m);
+                }
+            });
+            //删除的
+            if(deleteMenuIds.size()>0){
+                List<UUID> deleteId = agMenuRepository.getDeleteId(deleteMenuIds);
+                //查看要删除的关系记录是否被角色权限关联，如果没有，则直接删除，如果有，则先删除角色权限，再删除
+                List<UUID> roleMenuList = roleMenuRepository.getIdByAgencyMenu(deleteId);
+                if(null!=roleMenuList && roleMenuList.size()>0){
+                    roleMenuList.forEach(r->
+                            roleMenuRepository.delete(r)
+                    );
+                }
+                agMenuRepository.deleteByIdBatch(deleteId);
             }
-            authMenuRepository.save(authMenuList);
+            if(addMenuIds.size()>0){
+                //新增的
+                List<Menu> menus = menuRepository.findAll(addMenuIds);
+                List<AgencyAuthorizedMenu> authMenuList = new ArrayList<>();
+                AgencyAuthorizedMenu authMenu;
+                for (Menu menu : menus) {
+                    authMenu = new AgencyAuthorizedMenu();
+                    authMenu.setAgencyId(agId);
+                    authMenu.setMenu(menu);
+                    authMenuList.add(authMenu);
+                }
+                authMenuRepository.save(authMenuList);
+            }
         }
 
         return new TResult<>(agencyDto);

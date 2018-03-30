@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.admin.service.impl;
 
+import com.sunesoft.ecloud.admin.repository.AgencyRoleAuthorizedMenuRepository;
 import com.sunesoft.ecloud.admin.service.AgencyRoleService;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyRoleDto;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyRoleMenuDto;
@@ -26,6 +27,9 @@ public class AgencyRoleServiceImplTest {
 
     @Autowired
     AgencyRoleService roleService;
+    @Autowired
+    AgencyRoleAuthorizedMenuRepository repository;
+
 
     @Test
     public void addOrUpdateRole() throws Exception {
@@ -52,4 +56,10 @@ public class AgencyRoleServiceImplTest {
     public void deleteBatch() throws Exception {
     }
 
+
+    @Test
+    public void deleteRepository(){
+        repository.delete(UUID.fromString("98a218ce-75c0-405c-aca9-39f34af63d94"));
+        System.out.println(23);
+    }
 }

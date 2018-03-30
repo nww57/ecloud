@@ -8,6 +8,7 @@ import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -23,6 +24,9 @@ public class AgencyCustomerServiceImpl implements AgencyCustomerService {
 
     @Autowired
     AgencyCustomerRepository customerRepository;
+
+    @Value("${ecloud.agId}")
+    private UUID agId;
 
     @Override
     public TResult addOrUpdateAgencyCustomer(AgencyCustomerDto agencyCustomerDto) {
