@@ -42,6 +42,18 @@ public class AgencyQueryServiceImplTest {
 
     @Test
     public void findAgencyFullInfoById() throws Exception {
+
+    }
+
+
+    @Test
+    public void testGetOrganizationIdName(){
+    }
+
+    @Test
+    public void testFindAgencyDetailInfoById(){
+        TResult<AgencyDto> dtoList = agencyQueryService.findAgencyDetailInfoById(UUID.fromString("074a3949-9986-4b39-bf3c-aea94324eca3"));
+        System.out.println(23);
     }
 
 }

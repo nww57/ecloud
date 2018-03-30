@@ -37,9 +37,13 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
     @Override
     public Page<UserDto> findUserPaged(UserCriteria cretiria) {
         SqlBuilder builder = HSqlBuilder.hFrom(User.class, "u")
+                .leftJoin(AgencyOrganization.class,"org")
+                .on("u.structureId=org.id")
                 .where(cretiria.getParams())
                 .pagging(cretiria.getPageIndex(),cretiria.getPageSize())
-                .select(UserDto.class);
+                .select(UserDto.class)
+                .setFieldValue("organizationId","org.Id")
+                .setFieldValue("organizationName","org.Name");
         return this.queryPaged(builder);
     }
 
@@ -65,9 +69,10 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
 
     @Override
     public ListResult<BasicDto> getUserIdName() {
-        SqlBuilder<BasicDto> userBuilder = HSqlBuilder.hFrom(User.class,"user")
-                .select(BasicDto.class)
-                .setFieldValue("name", "user.realName");
+        //获取所有负责人
+        SqlBuilder<BasicDto> userBuilder = HSqlBuilder.hFrom(User.class,"u")
+                .setFieldValue("name","u.realName")
+                .select(BasicDto.class);
         List<BasicDto> userList = queryList(userBuilder);
         return new ListResult<>(userList);
     }

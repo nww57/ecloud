@@ -34,7 +34,7 @@ public class AgencyCustomerServiceImplTest {
         dto.setCity("常州");
         dto.setDistrict("武进");
         dto.setStreet("高新区XXX");
-        dto.setConsultantId(UUID.fromString("93c14d85-efc5-41ba-9546-b00e4d03feef"));
+//        dto.setConsultantId(UUID.fromString("93c14d85-efc5-41ba-9546-b00e4d03feef"));
         customerService.addOrUpdateAgencyCustomer(dto);
         System.out.println(23);
     }

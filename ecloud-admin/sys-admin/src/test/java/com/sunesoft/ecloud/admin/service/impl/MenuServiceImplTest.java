@@ -36,13 +36,10 @@ public class MenuServiceImplTest {
     public void addOrUpdateMenu() throws Exception {
         MenuDto menuDto=new MenuDto();
 //        menuDto.setId(UUID.fromString("52996c7b-ba83-4af0-ad92-04084b4fac52"));
-        menuDto.setName("ccccc");
-        menuDto.setSort(3);
-        menuDto.setDescription("ccccccc");
 
-//        MenuSimpleDto menuSimpleDto=new MenuSimpleDto();
-//        menuSimpleDto.setId(UUID.fromString("56cfb947-2cda-4216-b1e8-92bd804d4a89"));
-//        menuDto.setParentSimpleMenu(menuSimpleDto);
+        menuDto.setName("系统管理");
+        menuDto.setSort(1);
+        menuDto.setDescription("asdf23424");
 
         TResult tResult = menuService.addOrUpdateMenu(menuDto);
         System.out.println(tResult);

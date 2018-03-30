@@ -32,6 +32,9 @@ public class AgencyRole extends BizEntity {
     @Column(name="description")
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "agId")
+    private Agency agency;
 
     public String getName() {
         return name;
@@ -57,5 +60,11 @@ public class AgencyRole extends BizEntity {
         this.description = description;
     }
 
+    public Agency getAgency() {
+        return agency;
+    }
 
+    public void setAgency(Agency agency) {
+        this.agency = agency;
+    }
 }

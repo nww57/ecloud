@@ -1,25 +1,20 @@
 package com.sunesoft.ecloud.admin.service.impl;
 
-import com.sunesoft.ecloud.admin.domain.agency.Agency;
-import com.sunesoft.ecloud.admin.domain.agency.AgencyAuthorizedMenu;
-import com.sunesoft.ecloud.admin.domain.agency.AgencyRole;
-import com.sunesoft.ecloud.admin.domain.agency.AgencyRoleAuthorizedMenu;
-import com.sunesoft.ecloud.admin.repository.AgencyAuthorizedMenuRepository;
-import com.sunesoft.ecloud.admin.repository.AgencyRepository;
-import com.sunesoft.ecloud.admin.repository.AgencyRoleRepository;
+import com.sunesoft.ecloud.admin.domain.agency.*;
+import com.sunesoft.ecloud.admin.domain.menu.MenuFunction;
+import com.sunesoft.ecloud.admin.repository.*;
 import com.sunesoft.ecloud.admin.service.AgencyRoleService;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyRoleDto;
-import com.sunesoft.ecloud.adminclient.dtos.AgencyRoleMenuDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
+import com.sunesoft.ecloud.common.utils.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Auther: niww
@@ -34,12 +29,16 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
     @Autowired
     AgencyRoleRepository roleRepository;
     @Autowired
-    AgencyAuthorizedMenuRepository agMenuRepository;
+    AgencyRoleAuthorizedMenuRepository roleMenuRepository;
+    @Autowired
+    AgencyAuthorizedMenuRepository agencyMenuRepository;
+    @Autowired
+    MenuFunctionRepository menuFuncRepository;
 
     @Override
     public TResult addOrUpdateRole(AgencyRoleDto agencyRoleDto) {
-        UUID agId = UUID.fromString("c5accfc4-7e7f-488d-8c04-a6ce4894401d");
-
+        UUID agId = UUID.fromString("200e6946-70e3-4087-839a-0491c631caf1");
+        Agency agency = agencyRepository.findOne(agId);
         UUID id  = agencyRoleDto.getId();
         AgencyRole role;
         if(null == id){
@@ -48,24 +47,39 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
             role = roleRepository.findOne(id);
         }
         BeanUtil.copyPropertiesIgnoreNull(agencyRoleDto,role);
-        Agency agency = agencyRepository.findOne(agId);
         role.setAgency(agency);
-        //配置权限
-        List<AgencyRoleMenuDto> menuDtoList = agencyRoleDto.getAuthList();
-        List<UUID> menuIds = new ArrayList<>();
-        menuDtoList.forEach(menuDto->{
-            menuIds.add(menuDto.getId());
+        roleRepository.saveAndFlush(role);
+        //设置权限
+        Map<UUID,List<UUID>> authList = agencyRoleDto.getAuthList();
+        List<UUID> menuList = new ArrayList<>();
+        List<UUID> funcList = new ArrayList<>();
+        authList.forEach((key,value)->{
+            menuList.add(key);
+            funcList.addAll(value);
         });
+        //todo:修改
+        List<AgencyAuthorizedMenu> agencyMenuList = agencyMenuRepository.findAll();
+        List<MenuFunction> functionList = menuFuncRepository.findAll(funcList);
 
         List<AgencyRoleAuthorizedMenu> roleMenuList = new ArrayList<>();
-        List<AgencyAuthorizedMenu> agMenus =  agMenuRepository.findByMenuIn(menuIds);
-        agMenus.forEach(agMenu->{
-            AgencyRoleAuthorizedMenu roleMenu = new AgencyRoleAuthorizedMenu();
-            roleMenu.setAgencyMenu(agMenu);
+        AgencyRoleAuthorizedMenu roleMenu;
+        List<AgencyMenuAuthorizedFunction> menuFuncList;
+        AgencyMenuAuthorizedFunction menuFunc;
+        for(Map.Entry<UUID,List<UUID>> map:authList.entrySet()){
+            roleMenu = new AgencyRoleAuthorizedMenu();
+            menuFuncList = new ArrayList<>();
+            roleMenu.setRole(role);
+            roleMenu.setAgencyMenu(agencyMenuList.stream().filter(f-> Objects.equals(f.getMenu().getId(),map.getKey())).findAny().get());
+            List<MenuFunction> functions  = functionList.stream().filter(f->map.getValue().contains(f.getId())).collect(Collectors.toList());
+            for (MenuFunction function : functions) {
+                menuFunc = new AgencyMenuAuthorizedFunction();
+                menuFunc.setMenuFunction(function);
+                menuFuncList.add(menuFunc);
+            }
+            roleMenu.setRoleMenuFunctionEntities(menuFuncList);
             roleMenuList.add(roleMenu);
-        });
-        role.setRoleAuthMenu(roleMenuList);
-        roleRepository.saveAndFlush(role);
+        }
+        roleMenuRepository.save(roleMenuList);
         return new TResult<>(agencyRoleDto);
     }
 

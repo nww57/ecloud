@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.admin.query.impl;
 
+
 import com.sunesoft.ecloud.admin.query.AgencyOrganizationQueryService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyOrganizationCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyOrganizationDto;
@@ -15,14 +16,17 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.UUID;
 
 /**
- * @Auther: niww
- * @Date: 2018/3/29/029
+ * @Author: niww
+ * @Date: 2018/3/28
  */
+
+
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
 public class AgencyOrganizationQueryServiceImplTest {
 
     @Autowired
+
     AgencyOrganizationQueryService queryService;
 
     @Test
@@ -46,5 +50,6 @@ public class AgencyOrganizationQueryServiceImplTest {
         ListResult<BasicDto> s = queryService.getOrganizationIdName();
         System.out.println(23);
     }
+
 
 }

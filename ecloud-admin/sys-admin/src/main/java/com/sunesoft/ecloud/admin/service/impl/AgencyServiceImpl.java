@@ -33,10 +33,12 @@ public class AgencyServiceImpl implements AgencyService{
     AgencyRepository agencyRepository;
     @Autowired
     AgencyAuthorizedMenuRepository agMenuRepository;
+
     @Autowired
-    MenuRepository menuRepository;
+    MenuRepository  menuRepository;
 
-
+    @Autowired
+    AgencyAuthorizedMenuRepository authMenuRepository;
 
     @Override
     public TResult addOrUpdateAgency(AgencyDto agencyDto) {
@@ -54,23 +56,30 @@ public class AgencyServiceImpl implements AgencyService{
         }
         BeanUtil.copyProperties(agencyDto,agency,new String[]{"agencyType","serverStatus"});
         try{
-            agency.setServerEndDate(DateUtils.parseDate(agencyDto.getServerEndDate(),new String[]{"yyyy-MM-dd"}));
+            agency.setServerEndDate(DateUtils.parseDate(agencyDto.getServerEndDate(),new String[]{"yyyy-MM-dd HH:mm:ss"}));
         }catch (Exception e){
             e.printStackTrace();
         }
+
         // 配置菜单
-        List<UUID> menuIds = agencyDto.getMenuIds();
-        List<Menu> menuList = menuRepository.findAll(menuIds);
         agency = agencyRepository.saveAndFlush(agency);
-        UUID agId = agency.getId();
-        List<AgencyAuthorizedMenu> agMenuList = new ArrayList<>();
-        menuList.forEach(menu->{
-            AgencyAuthorizedMenu agMenu = new AgencyAuthorizedMenu();
-            agMenu.setAgencyId(agId);
-            agMenu.setMenu(menu);
-            agMenuList.add(agMenu);
-        });
-        agMenuRepository.save(agMenuList);
+        List<UUID> menuIds = agencyDto.getMenuIds();
+        if(null!=menuIds && menuIds.size()>0){
+            UUID agId = agency.getId();
+            //先删除原有的配置，再重新添加
+//            agMenuRepository.deleteByAgencyId(agId);
+            List<Menu> menus = menuRepository.findAll(menuIds);
+            List<AgencyAuthorizedMenu> authMenuList = new ArrayList<>();
+            AgencyAuthorizedMenu authMenu;
+            for (Menu menu : menus) {
+                authMenu = new AgencyAuthorizedMenu();
+                authMenu.setAgencyId(agId);
+                authMenu.setMenu(menu);
+                authMenuList.add(authMenu);
+            }
+            authMenuRepository.save(authMenuList);
+        }
+
         return new TResult<>(agencyDto);
     }
 
