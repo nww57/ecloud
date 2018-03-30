@@ -87,7 +87,7 @@ public class Menu extends IEntity {
     private Menu parentMenu;
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "parentMenu")
-    private List<Menu> chiledren = new ArrayList<>();
+    private List<Menu> children = new ArrayList<>();
 
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "menu")
@@ -192,12 +192,12 @@ public class Menu extends IEntity {
         this.parentMenu = parentMenu;
     }
 
-    public List<Menu> getChiledren() {
-        return chiledren;
+    public List<Menu> getChildren() {
+        return children;
     }
 
-    public void setChiledren(List<Menu> chiledren) {
-        this.chiledren = chiledren;
+    public void setChildren(List<Menu> children) {
+        this.children = children;
     }
 
     public Module getModule() {

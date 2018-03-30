@@ -45,6 +45,19 @@ public class MenuQueryServiceImplTest {
     }
 
     @Test
+    public void findAgAllMenu() throws Exception {
+        ListResult<MenuDto> allMenu = menuQueryService.findAgAllMenu();
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(allMenu);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        System.out.println(json);
+    }
+
+    @Test
     public void findAllSimpleMenu() throws Exception {
         ListResult<MenuSimpleDto> allSimpleMenu = menuQueryService.findAllSimpleMenu();
         ObjectMapper mapper = new ObjectMapper();

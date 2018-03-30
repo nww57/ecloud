@@ -76,7 +76,7 @@ public class MenuDto  extends TreeEntity {
     /**
      * 子级节点菜单
      */
-    private List<MenuDto> chiledren= new ArrayList<>();
+    private List<MenuDto> children= new ArrayList<>();
 
     /**
      * 菜单功能
@@ -179,12 +179,12 @@ public class MenuDto  extends TreeEntity {
         this.parentSimpleMenu = parentSimpleMenu;
     }
 
-    public List<MenuDto> getChiledren() {
-        return chiledren;
+    public List<MenuDto> getChildren() {
+        return children;
     }
 
-    public void setChiledren(List list) {
-        this.chiledren = list;
+    public void setChildren(List list) {
+        this.children = list;
     }
 
     public List<MenuFunctionDto> getMenuFunctions() {

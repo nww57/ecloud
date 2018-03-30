@@ -17,9 +17,9 @@ public abstract class TreeEntity {
     private UUID pid;
 
 
-    public abstract List getChiledren();
+    public abstract List getChildren();
 
-    public abstract void setChiledren(List list);
+    public abstract void setChildren(List list);
 
     public UUID getId() {
         return id;
