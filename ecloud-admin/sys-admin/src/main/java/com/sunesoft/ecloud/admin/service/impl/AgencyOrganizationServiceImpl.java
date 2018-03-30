@@ -34,7 +34,7 @@ public class AgencyOrganizationServiceImpl implements AgencyOrganizationService 
     @Override
     public TResult addOrUpdateOrganization(AgencyOrganizationDto agencyOrganizationDto) {
 
-        UUID parentId = agencyOrganizationDto.getParentId();
+        UUID parentId = agencyOrganizationDto.getPid();
         UUID id = agencyOrganizationDto.getId();
         AgencyOrganization org ;
         if(null == id){//新增

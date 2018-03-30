@@ -7,9 +7,9 @@ import java.util.UUID;
  * Created by jzj on 2018/3/26.
  * 机构信息
  */
-public class AgencyOrganizationDto {
+public class AgencyOrganizationDto extends TreeDto<AgencyOrganizationDto>{
 
-    private UUID id;
+
 
     /**
      * 所属企业id
@@ -17,10 +17,6 @@ public class AgencyOrganizationDto {
     private UUID agId;
 
 
-    /**
-     * 上层组织
-     */
-    private UUID parentId;
 
     /**
      * 上层组织名称
@@ -54,18 +50,9 @@ public class AgencyOrganizationDto {
      */
     private String leaderName;
 
-    /**
-     * 下级机构
-     */
-    private List<AgencyOrganizationDto> childList;
 
-    public UUID getId() {
-        return id;
-    }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
+
 
     public UUID getAgId() {
         return agId;
@@ -101,13 +88,6 @@ public class AgencyOrganizationDto {
         this.description = description;
     }
 
-    public UUID getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(UUID parentId) {
-        this.parentId = parentId;
-    }
 
     public String getParentName() {
         return parentName;
@@ -133,11 +113,5 @@ public class AgencyOrganizationDto {
         this.leaderId = leaderId;
     }
 
-    public List<AgencyOrganizationDto> getChildList() {
-        return childList;
-    }
 
-    public void setChildList(List<AgencyOrganizationDto> childList) {
-        this.childList = childList;
-    }
 }

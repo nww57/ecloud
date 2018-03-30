@@ -76,15 +76,15 @@ public class AgencyOrganizationQueryServiceImpl extends GenericQuery implements 
     private static List<AgencyOrganizationDto> buildTree(List<AgencyOrganizationDto> dtoList){
         List<AgencyOrganizationDto> treeList = new ArrayList<>();
         dtoList.forEach(parent->{
-            if(null == parent.getParentId()){
+            if(null == parent.getPid()){
                 treeList.add(parent);
             }
             dtoList.forEach(child->{
-                if(Objects.equals(child.getParentId(),parent.getId())){
-                    if(null == parent.getChildList()){
-                        parent.setChildList(new ArrayList<>());
+                if(Objects.equals(child.getPid(),parent.getId())){
+                    if(null == parent.getChildren()){
+                        parent.setChildren(new ArrayList<>());
                     }
-                    parent.getChildList().add(child);
+                    parent.getChildren().add(child);
                 }
             });
         });
