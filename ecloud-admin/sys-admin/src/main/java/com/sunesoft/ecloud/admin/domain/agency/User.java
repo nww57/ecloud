@@ -1,13 +1,16 @@
 package com.sunesoft.ecloud.admin.domain.agency;
 
+import com.sunesoft.ecloud.adminclient.UserType;
 import com.sunesoft.ecloud.hibernate.BizEntity;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @Author: niww
@@ -21,7 +24,8 @@ public class User extends BizEntity{
      *用户类型
      */
     @Column(name = "userType")
-    private String userType;
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
     /**
      *用户编号
      */
@@ -117,11 +121,23 @@ public class User extends BizEntity{
             inverseJoinColumns = {@JoinColumn(name = "roleId")})
     private List<AgencyRole> roleList = new ArrayList<>();
 
-    public String getUserType() {
+    @Column(name = "agId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
+    private UUID agencyId;
+
+    public User() {
+        this.userType = UserType.AGENCY_USER;
+    }
+
+    public User(UserType userType) {
+        this.userType = userType;
+    }
+
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(String userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 
@@ -270,5 +286,13 @@ public class User extends BizEntity{
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public UUID getAgencyId() {
+        return agencyId;
+    }
+
+    public void setAgencyId(UUID agencyId) {
+        this.agencyId = agencyId;
     }
 }

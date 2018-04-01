@@ -7,15 +7,18 @@ import com.sunesoft.ecloud.admin.repository.AgencyOrganizationRepository;
 import com.sunesoft.ecloud.admin.repository.AgencyRoleRepository;
 import com.sunesoft.ecloud.admin.repository.UserRepository;
 import com.sunesoft.ecloud.admin.service.UserService;
+import com.sunesoft.ecloud.adminclient.UserType;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -32,6 +35,9 @@ public class UserServiceImpl implements UserService {
     AgencyOrganizationRepository orgRepository;
     @Autowired
     AgencyRoleRepository roleRepository;
+
+    @Value("${ecloud.agId}")
+    private UUID agId;
 
     /**
      * 新增修改密码
@@ -67,6 +73,11 @@ public class UserServiceImpl implements UserService {
             user.setRoleList(roleListEntity);
         }
         BeanUtil.copyPropertiesIgnoreNull(userDto, user);
+        if(Objects.equals(user.getUserType(), UserType.AGENCY_ADMIN)){
+            user.setAgencyId(userDto.getAgId());
+        }else{
+            user.setAgencyId(agId);
+        }
         userRepository.saveAndFlush(user);
         return (TResult) ResultFactory.success();
     }

@@ -84,7 +84,7 @@ public class UserServiceImplTest {
 
     @Test
     public void test3(){
-        List<UUID> list = agMenuRepository.getMenuId("d2d512f3-0a6c-4373-9ab2-a348fb616d7a");
+        List<String> list = agMenuRepository.getMenuId("d2d512f3-0a6c-4373-9ab2-a348fb616d7a");
         System.out.println(23);
     }
 

@@ -62,15 +62,15 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
             });
             //先删除，在添加
             //根据menuId查找已经存在的记录
-            List<UUID> uuidList = roleMenuRepository.getIdByMenuId(menuList);
+            List<String> menuListString = menuList.stream().map(UUID::toString).collect(Collectors.toList());
+            List<String> uuidList = roleMenuRepository.getIdByMenuId(menuListString);
             if(null!=uuidList&& uuidList.size()>0){
                 uuidList.forEach(uuid -> {
-                    roleMenuRepository.delete(uuid);
+                    roleMenuRepository.delete(UUID.fromString(uuid));
                 });
             }
-            //todo:这里要修改 菜单id 查询
-            List<String> me = ConvertUtil.convert(menuList,String.class);
-            List<AgencyAuthorizedMenu> agencyMenuList = agencyMenuRepository.getAgencyAurhMenu(me);
+            //根据  菜单id 查询
+            List<AgencyAuthorizedMenu> agencyMenuList = agencyMenuRepository.getAgencyAuthMenu(menuListString);
             if(null !=agencyMenuList && agencyMenuList.size()>0){
                 List<MenuFunction> functionList = menuFuncRepository.findAll(funcList);
                 List<AgencyRoleAuthorizedMenu> roleMenuList = new ArrayList<>();
