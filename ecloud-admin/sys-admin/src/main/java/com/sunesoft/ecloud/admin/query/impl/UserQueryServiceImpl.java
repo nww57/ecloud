@@ -80,7 +80,7 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
                 .setFieldValue("org.name","organizationName")
                 .select(UserDto.class);
         UserDto userInfo = queryForObject(builder);
-        String sql = "select  r.id ,r.name  from sys_user u left join sys_ag_user_role ur on u.id = ur.userId left join sys_ag_role r on ur.roleId = r.id where u.id = :id";
+        String sql = "select  r.id id,r.name name from sys_user u left join sys_ag_user_role ur on u.id = ur.userId left join sys_ag_role r on ur.roleId = r.id where u.id = :id";
         Map params = new HashMap();
         params.put("id",id);
         List<BasicDto> roleList = super.queryList(sql,params,BasicDto.class);

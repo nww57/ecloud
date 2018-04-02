@@ -56,7 +56,7 @@ public class AgencyRoleQueryServiceImpl extends GenericQuery implements AgencyRo
                 .select(BasicDto.class)
                 .selectField("agMenu.menuId","id");
         List<UUID> roleMenuListId = queryList(roleMenuList).stream().map(BasicDto::getId).collect(Collectors.toList());
-        //获取功能 todo in roleMenuListId
+        //获取功能
         SqlBuilder<MenuFuncIdDto> funcList = HSqlBuilder.hFrom(AgencyRoleAuthorizedMenu.class, "roleMenu")
                 .leftJoin(AgencyMenuAuthorizedFunction.class,"roleMenuFunc")
                 .on("roleMenu.id = roleMenuFunc.roleMenuId")
