@@ -121,7 +121,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public TResult changePassword(UUID id, String oldPassword, String newPassword) {
-        //todo :验证旧密码是否正确
+        //todo 验证旧密码是否正确
+//        userRepository.selectPassword()
         setPassword(id, newPassword);
         return (TResult) ResultFactory.success();
     }

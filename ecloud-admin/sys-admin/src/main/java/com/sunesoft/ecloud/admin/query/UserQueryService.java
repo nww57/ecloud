@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.admin.query;
 
+import com.sunesoft.ecloud.adminclient.UserPositionType;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.TreeDto;
@@ -68,5 +69,5 @@ public interface UserQueryService {
      * 获取用户职位列表
      * @return 返回查询结果
      */
-    TResult<Map<String,String>> getPositionList();
+    ListResult<UserPositionType> getPositionList();
 }

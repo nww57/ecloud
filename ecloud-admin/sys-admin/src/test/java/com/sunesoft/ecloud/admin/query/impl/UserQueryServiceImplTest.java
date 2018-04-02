@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sunesoft.ecloud.admin.query.UserQueryService;
 import com.sunesoft.ecloud.admin.service.UserService;
+import com.sunesoft.ecloud.adminclient.UserPositionType;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
@@ -68,6 +69,12 @@ public class UserQueryServiceImplTest {
         System.out.println(32);
     }
 
+
+    @Test
+    public void getPositionList(){
+        ListResult<UserPositionType> basic = userQueryService.getPositionList();
+        System.out.println(32);
+    }
 
 
 }

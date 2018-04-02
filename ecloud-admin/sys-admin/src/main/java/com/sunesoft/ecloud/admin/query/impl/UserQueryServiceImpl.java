@@ -61,7 +61,9 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
         SqlBuilder<UserBasicDto> builder = HSqlBuilder.hFrom(User.class,"user")
                 .where("id",id)
                 .select(UserBasicDto.class);
-        return new TResult<>(queryForObject(builder));
+        UserBasicDto user =  queryForObject(builder);
+        user.setPosition(UserPositionType.valueOf(user.getPosition()).getName());
+        return new TResult<>(user);
     }
 
     @Override
@@ -110,13 +112,9 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
     }
 
     @Override
-    public TResult<Map<String, String>> getPositionList() {
+    public ListResult<UserPositionType> getPositionList() {
         UserPositionType[] positionTypes = UserPositionType.values();
-        Map<String,String> map = new HashMap<>();
-        for (UserPositionType type : positionTypes) {
-            map.put(type.getCode(),type.getName());
-        }
-        return new TResult<>(map);
+        return new ListResult<UserPositionType>(Arrays.asList(positionTypes));
     }
 
 
