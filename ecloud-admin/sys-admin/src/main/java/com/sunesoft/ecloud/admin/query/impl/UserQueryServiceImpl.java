@@ -1,7 +1,6 @@
 package com.sunesoft.ecloud.admin.query.impl;
 
 import com.sunesoft.ecloud.admin.domain.agency.AgencyOrganization;
-import com.sunesoft.ecloud.admin.domain.agency.AgencyRole;
 import com.sunesoft.ecloud.admin.domain.agency.User;
 import com.sunesoft.ecloud.admin.query.UserQueryService;
 import com.sunesoft.ecloud.admin.repository.UserRepository;
@@ -14,9 +13,7 @@ import com.sunesoft.ecloud.adminclient.dtos.UserPositionDto;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
-import com.sunesoft.ecloud.common.utils.BeanUtil;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
-import com.sunesoft.ecloud.hibernate.sqlExcute.GenericListExtractor;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -63,7 +60,6 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
                 .where("id",id)
                 .select(UserBasicDto.class);
         UserBasicDto user =  queryForObject(builder);
-        user.setPosition(UserPositionType.valueOf(user.getPosition()).getName());
         return new TResult<>(user);
     }
 
