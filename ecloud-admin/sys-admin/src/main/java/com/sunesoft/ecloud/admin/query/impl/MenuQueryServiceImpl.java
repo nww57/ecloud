@@ -82,9 +82,9 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
                 .setFieldValue("agencyId","a.agId")
                 .setFieldValue("menuId","a.menuId");
         List<AgencyAuthorizedMenuDto> list = this.queryList(sqlBuilder);
-        List<String> menuIds = new ArrayList<>();
+        List<UUID> menuIds = new ArrayList<>();
         for (AgencyAuthorizedMenuDto agencyAuthorizedMenuDto : list) {
-            menuIds.add(agencyAuthorizedMenuDto.getMenuId().toString());
+            menuIds.add(agencyAuthorizedMenuDto.getMenuId());
         }
         //取出所有菜单
         SqlBuilder sqlBuilder1 = HSqlBuilder.hFrom(Menu.class, "m")
