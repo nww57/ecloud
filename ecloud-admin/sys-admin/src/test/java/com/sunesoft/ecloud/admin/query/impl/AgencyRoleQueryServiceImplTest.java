@@ -41,7 +41,7 @@ public class AgencyRoleQueryServiceImplTest {
 
     @Test
     public void getAgencyRoleBasicById() {
-        TResult<AgencyRoleDto> dto = roleQueryService.getAgencyRoleBasicById(UUID.fromString("cdd070e2-9e48-455c-ab86-6a9973fd1ca5"));
+        TResult<AgencyRoleDto> dto = roleQueryService.getAgencyRoleBasicById(UUID.fromString("9ef4707f-16a2-4654-b598-ddce9973b1cc"));
         System.out.println(132);
     }
 

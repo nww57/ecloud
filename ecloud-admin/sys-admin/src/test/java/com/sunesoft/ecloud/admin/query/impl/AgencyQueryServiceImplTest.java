@@ -52,7 +52,7 @@ public class AgencyQueryServiceImplTest {
 
     @Test
     public void testFindAgencyDetailInfoById(){
-        TResult<AgencyDto> dtoList = agencyQueryService.findAgencyDetailInfoById(UUID.fromString("cf2c49a1-12a9-4219-938e-af99047ab575"));
+        TResult<AgencyDto> dtoList = agencyQueryService.findAgencyDetailInfoById(UUID.fromString("9ef4707f-16a2-4654-b598-ddce9973b1cc"));
         System.out.println(23);
     }
 

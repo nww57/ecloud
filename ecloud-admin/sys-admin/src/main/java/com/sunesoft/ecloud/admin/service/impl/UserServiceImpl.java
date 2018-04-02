@@ -7,15 +7,18 @@ import com.sunesoft.ecloud.admin.repository.AgencyOrganizationRepository;
 import com.sunesoft.ecloud.admin.repository.AgencyRoleRepository;
 import com.sunesoft.ecloud.admin.repository.UserRepository;
 import com.sunesoft.ecloud.admin.service.UserService;
+import com.sunesoft.ecloud.adminclient.UserType;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -32,6 +35,11 @@ public class UserServiceImpl implements UserService {
     AgencyOrganizationRepository orgRepository;
     @Autowired
     AgencyRoleRepository roleRepository;
+
+    @Value("${ecloud.agId}")
+    private UUID agId;
+
+    private static final UUID userId = UUID.fromString("42c569c0-7be3-42c6-9c07-6d9939d2739d");
 
     /**
      * 新增修改密码
@@ -67,6 +75,11 @@ public class UserServiceImpl implements UserService {
             user.setRoleList(roleListEntity);
         }
         BeanUtil.copyPropertiesIgnoreNull(userDto, user);
+        if(Objects.equals(user.getUserType(), UserType.AGENCY_ADMIN)){
+            user.setAgencyId(userDto.getAgId());
+        }else{
+            user.setAgencyId(agId);
+        }
         userRepository.saveAndFlush(user);
         return (TResult) ResultFactory.success();
     }
@@ -105,8 +118,14 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public TResult changePassword(UUID id, String oldPassword, String newPassword) {
-
+        //todo :验证旧密码是否正确
         setPassword(id, newPassword);
+        return (TResult) ResultFactory.success();
+    }
+
+    @Override
+    public TResult changePassword(String oldPassword, String newPassword) {
+        changePassword(userId,oldPassword,newPassword);
         return (TResult) ResultFactory.success();
     }
 
@@ -124,6 +143,12 @@ public class UserServiceImpl implements UserService {
             return new TResult<>("用户id不存在");
         }
         userRepository.updatePassword(id, newPassword);
+        return (TResult) ResultFactory.success();
+    }
+
+    @Override
+    public TResult setPassword(String newPassword) {
+        setPassword(userId,newPassword);
         return (TResult) ResultFactory.success();
     }
 }

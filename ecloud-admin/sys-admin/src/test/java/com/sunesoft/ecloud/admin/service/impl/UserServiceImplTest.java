@@ -1,5 +1,7 @@
 package com.sunesoft.ecloud.admin.service.impl;
 
+import com.sunesoft.ecloud.admin.repository.AgencyAuthorizedMenuRepository;
+import com.sunesoft.ecloud.admin.repository.UserRepository;
 import com.sunesoft.ecloud.admin.service.UserService;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import org.junit.Test;
@@ -24,6 +26,11 @@ public class UserServiceImplTest {
 
     @Autowired
     UserService userService;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    AgencyAuthorizedMenuRepository agMenuRepository;
+
     @Test
     public void addOrUpdateUser() throws Exception {
 //        for(int i=5;i<19;i++){
@@ -42,11 +49,11 @@ public class UserServiceImplTest {
         userDto.setCallphone("23231324");
         userDto.setEmail("1233@qq.com");
         userDto.setWorkon(true);
-        userDto.setOrganizationId(UUID.fromString("f5c3aaa2-24aa-4479-9bc6-d3af988c604a"));
-        List<UUID> roleList = new ArrayList<UUID>(){{
-           add(UUID.fromString("4d246b07-0fff-41bc-9f20-13e08488a592"));
-        }};
-        userDto.setRoleIdList(roleList);
+//        userDto.setOrganizationId(UUID.fromString("f5c3aaa2-24aa-4479-9bc6-d3af988c604a"));
+//        List<UUID> roleList = new ArrayList<UUID>(){{
+//           add(UUID.fromString("4d246b07-0fff-41bc-9f20-13e08488a592"));
+//        }};
+//        userDto.setRoleIdList(roleList);
         userService.addOrUpdateUser(userDto);
         System.out.println(23);
     }
@@ -65,6 +72,20 @@ public class UserServiceImplTest {
 
     @Test
     public void setPassword() throws Exception {
+        userService.setPassword(UUID.fromString("fc98e1ca-92f0-4f2e-b68c-f0129978c1bf"),"1asdfasf");
+        System.out.println(23);
+    }
+
+    @Test
+    public void test2(){
+        userRepository.updatePassword(UUID.fromString("fc98e1ca-92f0-4f2e-b68c-f0129978c1bf"),"23asdfa");
+        System.out.println(23);
+    }
+
+    @Test
+    public void test3(){
+        List<String> list = agMenuRepository.getMenuId("d2d512f3-0a6c-4373-9ab2-a348fb616d7a");
+        System.out.println(23);
     }
 
 }

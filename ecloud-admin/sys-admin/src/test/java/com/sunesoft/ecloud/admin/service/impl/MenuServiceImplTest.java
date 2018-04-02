@@ -35,15 +35,15 @@ public class MenuServiceImplTest {
     @Test
     public void addOrUpdateMenu() throws Exception {
         MenuDto menuDto=new MenuDto();
-        menuDto.setId(UUID.fromString("f28586a2-9e12-47e0-88a5-f9b14b98f0d7"));
+//        menuDto.setId(UUID.fromString("f28586a2-9e12-47e0-88a5-f9b14b98f0d7"));
 
-        menuDto.setName("测试2修改");
+        menuDto.setName("组织架构管理");
         menuDto.setSort(1);
-        menuDto.setDescription("测试啊");
+        menuDto.setDescription("阿道夫");
 
-        MenuSimpleDto menuSimpleDto=new MenuSimpleDto();
-        menuSimpleDto.setId(UUID.fromString("d22222bf-c28f-4d00-8682-f445f64460ba"));
-        menuDto.setParentSimpleMenu(menuSimpleDto);
+//        MenuSimpleDto menuSimpleDto=new MenuSimpleDto();
+//        menuSimpleDto.setId(UUID.fromString("d22222bf-c28f-4d00-8682-f445f64460ba"));
+//        menuDto.setParentSimpleMenu(menuSimpleDto);
 
         TResult tResult = menuService.addOrUpdateMenu(menuDto);
         System.out.println(tResult);

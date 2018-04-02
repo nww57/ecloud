@@ -33,11 +33,11 @@ public class MenuFunctionServiceImplTest {
         MenuFunctionDto menuFunctionDto=new MenuFunctionDto();
 //        menuFunctionDto.setId(UUID.fromString("ca7c25cb-896d-411a-93c8-97c8f8921a48"));
 //
-        menuFunctionDto.setName("新增");
+        menuFunctionDto.setName("修改");
         menuFunctionDto.setDescription("cccccc");
         menuFunctionDto.setResName("ccccc");
-        menuFunctionDto.setResUrl("cccccc");
-        TResult tResult = menuFunctionService.addOrUpdateFunction(menuFunctionDto, UUID.fromString("1d4597c4-fa81-41a9-ae98-0af2cb20d261"));
+        menuFunctionDto.setResUrl("api/update");
+        TResult tResult = menuFunctionService.addOrUpdateFunction(menuFunctionDto, UUID.fromString("669ff8e0-9db4-4089-85bb-cafb1e2a64d8"));
 
         System.out.println(tResult);
 

@@ -43,6 +43,14 @@ public interface UserService {
     TResult changePassword(UUID id,String oldPassword,String newPassword);
 
     /**
+     * 修改密码
+     * @param oldPassword
+     * @param newPassword
+     * @return
+     */
+    TResult changePassword(String oldPassword,String newPassword);
+
+    /**
      *设置密码
      * @param id
      * @param newPassword
@@ -51,7 +59,12 @@ public interface UserService {
     TResult setPassword(UUID id,String newPassword);
 
 
-
+    /**
+     *设置密码
+     * @param newPassword
+     * @return
+     */
+    TResult setPassword(String newPassword);
 
 
 

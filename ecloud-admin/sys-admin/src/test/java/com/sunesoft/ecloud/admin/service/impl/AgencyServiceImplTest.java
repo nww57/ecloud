@@ -30,14 +30,14 @@ public class AgencyServiceImplTest {
     public void addOrUpdateAgency() throws Exception {
             AgencyDto dto = new AgencyDto();
 
-            dto.setId(UUID.fromString("cf2c49a1-12a9-4219-938e-af99047ab575"));
-            dto.setName("asdfasdfa");
+//            dto.setId(UUID.fromString("d2d512f3-0a6c-4373-9ab2-a348fb616d7a"));
+            dto.setName("企业3333");
             dto.setCode("DW00232");
             dto.setCountry("Chinasadfa");
             dto.setRegisterDate("2018-3-27");
             dto.setLeader("张伟asdf");
             dto.setEmail("123@qq.com");
-            dto.setCellphone("12345678912");
+            dto.setCellphone("1596146415");
             dto.setFax("010+26737123");
             dto.setProvince("江苏asdf");
             dto.setCity("常州adf");
@@ -46,14 +46,15 @@ public class AgencyServiceImplTest {
             dto.setZipcode("21000adfad");
             dto.setServerEndDate("2019-3-27 13:23:23");
 
-        List<UUID> uuidList = new ArrayList<UUID>(){{
-
-//            add(UUID.fromString("1d4597c4-fa81-41a9-ae98-0af2cb20d261"));
-//            add(UUID.fromString("e1014027-32a6-4418-8573-b39c3f517379"));
-            add(UUID.fromString("ea5313a4-bbcf-4e72-b7cc-e4730c929378"));
-
-        }} ;
-        dto.setMenuIds(uuidList);
+//        List<UUID> uuidList = new ArrayList<UUID>(){{
+//
+//            add(UUID.fromString("669ff8e0-9db4-4089-85bb-cafb1e2a64d8"));
+//            add(UUID.fromString("73de0c03-8ee5-454a-bd50-f434b1440646"));
+//            add(UUID.fromString("8e1e37f4-b880-4804-8ea2-b2393905bbd9"));
+//
+//        }} ;
+//
+//        dto.setMenuIds(uuidList);
 
             TResult dto2 = agencyService.addOrUpdateAgency(dto);
 

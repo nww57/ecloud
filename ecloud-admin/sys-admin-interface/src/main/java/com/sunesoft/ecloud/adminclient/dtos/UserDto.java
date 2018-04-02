@@ -1,6 +1,8 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
 
+import com.sunesoft.ecloud.adminclient.UserType;
+
 import java.util.*;
 /**
  * @author: Zhouzh
@@ -13,7 +15,7 @@ public class UserDto extends BasicDto{
     /**
      *用户类型
      */
-    private String userType;
+    private UserType userType;
 
     /**
      *用户名
@@ -101,11 +103,14 @@ public class UserDto extends BasicDto{
      */
     private List<String> roleNameList;
 
-    public String getUserType() {
+
+    private UUID agId;
+
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(String userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 
@@ -255,5 +260,13 @@ public class UserDto extends BasicDto{
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public UUID getAgId() {
+        return agId;
+    }
+
+    public void setAgId(UUID agId) {
+        this.agId = agId;
     }
 }
