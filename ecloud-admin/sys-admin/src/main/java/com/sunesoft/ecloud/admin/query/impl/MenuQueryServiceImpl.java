@@ -57,7 +57,7 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
             menuDto.setMenuFunctions(functionlist);
         }
         List<MenuDto> listResult = TreeUtils.transformationTree(menulist);
-        return new ListResult(menulist);
+        return new ListResult(listResult);
     }
 
     @Override
@@ -98,7 +98,7 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
             menuDto.setMenuFunctions(functionlist);
         }
         List<MenuDto> listResult = TreeUtils.transformationTree(menulist);
-        return new ListResult(menulist);
+        return new ListResult(listResult);
     }
 
     @Override
