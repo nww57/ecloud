@@ -9,6 +9,7 @@ import com.sunesoft.ecloud.admin.repository.UserRepository;
 import com.sunesoft.ecloud.admin.service.UserService;
 import com.sunesoft.ecloud.adminclient.UserPositionType;
 import com.sunesoft.ecloud.adminclient.UserType;
+import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
@@ -87,6 +88,14 @@ public class UserServiceImpl implements UserService {
         return (TResult) ResultFactory.success();
     }
 
+    @Override
+    public TResult updateUserBasicInfo(UserBasicDto userBasicDto) {
+        User user = userRepository.findOne(userId);
+        BeanUtil.copyPropertiesIgnoreNull(userBasicDto,user);
+        userRepository.saveAndFlush(user);
+        return (TResult) ResultFactory.success();
+    }
+
     /**
      * 删除用户
      *
@@ -133,7 +142,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public TResult changePassword(String oldPassword, String newPassword) {
         return changePassword(userId,oldPassword,newPassword);
-
     }
 
     /**
@@ -155,7 +163,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public TResult setPassword(String newPassword) {
-        setPassword(userId,newPassword);
-        return (TResult) ResultFactory.success();
+        return  setPassword(userId,newPassword);
     }
 }

@@ -34,17 +34,17 @@ public class AgencyRoleServiceImplTest {
     @Test
     public void addOrUpdateRole() throws Exception {
         AgencyRoleDto dto = new AgencyRoleDto();
-        dto.setId(UUID.fromString("9ef4707f-16a2-4654-b598-ddce9973b1cc"));
+//        dto.setId(UUID.fromString("454d71d1-a78e-471e-a5b5-ce18d57103b0"));
         dto.setName("测试看看能不能改");
         dto.setDescription("s2323这是个业务顾问XXx");
 
         Map<UUID,List<UUID>> map = new HashMap<>();
         List<UUID> func = new ArrayList<UUID>(){{
-//            add(UUID.fromString("2db1a3a4-84af-445f-b379-aeb17d6d08d0"));
-            add(UUID.fromString("ab855fe2-5eba-4589-8e1a-4c177d3fe4ff"));
-            add(UUID.fromString("e8fe678e-bef0-4f2a-af97-f387aa8bdc37"));
+            add(UUID.fromString("254185e2-28d9-4400-bb16-9c5ef5a057f4"));
+            add(UUID.fromString("9b866201-0a6b-4b7b-9eef-18492c1a5286"));
+            add(UUID.fromString("d0a2bd50-473e-4776-9443-2bbfb5e76e0d"));
         }};
-        map.put(UUID.fromString("669ff8e0-9db4-4089-85bb-cafb1e2a64d8"),func);
+        map.put(UUID.fromString("56cfb947-2cda-4216-b1e8-92bd804d4a89"),func);
         dto.setAuthList(map);
 
         roleService.addOrUpdateRole(dto);
