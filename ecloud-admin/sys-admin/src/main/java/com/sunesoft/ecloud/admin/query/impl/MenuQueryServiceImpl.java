@@ -79,15 +79,16 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
                 .where("a.agId", agId)
 //                .where("a.agId", UUID.fromString("d2d512f3-0a6c-4373-9ab2-a348fb616d7a"))
                 .select(AgencyAuthorizedMenuDto.class)
-                .setFieldValue("agencyId","a.agId");
+                .setFieldValue("agencyId","a.agId")
+                .setFieldValue("menuId","a.menuId");
         List<AgencyAuthorizedMenuDto> list = this.queryList(sqlBuilder);
-        String menuIds = "";
+        List<String> menuIds = new ArrayList<>();
         for (AgencyAuthorizedMenuDto agencyAuthorizedMenuDto : list) {
-            menuIds += agencyAuthorizedMenuDto.getMenuId() + ",";
+            menuIds.add(agencyAuthorizedMenuDto.getMenuId().toString());
         }
         //取出所有菜单
         SqlBuilder sqlBuilder1 = HSqlBuilder.hFrom(Menu.class, "m")
-                .where("m.id", "%" + menuIds + "%")
+                .where("m.id",menuIds)
                 .select(MenuDto.class);
         List<MenuDto> menulist = this.queryList(sqlBuilder1);
         List<MenuFunctionDto> functionlist = new ArrayList<>();
