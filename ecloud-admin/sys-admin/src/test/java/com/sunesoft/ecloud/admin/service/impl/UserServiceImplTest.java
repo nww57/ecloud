@@ -3,6 +3,7 @@ package com.sunesoft.ecloud.admin.service.impl;
 import com.sunesoft.ecloud.admin.repository.AgencyAuthorizedMenuRepository;
 import com.sunesoft.ecloud.admin.repository.UserRepository;
 import com.sunesoft.ecloud.admin.service.UserService;
+import com.sunesoft.ecloud.adminclient.UserPositionType;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -85,6 +86,13 @@ public class UserServiceImplTest {
     @Test
     public void test3(){
         List<String> list = agMenuRepository.getMenuId("d2d512f3-0a6c-4373-9ab2-a348fb616d7a");
+        System.out.println(23);
+    }
+
+
+    @Test
+    public void test4(){
+        userRepository.updatePosition(UUID.fromString("42c569c0-7be3-42c6-9c07-6d9939d2739d"), UserPositionType.LEADER.getCode());
         System.out.println(23);
     }
 

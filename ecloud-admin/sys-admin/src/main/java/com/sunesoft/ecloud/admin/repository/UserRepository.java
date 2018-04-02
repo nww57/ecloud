@@ -27,9 +27,14 @@ public interface UserRepository extends BaseRepository<User,UUID> {
     void deleteBatch(@Param("ids") UUID... ids);
 
 
-    @Transactional
+
     @Modifying
     @Query(value = "update  User set password = :password where id = :id")
     void updatePassword(@Param("id") UUID id, @Param("password") String newPassword);
 
+
+
+    @Modifying
+    @Query(value = "update User set position = :position where id = :id")
+    void updatePosition(@Param("id") UUID id,@Param("position") String position);
 }

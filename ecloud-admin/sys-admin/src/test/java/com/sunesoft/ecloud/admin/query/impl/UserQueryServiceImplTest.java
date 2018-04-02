@@ -8,6 +8,7 @@ import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.ListResult;
+import com.sunesoft.ecloud.common.result.TResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,12 @@ public class UserQueryServiceImplTest {
     @Test
     public void getUserIdName(){
         ListResult<BasicDto> result= userQueryService.getUserIdName();
+        System.out.println(23);
+    }
+
+    @Test
+    public void getBasicInfo(){
+        TResult<UserDto> s = userQueryService.getUserInfo();
         System.out.println(23);
     }
 

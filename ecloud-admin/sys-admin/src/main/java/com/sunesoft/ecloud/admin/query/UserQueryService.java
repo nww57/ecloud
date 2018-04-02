@@ -2,11 +2,13 @@ package com.sunesoft.ecloud.admin.query;
 
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
+import com.sunesoft.ecloud.adminclient.dtos.TreeDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.data.domain.Page;
 
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -46,4 +48,11 @@ public interface UserQueryService {
      * @return 返回查询结果
      */
     ListResult<BasicDto> getUserIdName();
+
+
+    /**
+     * 获取用户职位列表
+     * @return 返回查询结果
+     */
+    TResult<Map<String,String>> getPositionList();
 }

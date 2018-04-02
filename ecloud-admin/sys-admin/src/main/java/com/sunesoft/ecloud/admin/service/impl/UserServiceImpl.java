@@ -7,6 +7,7 @@ import com.sunesoft.ecloud.admin.repository.AgencyOrganizationRepository;
 import com.sunesoft.ecloud.admin.repository.AgencyRoleRepository;
 import com.sunesoft.ecloud.admin.repository.UserRepository;
 import com.sunesoft.ecloud.admin.service.UserService;
+import com.sunesoft.ecloud.adminclient.UserPositionType;
 import com.sunesoft.ecloud.adminclient.UserType;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.TResult;
@@ -77,8 +78,10 @@ public class UserServiceImpl implements UserService {
         BeanUtil.copyPropertiesIgnoreNull(userDto, user);
         if(Objects.equals(user.getUserType(), UserType.AGENCY_ADMIN)){
             user.setAgencyId(userDto.getAgId());
+            user.setPosition(UserPositionType.ADMIN.toString());
         }else{
             user.setAgencyId(agId);
+            user.setPosition(UserPositionType.EMPLOYEE.toString());
         }
         userRepository.saveAndFlush(user);
         return (TResult) ResultFactory.success();
