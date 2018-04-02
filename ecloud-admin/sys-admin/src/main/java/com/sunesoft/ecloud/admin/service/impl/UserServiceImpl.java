@@ -132,8 +132,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public TResult changePassword(String oldPassword, String newPassword) {
-        changePassword(userId,oldPassword,newPassword);
-        return (TResult) ResultFactory.success();
+        return changePassword(userId,oldPassword,newPassword);
+
     }
 
     /**

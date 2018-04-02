@@ -120,7 +120,7 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
         for (UserPositionType position : positionTypes) {
             positionDto = new UserPositionDto();
             positionDto.setCode(position.getCode());
-            position.setName(position.getName());
+            positionDto.setName(position.getName());
             positionDtos.add(positionDto);
         }
         return new ListResult<>(positionDtos);
