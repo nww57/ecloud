@@ -201,6 +201,18 @@ public abstract class SqlBuilder<T> {
                         .append(":")
                         .append(field)
                         .append(")");
+                if(((List)wobj).size()>0){
+                    Object s = ((List) wobj).get(0);
+                    if(s instanceof UUID){
+                        List<String> ptemp = new ArrayList<>();
+                        ((List)wobj).forEach(x->{
+                            ptemp.add(x.toString());
+                        });
+                        whereMap.put(str,ptemp);
+                        wobj = ptemp;
+                    }
+
+                }
             } else if (wobj instanceof String) {
                 if (wobj.toString().indexOf("%") >= 0) {
                     whereCondition.append(" like ")
