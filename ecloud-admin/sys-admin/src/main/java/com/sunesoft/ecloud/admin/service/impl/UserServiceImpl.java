@@ -39,6 +39,8 @@ public class UserServiceImpl implements UserService {
     @Value("${ecloud.agId}")
     private UUID agId;
 
+    private static final UUID userId = UUID.fromString("42c569c0-7be3-42c6-9c07-6d9939d2739d");
+
     /**
      * 新增修改密码
      *
@@ -116,8 +118,14 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public TResult changePassword(UUID id, String oldPassword, String newPassword) {
-
+        //todo :验证旧密码是否正确
         setPassword(id, newPassword);
+        return (TResult) ResultFactory.success();
+    }
+
+    @Override
+    public TResult changePassword(String oldPassword, String newPassword) {
+        changePassword(userId,oldPassword,newPassword);
         return (TResult) ResultFactory.success();
     }
 
@@ -135,6 +143,12 @@ public class UserServiceImpl implements UserService {
             return new TResult<>("用户id不存在");
         }
         userRepository.updatePassword(id, newPassword);
+        return (TResult) ResultFactory.success();
+    }
+
+    @Override
+    public TResult setPassword(String newPassword) {
+        setPassword(userId,newPassword);
         return (TResult) ResultFactory.success();
     }
 }
