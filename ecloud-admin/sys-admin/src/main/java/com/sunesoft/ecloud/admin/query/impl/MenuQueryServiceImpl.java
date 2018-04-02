@@ -112,7 +112,7 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
         SqlBuilder sqlBuilder1 = HSqlBuilder.hFrom(MenuFunction.class, "f")
                 .where("f.menuId", uuid)
                 .select(MenuFunctionDto.class);
-        List<MenuFunctionDto> list = this.queryList(sqlBuilder);
+        List<MenuFunctionDto> list = this.queryList(sqlBuilder1);
         menuDto.setMenuFunctions(list);
         return new TResult<>(menuDto);
     }

@@ -36,13 +36,13 @@ public class MenuServiceImplTest {
     @Test
     public void addOrUpdateMenu() throws Exception {
         MenuDto menuDto=new MenuDto();
-//        menuDto.setId(UUID.fromString("f28586a2-9e12-47e0-88a5-f9b14b98f0d7"));
+        menuDto.setId(UUID.fromString("210dcb40-48ec-4bd3-a7c9-6981af074250"));
 
         menuDto.setName("测试4.2");
-        menuDto.setSort(1);
+        menuDto.setSort(1234123);
         menuDto.setDescription("cccccccc");
         menuDto.setType(MenuType.Link);
-        menuDto.setPid(UUID.fromString("51a68dce-3be2-4f4b-b6c9-226e58757ea4"));
+//        menuDto.setPid(UUID.fromString("51a68dce-3be2-4f4b-b6c9-226e58757ea4"));
 
 //        MenuSimpleDto menuSimpleDto=new MenuSimpleDto();
 //        menuSimpleDto.setId(UUID.fromString("d22222bf-c28f-4d00-8682-f445f64460ba"));
