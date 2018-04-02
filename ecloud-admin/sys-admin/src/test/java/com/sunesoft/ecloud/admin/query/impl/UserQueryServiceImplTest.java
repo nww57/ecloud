@@ -9,6 +9,7 @@ import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
+import com.sunesoft.ecloud.adminclient.dtos.UserPositionDto;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.junit.Test;
@@ -72,7 +73,7 @@ public class UserQueryServiceImplTest {
 
     @Test
     public void getPositionList(){
-        ListResult<UserPositionType> basic = userQueryService.getPositionList();
+        ListResult<UserPositionDto> basic = userQueryService.getPositionList();
         System.out.println(32);
     }
 

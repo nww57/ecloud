@@ -37,4 +37,7 @@ public interface UserRepository extends BaseRepository<User,UUID> {
     @Modifying
     @Query(value = "update User set position = :position where id = :id")
     void updatePosition(@Param("id") UUID id,@Param("position") String position);
+
+    @Query(value = "select u.password from User u where u.id = :id")
+    String selectPassword(@Param("id") UUID id);
 }

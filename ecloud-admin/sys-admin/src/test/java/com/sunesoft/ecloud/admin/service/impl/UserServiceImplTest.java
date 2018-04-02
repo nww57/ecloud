@@ -5,6 +5,7 @@ import com.sunesoft.ecloud.admin.repository.UserRepository;
 import com.sunesoft.ecloud.admin.service.UserService;
 import com.sunesoft.ecloud.adminclient.UserPositionType;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
+import com.sunesoft.ecloud.common.result.TResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,8 @@ public class UserServiceImplTest {
 
     @Test
     public void changePassword() throws Exception {
+        TResult result = userService.changePassword(UUID.fromString("42c569c0-7be3-42c6-9c07-6d9939d2739d"),"123","456");
+        System.out.println(23);
     }
 
     @Test

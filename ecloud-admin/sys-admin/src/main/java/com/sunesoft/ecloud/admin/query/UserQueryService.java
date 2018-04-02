@@ -2,10 +2,7 @@ package com.sunesoft.ecloud.admin.query;
 
 import com.sunesoft.ecloud.adminclient.UserPositionType;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
-import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
-import com.sunesoft.ecloud.adminclient.dtos.TreeDto;
-import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
-import com.sunesoft.ecloud.adminclient.dtos.UserDto;
+import com.sunesoft.ecloud.adminclient.dtos.*;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.data.domain.Page;
@@ -69,5 +66,5 @@ public interface UserQueryService {
      * 获取用户职位列表
      * @return 返回查询结果
      */
-    ListResult<UserPositionType> getPositionList();
+    ListResult<UserPositionDto> getPositionList();
 }

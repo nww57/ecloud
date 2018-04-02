@@ -10,6 +10,7 @@ import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
+import com.sunesoft.ecloud.adminclient.dtos.UserPositionDto;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
@@ -112,9 +113,17 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
     }
 
     @Override
-    public ListResult<UserPositionType> getPositionList() {
+    public ListResult<UserPositionDto> getPositionList() {
         UserPositionType[] positionTypes = UserPositionType.values();
-        return new ListResult<UserPositionType>(Arrays.asList(positionTypes));
+        List<UserPositionDto> positionDtos = new ArrayList<>();
+        UserPositionDto positionDto ;
+        for (UserPositionType position : positionTypes) {
+            positionDto = new UserPositionDto();
+            positionDto.setCode(position.getCode());
+            position.setName(position.getName());
+            positionDtos.add(positionDto);
+        }
+        return new ListResult<>(positionDtos);
     }
 
 
