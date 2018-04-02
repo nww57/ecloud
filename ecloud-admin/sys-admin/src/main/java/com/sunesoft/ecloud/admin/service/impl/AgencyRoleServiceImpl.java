@@ -1,6 +1,9 @@
 package com.sunesoft.ecloud.admin.service.impl;
 
-import com.sunesoft.ecloud.admin.domain.agency.*;
+import com.sunesoft.ecloud.admin.domain.agency.AgencyAuthorizedMenu;
+import com.sunesoft.ecloud.admin.domain.agency.AgencyMenuAuthorizedFunction;
+import com.sunesoft.ecloud.admin.domain.agency.AgencyRole;
+import com.sunesoft.ecloud.admin.domain.agency.AgencyRoleAuthorizedMenu;
 import com.sunesoft.ecloud.admin.domain.menu.MenuFunction;
 import com.sunesoft.ecloud.admin.repository.*;
 import com.sunesoft.ecloud.admin.service.AgencyRoleService;
@@ -8,8 +11,6 @@ import com.sunesoft.ecloud.adminclient.dtos.AgencyRoleDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
-import com.sunesoft.ecloud.common.utils.ConvertUtil;
-import com.sunesoft.ecloud.common.utils.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -66,7 +67,9 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
             List<String> uuidList = roleMenuRepository.getIdByMenuId(menuListString);
             if(null!=uuidList&& uuidList.size()>0){
                 uuidList.forEach(uuid -> {
-                    roleMenuRepository.delete(UUID.fromString(uuid));
+                    if(null != uuid){
+                        roleMenuRepository.delete(UUID.fromString(uuid));
+                    }
                 });
             }
             //根据  菜单id 查询

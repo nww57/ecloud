@@ -34,7 +34,7 @@ public class AgencyRoleServiceImplTest {
     @Test
     public void addOrUpdateRole() throws Exception {
         AgencyRoleDto dto = new AgencyRoleDto();
-//        dto.setId(UUID.fromString("454d71d1-a78e-471e-a5b5-ce18d57103b0"));
+        dto.setId(UUID.fromString("f59208b0-fb1f-4976-8a77-8d012988933d"));
         dto.setName("测试看看能不能改");
         dto.setDescription("s2323这是个业务顾问XXx");
 
@@ -62,7 +62,7 @@ public class AgencyRoleServiceImplTest {
 
     @Test
     public void deleteRepository(){
-        repository.delete(UUID.fromString("98a218ce-75c0-405c-aca9-39f34af63d94"));
+        repository.delete(UUID.fromString("29bdac6e-97b9-446e-89c5-4a76f84e2a31"));
         System.out.println(23);
     }
 }
