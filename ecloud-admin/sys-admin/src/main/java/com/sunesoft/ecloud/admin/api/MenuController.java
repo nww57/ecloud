@@ -118,6 +118,15 @@ public class MenuController {
     }
 
     /**
+     * 查询所有菜单
+     * @return
+     */
+    @GetMapping("collection")
+    public ListResult<MenuDto> findAllMenu(){
+        return menuQueryService.findAllMenu();
+    }
+
+    /**
      * 删除菜单功能
      * @param ids
      * @return

@@ -86,7 +86,7 @@ public class GenericQuery {
     }
 
 
-    protected <E> List<E> queryList(String sql, Map<String, Object> params, Class<E> clazz) {
+    public <E> List<E> queryList(String sql, Map<String, Object> params, Class<E> clazz) {
         return namedJdbcTemplate.query(sql, params, new GenericListExtractor<List<E>>(clazz));
     }
 
@@ -109,4 +109,19 @@ public class GenericQuery {
         return null;
     }
 
+    public JdbcTemplate getJdbcTemplate() {
+        return jdbcTemplate;
+    }
+
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    public NamedParameterJdbcTemplate getNamedJdbcTemplate() {
+        return namedJdbcTemplate;
+    }
+
+    public void setNamedJdbcTemplate(NamedParameterJdbcTemplate namedJdbcTemplate) {
+        this.namedJdbcTemplate = namedJdbcTemplate;
+    }
 }

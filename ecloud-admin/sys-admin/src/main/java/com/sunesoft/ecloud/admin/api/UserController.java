@@ -3,6 +3,7 @@ package com.sunesoft.ecloud.admin.api;
 import com.sunesoft.ecloud.admin.query.UserQueryService;
 import com.sunesoft.ecloud.admin.service.UserService;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
+import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,17 @@ public class UserController {
      */
     @GetMapping("/{id}")
     public TResult<UserDto> getUserInfo (@PathVariable UUID id) {
-        return userQueryService.findUserBasicById(id);
+        return userQueryService.findUserFullById(id);
+    }
+
+
+    /**
+     * 查询当前用户基本信息
+     * @return
+     */
+    @GetMapping("")
+    public TResult<UserBasicDto> getUserInfo(){
+        return userQueryService.getUserBasicInfo();
     }
 
     /**

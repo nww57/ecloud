@@ -7,7 +7,9 @@ import com.sunesoft.ecloud.admin.repository.AgencyOrganizationRepository;
 import com.sunesoft.ecloud.admin.repository.AgencyRoleRepository;
 import com.sunesoft.ecloud.admin.repository.UserRepository;
 import com.sunesoft.ecloud.admin.service.UserService;
+import com.sunesoft.ecloud.adminclient.UserPositionType;
 import com.sunesoft.ecloud.adminclient.UserType;
+import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
@@ -77,9 +79,19 @@ public class UserServiceImpl implements UserService {
         BeanUtil.copyPropertiesIgnoreNull(userDto, user);
         if(Objects.equals(user.getUserType(), UserType.AGENCY_ADMIN)){
             user.setAgencyId(userDto.getAgId());
+            user.setPosition(UserPositionType.ADMIN.toString());
         }else{
             user.setAgencyId(agId);
+            user.setPosition(UserPositionType.EMPLOYEE.toString());
         }
+        userRepository.saveAndFlush(user);
+        return (TResult) ResultFactory.success();
+    }
+
+    @Override
+    public TResult updateUserBasicInfo(UserBasicDto userBasicDto) {
+        User user = userRepository.findOne(userId);
+        BeanUtil.copyPropertiesIgnoreNull(userBasicDto,user);
         userRepository.saveAndFlush(user);
         return (TResult) ResultFactory.success();
     }
@@ -118,15 +130,18 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public TResult changePassword(UUID id, String oldPassword, String newPassword) {
-        //todo :验证旧密码是否正确
+        // 验证旧密码是否正确
+        String password =  userRepository.selectPassword(id);
+        if(!Objects.equals(password,oldPassword)){
+            return new TResult("旧密码错误");
+        }
         setPassword(id, newPassword);
         return (TResult) ResultFactory.success();
     }
 
     @Override
     public TResult changePassword(String oldPassword, String newPassword) {
-        changePassword(userId,oldPassword,newPassword);
-        return (TResult) ResultFactory.success();
+        return changePassword(userId,oldPassword,newPassword);
     }
 
     /**
@@ -148,7 +163,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public TResult setPassword(String newPassword) {
-        setPassword(userId,newPassword);
-        return (TResult) ResultFactory.success();
+        return  setPassword(userId,newPassword);
     }
 }

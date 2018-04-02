@@ -121,8 +121,8 @@ public class AgencyServiceImpl implements AgencyService{
             UserDto user  = new UserDto();
             user.setUserType(UserType.AGENCY_ADMIN);
             user.setAgId(agency.getId());
-            user.setUserName(agencyDto.getCellphone());
-            user.setPassword("888888");
+            user.setUserName(agencyDto.getUserName());
+            user.setPassword(agencyDto.getPassword());
             user.setCallphone(agencyDto.getCellphone());
             user.setEmail(agencyDto.getEmail());
             userservice.addOrUpdateUser(user);
