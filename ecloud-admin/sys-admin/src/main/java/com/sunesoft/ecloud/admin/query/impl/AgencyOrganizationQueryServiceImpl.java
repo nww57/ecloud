@@ -2,7 +2,7 @@ package com.sunesoft.ecloud.admin.query.impl;
 
 import com.sunesoft.ecloud.admin.domain.agency.AgencyOrganization;
 import com.sunesoft.ecloud.admin.domain.agency.User;
-import com.sunesoft.ecloud.admin.query.AgencyOrganizationQueryServicce;
+import com.sunesoft.ecloud.admin.query.AgencyOrganizationQueryService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyOrganizationCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyOrganizationDto;
 import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
@@ -11,6 +11,7 @@ import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,14 +25,21 @@ import java.util.UUID;
  */
 @Service
 @SuppressWarnings("All")
-public class AgencyOrganizationQueryServiceImpl extends GenericQuery implements AgencyOrganizationQueryServicce {
+public class AgencyOrganizationQueryServiceImpl extends GenericQuery implements AgencyOrganizationQueryService {
 
+    @Value("${ecloud.agId}")
+    private UUID agId;
 
     @Override
     public ListResult<AgencyOrganizationDto> findAgencyOrganization(AgencyOrganizationCriteria criteria) {
         SqlBuilder<AgencyOrganizationDto> builder = HSqlBuilder.hFrom(AgencyOrganization.class, "org")
-                .where("org.agId",criteria.getAgId())
-                .select(AgencyOrganizationDto.class);
+                .leftJoin(User.class,"user")
+                .on("org.leaderId = user.id")
+                .where("org.agId",agId)
+                .select(AgencyOrganizationDto.class)
+                .setFieldValue("pid","org.parentId")
+                .setFieldValue("leaderName","user.realName")
+                .setFieldValue("leaderId","user.id");
         List<AgencyOrganizationDto> allOrg = this.queryList(builder);
         return new ListResult<>(buildTree(allOrg));
     }
@@ -41,15 +49,25 @@ public class AgencyOrganizationQueryServiceImpl extends GenericQuery implements 
         SqlBuilder<AgencyOrganizationDto> builder = HSqlBuilder.hFrom(AgencyOrganization.class,"org")
                 .leftJoin(User.class,"user")
                 .on("org.leaderId = user.id")
+                .leftJoin(AgencyOrganization.class,"parent")
+                .on("org.parentId = parent.id")
                 .where("org.id",id)
                 .select(AgencyOrganizationDto.class)
-                .setFieldValue("leaderName","user.realName");
+                .setFieldValue("leaderId","user.Id")
+                .setFieldValue("leaderName","user.realName")
+                .setFieldValue("parentId","parent.id")
+                .setFieldValue("parentName","parent.name");
         return new TResult<>(this.queryForObject(builder));
     }
 
     @Override
     public ListResult<BasicDto> getOrganizationIdName() {
-        return null;
+
+        SqlBuilder<BasicDto> userBuilder = HSqlBuilder.hFrom(AgencyOrganization.class,"org")
+                .select(BasicDto.class);
+        List<BasicDto> orgList = queryList(userBuilder);
+        return new ListResult<>(orgList);
+
     }
 
 
@@ -61,15 +79,15 @@ public class AgencyOrganizationQueryServiceImpl extends GenericQuery implements 
     private static List<AgencyOrganizationDto> buildTree(List<AgencyOrganizationDto> dtoList){
         List<AgencyOrganizationDto> treeList = new ArrayList<>();
         dtoList.forEach(parent->{
-            if(null == parent.getParentId()){
+            if(null == parent.getPid()){
                 treeList.add(parent);
             }
             dtoList.forEach(child->{
-                if(Objects.equals(child.getParentId(),parent.getId())){
-                    if(null == parent.getChildList()){
-                        parent.setChildList(new ArrayList<>());
+                if(Objects.equals(child.getPid(),parent.getId())){
+                    if(null == parent.getChildren()){
+                        parent.setChildren(new ArrayList<>());
                     }
-                    parent.getChildList().add(child);
+                    parent.getChildren().add(child);
                 }
             });
         });

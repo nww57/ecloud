@@ -13,7 +13,7 @@ import java.util.UUID;
  * @Date: 2018/3/27/
  * 企业机构查询
  */
-public interface AgencyOrganizationQueryServicce {
+public interface AgencyOrganizationQueryService {
 
     /**
      * 查找组织机构

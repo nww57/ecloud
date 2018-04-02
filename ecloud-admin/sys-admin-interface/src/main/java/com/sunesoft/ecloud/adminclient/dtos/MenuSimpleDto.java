@@ -1,16 +1,26 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
-import com.sunesoft.ecloud.adminclient.MenuType;
 
+import com.sunesoft.ecloud.adminclient.MenuType;
+import com.sunesoft.ecloud.common.TreeEntity;
+import com.sunesoft.ecloud.common.sqlBuilderTool.annotations.AliasName;
+import com.sunesoft.ecloud.common.sqlBuilderTool.annotations.FieldWithoutCheck;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
  * @author: Zhouzh
  * @Date: 2018/3/26
  */
-public class MenuSimpleDto {
+public class MenuSimpleDto extends TreeEntity {
 
-    private UUID id;
+
+    /**
+     * 索引
+     */
+    private String menuIndex;
 
     /**
      *菜单名称
@@ -22,17 +32,19 @@ public class MenuSimpleDto {
      */
     private Integer sort;
 
-    /**
-     * 父级节点菜单
-     */
-    private MenuSimpleDto parentMenu;
 
-    public UUID getId() {
-        return id;
+    /**
+     * 子级节点菜单
+     */
+    private List<MenuSimpleDto> children= new ArrayList<>();
+
+
+    public String getMenuIndex() {
+        return menuIndex;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setMenuIndex(String menuIndex) {
+        this.menuIndex = menuIndex;
     }
 
     public String getName() {
@@ -51,12 +63,11 @@ public class MenuSimpleDto {
         this.sort = sort;
     }
 
-    public MenuSimpleDto getParentMenu() {
-        return parentMenu;
+    public List<MenuSimpleDto> getChildren() {
+        return children;
     }
 
-    public void setParentMenu(MenuSimpleDto parentMenu) {
-        this.parentMenu = parentMenu;
+    public void setChildren(List children) {
+        this.children = children;
     }
-
 }

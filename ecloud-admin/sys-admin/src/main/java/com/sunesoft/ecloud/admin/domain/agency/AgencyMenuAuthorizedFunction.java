@@ -24,4 +24,11 @@ public class AgencyMenuAuthorizedFunction extends IEntity{
     @JoinColumn(name = "funcId")
     private MenuFunction menuFunction;
 
+    public MenuFunction getMenuFunction() {
+        return menuFunction;
+    }
+
+    public void setMenuFunction(MenuFunction menuFunction) {
+        this.menuFunction = menuFunction;
+    }
 }

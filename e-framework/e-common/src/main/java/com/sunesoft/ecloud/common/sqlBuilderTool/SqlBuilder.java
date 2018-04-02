@@ -94,13 +94,19 @@ public abstract class SqlBuilder<T> {
                     cols.append(",");
 
                 } else {
+                    if(property.equals("FieldWithoutCheck")){
+                        cols.append(propertiesMap.get(property));
+                        cols.append(",");
+                        n = clname;
+
+                    }else
                     if (!property.equals(propertiesMap.get(property))) {
                         cols.append(clname);
                         cols.append(" ");
                         cols.append(propertiesMap.get(property));
                         cols.append(",");
                         n = clname;
-                    } else {
+                    }  else {
                         cols.append(" null ");
                         cols.append(clname).append(",");
                         n = clname;

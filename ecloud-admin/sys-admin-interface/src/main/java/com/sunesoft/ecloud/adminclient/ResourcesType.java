@@ -6,5 +6,11 @@ package com.sunesoft.ecloud.adminclient;
  * 资源类型
  */
 public enum ResourcesType {
+    ADD,
 
+    EDIT,
+
+    DELETE,
+
+    VIEW
 }

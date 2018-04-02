@@ -30,7 +30,7 @@ public class AgencyUserController {
      * @return
      */
     @GetMapping("search")
-    public Page<UserDto> search (@RequestBody UserCriteria userCriteria) {
+    public Page<UserDto> search (UserCriteria userCriteria) {
         return userQueryService.findUserPaged(userCriteria);
     }
 
@@ -50,7 +50,7 @@ public class AgencyUserController {
      */
     @GetMapping("{id}")
     public TResult<UserDto> getUserInfo (@PathVariable UUID id) {
-        return userQueryService.findUserBasicById(id);
+        return userQueryService.findUserFullById(id);
     }
 
     /**

@@ -1,9 +1,10 @@
 package com.sunesoft.ecloud.admin.api;
 
-import com.sunesoft.ecloud.admin.query.AgencyOrganizationQueryServicce;
+import com.sunesoft.ecloud.admin.query.AgencyOrganizationQueryService;
 import com.sunesoft.ecloud.admin.service.AgencyOrganizationService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyOrganizationCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyOrganizationDto;
+import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import java.util.UUID;
 public class AgencyOrgController {
 
     @Autowired
-    AgencyOrganizationQueryServicce organizationQueryServicce;
+    AgencyOrganizationQueryService organizationQueryServicce;
 
     @Autowired
     AgencyOrganizationService organizationService;
@@ -29,6 +30,15 @@ public class AgencyOrgController {
     @GetMapping("search")
     public ListResult<AgencyOrganizationDto> search (AgencyOrganizationCriteria criteria) {
         return organizationQueryServicce.findAgencyOrganization(criteria);
+    }
+
+    /**
+     * 获取组织列表
+     * @return
+     */
+    @GetMapping("collection")
+    public ListResult<BasicDto> collection () {
+        return organizationQueryServicce.getOrganizationIdName();
     }
 
     /**

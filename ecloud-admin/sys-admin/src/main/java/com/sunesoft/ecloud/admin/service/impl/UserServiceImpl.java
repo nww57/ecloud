@@ -1,20 +1,21 @@
 package com.sunesoft.ecloud.admin.service.impl;
 
-import com.alibaba.druid.sql.dialect.oracle.ast.stmt.OracleCreateTableStatement;
 import com.sunesoft.ecloud.admin.domain.agency.AgencyOrganization;
 import com.sunesoft.ecloud.admin.domain.agency.AgencyRole;
 import com.sunesoft.ecloud.admin.domain.agency.User;
 import com.sunesoft.ecloud.admin.repository.AgencyOrganizationRepository;
 import com.sunesoft.ecloud.admin.repository.AgencyRoleRepository;
 import com.sunesoft.ecloud.admin.repository.UserRepository;
-import com.sunesoft.ecloud.admin.service.AgencyOrganizationService;
 import com.sunesoft.ecloud.admin.service.UserService;
+import com.sunesoft.ecloud.adminclient.UserPositionType;
+import com.sunesoft.ecloud.adminclient.UserType;
+import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -36,6 +37,11 @@ public class UserServiceImpl implements UserService {
     AgencyOrganizationRepository orgRepository;
     @Autowired
     AgencyRoleRepository roleRepository;
+
+    @Value("${ecloud.agId}")
+    private UUID agId;
+
+    private static final UUID userId = UUID.fromString("42c569c0-7be3-42c6-9c07-6d9939d2739d");
 
     /**
      * 新增修改密码
@@ -71,6 +77,21 @@ public class UserServiceImpl implements UserService {
             user.setRoleList(roleListEntity);
         }
         BeanUtil.copyPropertiesIgnoreNull(userDto, user);
+        if(Objects.equals(user.getUserType(), UserType.AGENCY_ADMIN)){
+            user.setAgencyId(userDto.getAgId());
+            user.setPosition(UserPositionType.ADMIN.toString());
+        }else{
+            user.setAgencyId(agId);
+            user.setPosition(UserPositionType.EMPLOYEE.toString());
+        }
+        userRepository.saveAndFlush(user);
+        return (TResult) ResultFactory.success();
+    }
+
+    @Override
+    public TResult updateUserBasicInfo(UserBasicDto userBasicDto) {
+        User user = userRepository.findOne(userId);
+        BeanUtil.copyPropertiesIgnoreNull(userBasicDto,user);
         userRepository.saveAndFlush(user);
         return (TResult) ResultFactory.success();
     }
@@ -109,9 +130,18 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public TResult changePassword(UUID id, String oldPassword, String newPassword) {
-
+        // 验证旧密码是否正确
+        String password =  userRepository.selectPassword(id);
+        if(!Objects.equals(password,oldPassword)){
+            return new TResult("旧密码错误");
+        }
         setPassword(id, newPassword);
         return (TResult) ResultFactory.success();
+    }
+
+    @Override
+    public TResult changePassword(String oldPassword, String newPassword) {
+        return changePassword(userId,oldPassword,newPassword);
     }
 
     /**
@@ -129,5 +159,10 @@ public class UserServiceImpl implements UserService {
         }
         userRepository.updatePassword(id, newPassword);
         return (TResult) ResultFactory.success();
+    }
+
+    @Override
+    public TResult setPassword(String newPassword) {
+        return  setPassword(userId,newPassword);
     }
 }

@@ -1,13 +1,16 @@
 package com.sunesoft.ecloud.admin.domain.agency;
 
+import com.sunesoft.ecloud.adminclient.UserType;
 import com.sunesoft.ecloud.hibernate.BizEntity;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @Author: niww
@@ -21,7 +24,8 @@ public class User extends BizEntity{
      *用户类型
      */
     @Column(name = "userType")
-    private String userType;
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
     /**
      *用户编号
      */
@@ -62,6 +66,39 @@ public class User extends BizEntity{
      */
     @Column(name = "isWorkon")
     private Boolean isWorkon;
+
+
+    /**
+     * 地区code
+     */
+    @Column(name = "addressCode")
+    private String addressCode;
+    /**
+     * 省
+     */
+    @Column(name = "province")
+    private String province;
+    /**
+     *市
+     */
+    @Column(name = "city")
+    private String city;
+    /**
+     *区
+     */
+    @Column(name = "district")
+    private String district;
+    /**
+     *街道
+     */
+    @Column(name = "street")
+    private String street;
+
+    /**
+     * 职位
+     */
+    @Column(name = "position")
+    private String position;
     /**
      *最后登录时间
      */
@@ -84,11 +121,23 @@ public class User extends BizEntity{
             inverseJoinColumns = {@JoinColumn(name = "roleId")})
     private List<AgencyRole> roleList = new ArrayList<>();
 
-    public String getUserType() {
+    @Column(name = "agId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
+    private UUID agencyId;
+
+    public User() {
+        this.userType = UserType.AGENCY_USER;
+    }
+
+    public User(UserType userType) {
+        this.userType = userType;
+    }
+
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(String userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 
@@ -191,5 +240,59 @@ public class User extends BizEntity{
         this.roleList = roleList;
     }
 
+    public String getAddressCode() {
+        return addressCode;
+    }
 
+    public void setAddressCode(String addressCode) {
+        this.addressCode = addressCode;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public UUID getAgencyId() {
+        return agencyId;
+    }
+
+    public void setAgencyId(UUID agencyId) {
+        this.agencyId = agencyId;
+    }
 }

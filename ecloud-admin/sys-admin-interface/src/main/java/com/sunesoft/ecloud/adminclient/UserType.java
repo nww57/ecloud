@@ -17,5 +17,5 @@ public enum UserType {
     /**
      *机构普通用户
      */
-    AGENCY_COMMON
+    AGENCY_USER
 }

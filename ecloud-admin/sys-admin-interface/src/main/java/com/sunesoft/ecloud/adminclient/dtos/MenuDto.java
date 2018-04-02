@@ -1,6 +1,7 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
 import com.sunesoft.ecloud.adminclient.MenuType;
+import com.sunesoft.ecloud.common.TreeEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +11,10 @@ import java.util.UUID;
  * @author: Zhouzh
  * @Date: 2018/3/26
  */
-public class MenuDto {
+public class MenuDto  extends TreeEntity {
 
-    private UUID id;
 
-    private ModuleDto module;
+    private ModuleDto moduleDto;
 
     /**
      * 索引
@@ -39,7 +39,7 @@ public class MenuDto {
     /**
      *菜单类型
      */
-    private MenuType type;
+    private MenuType type =MenuType.Link;
 
 
     /**
@@ -68,30 +68,27 @@ public class MenuDto {
     private Integer childCount;
 
     /**
-     * 父级节点菜单
+     * 父级节点
      */
-    private MenuDto parentMenu;
+    private MenuSimpleDto parentSimpleMenu;
+
+
+    /**
+     * 子级节点菜单
+     */
+    private List<MenuDto> children= new ArrayList<>();
 
     /**
      * 菜单功能
      */
     private List<MenuFunctionDto> menuFunctions;
 
-
-    public UUID getId() {
-        return id;
+    public ModuleDto getModuleDto() {
+        return moduleDto;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public ModuleDto getModule() {
-        return module;
-    }
-
-    public void setModule(ModuleDto module) {
-        this.module = module;
+    public void setModuleDto(ModuleDto moduleDto) {
+        this.moduleDto = moduleDto;
     }
 
     public String getMenuIndex() {
@@ -174,12 +171,20 @@ public class MenuDto {
         this.childCount = childCount;
     }
 
-    public MenuDto getParentMenu() {
-        return parentMenu;
+    public MenuSimpleDto getParentSimpleMenu() {
+        return parentSimpleMenu;
     }
 
-    public void setParentMenu(MenuDto parentMenu) {
-        this.parentMenu = parentMenu;
+    public void setParentSimpleMenu(MenuSimpleDto parentSimpleMenu) {
+        this.parentSimpleMenu = parentSimpleMenu;
+    }
+
+    public List<MenuDto> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List list) {
+        this.children = list;
     }
 
     public List<MenuFunctionDto> getMenuFunctions() {

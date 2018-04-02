@@ -13,11 +13,5 @@ import java.util.UUID;
  * @Auther: niww
  * @Date: 2018/3/27/027
  */
-@Repository
 public interface AgencyRepository extends BaseRepository<Agency,UUID> {
-
-    @Modifying
-    @Query(value = "delete from Agency where id in :ids")
-    void deleteBatch(@Param("ids") UUID... ids);
-
 }

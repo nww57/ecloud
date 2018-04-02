@@ -13,7 +13,6 @@ import java.util.UUID;
  * @Auther: niww
  * @Date: 2018/3/28/028
  */
-@Repository
 public interface AgencyRoleRepository extends BaseRepository<AgencyRole,UUID>{
 
     @Modifying

@@ -4,12 +4,15 @@ import com.sunesoft.ecloud.admin.domain.agency.Agency;
 import com.sunesoft.ecloud.admin.domain.agency.AgencyOrganization;
 import com.sunesoft.ecloud.admin.repository.AgencyOrganizationRepository;
 import com.sunesoft.ecloud.admin.repository.AgencyRepository;
+import com.sunesoft.ecloud.admin.repository.UserRepository;
 import com.sunesoft.ecloud.admin.service.AgencyOrganizationService;
+import com.sunesoft.ecloud.adminclient.UserPositionType;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyOrganizationDto;
 import com.sunesoft.ecloud.common.cretiria.OrderTurn;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,12 +31,14 @@ public class AgencyOrganizationServiceImpl implements AgencyOrganizationService 
     AgencyOrganizationRepository orgRepository;
     @Autowired
     AgencyRepository agencyRepository;
-
+    @Autowired
+    UserRepository userRepository;
+    @Value("${ecloud.agId}")
+    private UUID agId;
     @Override
     public TResult addOrUpdateOrganization(AgencyOrganizationDto agencyOrganizationDto) {
 
-        UUID agId = agencyOrganizationDto.getAgId();
-        UUID parentId = agencyOrganizationDto.getParentId();
+        UUID parentId = agencyOrganizationDto.getPid();
         UUID id = agencyOrganizationDto.getId();
         AgencyOrganization org ;
         if(null == id){//新增
@@ -59,8 +64,11 @@ public class AgencyOrganizationServiceImpl implements AgencyOrganizationService 
             }
             org.setParentOrg(parentOrg);
         }
-        //设置负责人
-        org.setLeaderId(agencyOrganizationDto.getLeaderId());
+        //设置负责人 并将负责人的职位改为 “UserPositionType.LEADER”
+        if(null != agencyOrganizationDto.getLeaderId()){
+            org.setLeaderId(agencyOrganizationDto.getLeaderId());
+            userRepository.updatePosition(agencyOrganizationDto.getLeaderId(), UserPositionType.LEADER.getCode());
+        }
         orgRepository.saveAndFlush(org);
         return new TResult<>(agencyOrganizationDto);
     }

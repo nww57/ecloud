@@ -45,7 +45,7 @@ import java.util.UUID;
     /**
      *签约时间
      */
-    private Date signDate;
+    private String signDate;
     /**
      *客户负责人
      */
@@ -150,11 +150,11 @@ import java.util.UUID;
         this.street = street;
     }
 
-    public Date getSignDate() {
+    public String getSignDate() {
         return signDate;
     }
 
-    public void setSignDate(Date signDate) {
+    public void setSignDate(String signDate) {
         this.signDate = signDate;
     }
 

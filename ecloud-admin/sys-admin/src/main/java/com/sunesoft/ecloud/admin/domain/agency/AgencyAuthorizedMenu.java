@@ -2,6 +2,7 @@ package com.sunesoft.ecloud.admin.domain.agency;
 
 import com.sunesoft.ecloud.admin.domain.menu.Menu;
 import com.sunesoft.ecloud.hibernate.IEntity;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.*;
@@ -18,6 +19,8 @@ public class AgencyAuthorizedMenu extends IEntity {
     /**
      * 机构id
      */
+    @Column(name = "agId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
     private UUID agencyId;
 
     /**
@@ -42,5 +45,7 @@ public class AgencyAuthorizedMenu extends IEntity {
     public void setAgencyId(UUID agencyId) {
         this.agencyId = agencyId;
     }
+
+
 
 }

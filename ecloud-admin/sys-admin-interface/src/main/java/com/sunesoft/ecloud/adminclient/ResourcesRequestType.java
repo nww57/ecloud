@@ -6,5 +6,15 @@ package com.sunesoft.ecloud.adminclient;
  * 资源请求类型
  */
 public enum ResourcesRequestType {
+    GET,
 
+    POST,
+
+    PUT,
+
+    OPTIONS,
+
+    DELETE,
+
+    PATCH
 }

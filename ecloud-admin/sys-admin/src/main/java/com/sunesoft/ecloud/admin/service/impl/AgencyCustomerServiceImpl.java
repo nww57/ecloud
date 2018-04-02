@@ -1,13 +1,16 @@
 package com.sunesoft.ecloud.admin.service.impl;
 
+import com.sunesoft.ecloud.admin.domain.agency.Agency;
 import com.sunesoft.ecloud.admin.domain.agency.AgencyCustomer;
 import com.sunesoft.ecloud.admin.repository.AgencyCustomerRepository;
+import com.sunesoft.ecloud.admin.repository.AgencyRepository;
 import com.sunesoft.ecloud.admin.service.AgencyCustomerService;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,7 +25,12 @@ import java.util.UUID;
 public class AgencyCustomerServiceImpl implements AgencyCustomerService {
 
     @Autowired
+    AgencyRepository agencyRepository;
+    @Autowired
     AgencyCustomerRepository customerRepository;
+
+    @Value("${ecloud.agId}")
+    private UUID agId;
 
     @Override
     public TResult addOrUpdateAgencyCustomer(AgencyCustomerDto agencyCustomerDto) {
@@ -34,6 +42,8 @@ public class AgencyCustomerServiceImpl implements AgencyCustomerService {
             customer = customerRepository.findOne(id);
         }
         BeanUtil.copyPropertiesIgnoreNull(agencyCustomerDto,customer);
+        Agency agency = agencyRepository.findOne(agId);
+        customer.setAgency(agency);
         customerRepository.saveAndFlush(customer);
         return new TResult<>(agencyCustomerDto);
     }

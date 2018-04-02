@@ -73,6 +73,16 @@ public class MenuController {
     }
 
     /**
+     * 删除菜单
+     * @param id
+     * @return
+     */
+    @DeleteMapping("{id}")
+    public TResult delete (@PathVariable UUID id) {
+        return menuService.delete(id);
+    }
+
+    /**
      * 获取菜单操作功能
      * @param id
      */
@@ -105,6 +115,15 @@ public class MenuController {
                                    @PathVariable UUID fid) {
         menuFunctionDto.setId(fid);
         return menuFunctionService.addOrUpdateFunction(menuFunctionDto, mid);
+    }
+
+    /**
+     * 查询所有菜单
+     * @return
+     */
+    @GetMapping("collection")
+    public ListResult<MenuDto> findAllMenu(){
+        return menuQueryService.findAllMenu();
     }
 
     /**

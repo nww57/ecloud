@@ -4,10 +4,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sunesoft.ecloud.admin.query.UserQueryService;
 import com.sunesoft.ecloud.admin.service.UserService;
+import com.sunesoft.ecloud.adminclient.UserPositionType;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
+import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
+import com.sunesoft.ecloud.adminclient.dtos.UserPositionDto;
 import com.sunesoft.ecloud.common.result.ListResult;
+import com.sunesoft.ecloud.common.result.TResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +43,9 @@ public class UserQueryServiceImplTest {
     public void findUserPagedTest()
     {
 
-        Pageable pageable = new PageRequest(1,10,null);
+
         UserCriteria userCriteria = new UserCriteria();
-        userCriteria.setUserName("zhouzh");
+        userCriteria.setPageIndex(0);
         Page<UserDto> userPaged = userQueryService.findUserPaged(userCriteria);
 
         System.out.println(userPaged);
@@ -54,6 +58,24 @@ public class UserQueryServiceImplTest {
         System.out.println(23);
     }
 
+    @Test
+    public void getBasicInfo(){
+        TResult<UserDto> s = userQueryService.getUserFullInfo();
+        System.out.println(23);
+    }
+
+    @Test
+    public void getUserBasicInfo(){
+        TResult<UserBasicDto> basic = userQueryService.getUserBasicInfo();
+        System.out.println(32);
+    }
+
+
+    @Test
+    public void getPositionList(){
+        ListResult<UserPositionDto> basic = userQueryService.getPositionList();
+        System.out.println(32);
+    }
 
 
 }

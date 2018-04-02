@@ -1,6 +1,6 @@
 package com.sunesoft.ecloud.admin.domain.menu;
 
-import com.sunesoft.ecloud.admin.domain.MenuType;
+import com.sunesoft.ecloud.adminclient.MenuType;
 import com.sunesoft.ecloud.hibernate.IEntity;
 
 import javax.persistence.*;
@@ -49,7 +49,7 @@ public class Menu extends IEntity {
      */
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
-    private MenuType type;
+    private MenuType type = MenuType.Link;
 
 
     /**
@@ -86,11 +86,11 @@ public class Menu extends IEntity {
     @JoinColumn(name = "pid")
     private Menu parentMenu;
 
-    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "parentMenu")
-    private List<Menu> childMenuList = new ArrayList<>();
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "parentMenu")
+    private List<Menu> children = new ArrayList<>();
 
 
-    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "menu")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "menu")
     private List<MenuFunction> menuFunctions = new ArrayList<>();
 
 
@@ -192,12 +192,12 @@ public class Menu extends IEntity {
         this.parentMenu = parentMenu;
     }
 
-    public List<Menu> getChildMenuList() {
-        return childMenuList;
+    public List<Menu> getChildren() {
+        return children;
     }
 
-    public void setChildMenuList(List<Menu> childMenuList) {
-        this.childMenuList = childMenuList;
+    public void setChildren(List<Menu> children) {
+        this.children = children;
     }
 
     public Module getModule() {
