@@ -30,23 +30,25 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public TResult addOrUpdateMenu(MenuDto menuDto) {
         Menu menu;
-        if(menuDto.getId()!=null){//修改
-            menu=menuRepository.findOne(menuDto.getId());
-            BeanUtil.copyPropertiesIgnoreNull(menuDto,menu);
-        }else{//新增
-            menu=new Menu();
-            BeanUtil.copyPropertiesIgnoreNull(menuDto,menu);
+        if (menuDto.getId() != null) {//修改
+            menu = menuRepository.findOne(menuDto.getId());
+            BeanUtil.copyPropertiesIgnoreNull(menuDto, menu);
+        } else {//新增
+            menu = new Menu();
+            BeanUtil.copyPropertiesIgnoreNull(menuDto, menu);
         }
         Menu save = menuRepository.save(menu);
-        if(menuDto.getPid()!=null){
+        if (menuDto.getPid() != null) {
             Menu one = menuRepository.findOne(menuDto.getPid());//父级菜单
-            if(one!=null){
+            if (one != null) {
+                //增加一个子节点个数
+                one.setChildCount(one.getChildCount() + 1);
                 one.getChildren().add(menu);
                 menu.setParentMenu(one);
-                menu.setMenuIndex(one.getMenuIndex()+"."+save.getId());
+                menu.setMenuIndex(one.getMenuIndex() + "." + save.getId());
             }
-        }else{
-            menu.setMenuIndex(save.getId()+"");
+        } else {
+            menu.setMenuIndex(save.getId() + "");
         }
 //        menu.setParentMenu(menuRepository.findOne(menuDto.getParentSimpleMenu().getId()));
         Menu result = menuRepository.save(menu);
@@ -56,8 +58,13 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public TResult delete(UUID uuid) {
         Menu menu = menuRepository.findOne(uuid);
-        if(menu!=null){
-            //这里应该先判断下该菜单下有没有功能吗？
+        if (menu != null) {
+            Menu parentMenu = menu.getParentMenu();
+            if (parentMenu != null) {
+                if (parentMenu.getChildCount() > 0)
+                    parentMenu.setChildCount(parentMenu.getChildCount() - 1);
+                menuRepository.save(menu);
+            }
             menuRepository.delete(menu);
             return (TResult) ResultFactory.success();
         }

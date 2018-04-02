@@ -80,7 +80,7 @@ public class Menu extends IEntity {
      * 子节点数
      */
     @Column(name = "childCount")
-    private Integer childCount;
+    private Integer childCount = 0;
 
     @ManyToOne
     @JoinColumn(name = "pid")
