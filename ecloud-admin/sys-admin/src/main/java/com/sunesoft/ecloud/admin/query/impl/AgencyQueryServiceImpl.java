@@ -58,7 +58,6 @@ public class AgencyQueryServiceImpl extends GenericQuery implements AgencyQueryS
     public TResult<AgencyDto> findAgencyDetailInfoById(UUID id) {
         SqlBuilder<AgencyDto> builder = HSqlBuilder.hFrom(Agency.class,"agency").where("id",id).select(AgencyDto.class);
         AgencyDto dto = queryForObject(builder);
-
         //获取企业拥有的菜单
         SqlBuilder<BasicDto> menuList = HSqlBuilder.hFrom(AgencyAuthorizedMenu.class,"agMenu")
                 .where("agMenu.agId",id)
@@ -66,7 +65,6 @@ public class AgencyQueryServiceImpl extends GenericQuery implements AgencyQueryS
                 .selectField("agMenu.menuId","id");
         List<UUID> menuIds =  queryList(menuList).stream().map(BasicDto::getId).collect(Collectors.toList());
         dto.setMenuIds(menuIds);
-
         return new TResult<>(dto);
     }
 

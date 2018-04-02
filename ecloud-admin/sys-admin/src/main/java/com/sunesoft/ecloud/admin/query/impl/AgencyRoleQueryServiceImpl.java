@@ -82,21 +82,12 @@ public class AgencyRoleQueryServiceImpl extends GenericQuery implements AgencyRo
         return new TResult<>(dto);
     }
 
-    @Override
-    public TResult<AgencyRoleViewDto> getAgencyRoleFullById(UUID id) {
-        AgencyRoleViewDto viewDto = new AgencyRoleViewDto();
-        SqlBuilder<AgencyRoleDto> dtoBuilder = HSqlBuilder.hFrom(AgencyRole.class, "role")
-                .where("id",id)
-                .select(AgencyRoleViewDto.class);
-        //todo 查询菜单
-        return new TResult<>(viewDto);
-    }
 
     @Override
     public ListResult<BasicDto> getAgencyRoleIdName() {
         SqlBuilder<BasicDto> dtoBuilder = HSqlBuilder.hFrom(AgencyRole.class, "role")
-                .select(AgencyRoleViewDto.class);
-        return null;
+                .select(BasicDto.class);
+        return new ListResult<>(queryList(dtoBuilder));
     }
 
 
