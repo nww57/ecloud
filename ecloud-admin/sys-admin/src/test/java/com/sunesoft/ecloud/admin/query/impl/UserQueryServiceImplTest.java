@@ -58,7 +58,7 @@ public class UserQueryServiceImplTest {
 
     @Test
     public void getBasicInfo(){
-        TResult<UserDto> s = userQueryService.getUserInfo();
+        TResult<UserDto> s = userQueryService.getUserFullInfo();
         System.out.println(23);
     }
 

@@ -50,7 +50,7 @@ public class AgencyUserController {
      */
     @GetMapping("{id}")
     public TResult<UserDto> getUserInfo (@PathVariable UUID id) {
-        return userQueryService.findUserBasicById(id);
+        return userQueryService.findUserFullById(id);
     }
 
     /**
