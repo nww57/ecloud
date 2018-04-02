@@ -32,12 +32,6 @@ public interface AgencyRoleQueryService {
      */
     TResult<AgencyRoleDto> getAgencyRoleBasicById(UUID id);
 
-    /**
-     * 根据id获取角色信息
-     * @param id 角色id
-     * @return 返回查询结果
-     */
-    TResult<AgencyRoleViewDto> getAgencyRoleFullById(UUID id);
 
 
     /**

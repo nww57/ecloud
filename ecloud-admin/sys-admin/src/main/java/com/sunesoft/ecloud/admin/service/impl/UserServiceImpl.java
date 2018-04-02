@@ -77,10 +77,10 @@ public class UserServiceImpl implements UserService {
             user.setRoleList(roleListEntity);
         }
         BeanUtil.copyPropertiesIgnoreNull(userDto, user);
-        if(Objects.equals(user.getUserType(), UserType.AGENCY_ADMIN)){
+        if (Objects.equals(user.getUserType(), UserType.AGENCY_ADMIN)) {
             user.setAgencyId(userDto.getAgId());
             user.setPosition(UserPositionType.ADMIN.toString());
-        }else{
+        } else {
             user.setAgencyId(agId);
             user.setPosition(UserPositionType.EMPLOYEE.toString());
         }
@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public TResult updateUserBasicInfo(UserBasicDto userBasicDto) {
         User user = userRepository.findOne(userId);
-        BeanUtil.copyPropertiesIgnoreNull(userBasicDto,user);
+        BeanUtil.copyPropertiesIgnoreNull(userBasicDto, user);
         userRepository.saveAndFlush(user);
         return (TResult) ResultFactory.success();
     }
@@ -131,8 +131,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public TResult changePassword(UUID id, String oldPassword, String newPassword) {
         // 验证旧密码是否正确
-        String password =  userRepository.selectPassword(id);
-        if(!Objects.equals(password,oldPassword)){
+        String password = userRepository.selectPassword(id);
+        if (!Objects.equals(password, oldPassword)) {
             return new TResult("旧密码错误");
         }
         setPassword(id, newPassword);
@@ -141,7 +141,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public TResult changePassword(String oldPassword, String newPassword) {
-        return changePassword(userId,oldPassword,newPassword);
+        return changePassword(userId, oldPassword, newPassword);
     }
 
     /**
@@ -163,6 +163,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public TResult setPassword(String newPassword) {
-        return  setPassword(userId,newPassword);
+        return setPassword(userId, newPassword);
+    }
+
+    @Override
+    public TResult userLogin(String userName, String password) {
+
+//        User user = userRepository.findUserByUserNameAndPassword(userName, password);
+//        if (null == user) {
+//            return new TResult("用户名或密码错误");
+//        }
+//        return (TResult) ResultFactory.success();
+        return null;
     }
 }

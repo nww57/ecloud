@@ -84,7 +84,10 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
                     roleMenu = new AgencyRoleAuthorizedMenu();
                     menuFuncList = new ArrayList<>();
                     roleMenu.setRole(role);
-                    roleMenu.setAgencyMenu(agencyMenuList.stream().filter(f-> Objects.equals(f.getMenu().getId(),map.getKey())).findAny().get());
+                    Optional<AgencyAuthorizedMenu> optional = agencyMenuList.stream().filter(f-> Objects.equals(f.getMenu().getId(),map.getKey())).findAny();
+                    if(optional.isPresent()){
+                        roleMenu.setAgencyMenu(optional.get());
+                    }
                     List<MenuFunction> functions  = functionList.stream().filter(f->map.getValue().contains(f.getId())).collect(Collectors.toList());
                     for (MenuFunction function : functions) {
                         menuFunc = new AgencyMenuAuthorizedFunction();
@@ -97,8 +100,6 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
                 roleMenuRepository.save(roleMenuList);
             }
         }
-
-
 
         return new TResult<>(agencyRoleDto);
     }
