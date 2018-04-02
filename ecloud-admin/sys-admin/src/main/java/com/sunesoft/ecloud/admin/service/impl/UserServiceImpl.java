@@ -74,6 +74,7 @@ public class UserServiceImpl implements UserService {
         //设置角色
         if (null != roleList && roleList.size() > 0) {
             List<AgencyRole> roleListEntity = roleRepository.findAll(roleList);
+            user.getRoleList().clear();
             user.setRoleList(roleListEntity);
         }
         BeanUtil.copyPropertiesIgnoreNull(userDto, user);

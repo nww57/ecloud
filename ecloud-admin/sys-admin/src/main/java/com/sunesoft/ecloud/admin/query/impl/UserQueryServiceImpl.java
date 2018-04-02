@@ -76,8 +76,8 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
                 .leftJoin(AgencyOrganization.class,"org")
                 .on("user.structureId = org.id")
                 .where("id",id)
-                .setFieldValue("org.id","organizationId")
-                .setFieldValue("org.name","organizationName")
+                .setFieldValue("organizationId","org.id")
+                .setFieldValue("organizationName","org.name")
                 .select(UserDto.class);
         UserDto userInfo = queryForObject(builder);
         String sql = "select r.id id,r.name name from sys_user u left join sys_ag_user_role ur on u.id = ur.userId left join sys_ag_role r on ur.roleId = r.id where u.id = :id";
