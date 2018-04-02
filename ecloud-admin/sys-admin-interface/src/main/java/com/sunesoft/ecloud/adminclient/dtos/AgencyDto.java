@@ -66,9 +66,17 @@ public class AgencyDto extends AgencyBasicDto{
      */
     private String fax;
 
-
-
     private List<UUID> menuIds;
+
+    /**
+     * 账户用户名
+     */
+    private String userName;
+
+    /**
+     * 账户密码
+     */
+    private String password;
 
     public String getAddressCode() {
         return addressCode;
@@ -183,6 +191,19 @@ public class AgencyDto extends AgencyBasicDto{
         this.menuIds = menuIds;
     }
 
+    public String getUserName() {
+        return userName;
+    }
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

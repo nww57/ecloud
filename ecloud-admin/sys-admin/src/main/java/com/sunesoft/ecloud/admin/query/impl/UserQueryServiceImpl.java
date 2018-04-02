@@ -8,6 +8,7 @@ import com.sunesoft.ecloud.admin.repository.UserRepository;
 import com.sunesoft.ecloud.adminclient.UserPositionType;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
+import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
@@ -49,14 +50,29 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
     }
 
     @Override
-    public TResult<UserDto> getUserInfo() {
+    public TResult<UserBasicDto> getUserBasicInfo() {
         //todo 先获取用户id
         UUID id = UUID.fromString("42c569c0-7be3-42c6-9c07-6d9939d2739d");
-        return findUserBasicById(id);
+        return getUserBasicInfoById(id);
     }
 
     @Override
-    public TResult<UserDto> findUserBasicById(UUID id) {
+    public TResult<UserBasicDto> getUserBasicInfoById(UUID id) {
+        SqlBuilder<UserBasicDto> builder = HSqlBuilder.hFrom(User.class,"user")
+                .where("id",id)
+                .select(UserBasicDto.class);
+        return new TResult<>(queryForObject(builder));
+    }
+
+    @Override
+    public TResult<UserDto> getUserFullInfo() {
+        //todo 先获取用户id
+        UUID id = UUID.fromString("42c569c0-7be3-42c6-9c07-6d9939d2739d");
+        return findUserFullById(id);
+    }
+
+    @Override
+    public TResult<UserDto> findUserFullById(UUID id) {
         SqlBuilder<UserDto> builder = HSqlBuilder.hFrom(User.class, "user")
                 .leftJoin(AgencyOrganization.class,"org")
                 .on("user.structureId = org.id")
@@ -69,14 +85,16 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
         Map params = new HashMap();
         params.put("id",id);
         List<BasicDto> roleList = super.queryList(sql,params,BasicDto.class);
-        List<UUID> roleId = new ArrayList<>();
-        List<String> roleName = new ArrayList<>();
-        roleList.forEach(role->{
-            roleId.add(role.getId());
-            roleName.add(role.getName());
-        });
-        userInfo.setRoleIdList(roleId);
-        userInfo.setRoleNameList(roleName);
+        if(null != roleList && roleList.size()>0){
+            List<UUID> roleId = new ArrayList<>();
+            List<String> roleName = new ArrayList<>();
+            roleList.forEach(role->{
+                roleId.add(role.getId());
+                roleName.add(role.getName());
+            });
+            userInfo.setRoleIdList(roleId);
+            userInfo.setRoleNameList(roleName);
+        }
         return new TResult<>(userInfo);
     }
 

@@ -6,6 +6,7 @@ import com.sunesoft.ecloud.admin.query.UserQueryService;
 import com.sunesoft.ecloud.admin.service.UserService;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
+import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
@@ -59,6 +60,12 @@ public class UserQueryServiceImplTest {
     public void getBasicInfo(){
         TResult<UserDto> s = userQueryService.getUserInfo();
         System.out.println(23);
+    }
+
+    @Test
+    public void getUserBasicInfo(){
+        TResult<UserBasicDto> basic = userQueryService.getUserBasicInfo();
+        System.out.println(32);
     }
 
 

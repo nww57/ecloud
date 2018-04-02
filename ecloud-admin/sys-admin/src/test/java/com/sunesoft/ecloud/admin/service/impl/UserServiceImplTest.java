@@ -49,7 +49,7 @@ public class UserServiceImplTest {
         userDto.setRealName("王五");
         userDto.setCallphone("23231324");
         userDto.setEmail("1233@qq.com");
-        userDto.setWorkon(true);
+        userDto.setIsWorkon(true);
 //        userDto.setOrganizationId(UUID.fromString("f5c3aaa2-24aa-4479-9bc6-d3af988c604a"));
 //        List<UUID> roleList = new ArrayList<UUID>(){{
 //           add(UUID.fromString("4d246b07-0fff-41bc-9f20-13e08488a592"));
