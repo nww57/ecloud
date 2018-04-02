@@ -3,6 +3,7 @@ package com.sunesoft.ecloud.admin.service.impl;
 import com.sunesoft.ecloud.admin.domain.menu.Menu;
 import com.sunesoft.ecloud.admin.repository.MenuRepository;
 import com.sunesoft.ecloud.admin.service.MenuService;
+import com.sunesoft.ecloud.adminclient.MenuType;
 import com.sunesoft.ecloud.adminclient.dtos.MenuDto;
 import com.sunesoft.ecloud.adminclient.dtos.MenuSimpleDto;
 import com.sunesoft.ecloud.common.result.TResult;
@@ -37,9 +38,11 @@ public class MenuServiceImplTest {
         MenuDto menuDto=new MenuDto();
 //        menuDto.setId(UUID.fromString("f28586a2-9e12-47e0-88a5-f9b14b98f0d7"));
 
-        menuDto.setName("组织架构管理");
+        menuDto.setName("测试4.2");
         menuDto.setSort(1);
-        menuDto.setDescription("阿道夫");
+        menuDto.setDescription("cccccccc");
+        menuDto.setType(MenuType.Link);
+        menuDto.setPid(UUID.fromString("51a68dce-3be2-4f4b-b6c9-226e58757ea4"));
 
 //        MenuSimpleDto menuSimpleDto=new MenuSimpleDto();
 //        menuSimpleDto.setId(UUID.fromString("d22222bf-c28f-4d00-8682-f445f64460ba"));

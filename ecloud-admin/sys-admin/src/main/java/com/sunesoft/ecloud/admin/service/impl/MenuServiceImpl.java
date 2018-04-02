@@ -38,8 +38,8 @@ public class MenuServiceImpl implements MenuService {
             BeanUtil.copyPropertiesIgnoreNull(menuDto,menu);
         }
         Menu save = menuRepository.save(menu);
-        if(menuDto.getParentSimpleMenu()!=null){
-            Menu one = menuRepository.findOne(menuDto.getParentSimpleMenu().getId());//父级菜单
+        if(menuDto.getPid()!=null){
+            Menu one = menuRepository.findOne(menuDto.getPid());//父级菜单
             if(one!=null){
                 one.getChildren().add(menu);
                 menu.setParentMenu(one);
