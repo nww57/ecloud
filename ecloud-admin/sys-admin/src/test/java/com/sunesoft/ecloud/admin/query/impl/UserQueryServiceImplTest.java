@@ -22,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.transaction.Transactional;
+import java.util.UUID;
 
 /**
  * @author: Zhouzh
@@ -77,5 +78,11 @@ public class UserQueryServiceImplTest {
         System.out.println(32);
     }
 
+
+    @Test
+    public void findUserFullById(){
+        TResult<UserDto> dto=   userQueryService.findUserFullById(UUID.fromString("a7bf0d93-5ff2-4c6c-b417-a3a8648d08d0"));
+        System.out.println(23);
+    }
 
 }

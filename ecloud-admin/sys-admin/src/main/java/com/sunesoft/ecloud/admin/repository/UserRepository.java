@@ -42,4 +42,12 @@ public interface UserRepository extends BaseRepository<User,UUID> {
     String selectPassword(@Param("id") UUID id);
 
     void deleteByAgencyId(UUID agId);
+
+    /**
+     * 根据用户名密码查找用户
+     * @param userName 用户名
+     * @param password 密码
+     * @return 返回用户信息
+     */
+    User findUserByUserNameAndPassword(String userName,String password);
 }

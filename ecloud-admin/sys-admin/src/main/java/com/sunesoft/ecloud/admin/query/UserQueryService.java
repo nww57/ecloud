@@ -67,4 +67,7 @@ public interface UserQueryService {
      * @return 返回查询结果
      */
     ListResult<UserPositionDto> getPositionList();
+
+
+
 }

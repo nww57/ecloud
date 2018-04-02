@@ -75,6 +75,14 @@ public interface UserService {
     TResult setPassword(String newPassword);
 
 
+    /**
+     * 用户登录
+     * @param userName 用户名
+     * @param password 密码
+     * @return 返回登录状态
+     */
+    TResult userLogin(String userName,String password);
+
 
 
 }
