@@ -13,7 +13,7 @@ import java.util.UUID;
  * @Author: niww
  * @Date: 2018/3/29
  */
-public interface AgencyRoleAuthorizedMenuRepository extends JpaRepository<AgencyRoleAuthorizedMenu,UUID> {
+public interface AgencyRoleAuthorizedMenuRepository extends BaseRepository<AgencyRoleAuthorizedMenu,UUID> {
 
     @Query(value = "select r.Id from sys_ag_role_authmenu r where r.menuId in ?1" ,nativeQuery = true)
     List<String>  getIdByAgencyMenu(List<String> ids);

@@ -40,4 +40,6 @@ public interface UserRepository extends BaseRepository<User,UUID> {
 
     @Query(value = "select u.password from User u where u.id = :id")
     String selectPassword(@Param("id") UUID id);
+
+    void deleteByAgencyId(UUID agId);
 }

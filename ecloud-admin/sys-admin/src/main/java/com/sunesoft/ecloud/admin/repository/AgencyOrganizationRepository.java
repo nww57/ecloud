@@ -18,4 +18,6 @@ public interface AgencyOrganizationRepository extends BaseRepository<AgencyOrgan
     @Modifying
     @Query(value = "delete from AgencyOrganization where id in :ids")
     void deleteBatch(@Param("ids") UUID... ids);
+
+    void deleteByAgency_Id(UUID agId);
 }

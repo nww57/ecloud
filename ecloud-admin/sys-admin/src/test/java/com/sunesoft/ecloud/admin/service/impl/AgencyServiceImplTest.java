@@ -48,8 +48,9 @@ public class AgencyServiceImplTest {
 
         List<UUID> uuidList = new ArrayList<UUID>(){{
             add(UUID.fromString("5612c844-5d55-4a26-916d-51ce17efc0c7"));
-            add(UUID.fromString("56cfb947-2cda-4216-b1e8-92bd804d4a89"));
+//            add(UUID.fromString("56cfb947-2cda-4216-b1e8-92bd804d4a89"));
             add(UUID.fromString("78ef2cfe-b5ea-46cb-bf52-e4cd37f1ffba"));
+
         }} ;
 
         dto.setMenuIds(uuidList);
@@ -79,7 +80,7 @@ public class AgencyServiceImplTest {
 
     @Test
     public void delete() throws Exception {
-        UUID u1 = UUID.fromString("0486ce7e-8abd-4b59-bb41-deadba759805");
+        UUID u1 = UUID.fromString("d2d512f3-0a6c-4373-9ab2-a348fb616d7a");
         TResult result = agencyService.delete(u1);
         System.out.println(23);
     }

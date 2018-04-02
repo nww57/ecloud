@@ -19,4 +19,6 @@ public interface AgencyRoleRepository extends BaseRepository<AgencyRole,UUID>{
     @Query(value = "delete from AgencyRole  where id in :ids")
     void deleteBatch(@Param("ids") UUID... ids);
 
+    void deleteByAgencyId(UUID agId);
+
 }
