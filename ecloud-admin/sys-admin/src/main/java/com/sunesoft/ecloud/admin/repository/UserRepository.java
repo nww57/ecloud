@@ -54,8 +54,6 @@ public interface UserRepository extends BaseRepository<User,UUID> {
     User findUserByUserNameAndPassword(String userName,String password);
 
 
-    List<User> getUserByAgencyOrganization_Id(UUID orgId);
-
     @Modifying
     @Query(value = "update User u set u.agencyOrganization = null where u.agencyOrganization.id = :orgId")
     void updateOrganizationNull(@Param("orgId") UUID orgId);

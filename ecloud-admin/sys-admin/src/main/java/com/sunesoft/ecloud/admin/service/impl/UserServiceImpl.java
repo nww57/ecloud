@@ -105,7 +105,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public TResult deleteUser(UUID id) {
-        userRepository.findOne(id);
+        //删除用户跟角色的关联关系
+        User user = userRepository.findOne(id);
+        user.getRoleList().clear();
         userRepository.delete(id);
         return (TResult) ResultFactory.success();
     }
