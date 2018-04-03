@@ -28,19 +28,24 @@ public class AgencyOrganizationServiceImplTest {
 
     @Test
     public void addOrUpdateOrganization() throws Exception {
-        AgencyOrganizationDto dto = new AgencyOrganizationDto();
-//        dto.setParentId(UUID.fromString("cad1d2ae-f872-4e95-ae8e-656d5945563d"));
+        for(int i=1;i<4;i++){
+            AgencyOrganizationDto dto = new AgencyOrganizationDto();
+            dto.setPid(UUID.fromString("e116808d-d31b-4aab-8b1a-b360edbc2225"));
 //        dto.setAgId(UUID.fromString("1326723e-9532-4ec0-9d2f-6bad0a65db3b"));
-        dto.setName("策划部");
-        dto.setDescription("");
-        dto.setCode("02");
+            dto.setName("策划部2的下属部门"+i);
+            dto.setDescription("");
+            dto.setCode("02020"+i);
 //        dto.setLeaderId(UUID.fromString("06d11ea7-44d3-4267-8b26-15db3e6d70b2"));
-        organizationService.addOrUpdateOrganization(dto);
+            organizationService.addOrUpdateOrganization(dto);
+        }
+
         System.out.println(23);
     }
 
     @Test
     public void delete() throws Exception {
+        organizationService.delete(UUID.fromString("19b7e85b-5536-49fe-950c-4ac279d0549e"));
+        System.out.println(23);
     }
 
     @Test

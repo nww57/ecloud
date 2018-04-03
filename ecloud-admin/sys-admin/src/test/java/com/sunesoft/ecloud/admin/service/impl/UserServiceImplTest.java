@@ -9,6 +9,7 @@ import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.validator.PublicClassValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -36,28 +37,33 @@ public class UserServiceImplTest {
 
     @Test
     public void addOrUpdateUser() throws Exception {
-//        for(int i=5;i<19;i++){
-//            UserDto userDto = new UserDto();
-//            userDto.setUserName("wangwu"+i);
-//            userDto.setRealName("王五"+i);
-//            userDto.setCallphone("23231324");
-//            userDto.setEmail("1233@qq.com");
-//            userDto.setWorkon(true);
-//            userDto.setOrganizationId(UUID.fromString("8375a551-8759-4bc4-9e3c-59fd12d8ebb4"));
-//            userService.addOrUpdateUser(userDto);
-//        }
-        UserDto userDto = new UserDto();
-        userDto.setUserName("wangwu");
-        userDto.setRealName("王五");
-        userDto.setCallphone("23231324");
-        userDto.setEmail("1233@qq.com");
-        userDto.setIsWorkon(true);
+        for(int i=1;i<10;i++){
+            UserDto userDto = new UserDto();
+            userDto.setUserName("wangwu"+i);
+            userDto.setRealName("43测试"+i);
+            userDto.setCallphone("23231324");
+            userDto.setEmail("1233@qq.com");
+            userDto.setIsWorkon(true);
+            userDto.setOrganizationId(UUID.fromString("7a39654e-db51-4ee6-8366-f07acf0b9fc9"));
+            List<UUID> roleList = new ArrayList<UUID>(){{
+           add(UUID.fromString("55dae2f6-a821-4871-aa34-6e03f9804fd5"));
+           add(UUID.fromString("f59208b0-fb1f-4976-8a77-8d012988933d"));
+        }};
+            userDto.setRoleIdList(roleList);
+            userService.addOrUpdateUser(userDto);
+        }
+//        UserDto userDto = new UserDto();
+//        userDto.setUserName("saff");
+//        userDto.setRealName("43测试1");
+//        userDto.setCallphone("23231324");
+//        userDto.setEmail("1233@qq.com");
+//        userDto.setIsWorkon(true);
 //        userDto.setOrganizationId(UUID.fromString("f5c3aaa2-24aa-4479-9bc6-d3af988c604a"));
 //        List<UUID> roleList = new ArrayList<UUID>(){{
 //           add(UUID.fromString("4d246b07-0fff-41bc-9f20-13e08488a592"));
 //        }};
 //        userDto.setRoleIdList(roleList);
-        userService.addOrUpdateUser(userDto);
+//        userService.addOrUpdateUser(userDto);
         System.out.println(23);
     }
 
@@ -106,6 +112,13 @@ public class UserServiceImplTest {
         dto.setRealName("来看看的");
         dto.setEmail("555@qq.com");
         TResult result = userService.updateUserBasicInfo(dto);
+        System.out.println(23);
+    }
+
+    @Test
+    public void test5(){
+
+        userRepository.updateOrganizationNull(UUID.fromString("7a39654e-db51-4ee6-8366-f07acf0b9fc9"));
         System.out.println(23);
     }
 

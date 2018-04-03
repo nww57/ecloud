@@ -69,6 +69,11 @@ import java.util.UUID;
      */
     private String consultantName;
 
+    /**
+     * 按键数量
+     */
+    private Integer caseNumber;
+
     public UUID getAgId() {
         return agId;
     }
@@ -182,4 +187,11 @@ import java.util.UUID;
         this.leaderEmail = leaderEmail;
     }
 
+    public Integer getCaseNumber() {
+        return caseNumber;
+    }
+
+    public void setCaseNumber(Integer caseNumber) {
+        this.caseNumber = caseNumber;
+    }
 }

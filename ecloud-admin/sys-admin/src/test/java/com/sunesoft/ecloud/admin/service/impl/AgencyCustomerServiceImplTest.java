@@ -41,10 +41,12 @@ public class AgencyCustomerServiceImplTest {
 
     @Test
     public void delete() throws Exception {
+        customerService.delete(UUID.fromString("178894eb-9d04-4d23-a79e-927bc952b07c"));
     }
 
     @Test
     public void deleteBatch() throws Exception {
+        customerService.deleteBatch(UUID.fromString("98ca3092-cc29-4214-a67b-4064878d890b"),UUID.fromString("d93cf511-3c1f-4562-905c-93c68b3bee00"));
     }
 
 }

@@ -20,4 +20,8 @@ public interface AgencyOrganizationRepository extends BaseRepository<AgencyOrgan
     void deleteBatch(@Param("ids") UUID... ids);
 
     void deleteByAgency_Id(UUID agId);
+
+    @Modifying
+    @Query(value = "update AgencyOrganization a set a.parentOrg = null where a.parentOrg.id = :pid")
+    void updateParentAgencyNull(@Param("pid") UUID pid);
 }

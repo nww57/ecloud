@@ -2,6 +2,7 @@ package com.sunesoft.ecloud.admin.service.impl;
 
 import com.sunesoft.ecloud.admin.domain.agency.Agency;
 import com.sunesoft.ecloud.admin.domain.agency.AgencyOrganization;
+import com.sunesoft.ecloud.admin.domain.agency.User;
 import com.sunesoft.ecloud.admin.repository.AgencyOrganizationRepository;
 import com.sunesoft.ecloud.admin.repository.AgencyRepository;
 import com.sunesoft.ecloud.admin.repository.UserRepository;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -75,13 +77,18 @@ public class AgencyOrganizationServiceImpl implements AgencyOrganizationService 
 
     @Override
     public TResult delete(UUID id) {
+        //更新该组织架构下的用户的所属架构为null
+        userRepository.updateOrganizationNull(id);
+        orgRepository.updateParentAgencyNull(id);
         orgRepository.delete(id);
         return (TResult) ResultFactory.success();
     }
 
     @Override
     public TResult deleteBatch(UUID... ids) {
-        orgRepository.deleteBatch(ids);
+        for (UUID id : ids) {
+            delete(id);
+        }
         return (TResult) ResultFactory.success();
     }
 }
