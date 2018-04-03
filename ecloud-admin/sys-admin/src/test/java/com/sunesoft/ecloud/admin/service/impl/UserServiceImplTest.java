@@ -37,38 +37,40 @@ public class UserServiceImplTest {
 
     @Test
     public void addOrUpdateUser() throws Exception {
-        for(int i=1;i<10;i++){
-            UserDto userDto = new UserDto();
-            userDto.setUserName("wangwu"+i);
-            userDto.setRealName("43测试"+i);
-            userDto.setCallphone("23231324");
-            userDto.setEmail("1233@qq.com");
-            userDto.setIsWorkon(true);
-            userDto.setOrganizationId(UUID.fromString("7a39654e-db51-4ee6-8366-f07acf0b9fc9"));
-            List<UUID> roleList = new ArrayList<UUID>(){{
-           add(UUID.fromString("55dae2f6-a821-4871-aa34-6e03f9804fd5"));
-           add(UUID.fromString("f59208b0-fb1f-4976-8a77-8d012988933d"));
-        }};
-            userDto.setRoleIdList(roleList);
-            userService.addOrUpdateUser(userDto);
-        }
-//        UserDto userDto = new UserDto();
-//        userDto.setUserName("saff");
-//        userDto.setRealName("43测试1");
-//        userDto.setCallphone("23231324");
-//        userDto.setEmail("1233@qq.com");
-//        userDto.setIsWorkon(true);
-//        userDto.setOrganizationId(UUID.fromString("f5c3aaa2-24aa-4479-9bc6-d3af988c604a"));
+//        for(int i=1;i<10;i++){
+//            UserDto userDto = new UserDto();
+//            userDto.setUserName("测试用户删除"+i);
+//            userDto.setRealName("43测试"+i);
+//            userDto.setCallphone("23231324");
+//            userDto.setEmail("1233@qq.com");
+//            userDto.setIsWorkon(true);
+////            userDto.setOrganizationId(UUID.fromString("7a39654e-db51-4ee6-8366-f07acf0b9fc9"));
+//            List<UUID> roleList = new ArrayList<UUID>(){{
+//           add(UUID.fromString("3e4c832c-46bc-4601-9808-de55d4aa3d4a"));
+//           add(UUID.fromString("e2e16231-d787-4192-a928-94ef8c6c5501"));
+//        }};
+//            userDto.setRoleIdList(roleList);
+//            userService.addOrUpdateUser(userDto);
+//        }
+        UserDto userDto = new UserDto();
+        userDto.setUserName("saff");
+        userDto.setRealName("43测试1");
+        userDto.setCallphone("23231324");
+        userDto.setEmail("1233@qq.com");
+        userDto.setIsWorkon(true);
+        userDto.setOrganizationId(UUID.fromString("f5c3aaa2-24aa-4479-9bc6-d3af988c604a"));
 //        List<UUID> roleList = new ArrayList<UUID>(){{
 //           add(UUID.fromString("4d246b07-0fff-41bc-9f20-13e08488a592"));
 //        }};
 //        userDto.setRoleIdList(roleList);
-//        userService.addOrUpdateUser(userDto);
+        userService.addOrUpdateUser(userDto);
         System.out.println(23);
     }
 
     @Test
     public void deleteUser() throws Exception {
+        userService.deleteUser(UUID.fromString("f976099d-cc16-44fc-baaa-20cbf3388b7d"));
+        System.out.println(23);
     }
 
     @Test
@@ -83,14 +85,12 @@ public class UserServiceImplTest {
 
     @Test
     public void setPassword() throws Exception {
-        userService.setPassword(UUID.fromString("fc98e1ca-92f0-4f2e-b68c-f0129978c1bf"),"1asdfasf");
-        System.out.println(23);
+
     }
 
     @Test
     public void test2(){
-        userRepository.updatePassword(UUID.fromString("fc98e1ca-92f0-4f2e-b68c-f0129978c1bf"),"23asdfa");
-        System.out.println(23);
+
     }
 
     @Test
