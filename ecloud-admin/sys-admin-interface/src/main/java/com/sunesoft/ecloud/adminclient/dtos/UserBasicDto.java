@@ -212,4 +212,6 @@ public class UserBasicDto extends BasicDto{
     public void setAgId(UUID agId) {
         this.agId = agId;
     }
+
+
 }
