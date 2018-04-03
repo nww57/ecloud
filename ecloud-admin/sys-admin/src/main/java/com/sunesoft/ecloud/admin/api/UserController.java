@@ -2,9 +2,12 @@ package com.sunesoft.ecloud.admin.api;
 
 import com.sunesoft.ecloud.admin.query.UserQueryService;
 import com.sunesoft.ecloud.admin.service.UserService;
+import com.sunesoft.ecloud.adminclient.UserPositionType;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
+import com.sunesoft.ecloud.adminclient.dtos.UserPositionDto;
+import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -70,6 +74,16 @@ public class UserController {
     }
 
     /**
+     * 修改当前用户信息
+     * @param userDto
+     * @return
+     */
+    @PutMapping(value = "")
+    public TResult updateCurrentUserInfo (@RequestBody UserDto userDto) {
+        return userService.updateUserBasicInfo(userDto);
+    }
+
+    /**
      * 修改密码
      * @param id
      * @param oldPw
@@ -81,6 +95,21 @@ public class UserController {
         return userService.changePassword(id, oldPw, newPw);
     }
 
+    /**
+     * 修改当前用户密码
+     * @param oldPw
+     * @param newPw
+     * @return
+     */
+    @PutMapping(value = "/changepw")
+    public TResult changepw(String oldPw, String newPw){
+        return userService.changePassword(oldPw,newPw);
+    }
+
+    @GetMapping(value = "/position/collection")
+    public ListResult<UserPositionDto> getPositionList(){
+        return userQueryService.getPositionList();
+    }
 
     @RequestMapping(value = "/str", method = RequestMethod.GET)
     public String getString(){
