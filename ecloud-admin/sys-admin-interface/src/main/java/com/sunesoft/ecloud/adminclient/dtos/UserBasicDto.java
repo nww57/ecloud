@@ -80,6 +80,11 @@ public class UserBasicDto extends BasicDto{
      */
     private String createDate;
 
+    /**
+     * 所属企业id
+     */
+    private UUID agId;
+
     public UserType getUserType() {
         return userType;
     }
@@ -198,5 +203,13 @@ public class UserBasicDto extends BasicDto{
 
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
+    }
+
+    public UUID getAgId() {
+        return agId;
+    }
+
+    public void setAgId(UUID agId) {
+        this.agId = agId;
     }
 }

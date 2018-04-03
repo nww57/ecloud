@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.admin.service;
 
+import com.sunesoft.ecloud.admin.domain.agency.User;
 import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.TResult;
@@ -90,7 +91,7 @@ public interface UserService {
      * @param password 密码
      * @return 返回登录状态
      */
-    TResult userLogin(String userName,String password);
+    TResult<UUID> userLogin(String userName, String password);
 
 
 

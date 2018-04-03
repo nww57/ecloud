@@ -1,13 +1,11 @@
 package com.sunesoft.ecloud.admin.query;
 
-import com.sunesoft.ecloud.adminclient.UserPositionType;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.*;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.data.domain.Page;
 
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -61,7 +59,6 @@ public interface UserQueryService {
      */
     ListResult<BasicDto> getUserIdName();
 
-
     /**
      * 获取用户职位列表
      * @return 返回查询结果
@@ -69,5 +66,10 @@ public interface UserQueryService {
     ListResult<UserPositionDto> getPositionList();
 
 
-
+    /**
+     * 根据用户id获取用户的菜单权限
+     * @param id
+     * @return
+     */
+    TResult<UserMenuAuthDto> getUserAuthMenuList(UUID id);
 }

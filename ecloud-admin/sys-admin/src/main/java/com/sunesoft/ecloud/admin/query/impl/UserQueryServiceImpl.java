@@ -6,17 +6,19 @@ import com.sunesoft.ecloud.admin.query.UserQueryService;
 import com.sunesoft.ecloud.admin.repository.UserRepository;
 import com.sunesoft.ecloud.adminclient.UserPositionType;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
-import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
-import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
-import com.sunesoft.ecloud.adminclient.dtos.UserDto;
-import com.sunesoft.ecloud.adminclient.dtos.UserPositionDto;
+import com.sunesoft.ecloud.adminclient.dtos.*;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
+import com.sunesoft.ecloud.common.utils.BeanUtil;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -33,18 +35,23 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
 
     @Autowired
     UserRepository userRepository;
-
+    @Value("${ecloud.agId}")
+    private String agId;
     @Override
     public Page<UserDto> findUserPaged(UserCriteria cretiria) {
-        SqlBuilder builder = HSqlBuilder.hFrom(User.class, "u")
-                .leftJoin(AgencyOrganization.class,"org")
-                .on("u.structureId=org.id")
-                .where(cretiria.getParams())
-                .pagging(cretiria.getPageIndex(),cretiria.getPageSize())
-                .select(UserDto.class)
-                .setFieldValue("organizationId","org.Id")
-                .setFieldValue("organizationName","org.Name");
-        return this.queryPaged(builder);
+        PageRequest pageable = new PageRequest(cretiria.getPageIndex(),cretiria.getPageSize(),null);
+        StringBuilder sb = new StringBuilder("");
+        sb.append("select u.id,u.userName,u.realName,u.callphone,u.email,u.isWorkon,u.create_datetime createDate,org.name organizationName ," +
+                " (select GROUP_CONCAT(r.name) from sys_ag_user_role ur LEFT JOIN sys_ag_role r on r.id = ur.roleId where ur.userId = u.id) roleName " +
+                " from sys_user u " +
+                " LEFT JOIN sys_ag_organization org on org.id = u.structureId " +
+                " where u.agId = '").append(agId).append("' limit ").append(cretiria.getPageIndex()).append(",").append(cretiria.getPageSize());
+        List<UserDto> dtoList = queryList(sb.toString(),null,UserDto.class);
+        String queryCount = "select count(*) from sys_user u where u.agId = '"+agId+"'";
+        int count = queryCount(queryCount,null);
+        Page page= new PageImpl(dtoList,pageable,count);
+        return page;
+
     }
 
     @Override
@@ -120,6 +127,16 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
             positionDtos.add(positionDto);
         }
         return new ListResult<>(positionDtos);
+    }
+
+    @Override
+    public TResult<UserMenuAuthDto> getUserAuthMenuList(UUID id) {
+        UserMenuAuthDto authDto = new UserMenuAuthDto();
+        //获取基本信息
+        TResult<UserBasicDto> basicDto = getUserBasicInfoById(id);
+        BeanUtil.copyPropertiesIgnoreNull(basicDto.getResult(),authDto);
+        //获取
+        return null;
     }
 
 

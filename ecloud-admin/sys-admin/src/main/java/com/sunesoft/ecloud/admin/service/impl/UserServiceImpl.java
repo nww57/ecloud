@@ -178,13 +178,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public TResult userLogin(String userName, String password) {
+    public TResult<UUID> userLogin(String userName, String password) {
 
-//        User user = userRepository.findUserByUserNameAndPassword(userName, password);
-//        if (null == user) {
-//            return new TResult("用户名或密码错误");
-//        }
-//        return (TResult) ResultFactory.success();
-        return null;
+        User user = userRepository.findUserByUserNameAndPassword(userName, password);
+        if (null == user) {
+            return new TResult<>("用户名或密码错误");
+        }
+        return new TResult<>(user.getId());
     }
 }

@@ -1,9 +1,8 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
 
-import com.sunesoft.ecloud.adminclient.UserType;
-
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 /**
  * @author: Zhouzh
  * @Date: 2018/3/23
@@ -32,7 +31,8 @@ public class UserDto extends UserBasicDto{
      */
     private List<String> roleNameList;
 
-    private UUID agId;
+
+    private String roleName;
 
     public String getOrganizationName() {
         return organizationName;
@@ -67,11 +67,12 @@ public class UserDto extends UserBasicDto{
         this.organizationId = organizationId;
     }
 
-    public UUID getAgId() {
-        return agId;
+
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setAgId(UUID agId) {
-        this.agId = agId;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }
