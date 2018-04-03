@@ -22,6 +22,7 @@ import com.sunesoft.ecloud.common.Exceptions.BeansException;
 import com.sunesoft.ecloud.common.Exceptions.FatalBeanException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.text.resources.en.FormatData_en_US;
 
 import java.beans.PropertyDescriptor;
 import java.beans.PropertyEditor;
@@ -31,6 +32,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.URI;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 
@@ -628,7 +632,14 @@ public abstract class BeanUtil {
 							if (!Modifier.isPublic(writeMethod.getDeclaringClass().getModifiers())) {
 								writeMethod.setAccessible(true);
 							}
-							writeMethod.invoke(target, value);
+							//处理String ->Date
+							Class cl = writeMethod.getParameterTypes()[0];
+							if(cl==Date.class){
+								SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+								writeMethod.invoke(target, format.parse((String)value));
+							}else{
+								writeMethod.invoke(target, value);
+							}
 						}
 
 					} catch (Throwable ex) {
