@@ -26,15 +26,16 @@ public class AgencyCustomerServiceImplTest {
     @Test
     public void addOrUpdateAgencyCustomer() throws Exception {
         AgencyCustomerDto dto  = new AgencyCustomerDto();
-        dto.setName("来看看的企业");
-        dto.setLeader("张三");
-        dto.setLeaderEmail("23@qq.com");
-        dto.setLeaderMobile("3232323232");
-        dto.setProvince("江苏");
-        dto.setCity("常州");
-        dto.setDistrict("武进");
+        dto.setName("客户1");
+        dto.setLeader("负责人1");
+        dto.setLeaderEmail("123123@163.com");
+        dto.setLeaderMobile("1231313123");
+        dto.setProvince("北京市");
+        dto.setCity("市辖区");
+        dto.setDistrict("东城区");
         dto.setStreet("高新区XXX");
-//        dto.setConsultantId(UUID.fromString("93c14d85-efc5-41ba-9546-b00e4d03feef"));
+        dto.setSignDate("2018-04-03 11:06:52");
+        dto.setConsultantId(UUID.fromString("0f35220d-718e-4e53-b260-cb329d7fb407"));
         customerService.addOrUpdateAgencyCustomer(dto);
         System.out.println(23);
     }

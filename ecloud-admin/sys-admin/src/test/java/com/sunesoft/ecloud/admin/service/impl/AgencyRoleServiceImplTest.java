@@ -53,6 +53,8 @@ public class AgencyRoleServiceImplTest {
 
     @Test
     public void delete() throws Exception {
+        roleService.delete(UUID.fromString("3e4c832c-46bc-4601-9808-de55d4aa3d4a"));
+        System.out.println(23);
     }
 
     @Test

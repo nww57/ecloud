@@ -53,16 +53,16 @@ public class UserServiceImplTest {
 //            userService.addOrUpdateUser(userDto);
 //        }
         UserDto userDto = new UserDto();
-        userDto.setUserName("saff");
-        userDto.setRealName("43测试1");
-        userDto.setCallphone("23231324");
+        userDto.setUserName("wanggy3");
+        userDto.setRealName("王广杨3");
+        userDto.setCallphone("123123");
         userDto.setEmail("1233@qq.com");
         userDto.setIsWorkon(true);
-        userDto.setOrganizationId(UUID.fromString("f5c3aaa2-24aa-4479-9bc6-d3af988c604a"));
-//        List<UUID> roleList = new ArrayList<UUID>(){{
-//           add(UUID.fromString("4d246b07-0fff-41bc-9f20-13e08488a592"));
-//        }};
-//        userDto.setRoleIdList(roleList);
+        userDto.setOrganizationId(UUID.fromString("2fc7bc12-f15e-41b0-882c-fe4455723026"));
+        List<UUID> roleList = new ArrayList<UUID>(){{
+           add(UUID.fromString("840197db-04dd-4961-9bf6-5b8844e10ec5"));
+        }};
+        userDto.setRoleIdList(roleList);
         userService.addOrUpdateUser(userDto);
         System.out.println(23);
     }
