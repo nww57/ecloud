@@ -81,7 +81,7 @@ public class AgencyUserController {
      */
     @PutMapping("resetpw/{id}")
     public TResult resetpw (@PathVariable UUID id, @RequestBody ChangePassword changePassword) {
-        return userService.setPassword(id, changePassword.getNewPw());
+        return userService.setPassword(id, changePassword.getNewPw(),changePassword.getNeed());
     }
 
     /**

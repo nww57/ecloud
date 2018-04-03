@@ -1,6 +1,5 @@
 package com.sunesoft.ecloud.admin.service;
 
-import com.sunesoft.ecloud.admin.domain.agency.User;
 import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.TResult;
@@ -65,24 +64,16 @@ public interface UserService {
      * @param newPassword
      * @return
      */
-    TResult setPassword(UUID id,String newPassword);
+    TResult setPassword(UUID id,String newPassword,Boolean need);
 
 
 
     /**
-     * 重置密码后，下次登录时是否需要修改密码
-     * @param need
-     * @return
-     */
-    TResult setNeedChangePassword(UUID id,Boolean need);
-
-
-    /**
-     *设置密码
+     *重置密码后 ，下次登录时是否需要修改密码
      * @param newPassword
      * @return
      */
-    TResult setPassword(String newPassword);
+    TResult setPassword(String newPassword,Boolean need);
 
 
     /**

@@ -6,6 +6,17 @@ public class ChangePassword {
 
     private String newPw;
 
+    private Boolean need;
+
+
+    public Boolean getNeed() {
+        return need;
+    }
+
+    public void setNeed(Boolean need) {
+        this.need = need;
+    }
+
     public String getOldPw() {
         return oldPw;
     }
