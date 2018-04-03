@@ -136,9 +136,62 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
         TResult<UserBasicDto> basicDto = getUserBasicInfoById(id);
         BeanUtil.copyPropertiesIgnoreNull(basicDto.getResult(),authDto);
         //获取菜单及权限
+        //1.找出用户拥有的所有菜单 （用户-->角色-->菜单）
+        String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.description,m.frontDisc,m.icon,m.pid from sys_user u " +
+                " INNER JOIN sys_ag_user_role ur on ur.userId = u.id " +
+                " INNER JOIN sys_ag_role_authmenu rm on rm.roleId = ur.roleId " +
+                " INNER JOIN sys_ag_authmenu am on am.id = rm.menuId " +
+                " INNER JOIN sys_menu m on am.menuId = m.id " +
+                " where u.id = :uid";
+        Map map = new HashMap();
+        map.put("uid",id.toString());
+        List<MenuDto> menuDtoList = queryList(sql,map,MenuDto.class);
 
+        //2.找出用户拥有的菜单的功能
+        String funcSql = "select f.id,f.name,f.menuId,f.resCode,f.resType,f.resName,f.resUrl,f.resRequestType,f.description from sys_user u " +
+                " INNER JOIN sys_ag_user_role ur on ur.userId = u.id " +
+                " INNER JOIN sys_ag_role_authmenu rm on rm.roleId = ur.roleId " +
+                " INNER JOIN sys_ag_menu_authfunc rf on rm.id = rf.roleMenuId " +
+                " INNER JOIN sys_menu_func f on rf.funcId = f.id where u.id=:uid";
+        List<MenuFunctionDto> functionDtoList = queryList(funcSql,map,MenuFunctionDto.class);
+        //3.装配
+        //先将func匹配进menu
+        menuDtoList.forEach(menu->{
+            functionDtoList.forEach(func->{
+                if(Objects.equals(func.getMenuId(),menu.getId())){
+                    menu.getMenuFunctions().add(func);
+                }
+            });
+        });
+        //处理menu,转换成树形结构
+        List<MenuDto> treeList = buildTree(menuDtoList);
+
+        System.out.println(23);
         return null;
     }
 
+
+    /**
+     * 将集合数据转化成树形结构
+     * @param dtoList 集合数据
+     * @return 返回树形结构数据
+     */
+    private static List<MenuDto> buildTree(List<MenuDto> dtoList){
+        List<MenuDto> treeList = new ArrayList<>();
+        dtoList.forEach(parent->{
+            if(null == parent.getPid()){
+                treeList.add(parent);
+            }
+            dtoList.forEach(child->{
+                if(Objects.equals(child.getPid(),parent.getId())){
+                    if(null == parent.getChildren()){
+                        parent.setChildren(new ArrayList<>());
+                    }
+                    parent.getChildren().add(child);
+                }
+            });
+        });
+        return treeList;
+    }
 
 }

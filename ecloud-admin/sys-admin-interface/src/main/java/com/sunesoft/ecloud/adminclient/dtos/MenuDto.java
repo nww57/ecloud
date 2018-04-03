@@ -81,7 +81,7 @@ public class MenuDto  extends TreeEntity {
     /**
      * 菜单功能
      */
-    private List<MenuFunctionDto> menuFunctions;
+    private List<MenuFunctionDto> menuFunctions = new ArrayList<>();
 
     public ModuleDto getModuleDto() {
         return moduleDto;
