@@ -53,9 +53,9 @@ public interface UserRepository extends BaseRepository<User,UUID> {
      */
     User findUserByUserNameAndPassword(String userName,String password);
 
-    @Modifying
-    @Query(value = "update User set agencyOrganization = null where User.agencyOrganization.id = :orgId")
-    List<User> updateOrganiationNull(@Param("orgId") UUID orgId);
+//    @Modifying
+//    @Query(value = "update User set agencyOrganization = null where User.agencyOrganization.id = :orgId")
+//    List<User> updateOrganiationNull(@Param("orgId") UUID orgId);
 
     @Modifying
     @Query(value = "update User set needChangePassword = :need where id = :id")
