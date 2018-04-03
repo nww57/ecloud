@@ -1,6 +1,5 @@
 package com.sunesoft.ecloud.admin.service;
 
-import com.sunesoft.ecloud.admin.domain.agency.User;
 import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.TResult;
