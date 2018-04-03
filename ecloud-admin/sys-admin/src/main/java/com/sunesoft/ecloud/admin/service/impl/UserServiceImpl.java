@@ -139,7 +139,7 @@ public class UserServiceImpl implements UserService {
         if (!Objects.equals(password, oldPassword)) {
             return new TResult("旧密码错误");
         }
-        setPassword(id, newPassword);
+        setPassword(id, newPassword,false);
         return (TResult) ResultFactory.success();
     }
 
@@ -156,26 +156,22 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public TResult setPassword(UUID id, String newPassword) {
+    public TResult setPassword(UUID id, String newPassword,Boolean need) {
         boolean exist = userRepository.exists(id);
         if (!exist) {
             return new TResult<>("用户id不存在");
         }
-        userRepository.updatePassword(id, newPassword);
+        userRepository.updatePassword(id, newPassword,need);
         return (TResult) ResultFactory.success();
     }
 
 
-    @Override
-    public TResult setNeedChangePassword(UUID id, Boolean need) {
-        userRepository.updateNeedChangePassword(id,need);
-        return (TResult) ResultFactory.success();
-    }
 
     @Override
-    public TResult setPassword(String newPassword) {
-        return setPassword(userId, newPassword);
+    public TResult setPassword(String newPassword,Boolean need) {
+        return setPassword(userId, newPassword,need);
     }
+
 
     @Override
     public TResult<UUID> userLogin(String userName, String password) {

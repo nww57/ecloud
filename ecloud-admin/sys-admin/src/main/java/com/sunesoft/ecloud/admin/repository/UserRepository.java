@@ -31,8 +31,8 @@ public interface UserRepository extends BaseRepository<User,UUID> {
 
 
     @Modifying
-    @Query(value = "update  User set password = :password where id = :id")
-    void updatePassword(@Param("id") UUID id, @Param("password") String newPassword);
+    @Query(value = "update  User set password = :password ,needChangePassword = :need where id = :id")
+    void updatePassword(@Param("id") UUID id, @Param("password") String newPassword ,@Param("need") Boolean need);
 
 
 
@@ -58,7 +58,5 @@ public interface UserRepository extends BaseRepository<User,UUID> {
     @Query(value = "update User u set u.agencyOrganization = null where u.agencyOrganization.id = :orgId")
     void updateOrganizationNull(@Param("orgId") UUID orgId);
 
-    @Modifying
-    @Query(value = "update User set needChangePassword = :need where id = :id")
-    void updateNeedChangePassword(@Param("id") UUID id,@Param("need") Boolean need);
+
 }
