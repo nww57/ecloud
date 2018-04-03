@@ -197,11 +197,11 @@ public class User extends BizEntity{
         this.callphone = callphone;
     }
 
-    public Boolean getWorkon() {
+    public Boolean getIsWorkon() {
         return isWorkon;
     }
 
-    public void setWorkon(Boolean workon) {
+    public void setIsWorkon(Boolean workon) {
         isWorkon = workon;
     }
 
