@@ -67,6 +67,15 @@ public interface UserService {
     TResult setPassword(UUID id,String newPassword);
 
 
+
+    /**
+     * 重置密码后，下次登录时是否需要修改密码
+     * @param need
+     * @return
+     */
+    TResult setNeedChangePassword(UUID id,Boolean need);
+
+
     /**
      *设置密码
      * @param newPassword
@@ -82,6 +91,7 @@ public interface UserService {
      * @return 返回登录状态
      */
     TResult userLogin(String userName,String password);
+
 
 
 

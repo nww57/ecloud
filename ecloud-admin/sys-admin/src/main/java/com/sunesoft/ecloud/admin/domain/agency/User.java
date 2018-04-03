@@ -125,6 +125,12 @@ public class User extends BizEntity{
     @Type(type = "uuid-char")
     private UUID agencyId;
 
+    /**
+     * 下次登录时是否需要重置密码
+     */
+    @Column(name = "needChangePassword")
+    private Boolean needChangePassword;
+
     public User() {
         this.userType = UserType.AGENCY_USER;
     }
@@ -294,5 +300,15 @@ public class User extends BizEntity{
 
     public void setAgencyId(UUID agencyId) {
         this.agencyId = agencyId;
+    }
+
+
+
+    public Boolean getNeedChangePassword() {
+        return needChangePassword;
+    }
+
+    public void setNeedChangePassword(Boolean needChangePassword) {
+        this.needChangePassword = needChangePassword;
     }
 }

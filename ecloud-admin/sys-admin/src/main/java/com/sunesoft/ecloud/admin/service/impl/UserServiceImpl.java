@@ -105,6 +105,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public TResult deleteUser(UUID id) {
+        userRepository.findOne(id);
         userRepository.delete(id);
         return (TResult) ResultFactory.success();
     }
@@ -159,6 +160,13 @@ public class UserServiceImpl implements UserService {
             return new TResult<>("用户id不存在");
         }
         userRepository.updatePassword(id, newPassword);
+        return (TResult) ResultFactory.success();
+    }
+
+
+    @Override
+    public TResult setNeedChangePassword(UUID id, Boolean need) {
+        userRepository.updateNeedChangePassword(id,need);
         return (TResult) ResultFactory.success();
     }
 

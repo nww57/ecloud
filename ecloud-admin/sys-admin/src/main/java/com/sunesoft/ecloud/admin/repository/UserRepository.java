@@ -3,6 +3,7 @@ package com.sunesoft.ecloud.admin.repository;
 import com.sunesoft.ecloud.admin.domain.agency.User;
 import com.sunesoft.ecloud.hibernate.repository.BaseRepository;
 import com.sunesoft.ecloud.hibernate.repository.BaseRepositoryImpl;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -50,4 +52,12 @@ public interface UserRepository extends BaseRepository<User,UUID> {
      * @return 返回用户信息
      */
     User findUserByUserNameAndPassword(String userName,String password);
+
+    @Modifying
+    @Query(value = "update User set agencyOrganization = null where User.agencyOrganization.id = :orgId")
+    List<User> updateOrganiationNull(@Param("orgId") UUID orgId);
+
+    @Modifying
+    @Query(value = "update User set needChangePassword = :need where id = :id")
+    void updateNeedChangePassword(@Param("id") UUID id,@Param("need") Boolean need);
 }
