@@ -107,13 +107,18 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
     @Override
     @Transactional
     public TResult delete(UUID id) {
+        //删除角色跟用户的关联关系
+        roleRepository.deleteRoleUserRel(id.toString());
+        //在删除角色信息
         roleRepository.delete(id);
         return (TResult) ResultFactory.success();
     }
 
     @Override
     public TResult deleteBatch(UUID... ids) {
-        roleRepository.deleteBatch(ids);
+        for (UUID id : ids) {
+            delete(id);
+        }
         return (TResult) ResultFactory.success();
     }
 }
