@@ -40,7 +40,7 @@ public class MenuServiceImpl implements MenuService {
         Menu save = menuRepository.save(menu);
         if (menuDto.getPid() != null) {
             Menu one = menuRepository.findOne(menuDto.getPid());//父级菜单
-            if (one != null) {
+            if (one != null && menuDto.getId()!=null) {
                 //增加一个子节点个数
                 one.setChildCount(one.getChildCount() + 1);
                 one.getChildren().add(menu);
