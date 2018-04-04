@@ -30,4 +30,12 @@ public class LoginResultDto {
         this.id = id;
         this.status = status;
     }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public LoginResultStatus getStatus() {
+        return status;
+    }
 }
