@@ -148,12 +148,12 @@ public class AgencyServiceImpl extends HibernateQuery implements AgencyService{
 
 
     @Override
-    public TResult updateAgencyBasicInfo(AgencyBasicDto AgencyBasicDto) {
-        UUID id = AgencyBasicDto.getId();
+    public TResult updateAgencyBasicInfo(AgencyBasicDto agencyBasicDto) {
+        UUID id = agencyBasicDto.getId();
         Agency agency = agencyRepository.findOne(id);
-        BeanUtil.copyProperties(AgencyBasicDto,agency,new String[]{"serverStatus"});
+        BeanUtil.copyProperties(agencyBasicDto,agency,new String[]{"serverStatus"});
         agencyRepository.saveAndFlush(agency);
-        return new TResult<>(AgencyBasicDto);
+        return new TResult<>(agencyBasicDto);
     }
 
 
@@ -201,7 +201,7 @@ public class AgencyServiceImpl extends HibernateQuery implements AgencyService{
         TResult<Boolean> codeExist = checkAgencyCodeExist(agencyDto.getCode());
         if(codeExist.getIs_success()){
             if(codeExist.getResult()){
-                return new TResult("");
+                return new TResult("机构编码已存在");
             }
         }
         if(StringUtils.isEmpty(agencyDto.getCountry())){

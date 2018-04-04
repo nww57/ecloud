@@ -143,27 +143,26 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
         List<MenuFunctionDto> functionDtoList = null;
         UUID agId = basicDto.getAgId();
         if(Objects.equals(UserType.SUPER_ADMIN,userType)){
-            //如果是超级用户,获取所有菜单
+            //如果是超级用户,获取所有菜单及所有功能项
             //获取所有菜单
             String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.description,m.frontDisc,m.icon,m.pid from sys_menu m ";
             menuDtoList = queryList(sql,null,MenuDto.class);
-            List<UUID> menuIdList = menuDtoList.stream().map(MenuDto::getId).collect(Collectors.toList());
-            String funcSql = "select f.id,f.name,f.menuId,f.resCode,f.resType,f.resName,f.resUrl,f.resRequestType,f.description from sys_menu_func f where f.id in :idList";
-            Map funMap = new HashMap();
-            funMap.put("idList",menuIdList);
-            functionDtoList = queryList(funcSql,funMap,MenuFunctionDto.class);
+            //获取所有功能项
+            String funcSql = "select f.id,f.name,f.menuId,f.resCode,f.resType,f.resName,f.resUrl,f.resRequestType,f.description from sys_menu_func f ";
+            functionDtoList = queryList(funcSql,null,MenuFunctionDto.class);
         }else if(Objects.equals(UserType.AGENCY_ADMIN,userType)){
             //如果是企业管理员用户，找企业的菜单
             //获取菜单
-            String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.description,m.frontDisc,m.icon,m.pid from sys_ag_authmenu m where m.agId = :agId";
+            String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.description,m.frontDisc,m.icon,m.pid from sys_ag_authmenu am left join sys_menu m on m.id = am.menuId  where am.agId = :agId";
             Map map = new HashMap();
             map.put("agId",agId.toString());
             menuDtoList = queryList(sql,map,MenuDto.class);
             //获取功能
             List<UUID> menuIdList = menuDtoList.stream().map(MenuDto::getId).collect(Collectors.toList());
-            String funcSql = "select f.id,f.name,f.menuId,f.resCode,f.resType,f.resName,f.resUrl,f.resRequestType,f.description from sys_menu_func f where f.id in :idList";
+            String funcSql = "select f.id,f.name,f.menuId,f.resCode,f.resType,f.resName,f.resUrl,f.resRequestType,f.description from sys_menu_func f where f.menuId in (:idList)";
+            List<String> menuIdListString = menuIdList.stream().map(UUID::toString).collect(Collectors.toList());
             Map funMap = new HashMap();
-            funMap.put("idList",menuIdList);
+            funMap.put("idList",menuIdListString);
             functionDtoList = queryList(funcSql,funMap,MenuFunctionDto.class);
 
         }else if(Objects.equals(UserType.AGENCY_USER,userType)){

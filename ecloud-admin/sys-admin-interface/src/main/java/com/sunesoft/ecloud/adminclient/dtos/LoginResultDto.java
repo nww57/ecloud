@@ -12,6 +12,7 @@ public class LoginResultDto {
 
     /**
      * 用户id
+     * 登录成功则id有值
      */
     private UUID id;
 
