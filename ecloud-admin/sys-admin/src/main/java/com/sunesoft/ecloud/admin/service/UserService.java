@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.admin.service;
 
+import com.sunesoft.ecloud.adminclient.dtos.LoginResultDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.TResult;
@@ -80,11 +81,17 @@ public interface UserService {
      * 用户登录
      * @param userName 用户名
      * @param password 密码
-     * @return 返回登录状态
+     * @return
      */
-    TResult<UUID> userLogin(String userName, String password);
+    TResult<LoginResultDto> userLogin(String userName, String password);
 
 
+    /**
+     * 检查用户名是否存在
+     * @param userName 用户名
+     * @return true:已存在 false:不存在
+     */
+    TResult<Boolean> checkUserNameExist(String userName);
 
 
 }

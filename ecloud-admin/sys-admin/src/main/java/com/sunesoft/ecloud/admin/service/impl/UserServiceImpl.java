@@ -7,13 +7,16 @@ import com.sunesoft.ecloud.admin.repository.AgencyOrganizationRepository;
 import com.sunesoft.ecloud.admin.repository.AgencyRoleRepository;
 import com.sunesoft.ecloud.admin.repository.UserRepository;
 import com.sunesoft.ecloud.admin.service.UserService;
+import com.sunesoft.ecloud.adminclient.LoginResultStatus;
 import com.sunesoft.ecloud.adminclient.UserPositionType;
 import com.sunesoft.ecloud.adminclient.UserType;
+import com.sunesoft.ecloud.adminclient.dtos.LoginResultDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
+import com.sunesoft.ecloud.common.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -174,12 +177,31 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public TResult<UUID> userLogin(String userName, String password) {
-
-        User user = userRepository.findUserByUserNameAndPassword(userName, password);
-        if (null == user) {
-            return new TResult<>("用户名或密码错误");
+    public TResult<LoginResultDto> userLogin(String userName, String password) {
+        if(StringUtil.isEmpty(userName) || StringUtil.isEmpty(password)){
+            return new TResult<>("参数错误");
         }
-        return new TResult<>(user.getId());
+        User user = userRepository.findByUserNameEquals(userName);
+        if (null == user) {
+            return new TResult<>(new LoginResultDto(null, LoginResultStatus.ERROR_USERNAME));
+        }
+        if(!Objects.equals(password,user.getPassword())){
+            return new TResult<>(new LoginResultDto(null,LoginResultStatus.ERROR_PASSWORD));
+        }else{
+            return new TResult<>(new LoginResultDto(user.getId(),LoginResultStatus.SUCCESS));
+        }
+
+    }
+
+    @Override
+    public TResult<Boolean> checkUserNameExist(String userName) {
+        if(StringUtil.isEmpty(userName)){
+            return new TResult<>("参数错误");
+        }
+        User user = userRepository.findByUserNameEquals(userName);
+        if(null != user){
+            return new TResult<>(true);
+        }
+        return new TResult<>(false);
     }
 }
