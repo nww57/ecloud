@@ -50,7 +50,10 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
     public TResult addOrUpdateRole(AgencyRoleDto agencyRoleDto) {
 
         //参数检查
-        checkParam(agencyRoleDto);
+        TResult checkResult = checkParam(agencyRoleDto);
+        if(!checkResult.getIs_success()){
+            return checkResult;
+        }
         UUID id  = agencyRoleDto.getId();
         AgencyRole role;
         if(null == id){
