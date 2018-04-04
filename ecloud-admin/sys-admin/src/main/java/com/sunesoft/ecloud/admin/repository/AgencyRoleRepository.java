@@ -2,6 +2,7 @@ package com.sunesoft.ecloud.admin.repository;
 
 import com.sunesoft.ecloud.admin.domain.agency.AgencyRole;
 import com.sunesoft.ecloud.hibernate.repository.BaseRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,7 +14,7 @@ import java.util.UUID;
  * @Auther: niww
  * @Date: 2018/3/28/028
  */
-public interface AgencyRoleRepository extends BaseRepository<AgencyRole,UUID>{
+public interface AgencyRoleRepository extends BaseRepository<AgencyRole,UUID>,JpaSpecificationExecutor {
 
     @Modifying
     @Query(value = "delete from AgencyRole  where id in :ids")

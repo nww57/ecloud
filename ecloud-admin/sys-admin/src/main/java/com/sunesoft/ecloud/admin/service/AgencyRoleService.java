@@ -32,4 +32,14 @@ public interface AgencyRoleService {
      */
     TResult deleteBatch(UUID... ids);
 
+
+    /**
+     * 检查角色名称是否存在
+     * agId 方法内部获取
+     * @param id id
+     * @param name name
+     * @return true :已存在， false ：未存在
+     */
+    TResult<Boolean> checkRoleNameExist(UUID id,String name);
+
 }
