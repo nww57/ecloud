@@ -42,6 +42,11 @@ public interface AgencyService {
     TResult deleteBatch(UUID... ids);
 
 
-
+    /**
+     * 检查机构编码是否存在
+     * @param code code
+     * @return true：已存在 false :不存在
+     */
+    TResult<Boolean> checkAgencyCodeExist(String code);
 
 }
