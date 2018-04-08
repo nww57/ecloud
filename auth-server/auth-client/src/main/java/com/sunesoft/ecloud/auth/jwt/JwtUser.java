@@ -39,7 +39,7 @@ public class JwtUser {
         this.lastPasswordResetDate = lastPasswordResetDate;
     }
 
-    @JsonIgnore
+
     public UUID getId() {
         return id;
     }
