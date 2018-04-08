@@ -1,34 +1,26 @@
 package com.sunesoft.ecloud.auth.security;
 
-import com.sunesoft.ecloud.auth.model.security.Authority;
-import com.sunesoft.ecloud.auth.model.security.User;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.sunesoft.ecloud.adminclient.dtos.UserLoginDto;
 
 public final class JwtUserFactory {
 
     private JwtUserFactory() {
     }
 
-    public static JwtUser create(User user) {
+    public static JwtUser create(UserLoginDto user) {
+
         return new JwtUser(
+                user.getUserName(),
                 user.getId(),
-                user.getUsername(),
-                user.getFirstname(),
-                user.getLastname(),
-                user.getEmail(),
+                user.getAgId(),
+                user.getRealName(),
                 user.getPassword(),
-                mapToGrantedAuthorities(user.getAuthorities()),
-                user.getEnabled(),
-                user.getLastPasswordResetDate()
+                null,
+                user.getWorkon(),
+                user.getLastPasswordResetDate(),
+                user.getNeedChangePassword()
+
         );
     }
 
-    private static List<GrantedAuthority> mapToGrantedAuthorities(List<Authority> authorities) {
-        return authorities.stream()
-                .map(authority -> new SimpleGrantedAuthority(authority.getName().name()))
-                .collect(Collectors.toList());
-    }
 }

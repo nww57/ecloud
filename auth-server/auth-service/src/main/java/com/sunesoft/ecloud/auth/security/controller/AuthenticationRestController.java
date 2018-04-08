@@ -38,13 +38,10 @@ public class AuthenticationRestController {
 
     @RequestMapping(value = "${jwt.route.authentication.path}", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest) throws AuthenticationException {
-
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-
         // Reload password post-security so we can generate the token
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
-
         // Return the token
         return ResponseEntity.ok(new JwtAuthenticationResponse(token));
     }
@@ -79,9 +76,9 @@ public class AuthenticationRestController {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {
-            throw new AuthenticationException("User is disabled!", e);
+            throw new AuthenticationException("UserIsDisabled!", e);
         } catch (BadCredentialsException e) {
-            throw new AuthenticationException("Bad credentials!", e);
+            throw new AuthenticationException("BadCredentials", e);
         }
     }
 }

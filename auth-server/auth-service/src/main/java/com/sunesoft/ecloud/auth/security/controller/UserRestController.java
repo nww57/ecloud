@@ -1,7 +1,6 @@
 package com.sunesoft.ecloud.auth.security.controller;
 
 import com.sunesoft.ecloud.adminclient.clientService.UserServiceClient;
-import com.sunesoft.ecloud.auth.rest.Person;
 import com.sunesoft.ecloud.auth.security.JwtTokenUtil;
 import com.sunesoft.ecloud.auth.security.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,12 +40,5 @@ public class UserRestController {
         return user;
     }
 
-    @RequestMapping(value = "/persons", method = RequestMethod.GET)
-    public List<Person> getStr(){
-     List<Person> persons = new ArrayList<>();
-        persons.add(new Person("Hello", userServiceClient.getString()));
-        persons.add(new Person("Foo", userServiceClient.getString()));
-        return persons;
-    }
 
 }
