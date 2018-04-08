@@ -38,11 +38,11 @@ public class MenuServiceImplTest {
         MenuDto menuDto=new MenuDto();
 //        menuDto.setId(UUID.fromString("5612c844-5d55-4a26-916d-51ce17efc0c7"));
 
-        menuDto.setName("AAAAAAAAAABBBBB");
-        menuDto.setSort(1);
-        menuDto.setDescription("AAAAAAAAAAABBBBBb");
+        menuDto.setName("HHHHHHHH");
+        menuDto.setSort(4);
+        menuDto.setDescription("HHHHHHHHHHHHHHH");
         menuDto.setType(MenuType.Link);
-        menuDto.setPid(UUID.fromString("6acc1b60-9bb3-4d44-bae4-ec59163fc020"));
+        menuDto.setPid(UUID.fromString("f7f3b5cf-3f6e-4a95-affe-5c6b49d3bbc9"));
 
 //        MenuSimpleDto menuSimpleDto=new MenuSimpleDto();
 //        menuSimpleDto.setId(UUID.fromString("d22222bf-c28f-4d00-8682-f445f64460ba"));
@@ -54,7 +54,7 @@ public class MenuServiceImplTest {
 
     @Test
     public void delete() throws Exception {
-        TResult delete = menuService.delete(UUID.fromString("504139eb-b598-466a-a881-02ce692b283e"));
+        TResult delete = menuService.delete(UUID.fromString("00be6a3c-03d8-45ca-b04e-5ae98de231ec"));
         System.out.println(delete);
 
     }
