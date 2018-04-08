@@ -2,6 +2,9 @@ package com.sunesoft.ecloud.auth.security;
 
 import com.sunesoft.ecloud.adminclient.dtos.UserLoginDto;
 
+import java.util.Arrays;
+import java.util.Date;
+
 public final class JwtUserFactory {
 
     private JwtUserFactory() {
@@ -16,9 +19,9 @@ public final class JwtUserFactory {
                 user.getRealName(),
                 user.getPassword(),
                 null,
-                user.getWorkon(),
-                user.getLastPasswordResetDate(),
-                user.getNeedChangePassword()
+                true,
+            new Date(),
+                false
 
         );
     }

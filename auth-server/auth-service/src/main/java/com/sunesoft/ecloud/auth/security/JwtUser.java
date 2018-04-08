@@ -72,11 +72,12 @@ public class JwtUser implements UserDetails {
         return true;
     }
 
-
+    @JsonIgnore
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
+    @JsonIgnore
     public Boolean getNeedChangePassword() {
         return needChangePassword;
     }
@@ -92,7 +93,7 @@ public class JwtUser implements UserDetails {
 
 
 
-
+    @JsonIgnore
     public boolean isEnabled() {
         return enabled==null?true:enabled;
     }
