@@ -11,10 +11,17 @@ import com.sunesoft.ecloud.adminclient.dtos.AgencyRoleDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
+import com.sunesoft.ecloud.common.utils.StringUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -42,6 +49,11 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
     @Override
     public TResult addOrUpdateRole(AgencyRoleDto agencyRoleDto) {
 
+        //参数检查
+        TResult checkResult = checkParam(agencyRoleDto);
+        if(!checkResult.getIs_success()){
+            return checkResult;
+        }
         UUID id  = agencyRoleDto.getId();
         AgencyRole role;
         if(null == id){
@@ -104,8 +116,9 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
         return new TResult<>(agencyRoleDto);
     }
 
+
+
     @Override
-    @Transactional
     public TResult delete(UUID id) {
         //删除角色跟用户的关联关系
         roleRepository.deleteRoleUserRel(id.toString());
@@ -118,6 +131,40 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
     public TResult deleteBatch(UUID... ids) {
         for (UUID id : ids) {
             delete(id);
+        }
+        return (TResult) ResultFactory.success();
+    }
+
+    @Override
+    public TResult<Boolean> checkRoleNameExist(UUID id, String name) {
+        Specification querySpecification = (Specification<AgencyRole>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            predicates.add(criteriaBuilder.equal(root.get("agencyId"), agId));
+            if(null != id){
+                predicates.add(criteriaBuilder.notEqual(root.get("id"), id));
+            }
+            if(null != name){
+                predicates.add(criteriaBuilder.equal(root.get("name"), name));
+            }
+            return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+        };
+        List<AgencyRole> roleList =  roleRepository.findAll(querySpecification);
+        if(null != roleList && roleList.size()>0){
+            return new TResult<>(true);
+        }
+        return new TResult<>(false);
+    }
+
+    private TResult checkParam(AgencyRoleDto agencyRoleDto) {
+        if(StringUtils.isEmpty(agencyRoleDto.getName())){
+            return new TResult("角色名不能为空");
+        }
+        if(StringUtils.isEmpty(agencyRoleDto.getDescription())){
+            return new TResult("角色描述不能为空");
+        }
+        TResult<Boolean> roleNameChecked = checkRoleNameExist(agencyRoleDto.getId(),agencyRoleDto.getName());
+        if(roleNameChecked.getResult()){
+            return new TResult("角色名已经存在");
         }
         return (TResult) ResultFactory.success();
     }

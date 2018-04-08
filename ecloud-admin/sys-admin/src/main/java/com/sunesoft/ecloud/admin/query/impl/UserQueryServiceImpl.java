@@ -5,6 +5,7 @@ import com.sunesoft.ecloud.admin.domain.agency.User;
 import com.sunesoft.ecloud.admin.query.UserQueryService;
 import com.sunesoft.ecloud.admin.repository.UserRepository;
 import com.sunesoft.ecloud.adminclient.UserPositionType;
+import com.sunesoft.ecloud.adminclient.UserType;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.*;
 import com.sunesoft.ecloud.common.result.ListResult;
@@ -22,6 +23,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author: Zhouzh
@@ -133,31 +135,64 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
     public TResult<UserMenuAuthDto> getUserAuthMenuList(UUID id) {
         UserMenuAuthDto authDto = new UserMenuAuthDto();
         //获取基本信息
-        TResult<UserBasicDto> basicDto = getUserBasicInfoById(id);
-        BeanUtil.copyPropertiesIgnoreNull(basicDto.getResult(),authDto);
-        //获取菜单及权限
-        //1.找出用户拥有的所有菜单 （用户-->角色-->菜单）
-        String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.description,m.frontDisc,m.icon,m.pid from sys_user u " +
-                " INNER JOIN sys_ag_user_role ur on ur.userId = u.id " +
-                " INNER JOIN sys_ag_role_authmenu rm on rm.roleId = ur.roleId " +
-                " INNER JOIN sys_ag_authmenu am on am.id = rm.menuId " +
-                " INNER JOIN sys_menu m on am.menuId = m.id " +
-                " where u.id = :uid";
-        Map map = new HashMap();
-        map.put("uid",id.toString());
-        List<MenuDto> menuDtoList = queryList(sql,map,MenuDto.class);
+        TResult<UserBasicDto> result = getUserBasicInfoById(id);
+        UserBasicDto basicDto = result.getResult();
+        BeanUtil.copyPropertiesIgnoreNull(basicDto,authDto);
+        UserType userType = basicDto.getUserType();
+        List<MenuDto> menuDtoList = null;
+        List<MenuFunctionDto> functionDtoList = null;
+        UUID agId = basicDto.getAgId();
+        if(Objects.equals(UserType.SUPER_ADMIN,userType)){
+            //如果是超级用户,获取所有菜单及所有功能项
+            //获取所有菜单
+            String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.description,m.frontDisc,m.icon,m.pid from sys_menu m ";
+            menuDtoList = queryList(sql,null,MenuDto.class);
+            //获取所有功能项
+            String funcSql = "select f.id,f.name,f.menuId,f.resCode,f.resType,f.resName,f.resUrl,f.resRequestType,f.description from sys_menu_func f ";
+            functionDtoList = queryList(funcSql,null,MenuFunctionDto.class);
+        }else if(Objects.equals(UserType.AGENCY_ADMIN,userType)){
+            //如果是企业管理员用户，找企业的菜单
+            //获取菜单
+            String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.description,m.frontDisc,m.icon,m.pid from sys_ag_authmenu am left join sys_menu m on m.id = am.menuId  where am.agId = :agId";
+            Map map = new HashMap();
+            map.put("agId",agId.toString());
+            menuDtoList = queryList(sql,map,MenuDto.class);
+            //获取功能
+            List<UUID> menuIdList = menuDtoList.stream().map(MenuDto::getId).collect(Collectors.toList());
+            String funcSql = "select f.id,f.name,f.menuId,f.resCode,f.resType,f.resName,f.resUrl,f.resRequestType,f.description from sys_menu_func f where f.menuId in (:idList)";
+            List<String> menuIdListString = menuIdList.stream().map(UUID::toString).collect(Collectors.toList());
+            Map funMap = new HashMap();
+            funMap.put("idList",menuIdListString);
+            functionDtoList = queryList(funcSql,funMap,MenuFunctionDto.class);
 
-        //2.找出用户拥有的菜单的功能
-        String funcSql = "select f.id,f.name,f.menuId,f.resCode,f.resType,f.resName,f.resUrl,f.resRequestType,f.description from sys_user u " +
-                " INNER JOIN sys_ag_user_role ur on ur.userId = u.id " +
-                " INNER JOIN sys_ag_role_authmenu rm on rm.roleId = ur.roleId " +
-                " INNER JOIN sys_ag_menu_authfunc rf on rm.id = rf.roleMenuId " +
-                " INNER JOIN sys_menu_func f on rf.funcId = f.id where u.id=:uid";
-        List<MenuFunctionDto> functionDtoList = queryList(funcSql,map,MenuFunctionDto.class);
+        }else if(Objects.equals(UserType.AGENCY_USER,userType)){
+            //如果是普通用户，根据用户的角色去找菜单及权限
+            //1.找出用户拥有的所有菜单 （用户-->角色-->菜单）
+            String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.description,m.frontDisc,m.icon,m.pid from sys_user u " +
+                    " INNER JOIN sys_ag_user_role ur on ur.userId = u.id " +
+                    " INNER JOIN sys_ag_role_authmenu rm on rm.roleId = ur.roleId " +
+                    " INNER JOIN sys_ag_authmenu am on am.id = rm.menuId " +
+                    " INNER JOIN sys_menu m on am.menuId = m.id " +
+                    " where u.id = :uid";
+            Map map = new HashMap();
+            map.put("uid",id.toString());
+            menuDtoList = queryList(sql,map,MenuDto.class);
+            //2.找出用户拥有的菜单的功能
+            String funcSql = "select f.id,f.name,f.menuId,f.resCode,f.resType,f.resName,f.resUrl,f.resRequestType,f.description from sys_user u " +
+                    " INNER JOIN sys_ag_user_role ur on ur.userId = u.id " +
+                    " INNER JOIN sys_ag_role_authmenu rm on rm.roleId = ur.roleId " +
+                    " INNER JOIN sys_ag_menu_authfunc rf on rm.id = rf.roleMenuId " +
+                    " INNER JOIN sys_menu_func f on rf.funcId = f.id where u.id=:uid";
+             functionDtoList = queryList(funcSql,map,MenuFunctionDto.class);
+        }else{
+
+        }
+
         //3.装配
         //先将func匹配进menu
+        List<MenuFunctionDto> finalFunctionDtoList = functionDtoList;
         menuDtoList.forEach(menu->{
-            functionDtoList.forEach(func->{
+            finalFunctionDtoList.forEach(func->{
                 if(Objects.equals(func.getMenuId(),menu.getId())){
                     menu.getMenuFunctions().add(func);
                 }
@@ -165,9 +200,8 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
         });
         //处理menu,转换成树形结构
         List<MenuDto> treeList = buildTree(menuDtoList);
-
-        System.out.println(23);
-        return null;
+        authDto.setMenuList(treeList);
+        return new TResult<>(authDto);
     }
 
 

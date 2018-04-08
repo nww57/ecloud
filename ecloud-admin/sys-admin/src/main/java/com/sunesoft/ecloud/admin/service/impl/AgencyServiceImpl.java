@@ -9,12 +9,15 @@ import com.sunesoft.ecloud.admin.service.UserService;
 import com.sunesoft.ecloud.adminclient.UserType;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyDto;
+import com.sunesoft.ecloud.adminclient.dtos.TreeDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import com.sunesoft.ecloud.common.utils.ConvertUtil;
+import com.sunesoft.ecloud.common.utils.StringUtil;
 import com.sunesoft.ecloud.hibernate.repository.HibernateQuery;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,7 +61,11 @@ public class AgencyServiceImpl extends HibernateQuery implements AgencyService{
         if(null == agencyDto){
             throw new IllegalArgumentException("无效的参数");
         }
-        //todo :验证参数
+        //验证参数
+        TResult checkResult = checkParam(agencyDto);
+        if(!checkResult.getIs_success()){
+            return checkResult;
+        }
         UUID id = agencyDto.getId();
         Agency agency ;
         List<AgencyAuthorizedMenu> agencyMenu;
@@ -139,13 +146,14 @@ public class AgencyServiceImpl extends HibernateQuery implements AgencyService{
         return new TResult<>(agencyDto);
     }
 
+
     @Override
-    public TResult updateAgencyBasicInfo(AgencyBasicDto AgencyBasicDto) {
-        UUID id = AgencyBasicDto.getId();
+    public TResult updateAgencyBasicInfo(AgencyBasicDto agencyBasicDto) {
+        UUID id = agencyBasicDto.getId();
         Agency agency = agencyRepository.findOne(id);
-        BeanUtil.copyProperties(AgencyBasicDto,agency,new String[]{"serverStatus"});
+        BeanUtil.copyProperties(agencyBasicDto,agency,new String[]{"serverStatus"});
         agencyRepository.saveAndFlush(agency);
-        return new TResult<>(AgencyBasicDto);
+        return new TResult<>(agencyBasicDto);
     }
 
 
@@ -166,6 +174,59 @@ public class AgencyServiceImpl extends HibernateQuery implements AgencyService{
     public TResult deleteBatch(UUID... ids) {
         for (UUID id : ids) {
             delete(id);
+        }
+        return (TResult) ResultFactory.success();
+    }
+
+    @Override
+    public TResult<Boolean> checkAgencyCodeExist(String code) {
+        if(StringUtils.isEmpty(code)){
+            return new TResult<>("参数错误");
+        }
+        Agency agency = agencyRepository.findByCodeEquals(code);
+        if(null != agency){
+            return new TResult<>(true);
+        }
+        return new TResult<>(false);
+    }
+
+
+    private TResult checkParam(AgencyDto agencyDto) {
+        if(StringUtils.isEmpty(agencyDto.getName())){
+            return new TResult("机构名称不能为空");
+        }
+        if(StringUtils.isEmpty(agencyDto.getCode())){
+            return new TResult("机构编码不能为空");
+        }
+        TResult<Boolean> codeExist = checkAgencyCodeExist(agencyDto.getCode());
+        if(codeExist.getIs_success()){
+            if(codeExist.getResult()){
+                return new TResult("机构编码已存在");
+            }
+        }
+        if(StringUtils.isEmpty(agencyDto.getCountry())){
+            return new TResult("所属国家不能为空");
+        }
+        if(StringUtils.isEmpty(agencyDto.getLeader())){
+            return new TResult("负责人不能为空");
+        }
+        if(StringUtils.isEmpty(agencyDto.getCellphone())){
+            return new TResult("电话不能为空");
+        }
+        if(StringUtils.isEmpty(agencyDto.getLeader())){
+            return new TResult("所属国家不能为空");
+        }
+        if(StringUtils.isEmpty(agencyDto.getUserName())){
+            return new TResult("账户用户名不能为空");
+        }
+        if(StringUtils.isEmpty(agencyDto.getPassword())){
+            return new TResult("账户密码不能为空");
+        }
+        TResult<Boolean> userNameExist =  userservice.checkUserNameExist(agencyDto.getUserName());
+        if(userNameExist.getIs_success()){
+            if(userNameExist.getResult()){
+                return new TResult("账户用户名已存在");
+            }
         }
         return (TResult) ResultFactory.success();
     }

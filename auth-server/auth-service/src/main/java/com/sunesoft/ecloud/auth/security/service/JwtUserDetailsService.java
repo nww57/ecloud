@@ -1,6 +1,6 @@
 package com.sunesoft.ecloud.auth.security.service;
 
-import com.sunesoft.ecloud.auth.model.security.User;
+import com.sunesoft.ecloud.adminclient.dtos.UserLoginDto;
 import com.sunesoft.ecloud.auth.security.JwtUserFactory;
 import com.sunesoft.ecloud.auth.security.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        UserLoginDto user = userRepository.findByUsername(username);
 
         if (user == null) {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));

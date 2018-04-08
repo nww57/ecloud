@@ -34,4 +34,25 @@ public interface AgencyOrganizationService {
      * @return 返回操作结果
      */
     TResult deleteBatch(UUID... ids);
+
+
+    /**
+     * 检查企业下机构名称是否存在
+     * param agId 企业id在方法内部获取
+     * @param id 自身id
+     * @param name name
+     * @return true :已存在 false :不存在
+     */
+    TResult<Boolean> checkOrganizationNameExist(UUID id,String name);
+
+
+    /**
+     * 检查企业下机构编码是否存在
+     * param agId 企业id在方法内部获取
+     * @param id  自身id
+     * @param code code
+     * @return true :已存在 false :不存在
+     */
+    TResult<Boolean> checkOrganizationCodeExist(UUID id,String code);
+
 }

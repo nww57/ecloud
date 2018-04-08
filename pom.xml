@@ -15,6 +15,7 @@
         <module>e-monitoring</module>
         <module>ecloud-admin</module>
         <module>auth-server</module>
+        <module>e-flow</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

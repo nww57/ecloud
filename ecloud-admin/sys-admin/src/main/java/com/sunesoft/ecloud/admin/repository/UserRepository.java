@@ -28,12 +28,9 @@ public interface UserRepository extends BaseRepository<User,UUID> {
     @Query(value = "delete from User  where id in :ids")
     void deleteBatch(@Param("ids") UUID... ids);
 
-
-
     @Modifying
     @Query(value = "update  User set password = :password ,needChangePassword = :need where id = :id")
     void updatePassword(@Param("id") UUID id, @Param("password") String newPassword ,@Param("need") Boolean need);
-
 
 
     @Modifying
@@ -53,10 +50,17 @@ public interface UserRepository extends BaseRepository<User,UUID> {
      */
     User findUserByUserNameAndPassword(String userName,String password);
 
+    /**
+     * 根据用户名查找用户
+     * @param userName
+     * @return
+     */
+    User findByUserNameEquals(String userName);
 
     @Modifying
     @Query(value = "update User u set u.agencyOrganization = null where u.agencyOrganization.id = :orgId")
     void updateOrganizationNull(@Param("orgId") UUID orgId);
+
 
 
 }

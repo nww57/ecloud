@@ -125,6 +125,8 @@ public class User extends BizEntity{
     @Type(type = "uuid-char")
     private UUID agencyId;
 
+
+    private Date lastPasswordResetDate;
     /**
      * 下次登录时是否需要重置密码
      */
@@ -310,5 +312,21 @@ public class User extends BizEntity{
 
     public void setNeedChangePassword(Boolean needChangePassword) {
         this.needChangePassword = needChangePassword;
+    }
+
+    public Boolean getWorkon() {
+        return isWorkon;
+    }
+
+    public void setWorkon(Boolean workon) {
+        isWorkon = workon;
+    }
+
+    public Date getLastPasswordResetDate() {
+        return lastPasswordResetDate;
+    }
+
+    public void setLastPasswordResetDate(Date lastPasswordResetDate) {
+        this.lastPasswordResetDate = lastPasswordResetDate;
     }
 }

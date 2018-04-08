@@ -10,13 +10,13 @@ import java.util.List;
 public class UserMenuAuthDto extends UserBasicDto{
 
 
-    private List<MenuDto> userMenu;
+    private List<MenuDto> menuList;
 
-    public List<MenuDto> getUserMenu() {
-        return userMenu;
+    public List<MenuDto> getMenuList() {
+        return menuList;
     }
 
-    public void setUserMenu(List<MenuDto> userMenu) {
-        this.userMenu = userMenu;
+    public void setMenuList(List<MenuDto> menuList) {
+        this.menuList = menuList;
     }
 }

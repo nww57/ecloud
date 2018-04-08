@@ -1,17 +1,31 @@
 package com.sunesoft.ecloud.auth.security.repository;
 
-import com.sunesoft.ecloud.auth.model.security.User;
-import com.sunesoft.ecloud.hibernate.repository.BaseRepository;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import com.sunesoft.ecloud.adminclient.dtos.UserLoginDto;
+import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
 import org.springframework.stereotype.Repository;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by stephan on 20.03.16.
  */
 @Repository
-public interface UserRepository extends BaseRepository<User, Long> {
-    User findByUsername(String username);
+public class UserRepository extends GenericQuery {
+
+    public UserLoginDto findByUsername(String userName){
+
+
+        String sql = "select * from sys_user where userName =:userName";
+        Map<String,Object> map = new HashMap<>();
+        map.put("userName",userName);
+
+        UserLoginDto user =  queryForObject(sql,map,UserLoginDto.class);
+
+        return user;
+
+    }
+
 
 
 }

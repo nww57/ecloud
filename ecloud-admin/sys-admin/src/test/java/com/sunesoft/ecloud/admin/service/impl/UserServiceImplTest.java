@@ -9,16 +9,14 @@ import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.validator.PublicClassValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import static org.junit.Assert.*;
 
 /**
  * @Auther: niww
@@ -120,6 +118,16 @@ public class UserServiceImplTest {
 
         userRepository.updateOrganizationNull(UUID.fromString("7a39654e-db51-4ee6-8366-f07acf0b9fc9"));
         System.out.println(23);
+    }
+
+
+    @Test
+    public void test6(){
+        BCryptPasswordEncoder encoder =new BCryptPasswordEncoder();
+        String s = encoder.encode("888888");
+        System.out.println(s);
+        BCryptPasswordEncoder encoder1 =new BCryptPasswordEncoder();
+        System.out.println(encoder1.matches("888888",s));
     }
 
 }

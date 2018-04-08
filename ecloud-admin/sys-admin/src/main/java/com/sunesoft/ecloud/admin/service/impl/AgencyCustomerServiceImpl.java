@@ -9,6 +9,7 @@ import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -34,19 +35,25 @@ public class AgencyCustomerServiceImpl implements AgencyCustomerService {
 
     @Override
     public TResult addOrUpdateAgencyCustomer(AgencyCustomerDto agencyCustomerDto) {
+        //参数检查
+        TResult checkParamResult = checkParam(agencyCustomerDto);
+        if(!checkParamResult.getIs_success()){
+            return checkParamResult;
+        }
         UUID id = agencyCustomerDto.getId();
         AgencyCustomer customer;
-        if(null == id){
+        if (null == id) {
             customer = new AgencyCustomer();
-        }else{
+        } else {
             customer = customerRepository.findOne(id);
         }
-        BeanUtil.copyPropertiesIgnoreNull(agencyCustomerDto,customer);
+        BeanUtil.copyPropertiesIgnoreNull(agencyCustomerDto, customer);
         Agency agency = agencyRepository.findOne(agId);
         customer.setAgency(agency);
         customerRepository.saveAndFlush(customer);
         return new TResult<>(agencyCustomerDto);
     }
+
 
     @Override
     public TResult delete(UUID id) {
@@ -57,6 +64,25 @@ public class AgencyCustomerServiceImpl implements AgencyCustomerService {
     @Override
     public TResult deleteBatch(UUID... ids) {
         customerRepository.deleteBatch(ids);
+        return (TResult) ResultFactory.success();
+    }
+
+    private TResult checkParam(AgencyCustomerDto agencyCustomerDto) {
+        if (StringUtils.isEmpty(agencyCustomerDto.getName())) {
+            return new TResult<>("客户名称不能为空");
+        }
+        if (StringUtils.isEmpty(agencyCustomerDto.getLeader())) {
+            return new TResult<>("负责人不能为空");
+        }
+        if (StringUtils.isEmpty(agencyCustomerDto.getLeaderMobile())) {
+            return new TResult<>("手机号不能为空");
+        }
+        if (StringUtils.isEmpty(agencyCustomerDto.getLeaderEmail())) {
+            return new TResult<>("邮箱不能为空");
+        }
+        if (StringUtils.isEmpty(agencyCustomerDto.getSignDate())) {
+            return new TResult<>("签约时间不能为空");
+        }
         return (TResult) ResultFactory.success();
     }
 }

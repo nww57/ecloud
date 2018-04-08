@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.admin.service;
 
+import com.sunesoft.ecloud.adminclient.dtos.LoginResultDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.TResult;
@@ -13,56 +14,57 @@ public interface UserService {
 
     /**
      * 新增/修改 用户信息
-     * @param userDto
-     * @return
+     * @param userDto 参数
+     * @return 返回操作结果
      */
     TResult addOrUpdateUser(UserDto userDto);
 
     /**
      * 修改用户基础信息
-     * @param userBasicDto
-     * @return
+     * @param userBasicDto 参数
+     * @return 返回操作结果
      */
     TResult updateUserBasicInfo(UserBasicDto userBasicDto);
 
     /**
      * 删除用户
-     * @param id
-     * @return
+     * @param id 用户id
+     * @return 返回操作结果
      */
     TResult deleteUser(UUID id);
 
 
     /**
      * 批量删除用户
-     * @param ids
-     * @return
+     * @param ids ids
+     * @return 返回操作结果
      */
     TResult deleteUserBatch(UUID... ids);
 
 
     /**
      * 修改密码
-     * @param id
-     * @param oldPassword
-     * @param newPassword
-     * @return
+     * @param id id
+     * @param oldPassword 旧密码
+     * @param newPassword 新密码
+     * @return 返回操作结果
      */
     TResult changePassword(UUID id,String oldPassword,String newPassword);
 
     /**
      * 修改密码
-     * @param oldPassword
-     * @param newPassword
-     * @return
+     * @param oldPassword 旧密码
+     * @param newPassword 新密码
+     * @return 返回操作结果
      */
     TResult changePassword(String oldPassword,String newPassword);
 
     /**
      *设置密码
-     * @param id
-     * @param newPassword
-     * @return
+     * @param id id
+     * @param newPassword 新密码
+     * @param need 下次登录是否需要修改密码
+     * @return 返回操作结果
      */
     TResult setPassword(UUID id,String newPassword,Boolean need);
 
@@ -70,8 +72,9 @@ public interface UserService {
 
     /**
      *重置密码后 ，下次登录时是否需要修改密码
-     * @param newPassword
-     * @return
+     * @param newPassword  新密码
+     * @param need 下次登录是否需要修改密码
+     * @return 返回操作结果
      */
     TResult setPassword(String newPassword,Boolean need);
 
@@ -80,11 +83,17 @@ public interface UserService {
      * 用户登录
      * @param userName 用户名
      * @param password 密码
-     * @return 返回登录状态
+     * @return 返回操作结果
      */
-    TResult<UUID> userLogin(String userName, String password);
+    TResult<LoginResultDto> userLogin(String userName, String password);
 
 
+    /**
+     * 检查用户名是否存在
+     * @param userName 用户名
+     * @return true:已存在 false:不存在
+     */
+    TResult<Boolean> checkUserNameExist(String userName);
 
 
 }
