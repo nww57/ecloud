@@ -188,7 +188,6 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
 
         }
 
-
         //3.装配
         //先将func匹配进menu
         List<MenuFunctionDto> finalFunctionDtoList = functionDtoList;

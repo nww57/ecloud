@@ -17,8 +17,10 @@ import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import com.sunesoft.ecloud.common.utils.StringUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -41,6 +43,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     AgencyRoleRepository roleRepository;
 
+    /**
+     * BCrypt加密
+     */
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
     @Value("${ecloud.agId}")
     private UUID agId;
 
@@ -55,9 +62,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public TResult addOrUpdateUser(UserDto userDto) {
 
+        //检查参数
+        TResult checkResult = checkParam(userDto);
+        if(!checkResult.getIs_success()){
+            return checkResult;
+        }
         UUID id = userDto.getId();
-        //todo 检查用户名是否存在
-        String userName = userDto.getUserName();
         UUID structureId = userDto.getOrganizationId();
         List<UUID> roleList = userDto.getRoleIdList();
         User user;
@@ -84,13 +94,18 @@ public class UserServiceImpl implements UserService {
         if (Objects.equals(user.getUserType(), UserType.AGENCY_ADMIN)) {
             user.setAgencyId(userDto.getAgId());
             user.setPosition(UserPositionType.ADMIN.toString());
+            user.setPassword(encoder.encode(userDto.getPassword()));
         } else {
             user.setAgencyId(agId);
             user.setPosition(UserPositionType.EMPLOYEE.toString());
+            //设置默认密码
+            user.setPassword(encoder.encode("888888"));
         }
         userRepository.saveAndFlush(user);
         return (TResult) ResultFactory.success();
     }
+
+
 
     @Override
     public TResult updateUserBasicInfo(UserBasicDto userBasicDto) {
@@ -127,22 +142,15 @@ public class UserServiceImpl implements UserService {
         return (TResult) ResultFactory.success();
     }
 
-    /**
-     * 修改密码
-     *
-     * @param id
-     * @param oldPassword
-     * @param newPassword
-     * @return
-     */
+
     @Override
     public TResult changePassword(UUID id, String oldPassword, String newPassword) {
         // 验证旧密码是否正确
         String password = userRepository.selectPassword(id);
-        if (!Objects.equals(password, oldPassword)) {
+        if (!encoder.matches(oldPassword,password)) {
             return new TResult("旧密码错误");
         }
-        setPassword(id, newPassword,false);
+        setPassword(id, encoder.encode(newPassword),false);
         return (TResult) ResultFactory.success();
     }
 
@@ -164,7 +172,7 @@ public class UserServiceImpl implements UserService {
         if (!exist) {
             return new TResult<>("用户id不存在");
         }
-        userRepository.updatePassword(id, newPassword,need);
+        userRepository.updatePassword(id,encoder.encode(newPassword),need);
         return (TResult) ResultFactory.success();
     }
 
@@ -185,7 +193,7 @@ public class UserServiceImpl implements UserService {
         if (null == user) {
             return new TResult<>(new LoginResultDto(null, LoginResultStatus.ERROR_USERNAME));
         }
-        if(!Objects.equals(password,user.getPassword())){
+        if(!encoder.matches(password,user.getPassword())){
             return new TResult<>(new LoginResultDto(null,LoginResultStatus.ERROR_PASSWORD));
         }else{
             return new TResult<>(new LoginResultDto(user.getId(),LoginResultStatus.SUCCESS));
@@ -204,4 +212,22 @@ public class UserServiceImpl implements UserService {
         }
         return new TResult<>(false);
     }
+
+
+    private TResult checkParam(UserDto userDto) {
+        if(StringUtils.isEmpty(userDto.getUserName())){
+            return new TResult("用户名不能为空");
+        }
+        TResult<Boolean> existResult = checkUserNameExist(userDto.getUserName());
+        if(existResult.getIs_success()){
+            if(existResult.getResult()) {
+                return new TResult("用户名已经存在");
+            }
+        }
+        return (TResult) ResultFactory.success();
+    }
+
+
+
+
 }

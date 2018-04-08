@@ -2,6 +2,7 @@ package com.sunesoft.ecloud.admin.service.impl;
 
 import com.sunesoft.ecloud.admin.service.AgencyOrganizationService;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyOrganizationDto;
+import com.sunesoft.ecloud.common.result.TResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,12 +45,18 @@ public class AgencyOrganizationServiceImplTest {
 
     @Test
     public void delete() throws Exception {
-        organizationService.delete(UUID.fromString("19b7e85b-5536-49fe-950c-4ac279d0549e"));
+        organizationService.delete(UUID.fromString("2fc7bc12-f15e-41b0-882c-fe4455723026"));
         System.out.println(23);
     }
 
     @Test
     public void deleteBatch() throws Exception {
+    }
+
+    @Test
+    public void checkOrganizationNameExist(){
+        TResult<Boolean> result = organizationService.checkOrganizationNameExist(UUID.fromString("d89c088d-9b0c-48ee-a6ce-27a4b7d61fb0"),"策划部");
+        System.out.println(23);
     }
 
 }
