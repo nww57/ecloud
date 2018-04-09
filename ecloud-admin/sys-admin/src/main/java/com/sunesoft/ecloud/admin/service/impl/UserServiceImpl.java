@@ -26,7 +26,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
@@ -49,15 +51,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     AgencyRepository agencyRepository;
 
+
     /**
      * BCrypt加密
      */
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-    @Value("${ecloud.agId}")
-    private UUID agId;
-
-    private static final UUID userId = UUID.fromString("42c569c0-7be3-42c6-9c07-6d9939d2739d");
 
     /**
      * 新增修改密码
@@ -74,6 +72,7 @@ public class UserServiceImpl implements UserService {
             return checkResult;
         }
         UUID id = userDto.getId();
+        UUID agId = userDto.getAgId();
         UUID structureId = userDto.getOrganizationId();
         List<UUID> roleList = userDto.getRoleIdList();
         User user;
@@ -115,7 +114,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public TResult updateUserBasicInfo(UserBasicDto userBasicDto) {
-        User user = userRepository.findOne(userId);
+        UUID id = userBasicDto.getId();
+        User user = userRepository.findOne(id);
         BeanUtil.copyPropertiesIgnoreNull(userBasicDto, user);
         userRepository.saveAndFlush(user);
         return (TResult) ResultFactory.success();
@@ -160,10 +160,6 @@ public class UserServiceImpl implements UserService {
         return (TResult) ResultFactory.success();
     }
 
-    @Override
-    public TResult changePassword(String oldPassword, String newPassword) {
-        return changePassword(userId, oldPassword, newPassword);
-    }
 
     /**
      * 设置密码
@@ -184,10 +180,6 @@ public class UserServiceImpl implements UserService {
 
 
 
-    @Override
-    public TResult setPassword(String newPassword,Boolean need) {
-        return setPassword(userId, newPassword,need);
-    }
 
 
     @Override
@@ -234,6 +226,9 @@ public class UserServiceImpl implements UserService {
 
 
     private TResult checkParam(UserDto userDto) {
+        if(null == userDto.getAgId()){
+            throw new IllegalArgumentException("企业id不能为null");
+        }
         if(StringUtils.isEmpty(userDto.getUserName())){
             return new TResult("用户名不能为空");
         }

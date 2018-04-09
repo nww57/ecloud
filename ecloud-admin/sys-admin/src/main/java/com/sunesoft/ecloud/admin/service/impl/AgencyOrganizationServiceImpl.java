@@ -41,8 +41,7 @@ public class AgencyOrganizationServiceImpl implements AgencyOrganizationService 
     AgencyRepository agencyRepository;
     @Autowired
     UserRepository userRepository;
-    @Value("${ecloud.agId}")
-    private UUID agId;
+
     @Override
     public TResult addOrUpdateOrganization(AgencyOrganizationDto agencyOrganizationDto) {
 
@@ -53,6 +52,7 @@ public class AgencyOrganizationServiceImpl implements AgencyOrganizationService 
         }
         UUID parentId = agencyOrganizationDto.getPid();
         UUID id = agencyOrganizationDto.getId();
+        UUID agId = agencyOrganizationDto.getAgId();
         AgencyOrganization org ;
         if(null == id){//新增
             org = new AgencyOrganization();
@@ -109,7 +109,7 @@ public class AgencyOrganizationServiceImpl implements AgencyOrganizationService 
 
 
     @Override
-    public TResult<Boolean> checkOrganizationNameExist(UUID id, String name) {
+    public TResult<Boolean> checkOrganizationNameExist(UUID agId,UUID id, String name) {
         Specification querySpecification = (Specification<AgencyOrganization>) (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> predicateList = new ArrayList<>();
             predicateList.add(criteriaBuilder.equal(root.get("agency").get("id"), agId));
@@ -130,7 +130,7 @@ public class AgencyOrganizationServiceImpl implements AgencyOrganizationService 
 
 
     @Override
-    public TResult<Boolean> checkOrganizationCodeExist(UUID id, String code) {
+    public TResult<Boolean> checkOrganizationCodeExist(UUID agId,UUID id, String code) {
         Specification querySpecification = (Specification<AgencyOrganization>) (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             predicates.add(criteriaBuilder.equal(root.get("agency").get("id"), agId));
@@ -151,6 +151,9 @@ public class AgencyOrganizationServiceImpl implements AgencyOrganizationService 
 
 
     private TResult checkParam(AgencyOrganizationDto agencyOrganizationDto) {
+        if(null == agencyOrganizationDto.getAgId()){
+            throw new IllegalArgumentException("企业id不能为null");
+        }
         if(StringUtils.isEmpty(agencyOrganizationDto.getName())){
             return new TResult("部门名称不能为空");
         }
@@ -160,13 +163,13 @@ public class AgencyOrganizationServiceImpl implements AgencyOrganizationService 
         if(StringUtils.isEmpty(agencyOrganizationDto.getCode())){
             return new TResult("描述不能为空");
         }
-        TResult<Boolean> nameExistResult = checkOrganizationNameExist(agencyOrganizationDto.getId(),agencyOrganizationDto.getName());
+        TResult<Boolean> nameExistResult = checkOrganizationNameExist(agencyOrganizationDto.getAgId(),agencyOrganizationDto.getId(),agencyOrganizationDto.getName());
         if(nameExistResult.getIs_success()){
             if(nameExistResult.getResult()){
                 return new TResult("部门名称已经存在");
             }
         }
-        TResult<Boolean> codeExistResult = checkOrganizationCodeExist(agencyOrganizationDto.getId(),agencyOrganizationDto.getCode());
+        TResult<Boolean> codeExistResult = checkOrganizationCodeExist(agencyOrganizationDto.getAgId(),agencyOrganizationDto.getId(),agencyOrganizationDto.getCode());
         if(codeExistResult.getIs_success()){
             if(codeExistResult.getResult()){
                 return new TResult("部门编码已经存在");

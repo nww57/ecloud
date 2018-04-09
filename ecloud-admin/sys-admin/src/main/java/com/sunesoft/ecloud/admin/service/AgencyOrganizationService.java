@@ -43,7 +43,7 @@ public interface AgencyOrganizationService {
      * @param name name
      * @return true :已存在 false :不存在
      */
-    TResult<Boolean> checkOrganizationNameExist(UUID id,String name);
+    TResult<Boolean> checkOrganizationNameExist(UUID agId,UUID id,String name);
 
 
     /**
@@ -53,6 +53,6 @@ public interface AgencyOrganizationService {
      * @param code code
      * @return true :已存在 false :不存在
      */
-    TResult<Boolean> checkOrganizationCodeExist(UUID id,String code);
+    TResult<Boolean> checkOrganizationCodeExist(UUID agId,UUID id,String code);
 
 }
