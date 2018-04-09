@@ -10,6 +10,6 @@ spring:
 
 eureka:
   instance:
-      statusPageUrlPath: /uaa/info
+      statusPageUrlPath: /ua/info
       metadata-map:
-        management.context-path: /uaa
+        management.context-path: /ua

@@ -25,7 +25,7 @@ zuul:
 
   routes:
     auth-service:
-        path: /uaa/**
+        path: /ua/**
         url: http://localhost:5000
         stripPrefix: false
         sensitiveHeaders:
@@ -37,7 +37,7 @@ zuul:
 
 gate:
   ignore:
-    startWith: /uaa
+    startWith: /ua
 
 server:
   port: 4000
