@@ -62,6 +62,8 @@ public class AgencyUserController {
      */
     @PostMapping("")
     public TResult addUserInfo (@RequestBody UserDto userDto) {
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
+        userDto.setAgId(agId);
         return userService.addOrUpdateUser(userDto);
     }
 
@@ -73,6 +75,8 @@ public class AgencyUserController {
     @PutMapping("{id}")
     public TResult updateUserInfo (@RequestBody UserDto userDto, @PathVariable UUID id) {
         userDto.setId(id);
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
+        userDto.setAgId(agId);
         return userService.addOrUpdateUser(userDto);
     }
 
