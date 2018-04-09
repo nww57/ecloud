@@ -55,7 +55,7 @@ public class AgencyOrganizationServiceImplTest {
 
     @Test
     public void checkOrganizationNameExist(){
-        TResult<Boolean> result = organizationService.checkOrganizationNameExist(UUID.fromString("d89c088d-9b0c-48ee-a6ce-27a4b7d61fb0"),"策划部");
+        TResult<Boolean> result = organizationService.checkOrganizationNameExist(UUID.fromString("abc"),UUID.fromString("d89c088d-9b0c-48ee-a6ce-27a4b7d61fb0"),"策划部");
         System.out.println(23);
     }
 
