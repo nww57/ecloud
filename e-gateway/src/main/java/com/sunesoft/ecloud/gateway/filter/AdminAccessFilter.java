@@ -14,10 +14,9 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * ${DESCRIPTION}
  *
- * @author wanghaobin
- * @create 2017-06-23 8:25
+ * @author zhouzh
+ * @create 2018-04-08 8:25
  */
 @Component
 public class AdminAccessFilter extends ZuulFilter {
