@@ -1,13 +1,10 @@
 package com.sunesoft.ecloud.admin.service.impl;
 
-import com.sunesoft.ecloud.admin.domain.menu.Menu;
 import com.sunesoft.ecloud.admin.repository.MenuRepository;
 import com.sunesoft.ecloud.admin.service.MenuService;
 import com.sunesoft.ecloud.adminclient.MenuType;
 import com.sunesoft.ecloud.adminclient.dtos.MenuDto;
-import com.sunesoft.ecloud.adminclient.dtos.MenuSimpleDto;
 import com.sunesoft.ecloud.common.result.TResult;
-import com.sunesoft.ecloud.common.utils.BeanUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.UUID;
-
-import static org.junit.Assert.*;
 
 /**
  * @author: jiangzhenjing
@@ -41,7 +36,7 @@ public class MenuServiceImplTest {
         menuDto.setName("HHHHHHHH");
         menuDto.setSort(4);
         menuDto.setDescription("HHHHHHHHHHHHHHH");
-        menuDto.setType(MenuType.Link);
+        menuDto.setType(MenuType.LINK);
         menuDto.setPid(UUID.fromString("f7f3b5cf-3f6e-4a95-affe-5c6b49d3bbc9"));
 
 //        MenuSimpleDto menuSimpleDto=new MenuSimpleDto();

@@ -5,7 +5,6 @@ import com.sunesoft.ecloud.common.TreeEntity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author: Zhouzh
@@ -39,7 +38,7 @@ public class MenuDto  extends TreeEntity {
     /**
      *菜单类型
      */
-    private MenuType type =MenuType.Link;
+    private MenuType type =MenuType.LINK;
 
 
     /**
