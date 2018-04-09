@@ -20,18 +20,10 @@ public interface AgencyOrganizationRepository extends BaseRepository<AgencyOrgan
     @Query(value = "delete from AgencyOrganization where id in :ids")
     void deleteBatch(@Param("ids") UUID... ids);
 
-    void deleteByAgency_Id(UUID agId);
+
 
     @Modifying
     @Query(value = "update AgencyOrganization a set a.parentOrg = null where a.parentOrg.id = :pid")
     void updateParentAgencyNull(@Param("pid") UUID pid);
 
-
-    AgencyOrganization findByAgency_IdAndNameEquals(UUID agId,String name);
-
-    AgencyOrganization findByAgency_IdAndIdNotAndNameEquals(UUID agId,UUID id,String name);
-
-    AgencyOrganization findByAgency_IdAndCodeEquals(UUID agId,String code);
-
-    AgencyOrganization findByAgency_IdAndIdNotAndCodeEquals(UUID agId,UUID id,String code);
 }

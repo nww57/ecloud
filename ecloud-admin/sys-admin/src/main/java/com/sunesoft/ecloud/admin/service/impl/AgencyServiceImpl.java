@@ -159,22 +159,16 @@ public class AgencyServiceImpl extends HibernateQuery implements AgencyService{
 
     @Override
     public TResult delete(UUID id) {
-        //删除组织机构
-        orgRepository.deleteByAgency_Id(id);
-//        //删除用户
-//        userRepository.deleteByAgencyId(id);
-//        //删除角色
-//        roleRepository.deleteByAgencyId(id);
-        agencyRepository.delete(id);
+        //逻辑删除
+        agencyRepository.deleteLogical(id);
         return (TResult) ResultFactory.success();
     }
 
     @Override
     @Transactional
     public TResult deleteBatch(UUID... ids) {
-        for (UUID id : ids) {
-            delete(id);
-        }
+        //逻辑删除
+        agencyRepository.deleteLogical(ids);
         return (TResult) ResultFactory.success();
     }
 
