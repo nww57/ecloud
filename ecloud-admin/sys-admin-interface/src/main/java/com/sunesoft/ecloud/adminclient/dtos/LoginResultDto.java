@@ -11,10 +11,10 @@ import java.util.UUID;
 public class LoginResultDto {
 
     /**
-     * 用户id
-     * 登录成功则id有值
+     * 用户信息
+     * 登录成功则有信息，登录失败则为null
      */
-    private UUID id;
+    private UserLoginDto userInfo;
 
     /**
      * 登录状态
@@ -22,17 +22,17 @@ public class LoginResultDto {
     private LoginResultStatus status;
 
     /**
-     * 如果登录失败，id为null
-     * @param id id
+     * 如果登录失败，userInfo为null
+     * @param userInfo 用户信息
      * @param status 登录状态
      */
-    public LoginResultDto(UUID id, LoginResultStatus status) {
-        this.id = id;
+    public LoginResultDto(UserLoginDto userInfo, LoginResultStatus status) {
+        this.userInfo = userInfo;
         this.status = status;
     }
 
-    public UUID getId() {
-        return id;
+    public UserLoginDto getUserInfo() {
+        return userInfo;
     }
 
     public LoginResultStatus getStatus() {

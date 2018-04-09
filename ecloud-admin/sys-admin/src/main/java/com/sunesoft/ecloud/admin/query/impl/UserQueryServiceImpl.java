@@ -137,7 +137,6 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
         //获取基本信息
         TResult<UserBasicDto> result = getUserBasicInfoById(id);
         UserBasicDto basicDto = result.getResult();
-        BeanUtil.copyPropertiesIgnoreNull(basicDto,authDto);
         UserType userType = basicDto.getUserType();
         List<MenuDto> menuDtoList = null;
         List<MenuFunctionDto> functionDtoList = null;
@@ -185,7 +184,7 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
                     " INNER JOIN sys_menu_func f on rf.funcId = f.id where u.id=:uid";
              functionDtoList = queryList(funcSql,map,MenuFunctionDto.class);
         }else{
-
+            throw new IllegalArgumentException("无效的用户类型");
         }
 
         //3.装配
@@ -202,6 +201,75 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
         List<MenuDto> treeList = buildTree(menuDtoList);
         authDto.setMenuList(treeList);
         return new TResult<>(authDto);
+    }
+
+    @Override
+    public ListResult<UserMenuDto> getUserMenuList(UUID id) {
+        UserMenuDto authDto = new UserMenuDto();
+        //获取基本信息
+        TResult<UserBasicDto> result = getUserBasicInfoById(id);
+        UserBasicDto basicDto = result.getResult();
+        UserType userType = basicDto.getUserType();
+        List<UserMenuDto> menuDtoList = null;
+        List<MenuFunctionDto> functionDtoList = null;
+        UUID agId = basicDto.getAgId();
+        if(Objects.equals(UserType.SUPER_ADMIN,userType)){
+            //如果是超级用户,获取所有菜单及所有功能项
+            //获取所有菜单
+            String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.description,m.frontDisc,m.icon,m.pid from sys_menu m order by m.pid ,m.sort";
+            menuDtoList = queryList(sql,null,UserMenuDto.class);
+            //获取所有功能项
+            String funcSql = "select f.id,f.name,f.menuId,f.resCode,f.resType,f.resName,f.resUrl,f.resRequestType,f.description from sys_menu_func f ";
+            functionDtoList = queryList(funcSql,null,MenuFunctionDto.class);
+        }else if(Objects.equals(UserType.AGENCY_ADMIN,userType)){
+            //如果是企业管理员用户，找企业的菜单
+            //获取菜单
+            String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.description,m.frontDisc,m.icon,m.pid from sys_ag_authmenu am left join sys_menu m on m.id = am.menuId  where am.agId = :agId order by m.pid ,m.sort";
+            Map map = new HashMap();
+            map.put("agId",agId.toString());
+            menuDtoList = queryList(sql,map,UserMenuDto.class);
+            //获取功能
+            List<UUID> menuIdList = menuDtoList.stream().map(UserMenuDto::getId).collect(Collectors.toList());
+            String funcSql = "select f.id,f.name,f.menuId,f.resCode,f.resType,f.resName,f.resUrl,f.resRequestType,f.description from sys_menu_func f where f.menuId in (:idList)";
+            List<String> menuIdListString = menuIdList.stream().map(UUID::toString).collect(Collectors.toList());
+            Map funMap = new HashMap();
+            funMap.put("idList",menuIdListString);
+            functionDtoList = queryList(funcSql,funMap,MenuFunctionDto.class);
+
+        }else if(Objects.equals(UserType.AGENCY_USER,userType)){
+            //如果是普通用户，根据用户的角色去找菜单及权限
+            //1.找出用户拥有的所有菜单 （用户-->角色-->菜单）
+            String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.description,m.frontDisc,m.icon,m.pid from sys_user u " +
+                    " INNER JOIN sys_ag_user_role ur on ur.userId = u.id " +
+                    " INNER JOIN sys_ag_role_authmenu rm on rm.roleId = ur.roleId " +
+                    " INNER JOIN sys_ag_authmenu am on am.id = rm.menuId " +
+                    " INNER JOIN sys_menu m on am.menuId = m.id " +
+                    " where u.id = :uid order by m.pid ,m.sort";
+            Map map = new HashMap();
+            map.put("uid",id.toString());
+            menuDtoList = queryList(sql,map,UserMenuDto.class);
+            //2.找出用户拥有的菜单的功能
+            String funcSql = "select f.id,f.name,f.menuId,f.resCode,f.resType,f.resName,f.resUrl,f.resRequestType,f.description from sys_user u " +
+                    " INNER JOIN sys_ag_user_role ur on ur.userId = u.id " +
+                    " INNER JOIN sys_ag_role_authmenu rm on rm.roleId = ur.roleId " +
+                    " INNER JOIN sys_ag_menu_authfunc rf on rm.id = rf.roleMenuId " +
+                    " INNER JOIN sys_menu_func f on rf.funcId = f.id where u.id=:uid";
+            functionDtoList = queryList(funcSql,map,MenuFunctionDto.class);
+        }else{
+            throw new IllegalArgumentException("无效的用户类型");
+        }
+
+        //3.装配
+        //将func匹配进menu
+        List<MenuFunctionDto> finalFunctionDtoList = functionDtoList;
+        menuDtoList.forEach(menu->{
+            finalFunctionDtoList.forEach(func->{
+                if(Objects.equals(func.getMenuId(),menu.getId())){
+                    menu.getMenuFunctions().add(func);
+                }
+            });
+        });
+        return new ListResult<>(menuDtoList);
     }
 
 
