@@ -4,6 +4,7 @@ import com.sunesoft.ecloud.admin.query.AgencyCustomerQueryService;
 import com.sunesoft.ecloud.admin.service.AgencyCustomerService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyCustomerCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
+import com.sunesoft.ecloud.auth.UserContext;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -45,6 +46,8 @@ public class AgencyCustomerController {
      */
     @PostMapping("")
     public TResult addInfo (@RequestBody AgencyCustomerDto agencyCustomerDto) {
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
+        agencyCustomerDto.setAgId(agId);
         return agencyCustomerService.addOrUpdateAgencyCustomer(agencyCustomerDto);
     }
 
@@ -55,6 +58,8 @@ public class AgencyCustomerController {
     @PutMapping("{id}")
     public TResult updateInfo (@PathVariable UUID id, @RequestBody AgencyCustomerDto agencyCustomerDto) {
         agencyCustomerDto.setId(id);
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
+        agencyCustomerDto.setAgId(agId);
         return agencyCustomerService.addOrUpdateAgencyCustomer(agencyCustomerDto);
     }
 

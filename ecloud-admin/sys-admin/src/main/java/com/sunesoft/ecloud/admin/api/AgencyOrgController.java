@@ -5,6 +5,7 @@ import com.sunesoft.ecloud.admin.service.AgencyOrganizationService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyOrganizationCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyOrganizationDto;
 import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
+import com.sunesoft.ecloud.auth.UserContext;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,8 @@ public class AgencyOrgController {
      */
     @PostMapping("")
     public TResult addInfo (@RequestBody AgencyOrganizationDto agencyOrganizationDto) {
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
+        agencyOrganizationDto.setAgId(agId);
         return organizationService.addOrUpdateOrganization(agencyOrganizationDto);
     }
 
@@ -70,6 +73,8 @@ public class AgencyOrgController {
     @PutMapping("{id}")
     public TResult updateInfo (@PathVariable UUID id, @RequestBody AgencyOrganizationDto agencyOrganizationDto) {
         agencyOrganizationDto.setId(id);
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
+        agencyOrganizationDto.setAgId(agId);
         return organizationService.addOrUpdateOrganization(agencyOrganizationDto);
     }
 

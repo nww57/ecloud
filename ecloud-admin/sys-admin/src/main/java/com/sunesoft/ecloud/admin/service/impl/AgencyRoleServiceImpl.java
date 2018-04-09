@@ -44,8 +44,7 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
     AgencyAuthorizedMenuRepository agencyMenuRepository;
     @Autowired
     MenuFunctionRepository menuFuncRepository;
-    @Value("${ecloud.agId}")
-    private UUID agId;
+
     @Override
     public TResult addOrUpdateRole(AgencyRoleDto agencyRoleDto) {
 
@@ -55,6 +54,7 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
             return checkResult;
         }
         UUID id  = agencyRoleDto.getId();
+        UUID agId = agencyRoleDto.getAgId();
         AgencyRole role;
         if(null == id){
             role = new AgencyRole();
@@ -136,7 +136,7 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
     }
 
     @Override
-    public TResult<Boolean> checkRoleNameExist(UUID id, String name) {
+    public TResult<Boolean> checkRoleNameExist(UUID agId,UUID id, String name) {
         Specification querySpecification = (Specification<AgencyRole>) (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             predicates.add(criteriaBuilder.equal(root.get("agencyId"), agId));
@@ -156,13 +156,16 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
     }
 
     private TResult checkParam(AgencyRoleDto agencyRoleDto) {
+        if(null == agencyRoleDto.getAgId()){
+            throw  new IllegalArgumentException("企业id不能为null");
+        }
         if(StringUtils.isEmpty(agencyRoleDto.getName())){
             return new TResult("角色名不能为空");
         }
         if(StringUtils.isEmpty(agencyRoleDto.getDescription())){
             return new TResult("角色描述不能为空");
         }
-        TResult<Boolean> roleNameChecked = checkRoleNameExist(agencyRoleDto.getId(),agencyRoleDto.getName());
+        TResult<Boolean> roleNameChecked = checkRoleNameExist(agencyRoleDto.getAgId(),agencyRoleDto.getId(),agencyRoleDto.getName());
         if(roleNameChecked.getResult()){
             return new TResult("角色名已经存在");
         }

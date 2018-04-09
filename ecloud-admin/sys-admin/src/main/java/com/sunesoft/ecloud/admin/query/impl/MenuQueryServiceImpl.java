@@ -76,7 +76,7 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
     public ListResult<MenuDto> findAgAllMenu() {//这里要获取有功能的
         //查出企业菜单权限表
         SqlBuilder sqlBuilder = HSqlBuilder.hFrom(AgencyAuthorizedMenu.class, "a")
-                .where("a.agId", agId)
+                .where("a.agId", UserContext.getAgencyId())
 //                .where("a.agId", UUID.fromString("d2d512f3-0a6c-4373-9ab2-a348fb616d7a"))
                 .select(AgencyAuthorizedMenuDto.class)
                 .setFieldValue("agencyId","a.agId")

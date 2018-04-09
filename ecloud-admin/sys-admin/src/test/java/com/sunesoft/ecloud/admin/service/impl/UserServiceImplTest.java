@@ -4,6 +4,7 @@ import com.sunesoft.ecloud.admin.repository.AgencyAuthorizedMenuRepository;
 import com.sunesoft.ecloud.admin.repository.UserRepository;
 import com.sunesoft.ecloud.admin.service.UserService;
 import com.sunesoft.ecloud.adminclient.UserPositionType;
+import com.sunesoft.ecloud.adminclient.dtos.LoginResultDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.common.result.TResult;
@@ -128,6 +129,13 @@ public class UserServiceImplTest {
         System.out.println(s);
         BCryptPasswordEncoder encoder1 =new BCryptPasswordEncoder();
         System.out.println(encoder1.matches("888888",s));
+    }
+
+
+    @Test
+    public void test7(){
+        TResult<LoginResultDto> dto = userService.userLogin("admin","admin");
+        System.out.println(23);
     }
 
 }

@@ -40,6 +40,6 @@ public interface AgencyRoleService {
      * @param name name
      * @return true :已存在， false ：未存在
      */
-    TResult<Boolean> checkRoleNameExist(UUID id,String name);
+    TResult<Boolean> checkRoleNameExist(UUID agId,UUID id,String name);
 
 }
