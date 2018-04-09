@@ -4,6 +4,7 @@ import com.sunesoft.ecloud.auth.utils.StringHelper;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author: Zhouzh
@@ -37,12 +38,12 @@ public class UserContext {
     }
 
     public static String getUsername(){
-        Object value = get(CommonConstants.CONTEXT_KEY_USERNAME);
+        Object value = get(CommonConstants.CONTEXT_KEY_USER_NAME);
         return returnObjectValue(value);
     }
 
-    public static String getName(){
-        Object value = get(CommonConstants.CONTEXT_KEY_USER_NAME);
+    public static String getRealName(){
+        Object value = get(CommonConstants.CONTEXT_KEY_REALNAME);
         return StringHelper.getObjectValue(value);
     }
     public static String getAgencyId(){
@@ -55,14 +56,17 @@ public class UserContext {
     }
     public static void setToken(String token){set(CommonConstants.CONTEXT_KEY_USER_TOKEN,token);}
 
-    public static void setName(String name){set(CommonConstants.CONTEXT_KEY_USER_NAME,name);}
+    public static void setRealName(String name){set(CommonConstants.CONTEXT_KEY_REALNAME,name);}
 
-    public static void setUserID(String userID){
+    public static void setUserID(UUID userID){
         set(CommonConstants.CONTEXT_KEY_USER_ID,userID);
+    }
+    public static void setAgencyId(UUID userID){
+        set(CommonConstants.CONTEXT_KEY_AGENCY_ID,userID);
     }
 
     public static void setUsername(String username){
-        set(CommonConstants.CONTEXT_KEY_USERNAME,username);
+        set(CommonConstants.CONTEXT_KEY_USER_NAME,username);
     }
 
     private static String returnObjectValue(Object value) {

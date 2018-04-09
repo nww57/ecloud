@@ -16,35 +16,39 @@ public class JwtUser {
     private final UUID id;
     private final UUID agencyid;
     private final String username;
+    private final String password;
     private final String realname;
-    private final List<String> authorities;
-    private final boolean enabled;
+    private final Collection<?> authorities;
+    private final Boolean enabled;
     private final Date lastPasswordResetDate;
+    private final Boolean needChangePassword;
 
     public JwtUser(
             String username,
             UUID id,
             UUID agencyid,
             String realname,
-            List<String> roles,
-            boolean enabled,
-            Date lastPasswordResetDate
+            String password,
+            Collection<?> roles,
+            Boolean enabled,
+            Date lastPasswordResetDate,
+            Boolean needChangePassword
     ) {
         this.id = id;
         this.username = username;
+        this.password = password;
         this.realname = realname;
         this.authorities = roles;
         this.enabled = enabled;
         this.agencyid = agencyid;
         this.lastPasswordResetDate = lastPasswordResetDate;
+        this.needChangePassword = needChangePassword;
     }
 
 
     public UUID getId() {
         return id;
     }
-
-
     public UUID getAgencyid() {
         return agencyid;
     }
@@ -68,18 +72,29 @@ public class JwtUser {
         return true;
     }
 
+    @JsonIgnore
+    public String getPassword() {
+        return password;
+    }
+    @JsonIgnore
+    public Boolean getNeedChangePassword() {
+        return needChangePassword;
+    }
+
     public String getRealname() {
         return realname;
     }
 
 
-    public Collection<String> getAuthorities() {
+    public Collection<?> getAuthorities() {
         return authorities;
     }
 
 
+
+    @JsonIgnore
     public boolean isEnabled() {
-        return enabled;
+        return enabled==null?true:enabled;
     }
 
     @JsonIgnore

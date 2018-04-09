@@ -12,10 +12,10 @@ public class CommonConstants {
     public static final Integer EX_CLIENT_INVALID_CODE = 40301;
     public static final Integer EX_CLIENT_FORBIDDEN_CODE = 40331;
     public static final Integer EX_OTHER_CODE = 500;
-    public static final String CONTEXT_KEY_AGENCY_ID = "currentCorpId";
+    public static final String CONTEXT_KEY_AGENCY_ID = "currentAgencyId";
     public static final String CONTEXT_KEY_USER_ID = "currentUserId";
-    public static final String CONTEXT_KEY_USERNAME = "currentUserName";
-    public static final String CONTEXT_KEY_USER_NAME = "currentUser";
+    public static final String CONTEXT_KEY_REALNAME = "currentUserName";
+    public static final String CONTEXT_KEY_USER_NAME = "currentUserName";
     public static final String CONTEXT_KEY_USER_TOKEN = "currentUserToken";
     public static final String JWT_KEY_USER_ID = "id";
     public static final String JWT_KEY_NAME = "username";

@@ -134,8 +134,10 @@ public class JwtTokenUtil implements Serializable {
                 UUID.fromString(body.get("agencyid").toString()),
                 StringHelper.getObjectValue(body.get("realname")),
                 null,
+                null,
                 true,
-                new Date()
+                new Date(),
+                false
         );
 
     }
