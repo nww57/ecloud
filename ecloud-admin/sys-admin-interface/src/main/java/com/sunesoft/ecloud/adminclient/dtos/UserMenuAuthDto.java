@@ -7,7 +7,7 @@ import java.util.List;
  * @Auther: niww
  * @Date: 2018/4/3/003
  */
-public class UserMenuAuthDto extends UserBasicDto{
+public class UserMenuAuthDto{
 
 
     private List<MenuDto> menuList;

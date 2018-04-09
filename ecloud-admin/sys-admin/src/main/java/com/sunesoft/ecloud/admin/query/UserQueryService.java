@@ -68,8 +68,15 @@ public interface UserQueryService {
 
     /**
      * 根据用户id获取用户的菜单权限
-     * @param id
-     * @return
+     * @param id 用户id
+     * @return 返回菜单树形结构
      */
     TResult<UserMenuAuthDto> getUserAuthMenuList(UUID id);
+
+    /**
+     * 根据用户id获取用户的菜单权限
+     * @param id 用户id
+     * @return 返回扁平结构
+     */
+    ListResult<UserMenuDto> getUserMenuList(UUID id);
 }
