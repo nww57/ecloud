@@ -21,12 +21,14 @@ public interface UserQueryService {
      */
     Page<UserDto> findUserPaged(UserCriteria criteria);
 
-
     /**
-     * 根据id查询用户基本信息
-     * @return 返回用户基本信息
+     * 根据用户名查找用户信息
+     * @param userName 用户名
+     * @return 返回用户信息
      */
-    TResult<UserBasicDto> getUserBasicInfo();
+    UserDto findUserByUserName(String userName);
+
+
 
     /**
      * 根据id查询用户基本信息
@@ -36,11 +38,6 @@ public interface UserQueryService {
     TResult<UserBasicDto> getUserBasicInfoById(UUID id);
 
 
-    /**
-     * 根据id查询用户信息
-     * @return 返回用户基本信息
-     */
-    TResult<UserDto> getUserFullInfo();
 
 
 

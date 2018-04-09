@@ -27,11 +27,11 @@ import java.util.UUID;
 @SuppressWarnings("All")
 public class AgencyOrganizationQueryServiceImpl extends GenericQuery implements AgencyOrganizationQueryService {
 
-    @Value("${ecloud.agId}")
-    private UUID agId;
+
 
     @Override
     public ListResult<AgencyOrganizationDto> findAgencyOrganization(AgencyOrganizationCriteria criteria) {
+        UUID agId = criteria.getAgId();
         SqlBuilder<AgencyOrganizationDto> builder = HSqlBuilder.hFrom(AgencyOrganization.class, "org")
                 .leftJoin(User.class,"user")
                 .on("org.leaderId = user.id")

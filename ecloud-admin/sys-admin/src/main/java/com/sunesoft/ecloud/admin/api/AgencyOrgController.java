@@ -30,6 +30,8 @@ public class AgencyOrgController {
      */
     @GetMapping("search")
     public ListResult<AgencyOrganizationDto> search (AgencyOrganizationCriteria criteria) {
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
+        criteria.setAgId(agId);
         return organizationQueryServicce.findAgencyOrganization(criteria);
     }
 

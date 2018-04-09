@@ -53,17 +53,9 @@ public class UserQueryServiceImplTest {
         System.out.println(23);
     }
 
-    @Test
-    public void getBasicInfo(){
-        TResult<UserDto> s = userQueryService.getUserFullInfo();
-        System.out.println(23);
-    }
 
-    @Test
-    public void getUserBasicInfo(){
-        TResult<UserBasicDto> basic = userQueryService.getUserBasicInfo();
-        System.out.println(32);
-    }
+
+
 
 
     @Test
