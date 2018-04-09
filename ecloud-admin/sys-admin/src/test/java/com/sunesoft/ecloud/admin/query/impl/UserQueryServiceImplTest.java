@@ -85,4 +85,10 @@ public class UserQueryServiceImplTest {
         TResult<UserMenuAuthDto> result = userQueryService.getUserAuthMenuList(UUID.fromString("654eee33-ba5b-4e82-b519-04d2c05b69bd"));
         System.out.println(23);
     }
+
+    @Test
+    public void test6(){
+        ListResult<UserMenuDto> result = userQueryService.getUserMenuList(UUID.fromString("fc98e1ca-92f0-4f2e-b68c-f0129978c1bf"));
+        System.out.println(23);
+    }
 }

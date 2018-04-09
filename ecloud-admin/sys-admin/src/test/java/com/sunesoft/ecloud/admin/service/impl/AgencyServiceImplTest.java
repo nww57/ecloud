@@ -80,16 +80,16 @@ public class AgencyServiceImplTest {
 
     @Test
     public void delete() throws Exception {
-        UUID u1 = UUID.fromString("d2d512f3-0a6c-4373-9ab2-a348fb616d7a");
+        UUID u1 = UUID.fromString("01d134d6-3eef-4b60-9979-c6392554da24");
         TResult result = agencyService.delete(u1);
         System.out.println(23);
     }
 
     @Test
     public void deleteBatch() throws Exception {
-        UUID u1 = UUID.fromString("4a98324d-dedc-4c4f-afce-daa87cf499b0");
-        UUID[] s = new UUID[]{u1};
-        TResult result = agencyService.deleteBatch(s);
+        UUID u1 = UUID.fromString("1621cf35-2f8e-4b8c-8724-d29d2709052b");
+        UUID u2 = UUID.fromString("54511220-993b-4428-89c4-35fdf7001e26");
+        TResult result = agencyService.deleteBatch(u1,u2);
         System.out.println(23);
     }
 
