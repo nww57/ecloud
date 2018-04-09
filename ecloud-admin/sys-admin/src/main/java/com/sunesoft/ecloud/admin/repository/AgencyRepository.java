@@ -2,6 +2,9 @@ package com.sunesoft.ecloud.admin.repository;
 
 import com.sunesoft.ecloud.admin.domain.agency.Agency;
 import com.sunesoft.ecloud.hibernate.repository.BaseRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.UUID;
 
@@ -17,4 +20,8 @@ public interface AgencyRepository extends BaseRepository<Agency,UUID> {
      * @return 返回信息
      */
     Agency findByCodeEquals(String code);
+
+    @Modifying
+    @Query(value = "update Agency set is_active = false where id in :ids")
+    void deleteLogical(@Param("ids") UUID... ids);
 }
