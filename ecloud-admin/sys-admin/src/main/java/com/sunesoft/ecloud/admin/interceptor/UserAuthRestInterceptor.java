@@ -37,7 +37,11 @@ public class UserAuthRestInterceptor extends HandlerInterceptorAdapter {
 //        if (annotation != null) {
 //            return super.preHandle(request, response, handler);
 //        }
-        String token = request.getHeader(tokenHeader);
+        if ("OPTIONS".equals(request.getMethod())) {//这里通过判断请求的方法，判断此次是否是预检请求，如果是，立即返回一个204状态吗，标示，允许跨域；预检后，正式请求，这个方法参数就是我们设置的post了
+            return super.preHandle(request, response, handler);
+
+        }
+            String token = request.getHeader(tokenHeader);
         if (StringUtil.isEmpty(token)) {
          throw new TokenNotFoundException("TokenNotFound");
         }
