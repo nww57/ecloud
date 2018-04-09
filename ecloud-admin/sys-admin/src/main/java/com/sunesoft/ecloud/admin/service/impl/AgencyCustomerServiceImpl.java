@@ -30,9 +30,6 @@ public class AgencyCustomerServiceImpl implements AgencyCustomerService {
     @Autowired
     AgencyCustomerRepository customerRepository;
 
-    @Value("${ecloud.agId}")
-    private UUID agId;
-
     @Override
     public TResult addOrUpdateAgencyCustomer(AgencyCustomerDto agencyCustomerDto) {
         //参数检查
@@ -41,6 +38,7 @@ public class AgencyCustomerServiceImpl implements AgencyCustomerService {
             return checkParamResult;
         }
         UUID id = agencyCustomerDto.getId();
+        UUID agId = agencyCustomerDto.getAgId();
         AgencyCustomer customer;
         if (null == id) {
             customer = new AgencyCustomer();
@@ -68,6 +66,9 @@ public class AgencyCustomerServiceImpl implements AgencyCustomerService {
     }
 
     private TResult checkParam(AgencyCustomerDto agencyCustomerDto) {
+        if(null == agencyCustomerDto.getAgId()){
+            throw new IllegalArgumentException("企业id不能为null");
+        }
         if (StringUtils.isEmpty(agencyCustomerDto.getName())) {
             return new TResult<>("客户名称不能为空");
         }

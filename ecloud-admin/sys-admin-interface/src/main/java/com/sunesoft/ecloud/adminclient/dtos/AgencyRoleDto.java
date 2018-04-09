@@ -17,6 +17,11 @@ public class AgencyRoleDto extends  BasicDto{
     private String description;
 
     /**
+     * 企业id
+     */
+    private UUID agId;
+
+    /**
      * 权限信息
      */
     private Map<UUID,List<UUID>> authList;
@@ -36,5 +41,13 @@ public class AgencyRoleDto extends  BasicDto{
 
     public void setAuthList(Map<UUID, List<UUID>> authList) {
         this.authList = authList;
+    }
+
+    public UUID getAgId() {
+        return agId;
+    }
+
+    public void setAgId(UUID agId) {
+        this.agId = agId;
     }
 }
