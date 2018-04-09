@@ -49,7 +49,7 @@ public class Menu extends IEntity {
      */
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
-    private MenuType type = MenuType.Link;
+    private MenuType type = MenuType.LINK;
 
 
     /**
