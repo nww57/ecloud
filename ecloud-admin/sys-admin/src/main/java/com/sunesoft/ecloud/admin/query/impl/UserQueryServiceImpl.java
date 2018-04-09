@@ -37,10 +37,13 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
 
     @Autowired
     UserRepository userRepository;
-    @Value("${ecloud.agId}")
-    private String agId;
+
     @Override
     public Page<UserDto> findUserPaged(UserCriteria cretiria) {
+        UUID agId = cretiria.getAgId();
+        if(null == agId){
+            throw new IllegalArgumentException("企业id不能为null");
+        }
         PageRequest pageable = new PageRequest(cretiria.getPageIndex(),cretiria.getPageSize(),null);
         StringBuilder sb = new StringBuilder("");
         sb.append("select u.id,u.userName,u.realName,u.callphone,u.email,u.isWorkon,u.create_datetime createDate,org.name organizationName ," +
@@ -57,11 +60,13 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
     }
 
     @Override
-    public TResult<UserBasicDto> getUserBasicInfo() {
-        //todo 先获取用户id
-        UUID id = UUID.fromString("42c569c0-7be3-42c6-9c07-6d9939d2739d");
-        return getUserBasicInfoById(id);
+    public UserDto findUserByUserName(String userName) {
+        StringBuilder sql = new StringBuilder("select * form sys_user u where u.username = :username");
+        Map param  = new HashMap();
+        param.put("username",userName);
+        return queryForObject(sql.toString(),param,UserDto.class);
     }
+
 
     @Override
     public TResult<UserBasicDto> getUserBasicInfoById(UUID id) {
@@ -72,12 +77,6 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
         return new TResult<>(user);
     }
 
-    @Override
-    public TResult<UserDto> getUserFullInfo() {
-        //todo 先获取用户id
-        UUID id = UUID.fromString("42c569c0-7be3-42c6-9c07-6d9939d2739d");
-        return findUserFullById(id);
-    }
 
     @Override
     public TResult<UserDto> findUserFullById(UUID id) {

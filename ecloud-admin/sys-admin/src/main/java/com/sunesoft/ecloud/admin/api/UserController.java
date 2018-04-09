@@ -53,7 +53,8 @@ public class UserController {
      */
     @GetMapping("")
     public TResult<UserBasicDto> getUserInfo(){
-        return userQueryService.getUserBasicInfo();
+        UUID id = UUID.fromString(UserContext.getUserID());
+        return userQueryService.getUserBasicInfoById(id);
     }
 
     /**

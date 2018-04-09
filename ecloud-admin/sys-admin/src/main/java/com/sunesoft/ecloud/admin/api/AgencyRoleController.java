@@ -37,6 +37,8 @@ public class AgencyRoleController {
      */
     @GetMapping("search")
     public Page<AgencyRoleDto> search (AgencyRoleCriteria agencyRoleCriteria) {
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
+        agencyRoleCriteria.setAgId(agId);
        return agencyRoleQueryService.findAgencyRolePaged(agencyRoleCriteria);
     }
 
