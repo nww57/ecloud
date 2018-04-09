@@ -1,18 +1,22 @@
 package com.sunesoft.ecloud.admin.service.impl;
 
+import com.sunesoft.ecloud.admin.domain.agency.Agency;
 import com.sunesoft.ecloud.admin.domain.agency.AgencyOrganization;
 import com.sunesoft.ecloud.admin.domain.agency.AgencyRole;
 import com.sunesoft.ecloud.admin.domain.agency.User;
 import com.sunesoft.ecloud.admin.repository.AgencyOrganizationRepository;
+import com.sunesoft.ecloud.admin.repository.AgencyRepository;
 import com.sunesoft.ecloud.admin.repository.AgencyRoleRepository;
 import com.sunesoft.ecloud.admin.repository.UserRepository;
 import com.sunesoft.ecloud.admin.service.UserService;
 import com.sunesoft.ecloud.adminclient.LoginResultStatus;
+import com.sunesoft.ecloud.adminclient.ServerStatusType;
 import com.sunesoft.ecloud.adminclient.UserPositionType;
 import com.sunesoft.ecloud.adminclient.UserType;
 import com.sunesoft.ecloud.adminclient.dtos.LoginResultDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
+import com.sunesoft.ecloud.adminclient.dtos.UserLoginDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
@@ -42,6 +46,8 @@ public class UserServiceImpl implements UserService {
     AgencyOrganizationRepository orgRepository;
     @Autowired
     AgencyRoleRepository roleRepository;
+    @Autowired
+    AgencyRepository agencyRepository;
 
     /**
      * BCrypt加密
@@ -193,10 +199,23 @@ public class UserServiceImpl implements UserService {
         if (null == user) {
             return new TResult<>(new LoginResultDto(null, LoginResultStatus.ERROR_USERNAME));
         }
+        if(!Objects.equals(user.getUserType(),UserType.SUPER_ADMIN)){
+            UUID agId = user.getAgencyId();
+            Agency agency = agencyRepository.findOne(agId);
+            if(!agency.getIs_active()){
+                return new TResult<>(new LoginResultDto(null, LoginResultStatus.ERROR_USERNAME));
+            }
+            if(Objects.equals(agency.getServerStatus(), ServerStatusType.DISABLE)){
+                return new TResult<>(new LoginResultDto(null, LoginResultStatus.SERVER_EXPIRED));
+            }
+        }
         if(!encoder.matches(password,user.getPassword())){
             return new TResult<>(new LoginResultDto(null,LoginResultStatus.ERROR_PASSWORD));
         }else{
-            return new TResult<>(new LoginResultDto(user.getId(),LoginResultStatus.SUCCESS));
+            //todo： 设置登录ip及最后一次登录时间
+            UserLoginDto dto = new UserLoginDto();
+            BeanUtil.copyProperties(user,dto);
+            return new TResult<>(new LoginResultDto(dto,LoginResultStatus.SUCCESS));
         }
 
     }

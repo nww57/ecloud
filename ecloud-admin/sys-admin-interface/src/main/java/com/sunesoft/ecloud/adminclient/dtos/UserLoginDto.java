@@ -1,7 +1,5 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
-import com.sunesoft.ecloud.adminclient.UserType;
-
 import java.util.Date;
 import java.util.UUID;
 

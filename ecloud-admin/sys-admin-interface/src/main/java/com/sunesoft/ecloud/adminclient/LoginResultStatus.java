@@ -16,7 +16,11 @@ public enum LoginResultStatus {
     /**
      * 密码错误
      */
-    ERROR_PASSWORD
+    ERROR_PASSWORD,
+    /**
+     * 企业服务已到期
+     */
+    SERVER_EXPIRED
 
 
 }
