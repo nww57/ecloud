@@ -139,8 +139,8 @@ public class JwtTokenUtil implements Serializable {
         Claims body = getAllClaimsFromToken(authToken);
         return new JwtUser(
                 body.getSubject(),
-                (UUID) body.get("id"),
-                (UUID) body.get("agencyid"),
+                UUID.fromString(body.get("id").toString()),
+                UUID.fromString(body.get("agencyid").toString()),
                 body.get("realname") == null ? "" : body.get("realname").toString(),
                 null,
                 null,
