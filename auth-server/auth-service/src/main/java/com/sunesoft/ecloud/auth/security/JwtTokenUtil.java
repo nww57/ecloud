@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.auth.security;
 
+import com.sunesoft.ecloud.common.utils.StringUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.Jwts;
@@ -13,15 +14,15 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 
 @Component
 public class JwtTokenUtil implements Serializable {
-
     static final String CLAIM_KEY_USERNAME = "sub";
     static final String CLAIM_KEY_CREATED = "iat";
     private static final long serialVersionUID = -3301605591108950415L;
-     private Clock clock = DefaultClock.INSTANCE;
+    private Clock clock = DefaultClock.INSTANCE;
 
     @Value("${jwt.secret}")
     private String secret;
@@ -48,9 +49,9 @@ public class JwtTokenUtil implements Serializable {
 
     private Claims getAllClaimsFromToken(String token) {
         return Jwts.parser()
-            .setSigningKey(secret)
-            .parseClaimsJws(token)
-            .getBody();
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     private Boolean isTokenExpired(String token) {
@@ -67,8 +68,21 @@ public class JwtTokenUtil implements Serializable {
         return false;
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(JwtUser userDetails) {
         Map<String, Object> claims = new HashMap<>();
+
+        claims.put("id", userDetails.getId());
+        claims.put("agencyid", userDetails.getAgencyid());
+        if (!StringUtil.isEmpty(userDetails.getRealname()))
+            claims.put("realname", userDetails.getRealname());
+//        claims.put("password", userDetails.getPassword());
+        if (userDetails.getAuthorities() != null && userDetails.getAuthorities().size() > 0)
+            claims.put("roles", "");
+        claims.put("enabled", userDetails.isEnabled());
+        if (userDetails.getLastPasswordResetDate() != null)
+            claims.put("lastPasswordResetDate", userDetails.getLastPasswordResetDate());
+        if (userDetails.getNeedChangePassword() != null)
+            claims.put("needChangePassword", userDetails.getNeedChangePassword());
         return doGenerateToken(claims, userDetails.getUsername());
     }
 
@@ -77,18 +91,18 @@ public class JwtTokenUtil implements Serializable {
         final Date expirationDate = calculateExpirationDate(createdDate);
 
         return Jwts.builder()
-            .setClaims(claims)
-            .setSubject(subject)
-            .setIssuedAt(createdDate)
-            .setExpiration(expirationDate)
-            .signWith(SignatureAlgorithm.HS512, secret)
-            .compact();
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(createdDate)
+                .setExpiration(expirationDate)
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
     }
 
     public Boolean canTokenBeRefreshed(String token, Date lastPasswordReset) {
         final Date created = getIssuedAtDateFromToken(token);
         return !isCreatedBeforeLastPasswordReset(created, lastPasswordReset)
-            && (!isTokenExpired(token) || ignoreTokenExpiration(token));
+                && (!isTokenExpired(token) || ignoreTokenExpiration(token));
     }
 
     public String refreshToken(String token) {
@@ -100,9 +114,9 @@ public class JwtTokenUtil implements Serializable {
         claims.setExpiration(expirationDate);
 
         return Jwts.builder()
-            .setClaims(claims)
-            .signWith(SignatureAlgorithm.HS512, secret)
-            .compact();
+                .setClaims(claims)
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
@@ -111,13 +125,29 @@ public class JwtTokenUtil implements Serializable {
         final Date created = getIssuedAtDateFromToken(token);
         //final Date expiration = getExpirationDateFromToken(token);
         return (
-            username.equals(user.getUsername())
-                && !isTokenExpired(token)
-                && !isCreatedBeforeLastPasswordReset(created, user.getLastPasswordResetDate())
+                username.equals(user.getUsername())
+                        && !isTokenExpired(token)
+                        && !isCreatedBeforeLastPasswordReset(created, user.getLastPasswordResetDate())
         );
     }
 
     private Date calculateExpirationDate(Date createdDate) {
         return new Date(createdDate.getTime() + expiration * 1000);
+    }
+
+    public JwtUser getInfoFromToken(String authToken) {
+        Claims body = getAllClaimsFromToken(authToken);
+        return new JwtUser(
+                body.getSubject(),
+                (UUID) body.get("id"),
+                (UUID) body.get("agencyid"),
+                body.get("realname") == null ? "" : body.get("realname").toString(),
+                null,
+                null,
+                (Boolean) body.get("enabled"),
+                new Date(),
+                false
+        );
+
     }
 }

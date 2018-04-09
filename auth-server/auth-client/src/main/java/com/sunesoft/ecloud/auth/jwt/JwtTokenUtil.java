@@ -1,6 +1,7 @@
 package com.sunesoft.ecloud.auth.jwt;
 
 import com.sunesoft.ecloud.auth.utils.StringHelper;
+import com.sunesoft.ecloud.common.utils.StringUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.Jwts;
@@ -74,6 +75,19 @@ public class JwtTokenUtil implements Serializable {
 
     public String generateToken(JwtUser userDetails) {
         Map<String, Object> claims = new HashMap<>();
+
+        claims.put("id", userDetails.getId());
+        claims.put("agencyid", userDetails.getAgencyid());
+        if (!StringUtil.isEmpty(userDetails.getRealname()))
+            claims.put("realname", userDetails.getRealname());
+        claims.put("password", userDetails.getPassword());
+        if (userDetails.getAuthorities() != null && userDetails.getAuthorities().size() > 0)
+            claims.put("roles", "");
+        claims.put("enabled", userDetails.isEnabled());
+        if (userDetails.getLastPasswordResetDate() != null)
+            claims.put("lastPasswordResetDate", userDetails.getLastPasswordResetDate());
+        if (userDetails.getNeedChangePassword() != null)
+            claims.put("needChangePassword", userDetails.getNeedChangePassword());
         return doGenerateToken(claims, userDetails.getUsername());
     }
 
@@ -126,16 +140,16 @@ public class JwtTokenUtil implements Serializable {
         return new Date(createdDate.getTime() + expiration * 1000);
     }
 
-    public  JwtUser getInfoFromToken(String authToken) {
+    public JwtUser getInfoFromToken(String authToken) {
         Claims body = getAllClaimsFromToken(authToken);
         return new JwtUser(
                 body.getSubject(),
-                UUID.fromString(body.get("id").toString()),
-                UUID.fromString(body.get("agencyid").toString()),
-                StringHelper.getObjectValue(body.get("realname")),
+                (UUID) body.get("id"),
+                (UUID) body.get("agencyid"),
+                body.get("realname") == null ? "" : body.get("realname").toString(),
                 null,
                 null,
-                true,
+                (Boolean) body.get("enabled"),
                 new Date(),
                 false
         );
