@@ -79,8 +79,12 @@ public class AgencyServiceImpl extends HibernateQuery implements AgencyService {
         }
         BeanUtil.copyProperties(agencyDto, agency, new String[]{"agencyType", "serverStatus"});
         try {
-            agency.setServerEndDate(DateUtils.parseDate(agencyDto.getServerEndDate(), new String[]{"yyyy-MM-dd HH:mm:ss"}));
-            agency.setRegisterDate(DateUtils.parseDate(agencyDto.getRegisterDate(), new String[]{"yyyy-MM-dd"}));
+            if(null != agencyDto.getServerEndDate()){
+                agency.setServerEndDate(DateUtils.parseDate(agencyDto.getServerEndDate(), new String[]{"yyyy-MM-dd HH:mm:ss"}));
+            }
+            if(null != agencyDto.getRegisterDate()){
+                agency.setRegisterDate(DateUtils.parseDate(agencyDto.getRegisterDate(), new String[]{"yyyy-MM-dd"}));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -30,7 +30,7 @@ public interface UserRepository extends BaseRepository<User,UUID>,JpaSpecificati
     void deleteBatch(@Param("ids") UUID... ids);
 
     @Modifying
-    @Query(value = "update  User set password = :password ,needChangePassword = :need where id = :id")
+    @Query(value = "update  User set password = :password ,needChangePassword = :need,lastPasswordResetDate = CURRENT_TIME  where id = :id")
     void updatePassword(@Param("id") UUID id, @Param("password") String newPassword ,@Param("need") Boolean need);
 
 
@@ -41,7 +41,6 @@ public interface UserRepository extends BaseRepository<User,UUID>,JpaSpecificati
     @Query(value = "select u.password from User u where u.id = :id")
     String selectPassword(@Param("id") UUID id);
 
-    void deleteByAgencyId(UUID agId);
 
     /**
      * 根据用户名密码查找用户
@@ -63,5 +62,8 @@ public interface UserRepository extends BaseRepository<User,UUID>,JpaSpecificati
     void updateOrganizationNull(@Param("orgId") UUID orgId);
 
 
+    @Modifying
+    @Query(value = "update User u set u.lastLoginIp = :ip,u.lastLoginDatetime = CURRENT_TIME where u.id.id = :id")
+    void updateLoginIPAndLastLoginDatetime(@Param("id") UUID id,@Param("ip") String ip);
 
 }

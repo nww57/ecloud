@@ -20,6 +20,7 @@ import com.sunesoft.ecloud.adminclient.dtos.UserLoginDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
+import com.sunesoft.ecloud.common.utils.IPUtil;
 import com.sunesoft.ecloud.common.utils.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.persistence.criteria.Predicate;
 import javax.servlet.http.HttpServletRequest;
@@ -207,7 +209,10 @@ public class UserServiceImpl implements UserService {
         if(!encoder.matches(password,user.getPassword())){
             return new TResult<>(new LoginResultDto(null,LoginResultStatus.ERROR_PASSWORD));
         }else{
-            //todo： 设置登录ip及最后一次登录时间
+            // 设置登录ip及最后一次登录时间
+            HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+            String ip = IPUtil.getClientIp(request);
+            userRepository.updateLoginIPAndLastLoginDatetime(user.getId(),ip);
             UserLoginDto dto = new UserLoginDto();
             BeanUtil.copyProperties(user,dto);
             return new TResult<>(new LoginResultDto(dto,LoginResultStatus.SUCCESS));
