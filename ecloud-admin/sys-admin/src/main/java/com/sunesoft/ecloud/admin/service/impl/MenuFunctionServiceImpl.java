@@ -48,9 +48,9 @@ public class MenuFunctionServiceImpl implements MenuFunctionService {
                 menu.getMenuFunctions().add(menuFunction);
             }
             menuFunction.setMenu(menu);
-            Menu save = menuRepository.save(menu);
-//            MenuFunction save = menuFunctionRepository.save(menuFunction);
-            return (TResult) ResultFactory.success(save);
+//            Menu save = menuRepository.save(menu);
+            MenuFunction save = menuFunctionRepository.save(menuFunction);
+            return (TResult) ResultFactory.success();
         }
         return (TResult) ResultFactory.error("操作失败，请选择菜单！");
     }
