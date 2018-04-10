@@ -31,29 +31,7 @@ public class AgencyController {
     }
 
     /**
-     * 企业信息获取(企业管理)
-     * @param id
-     * @return
-     */
-    @GetMapping("basic/{id}")
-    public TResult<AgencyBasicDto> getBasicInfo (@PathVariable UUID id) {
-        return agencyQueryService.findAgencyBasicInfoById(id);
-    }
-
-    /**
-     * 修改企业信息（企业管理）
-     * @param agencyBasicDto
-     * @param id
-     * @return
-     */
-    @PutMapping("basic/{id}")
-    public TResult updateBasicInfo (@RequestBody AgencyBasicDto agencyBasicDto, @PathVariable UUID id) {
-        agencyBasicDto.setId(id);
-        return agencyService.updateAgencyBasicInfo(agencyBasicDto);
-    }
-
-    /**
-     * 获取企业信息
+     * 获取企业信息(企业管理)
      * @param id
      * @return
      */
@@ -63,7 +41,7 @@ public class AgencyController {
     }
 
     /**
-     * 新增企业信息
+     * 新增企业信息(企业管理)
      * @param agencyDto
      * @return
      */
@@ -73,7 +51,7 @@ public class AgencyController {
     }
 
     /**
-     * 修改企业信息
+     * 修改企业信息(企业管理)
      * @param agencyDto
      * @param id
      * @return
@@ -84,6 +62,27 @@ public class AgencyController {
         return agencyService.addOrUpdateAgency(agencyDto);
     }
 
+    /**
+     * 企业信息获取 (获取所属企业的信息)
+     * @param id
+     * @return
+     */
+    @GetMapping("basic/{id}")
+    public TResult<AgencyBasicDto> getBasicInfo (@PathVariable UUID id) {
+        return agencyQueryService.findAgencyBasicInfoById(id);
+    }
+
+    /**
+     * 修改企业信息(获取所属企业的信息)
+     * @param agencyBasicDto
+     * @param id
+     * @return
+     */
+    @PutMapping("basic/{id}")
+    public TResult updateBasicInfo (@RequestBody AgencyBasicDto agencyBasicDto, @PathVariable UUID id) {
+        agencyBasicDto.setId(id);
+        return agencyService.updateAgencyBasicInfo(agencyBasicDto);
+    }
 
     /**
      * 删除企业
