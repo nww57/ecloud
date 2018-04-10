@@ -7,6 +7,7 @@ import com.sunesoft.ecloud.admin.service.UserService;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.*;
 import com.sunesoft.ecloud.common.result.ListResult;
+import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,7 +42,7 @@ public class UserQueryServiceImplTest {
         UserCriteria userCriteria = new UserCriteria();
         userCriteria.setPageIndex(1);
         userCriteria.setPageSize(10);
-        Page<UserDto> userPaged = userQueryService.findUserPaged(userCriteria);
+        PagedResult<UserDto> userPaged = userQueryService.findUserPaged(userCriteria);
 
         System.out.println(userPaged);
 

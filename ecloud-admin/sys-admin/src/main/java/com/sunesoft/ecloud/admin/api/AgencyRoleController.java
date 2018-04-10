@@ -9,6 +9,7 @@ import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.MenuDto;
 import com.sunesoft.ecloud.auth.UserContext;
 import com.sunesoft.ecloud.common.result.ListResult;
+import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,7 +37,7 @@ public class AgencyRoleController {
      * @return
      */
     @GetMapping("search")
-    public Page<AgencyRoleDto> search (AgencyRoleCriteria agencyRoleCriteria) {
+    public PagedResult<AgencyRoleDto> search (AgencyRoleCriteria agencyRoleCriteria) {
        return agencyRoleQueryService.findAgencyRolePaged(agencyRoleCriteria);
     }
 

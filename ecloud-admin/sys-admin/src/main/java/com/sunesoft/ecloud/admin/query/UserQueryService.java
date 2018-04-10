@@ -3,6 +3,7 @@ package com.sunesoft.ecloud.admin.query;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.*;
 import com.sunesoft.ecloud.common.result.ListResult;
+import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.data.domain.Page;
 
@@ -19,7 +20,7 @@ public interface UserQueryService {
      * @param criteria
      * @return
      */
-    Page<UserDto> findUserPaged(UserCriteria criteria);
+    PagedResult<UserDto> findUserPaged(UserCriteria criteria);
 
 
     /**

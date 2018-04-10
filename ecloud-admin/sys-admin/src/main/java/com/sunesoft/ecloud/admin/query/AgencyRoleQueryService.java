@@ -5,6 +5,7 @@ import com.sunesoft.ecloud.adminclient.dtos.AgencyRoleDto;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyRoleViewDto;
 import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
 import com.sunesoft.ecloud.common.result.ListResult;
+import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.data.domain.Page;
 
@@ -22,7 +23,7 @@ public interface AgencyRoleQueryService {
      * @param criteria
      * @return
      */
-    Page<AgencyRoleDto> findAgencyRolePaged(AgencyRoleCriteria criteria);
+    PagedResult<AgencyRoleDto> findAgencyRolePaged(AgencyRoleCriteria criteria);
 
 
     /**

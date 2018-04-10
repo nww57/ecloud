@@ -9,16 +9,16 @@ import java.util.List;
 
 public class ResultFactory {
 
-    public static IResult success() {
+    public static TResult success() {
         return new TResult(true, "");
     }
 
 
-    public static <T> IResult success(T t) {
+    public static <T> TResult success(T t) {
         return new TResult(t);
     }
 
-    public static IResult error(String message)
+    public static TResult error(String message)
     {
         return new TResult(message);
     }

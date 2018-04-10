@@ -9,6 +9,7 @@ import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserPositionDto;
 import com.sunesoft.ecloud.auth.UserContext;
 import com.sunesoft.ecloud.common.result.ListResult;
+import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -126,12 +127,11 @@ public class UserController {
     }
     @RequestMapping(value = "/index", method = RequestMethod.GET)
 
-    public   Page<UserDto> index(){
+    public PagedResult<UserDto> index(){
         Pageable pageable = new PageRequest(0,10,null);
         UserCriteria userCriteria = new UserCriteria();
         userCriteria.setUserName("zhouzh");
-        Page<UserDto> userPaged = userQueryService.findUserPaged(userCriteria);
-
+        PagedResult<UserDto> userPaged = userQueryService.findUserPaged(userCriteria);
         return userPaged;
     }
 }

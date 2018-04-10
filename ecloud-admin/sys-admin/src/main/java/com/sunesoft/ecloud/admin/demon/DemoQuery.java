@@ -41,13 +41,10 @@ public class DemoQuery extends GenericQuery {
 
 
     public void page() {
-
         Pageable pageable = new PageRequest(1,10);
-
-
-        Page<eUserTemp> query = this.queryPaged(pageable,"select * from e_user", new HashMap<>(), eUserTemp.class);
+//        Page<eUserTemp> query = this.queryPaged(pageable,"select * from e_user", new HashMap<>(), eUserTemp.class);
 //       List<Map<String,Object>>  map =jdbcTemplate.queryForList()
-        System.out.println(query.getContent().size());
+        System.out.println("");
     }
 
 

@@ -7,6 +7,8 @@ public interface IResult<T> extends Serializable {
 
     Boolean getIs_success();
 
+    Long getStatusCode();
+
     void setIs_success(Boolean is_success);
 
     String getMessage();

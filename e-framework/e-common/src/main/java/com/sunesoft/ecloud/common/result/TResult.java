@@ -6,6 +6,8 @@ import java.util.Map;
 public class TResult<T> implements IResult<T>{
     private Boolean is_success;
 
+    private Long statusCode=200L;
+
     private String message ="";
 
     private T result;
@@ -49,14 +51,25 @@ public class TResult<T> implements IResult<T>{
     public void setResult(T result) {
         this.result = result;
     }
+
     public Map<String, Object> getUserData() {
         return userData;
     }
+
     public void setUserData(Map<String, Object> userData) {
         this.userData = userData;
     }
 
     public void putUserData(String key, Object value) {
         userData.put(key,value);
+    }
+
+    @Override
+    public Long getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(Long statusCode) {
+        this.statusCode = statusCode;
     }
 }

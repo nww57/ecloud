@@ -5,6 +5,7 @@ import com.sunesoft.ecloud.admin.query.AgencyRoleQueryService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyRoleCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyRoleDto;
 
+import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +36,7 @@ public class AgencyRoleQueryServiceImplTest {
     public void findAgencyRolePaged() {
         AgencyRoleCriteria criteria = new AgencyRoleCriteria();
         criteria.setPageIndex(0);
-        Page<AgencyRoleDto> lsit = roleQueryService.findAgencyRolePaged(criteria);
+        PagedResult<AgencyRoleDto> lsit = roleQueryService.findAgencyRolePaged(criteria);
         System.out.println(23);
     }
 

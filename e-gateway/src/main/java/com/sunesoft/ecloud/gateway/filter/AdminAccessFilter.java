@@ -2,6 +2,7 @@ package com.sunesoft.ecloud.gateway.filter;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
+import com.sunesoft.ecloud.adminclient.dtos.MenuFunctionDto;
 import com.sunesoft.ecloud.common.utils.StringUtil;
 import com.sunesoft.ecloud.auth.UserContext;
 import com.sunesoft.ecloud.auth.configs.UserAuthConfig;
@@ -12,6 +13,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 /**
  *
@@ -92,6 +97,34 @@ public class AdminAccessFilter extends ZuulFilter {
         return jwtTokenUtil.getInfoFromToken(authToken);
     }
 
+
+    /**
+     * 获取目标权限资源
+     *
+     * @param requestUri
+     * @param method
+     * @param serviceInfo
+     * @return
+     */
+    private Stream<MenuFunctionDto> getPermissionIfs(final String requestUri, final String method, List<MenuFunctionDto> serviceInfo) {
+        Stream<MenuFunctionDto> result = serviceInfo.parallelStream().filter(new Predicate<MenuFunctionDto>() {
+            @Override
+            public boolean test(MenuFunctionDto permissionInfo) {
+                String url = permissionInfo.getResUrl();
+                String uri = url.replaceAll("\\{\\*\\}", "[a-zA-Z\\\\d]+");
+                String regEx = "^" + uri + "$";
+                return (Pattern.compile(regEx).matcher(requestUri).find() || requestUri.startsWith(url + "/"))
+                        && method.equals(permissionInfo.getResRequestType());
+            }
+        });
+
+        if(result.count()==0){
+//            setFailedRequest(JSON.toJSONString(new TokenForbiddenResponse("Token Forbidden!")), 200);
+
+        }
+        return null;
+    }
+
     /**
      * URI是否以什么打头
      *
@@ -106,5 +139,20 @@ public class AdminAccessFilter extends ZuulFilter {
             }
         }
         return flag;
+    }
+
+    /**
+     * 网关抛异常
+     *
+     * @param body
+     * @param code
+     */
+    private void setFailedRequest(String body, int code) {
+        RequestContext ctx = RequestContext.getCurrentContext();
+        ctx.setResponseStatusCode(code);
+        if (ctx.getResponseBody() == null) {
+            ctx.setResponseBody(body);
+            ctx.setSendZuulResponse(false);
+        }
     }
 }

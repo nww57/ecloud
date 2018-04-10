@@ -3,6 +3,7 @@ package com.sunesoft.ecloud.admin.query;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyDto;
+import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.data.domain.Page;
 
@@ -20,7 +21,7 @@ public interface AgencyQueryService {
      * @param criteria 查询参数
      * @return 返回查询信息
      */
-    Page<AgencyDto> findAgencyPaged(AgencyCriteria criteria);
+    PagedResult<AgencyDto> findAgencyPaged(AgencyCriteria criteria);
 
     /**
      * 根据id获取企业基本信息

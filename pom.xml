@@ -16,6 +16,8 @@
         <module>ecloud-admin</module>
         <module>auth-server</module>
         <module>e-flow</module>
+        <module>ecloud-patent-manager</module>
+        <module>ecloud-file-system</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -5,12 +5,12 @@ import com.sunesoft.ecloud.admin.domain.agency.User;
 import com.sunesoft.ecloud.admin.query.AgencyCustomerQueryService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyCustomerCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
+import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
+import org.springframework.beans.factory.annotation.Value; 
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -28,7 +28,7 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
     private UUID agId;
 
     @Override
-    public Page<AgencyCustomerDto> findAgencyCustomerPaged(AgencyCustomerCriteria criteria) {
+    public PagedResult<AgencyCustomerDto> findAgencyCustomerPaged(AgencyCustomerCriteria criteria) {
         SqlBuilder<AgencyCustomerDto> dtoBuilder = HSqlBuilder.hFrom(AgencyCustomer.class, "c")
                 .leftJoin(User.class,"u")
                 .on("c.consultantId = u.id")

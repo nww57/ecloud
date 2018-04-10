@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.hibernate.sqlExcute;
 
+import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,19 +23,17 @@ public class GenericQuery {
     @Autowired
     private NamedParameterJdbcTemplate namedJdbcTemplate;
 
-    public <E> Page<E> queryPaged(Pageable pageable, String sql, Map<String, Object> params, Class<E> clazz) {
-        String pageSql = sql + " limit " + pageable.getPageNumber() * pageable.getPageSize() + "," + pageable.getPageSize();
+    public <E> PagedResult<E> queryPaged(Integer pageIndex,Integer pegeSize, String sql, Map<String, Object> params, Class<E> clazz) {
+        String pageSql = sql + " limit " + pageIndex * pegeSize + "," + pegeSize;
         List<E> result = namedJdbcTemplate.query(pageSql, params, new GenericListExtractor<List<E>>(clazz));
         int total = queryCount(sql, params);
-        Page<E> page = new PageImpl<E>(result, pageable, total);
+        PagedResult<E> page = new PagedResult<E>(result, pageIndex,pegeSize, total);
         return page;
     }
 
-    public <E> Page<E> queryPaged(SqlBuilder<E> sqlBuilder) {
+    public <E> PagedResult<E> queryPaged(SqlBuilder<E> sqlBuilder) {
         //todo  sort  处理
-
-
-        return queryPaged(new PageRequest(sqlBuilder.getPageIndex(), sqlBuilder.getPageSize(), null), sqlBuilder.getQuerySql(), sqlBuilder.getParams(), sqlBuilder.getSelectClass());
+        return queryPaged( sqlBuilder.getPageIndex(), sqlBuilder.getPageSize(), sqlBuilder.getQuerySql(), sqlBuilder.getParams(), sqlBuilder.getSelectClass());
     }
 
     public int queryCount(String sql, Map<String, Object> params) {

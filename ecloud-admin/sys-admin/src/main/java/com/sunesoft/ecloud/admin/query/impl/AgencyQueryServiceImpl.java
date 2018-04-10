@@ -7,6 +7,7 @@ import com.sunesoft.ecloud.adminclient.cretirias.AgencyCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyDto;
 import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
+import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
 import com.sunesoft.ecloud.hibernate.IEntity;
@@ -33,7 +34,7 @@ public class AgencyQueryServiceImpl extends GenericQuery implements AgencyQueryS
     private UUID agId;
 
     @Override
-    public Page<AgencyDto> findAgencyPaged(AgencyCriteria criteria) {
+    public PagedResult<AgencyDto> findAgencyPaged(AgencyCriteria criteria) {
 
         SqlBuilder builder = HSqlBuilder.hFrom(Agency.class, "agency")
                 .pagging(criteria.getPageIndex(), criteria.getPageSize())

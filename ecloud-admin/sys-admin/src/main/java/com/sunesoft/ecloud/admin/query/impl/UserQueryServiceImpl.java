@@ -9,6 +9,7 @@ import com.sunesoft.ecloud.adminclient.UserType;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.*;
 import com.sunesoft.ecloud.common.result.ListResult;
+import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
@@ -40,8 +41,7 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
     @Value("${ecloud.agId}")
     private String agId;
     @Override
-    public Page<UserDto> findUserPaged(UserCriteria cretiria) {
-        PageRequest pageable = new PageRequest(cretiria.getPageIndex(),cretiria.getPageSize(),null);
+    public PagedResult<UserDto> findUserPaged(UserCriteria cretiria) {
         StringBuilder sb = new StringBuilder("");
         sb.append("select u.id,u.userName,u.realName,u.callphone,u.email,u.isWorkon,u.create_datetime createDate,org.name organizationName ," +
                 " (select GROUP_CONCAT(r.name) from sys_ag_user_role ur LEFT JOIN sys_ag_role r on r.id = ur.roleId where ur.userId = u.id) roleName " +
@@ -51,7 +51,7 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
         List<UserDto> dtoList = queryList(sb.toString(),null,UserDto.class);
         String queryCount = "select count(*) from sys_user u where u.agId = '"+agId+"'";
         int count = queryCount(queryCount,null);
-        Page page= new PageImpl(dtoList,pageable,count);
+        PagedResult page = new PagedResult(dtoList,cretiria.getPageIndex(),cretiria.getPageSize(),count);
         return page;
 
     }

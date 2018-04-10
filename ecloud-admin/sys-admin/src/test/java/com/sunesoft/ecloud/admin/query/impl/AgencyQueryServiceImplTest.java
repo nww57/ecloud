@@ -4,6 +4,7 @@ import com.sunesoft.ecloud.admin.query.AgencyQueryService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyDto;
+import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +31,7 @@ public class AgencyQueryServiceImplTest {
     @Test
     public void findAgencyPaged() throws Exception {
         AgencyCriteria c = new AgencyCriteria();
-        Page<AgencyDto> page =  agencyQueryService.findAgencyPaged(c);
+        PagedResult<AgencyDto> page =  agencyQueryService.findAgencyPaged(c);
         System.out.println(23);
     }
 

@@ -5,6 +5,7 @@ import com.sunesoft.ecloud.admin.service.AgencyCustomerService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyCustomerCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
 import com.sunesoft.ecloud.auth.UserContext;
+import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,7 +27,7 @@ public class AgencyCustomerController {
      * 客户查询
      */
     @GetMapping("search")
-    public Page<AgencyCustomerDto> search (AgencyCustomerCriteria agencyCustomerCriteria) {
+    public PagedResult<AgencyCustomerDto> search (AgencyCustomerCriteria agencyCustomerCriteria) {
         return agencyCustomerQueryService.findAgencyCustomerPaged(agencyCustomerCriteria);
     }
 

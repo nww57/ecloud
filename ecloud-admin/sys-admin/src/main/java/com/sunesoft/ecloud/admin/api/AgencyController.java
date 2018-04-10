@@ -5,6 +5,7 @@ import com.sunesoft.ecloud.admin.service.AgencyService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyDto;
+import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,7 +27,7 @@ public class AgencyController {
      * @param agencyCriteria
      */
     @GetMapping("search")
-    public Page<AgencyDto> search (AgencyCriteria agencyCriteria) {
+    public PagedResult<AgencyDto> search (AgencyCriteria agencyCriteria) {
         return agencyQueryService.findAgencyPaged(agencyCriteria);
     }
 

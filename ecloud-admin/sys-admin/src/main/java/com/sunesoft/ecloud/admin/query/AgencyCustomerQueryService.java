@@ -2,6 +2,7 @@ package com.sunesoft.ecloud.admin.query;
 
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyCustomerCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
+import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.data.domain.Page;
 
@@ -19,7 +20,7 @@ public interface AgencyCustomerQueryService {
      * @param criteria 查询参数
      * @return 返回查询结果
      */
-    Page<AgencyCustomerDto> findAgencyCustomerPaged(AgencyCustomerCriteria criteria);
+    PagedResult<AgencyCustomerDto> findAgencyCustomerPaged(AgencyCustomerCriteria criteria);
 
     /**
      * 根据id查询客户信息
