@@ -1,36 +1,29 @@
 package com.sunesoft.ecloud.admin.api;
 
-import com.sunesoft.ecloud.admin.service.UserService;
-import com.sunesoft.ecloud.common.result.TResult;
+import com.sunesoft.ecloud.admin.query.UserQueryService;
+import com.sunesoft.ecloud.adminclient.dtos.UserMenuDto;
+import com.sunesoft.ecloud.auth.UserContext;
+import com.sunesoft.ecloud.common.result.ListResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("auth")
 public class AuthController {
 
     @Autowired
-    UserService userService;
+    UserQueryService userQueryService;
 
     /**
-     * 获取授权码
-     * @param username
-     * @param password
+     * 获取用户权限菜单
      * @return
      */
-    @PostMapping("token")
-    public TResult getToken (String username, String password) {
-        return userService.userLogin(username, password);
-    }
-
-    /**
-     * 删除授权码
-     */
-    @DeleteMapping("token")
-    public void deleteToken () {
-
+    @GetMapping("menus")
+    public ListResult<UserMenuDto> getMenus () {
+        return userQueryService.getUserMenuList(UUID.fromString(UserContext.getUserID()));
     }
 }
