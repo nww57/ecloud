@@ -12,7 +12,6 @@ import com.sunesoft.ecloud.adminclient.dtos.AgencyRoleViewDto;
 import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.MenuFuncIdDto;
 import com.sunesoft.ecloud.common.result.ListResult;
-import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
@@ -32,11 +31,13 @@ import java.util.stream.Collectors;
 public class AgencyRoleQueryServiceImpl extends GenericQuery implements AgencyRoleQueryService {
 
 
-    private static final UUID agId = UUID.fromString("200e6946-70e3-4087-839a-0491c631caf1");
+
 
     @Override
-    public PagedResult<AgencyRoleDto> findAgencyRolePaged(AgencyRoleCriteria criteria) {
+    public Page<AgencyRoleDto> findAgencyRolePaged(AgencyRoleCriteria criteria) {
+        UUID agId = criteria.getAgId();
         SqlBuilder<AgencyRoleDto> dtoBuilder = HSqlBuilder.hFrom(AgencyRole.class, "role")
+                .where("role.agId",agId)
                 .pagging(criteria.getPageIndex(),criteria.getPageSize())
                 .select(AgencyRoleDto.class);
         return this.queryPaged(dtoBuilder);

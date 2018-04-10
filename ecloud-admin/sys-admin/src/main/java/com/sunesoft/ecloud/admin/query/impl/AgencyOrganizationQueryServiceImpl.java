@@ -27,11 +27,11 @@ import java.util.UUID;
 @SuppressWarnings("All")
 public class AgencyOrganizationQueryServiceImpl extends GenericQuery implements AgencyOrganizationQueryService {
 
-    @Value("${ecloud.agId}")
-    private UUID agId;
+
 
     @Override
     public ListResult<AgencyOrganizationDto> findAgencyOrganization(AgencyOrganizationCriteria criteria) {
+        UUID agId = criteria.getAgId();
         SqlBuilder<AgencyOrganizationDto> builder = HSqlBuilder.hFrom(AgencyOrganization.class, "org")
                 .leftJoin(User.class,"user")
                 .on("org.leaderId = user.id")
@@ -53,6 +53,9 @@ public class AgencyOrganizationQueryServiceImpl extends GenericQuery implements 
                 .on("org.parentId = parent.id")
                 .where("org.id",id)
                 .select(AgencyOrganizationDto.class)
+                .setFieldValue("name","org.name")
+                .setFieldValue("code","org.code")
+                .setFieldValue("description","org.description")
                 .setFieldValue("leaderId","user.Id")
                 .setFieldValue("leaderName","user.realName")
                 .setFieldValue("parentId","parent.id")

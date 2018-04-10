@@ -38,7 +38,7 @@ public class UserMenuDto{
     /**
      *菜单类型
      */
-    private MenuType type = MenuType.Link;
+    private MenuType type = MenuType.LINK;
 
     /**
      * 菜单功能

@@ -28,6 +28,8 @@ public class AgencyCustomerController {
      */
     @GetMapping("search")
     public PagedResult<AgencyCustomerDto> search (AgencyCustomerCriteria agencyCustomerCriteria) {
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
+        agencyCustomerCriteria.setAgId(agId);
         return agencyCustomerQueryService.findAgencyCustomerPaged(agencyCustomerCriteria);
     }
 

@@ -7,13 +7,13 @@ import com.sunesoft.ecloud.adminclient.cretirias.AgencyCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyDto;
 import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
-import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
 import com.sunesoft.ecloud.hibernate.IEntity;
 import com.sunesoft.ecloud.hibernate.repository.HibernateQuery;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -30,23 +30,19 @@ import java.util.stream.Collectors;
 @SuppressWarnings("All")
 public class AgencyQueryServiceImpl extends GenericQuery implements AgencyQueryService {
 
-    @Value("${ecloud.agId}")
-    private UUID agId;
 
     @Override
-    public PagedResult<AgencyDto> findAgencyPaged(AgencyCriteria criteria) {
-
-        SqlBuilder builder = HSqlBuilder.hFrom(Agency.class, "agency")
-                .pagging(criteria.getPageIndex(), criteria.getPageSize())
+    public Page<AgencyDto> findAgencyPaged(AgencyCriteria criteria) {
+        String keywords = criteria.getKeywords();
+        SqlBuilder builder = HSqlBuilder.hFrom(Agency.class, "agency");
+        if(StringUtils.isNotEmpty(keywords)){
+            builder.and("(agency.name like '%"+keywords+"%' or agency.code like '%"+keywords+"%' or agency.leader like '%"+keywords+"%' or agency.cellphone like '%"+keywords+"%')");
+        }
+        builder.pagging(criteria.getPageIndex(), criteria.getPageSize())
                 .select(AgencyDto.class);
         return this.queryPaged(builder);
     }
 
-    @Override
-    public TResult<AgencyBasicDto> findAgencyBasicInfo() {
-
-        return findAgencyBasicInfoById(agId);
-    }
 
     @Override
     public TResult<AgencyBasicDto> findAgencyBasicInfoById(UUID id) {

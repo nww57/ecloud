@@ -85,6 +85,8 @@ public class UserBasicDto extends BasicDto{
      */
     private UUID agId;
 
+    private Boolean needChangePassword;
+
     public UserType getUserType() {
         return userType;
     }
@@ -213,5 +215,11 @@ public class UserBasicDto extends BasicDto{
         this.agId = agId;
     }
 
+    public Boolean getNeedChangePassword() {
+        return needChangePassword;
+    }
 
+    public void setNeedChangePassword(Boolean needChangePassword) {
+        this.needChangePassword = needChangePassword;
+    }
 }

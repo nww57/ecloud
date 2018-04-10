@@ -6,5 +6,6 @@ package com.sunesoft.ecloud.adminclient;
  * 菜单类型
  */
 public enum MenuType {
-    Link
+    LINK,
+    MENU
 }

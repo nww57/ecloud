@@ -16,6 +16,7 @@ import com.sunesoft.ecloud.common.TreeEntity;
 import com.sunesoft.ecloud.common.TreeUtils;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
+import com.sunesoft.ecloud.common.sqlBuilderTool.OrderType;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
 import com.sunesoft.ecloud.auth.UserContext;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
@@ -25,6 +26,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,6 +49,8 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
     public ListResult<MenuDto> findAllMenu() {//要有功能的
         //取出所有菜单
         SqlBuilder sqlBuilder = HSqlBuilder.hFrom(Menu.class, "m")
+                .orderBy("m.pid", OrderType.ASC)
+                .orderBy("m.sort",OrderType.ASC)
                 .select(MenuDto.class);
         List<MenuDto> menulist = this.queryList(sqlBuilder);
         List<MenuFunctionDto> functionlist = new ArrayList<>();
@@ -66,6 +70,8 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
     @Override
     public ListResult<MenuSimpleDto> findAllSimpleMenu() {//没有功能的
         SqlBuilder sqlBuilder = HSqlBuilder.hFrom(Menu.class, "m")
+                .orderBy("m.pid", OrderType.ASC)
+                .orderBy("m.sort",OrderType.ASC)
                 .select(MenuSimpleDto.class);
         List<MenuSimpleDto> list = this.queryList(sqlBuilder);
         List<MenuSimpleDto> listResult = TreeUtils.transformationTree(list);
@@ -82,6 +88,9 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
                 .setFieldValue("agencyId","a.agId")
                 .setFieldValue("menuId","a.menuId");
         List<AgencyAuthorizedMenuDto> list = this.queryList(sqlBuilder);
+        if(null == list || list.size() ==0){
+            return new ListResult<>(Collections.emptyList());
+        }
         List<UUID> menuIds = new ArrayList<>();
         for (AgencyAuthorizedMenuDto agencyAuthorizedMenuDto : list) {
             menuIds.add(agencyAuthorizedMenuDto.getMenuId());
@@ -89,6 +98,8 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
         //取出所有菜单
         SqlBuilder sqlBuilder1 = HSqlBuilder.hFrom(Menu.class, "m")
                 .where("m.id",menuIds)
+                .orderBy("m.pid", OrderType.ASC)
+                .orderBy("m.sort",OrderType.ASC)
                 .select(MenuDto.class);
         List<MenuDto> menulist = this.queryList(sqlBuilder1);
         List<MenuFunctionDto> functionlist = new ArrayList<>();
@@ -110,6 +121,8 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
         //查询Menu
         SqlBuilder sqlBuilder = HSqlBuilder.hFrom(Menu.class, "m")
                 .where("m.id", uuid)
+                .orderBy("m.pid", OrderType.ASC)
+                .orderBy("m.sort",OrderType.ASC)
                 .select(MenuDto.class);
         MenuDto menuDto = (MenuDto) this.queryForObject(sqlBuilder);
         //查询menuFunction

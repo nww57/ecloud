@@ -80,7 +80,7 @@ public interface UserService {
      * @param userName 用户名
      * @return true:已存在 false:不存在
      */
-    TResult<Boolean> checkUserNameExist(String userName);
+    TResult<Boolean> checkUserNameExist(UUID id,String userName);
 
 
 }

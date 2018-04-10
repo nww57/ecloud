@@ -23,11 +23,7 @@ public interface AgencyQueryService {
      */
     PagedResult<AgencyDto> findAgencyPaged(AgencyCriteria criteria);
 
-    /**
-     * 根据id获取企业基本信息
-     * @return 返回查询结果
-     */
-    TResult<AgencyBasicDto> findAgencyBasicInfo();
+
 
     /**
      * 根据id获取企业基本信息

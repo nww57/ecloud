@@ -7,8 +7,8 @@ import com.sunesoft.ecloud.admin.service.UserService;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
+import com.sunesoft.ecloud.auth.UserContext;
 import com.sunesoft.ecloud.common.result.ListResult;
-import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,7 +31,9 @@ public class AgencyUserController {
      * @return
      */
     @GetMapping("search")
-    public PagedResult<UserDto> search (UserCriteria userCriteria) {
+    public Page<UserDto> search (UserCriteria userCriteria) {
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
+        userCriteria.setAgId(agId);
         return userQueryService.findUserPaged(userCriteria);
     }
 
@@ -60,6 +62,8 @@ public class AgencyUserController {
      */
     @PostMapping("")
     public TResult addUserInfo (@RequestBody UserDto userDto) {
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
+        userDto.setAgId(agId);
         return userService.addOrUpdateUser(userDto);
     }
 
@@ -71,6 +75,8 @@ public class AgencyUserController {
     @PutMapping("{id}")
     public TResult updateUserInfo (@RequestBody UserDto userDto, @PathVariable UUID id) {
         userDto.setId(id);
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
+        userDto.setAgId(agId);
         return userService.addOrUpdateUser(userDto);
     }
 

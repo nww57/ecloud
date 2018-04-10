@@ -2,7 +2,6 @@ package com.sunesoft.ecloud.admin.api;
 
 import com.sunesoft.ecloud.admin.query.UserQueryService;
 import com.sunesoft.ecloud.admin.service.UserService;
-import com.sunesoft.ecloud.adminclient.UserPositionType;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
@@ -18,7 +17,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -54,55 +52,56 @@ public class UserController {
      */
     @GetMapping("")
     public TResult<UserBasicDto> getUserInfo(){
-        return userQueryService.getUserBasicInfo();
+        UUID id = UUID.fromString(UserContext.getUserID());
+        return userQueryService.getUserBasicInfoById(id);
     }
 
-    /**
-     * 新增用户信息
-     * @param userDto
-     * @return
-     */
-    @PostMapping()
-    public TResult addUserInfo (@RequestBody UserDto userDto) {
-        userDto.setAgId(agId);
-        return userService.addOrUpdateUser(userDto);
-    }
-
-    /**
-     * 修改用户信息
-     * @param id
-     * @param userDto
-     * @return
-     */
-    @PutMapping(value = "/{id}")
-    public TResult updateUserInfo (@PathVariable UUID id, @RequestBody UserDto userDto) {
-        userDto.setId(id);
-        return userService.addOrUpdateUser(userDto);
-    }
+//    /**
+//     * 新增用户信息
+//     * @param userDto
+//     * @return
+//     */
+//    @PostMapping()
+//    public TResult addUserInfo (@RequestBody UserDto userDto) {
+//        userDto.setAgId(agId);
+//        return userService.addOrUpdateUser(userDto);
+//    }
+//
+//    /**
+//     * 修改用户信息
+//     * @param id
+//     * @param userDto
+//     * @return
+//     */
+//    @PutMapping(value = "/{id}")
+//    public TResult updateUserInfo (@PathVariable UUID id, @RequestBody UserDto userDto) {
+//        userDto.setId(id);
+//        return userService.addOrUpdateUser(userDto);
+//    }
 
     /**
      * 修改当前用户信息
      * @param userDto
      * @return
      */
-    @PutMapping(value = "")
+    @PutMapping()
     public TResult updateCurrentUserInfo (@RequestBody UserDto userDto) {
         UUID id = UUID.fromString(UserContext.getUserID());
         userDto.setId(id);
         return userService.updateUserBasicInfo(userDto);
     }
 
-    /**
-     * 修改密码
-     * @param id
-     * @param oldPw
-     * @param newPw
-     * @return
-     */
-    @PutMapping(value = "/changepw/{id}")
-    public TResult changepw (@PathVariable UUID id, String oldPw, String newPw) {
-        return userService.changePassword(id, oldPw, newPw);
-    }
+//    /**
+//     * 修改密码
+//     * @param id
+//     * @param oldPw
+//     * @param newPw
+//     * @return
+//     */
+//    @PutMapping(value = "/changepw/{id}")
+//    public TResult changepw (@PathVariable UUID id, String oldPw, String newPw) {
+//        return userService.changePassword(id, oldPw, newPw);
+//    }
 
     /**
      * 修改当前用户密码

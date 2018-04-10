@@ -24,12 +24,15 @@ import com.sunesoft.ecloud.common.utils.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 
+import javax.persistence.criteria.Predicate;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -156,7 +159,7 @@ public class UserServiceImpl implements UserService {
         if (!encoder.matches(oldPassword,password)) {
             return new TResult("旧密码错误");
         }
-        setPassword(id, encoder.encode(newPassword),false);
+        userRepository.updatePassword(id, encoder.encode(newPassword),false);
         return (TResult) ResultFactory.success();
     }
 
@@ -213,12 +216,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public TResult<Boolean> checkUserNameExist(String userName) {
+    public TResult<Boolean> checkUserNameExist(UUID id,String userName) {
         if(StringUtil.isEmpty(userName)){
             return new TResult<>("参数错误");
         }
-        User user = userRepository.findByUserNameEquals(userName);
-        if(null != user){
+        Specification querySpecification = (Specification<User>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            if(null != id){
+                predicates.add(criteriaBuilder.notEqual(root.get("id"), id));
+            }
+            predicates.add(criteriaBuilder.equal(root.get("userName"), userName));
+            return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+        };
+        List<User> userList =  userRepository.findAll(querySpecification);
+        if(null != userList && userList.size()>0){
             return new TResult<>(true);
         }
         return new TResult<>(false);
@@ -232,7 +243,7 @@ public class UserServiceImpl implements UserService {
         if(StringUtils.isEmpty(userDto.getUserName())){
             return new TResult("用户名不能为空");
         }
-        TResult<Boolean> existResult = checkUserNameExist(userDto.getUserName());
+        TResult<Boolean> existResult = checkUserNameExist(userDto.getId(),userDto.getUserName());
         if(existResult.getIs_success()){
             if(existResult.getResult()) {
                 return new TResult("用户名已经存在");
