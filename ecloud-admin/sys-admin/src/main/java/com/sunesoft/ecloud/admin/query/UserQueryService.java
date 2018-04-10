@@ -76,4 +76,12 @@ public interface UserQueryService {
      * @return 返回扁平结构
      */
     ListResult<UserMenuDto> getUserMenuList(UUID id);
+
+
+    /**
+     * 获取用户功能列表
+     * @param id 用户id
+     * @return 返回功能列表
+     */
+    ListResult<MenuFunctionDto> getUserFuncList(UUID id);
 }
