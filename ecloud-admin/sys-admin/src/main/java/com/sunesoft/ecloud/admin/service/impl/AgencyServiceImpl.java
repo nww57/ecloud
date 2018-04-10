@@ -2,6 +2,7 @@ package com.sunesoft.ecloud.admin.service.impl;
 
 import com.sunesoft.ecloud.admin.domain.agency.Agency;
 import com.sunesoft.ecloud.admin.domain.agency.AgencyAuthorizedMenu;
+import com.sunesoft.ecloud.admin.domain.agency.AgencyRole;
 import com.sunesoft.ecloud.admin.domain.menu.Menu;
 import com.sunesoft.ecloud.admin.repository.*;
 import com.sunesoft.ecloud.admin.service.AgencyService;
@@ -20,9 +21,11 @@ import com.sunesoft.ecloud.hibernate.repository.HibernateQuery;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -173,15 +176,24 @@ public class AgencyServiceImpl extends HibernateQuery implements AgencyService{
     }
 
     @Override
-    public TResult<Boolean> checkAgencyCodeExist(String code) {
+    public TResult<Boolean> checkAgencyCodeExist(UUID id,String code) {
         if(StringUtils.isEmpty(code)){
             return new TResult<>("参数错误");
         }
-        Agency agency = agencyRepository.findByCodeEquals(code);
-        if(null != agency){
+        Specification querySpecification = (Specification<Agency>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            if(null != id){
+                predicates.add(criteriaBuilder.notEqual(root.get("id"), id));
+            }
+            predicates.add(criteriaBuilder.equal(root.get("code"), code));
+            return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+        };
+        List<Agency> agencyList =  agencyRepository.findAll(querySpecification);
+        if(null != agencyList && agencyList.size()>0){
             return new TResult<>(true);
         }
         return new TResult<>(false);
+
     }
 
 
@@ -192,7 +204,7 @@ public class AgencyServiceImpl extends HibernateQuery implements AgencyService{
         if(StringUtils.isEmpty(agencyDto.getCode())){
             return new TResult("机构编码不能为空");
         }
-        TResult<Boolean> codeExist = checkAgencyCodeExist(agencyDto.getCode());
+        TResult<Boolean> codeExist = checkAgencyCodeExist(agencyDto.getId(),agencyDto.getCode());
         if(codeExist.getIs_success()){
             if(codeExist.getResult()){
                 return new TResult("机构编码已存在");
