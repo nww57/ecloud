@@ -228,7 +228,7 @@ public class AgencyServiceImpl extends HibernateQuery implements AgencyService{
         if(StringUtils.isEmpty(agencyDto.getPassword())){
             return new TResult("账户密码不能为空");
         }
-        TResult<Boolean> userNameExist =  userservice.checkUserNameExist(agencyDto.getUserName());
+        TResult<Boolean> userNameExist =  userservice.checkUserNameExist(null,agencyDto.getUserName());
         if(userNameExist.getIs_success()){
             if(userNameExist.getResult()){
                 return new TResult("账户用户名已存在");

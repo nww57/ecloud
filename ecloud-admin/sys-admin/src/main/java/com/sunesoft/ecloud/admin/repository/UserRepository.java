@@ -5,6 +5,7 @@ import com.sunesoft.ecloud.hibernate.repository.BaseRepository;
 import com.sunesoft.ecloud.hibernate.repository.BaseRepositoryImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
@@ -21,7 +22,7 @@ import java.util.UUID;
  * @Date: 2018/3/23
  */
 @Repository
-public interface UserRepository extends BaseRepository<User,UUID> {
+public interface UserRepository extends BaseRepository<User,UUID>,JpaSpecificationExecutor {
 
 
     @Modifying
