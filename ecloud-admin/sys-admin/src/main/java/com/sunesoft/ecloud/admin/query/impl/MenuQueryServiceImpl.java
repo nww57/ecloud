@@ -16,6 +16,7 @@ import com.sunesoft.ecloud.common.TreeEntity;
 import com.sunesoft.ecloud.common.TreeUtils;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
+import com.sunesoft.ecloud.common.sqlBuilderTool.OrderType;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
 import com.sunesoft.ecloud.auth.UserContext;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
@@ -47,6 +48,8 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
     public ListResult<MenuDto> findAllMenu() {//要有功能的
         //取出所有菜单
         SqlBuilder sqlBuilder = HSqlBuilder.hFrom(Menu.class, "m")
+                .orderBy("m.pid", OrderType.ASC)
+                .orderBy("m.sort",OrderType.ASC)
                 .select(MenuDto.class);
         List<MenuDto> menulist = this.queryList(sqlBuilder);
         List<MenuFunctionDto> functionlist = new ArrayList<>();
@@ -66,6 +69,8 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
     @Override
     public ListResult<MenuSimpleDto> findAllSimpleMenu() {//没有功能的
         SqlBuilder sqlBuilder = HSqlBuilder.hFrom(Menu.class, "m")
+                .orderBy("m.pid", OrderType.ASC)
+                .orderBy("m.sort",OrderType.ASC)
                 .select(MenuSimpleDto.class);
         List<MenuSimpleDto> list = this.queryList(sqlBuilder);
         List<MenuSimpleDto> listResult = TreeUtils.transformationTree(list);
@@ -78,6 +83,8 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
         SqlBuilder sqlBuilder = HSqlBuilder.hFrom(AgencyAuthorizedMenu.class, "a")
                 .where("a.agId", UserContext.getAgencyId())
 //                .where("a.agId", UUID.fromString("d2d512f3-0a6c-4373-9ab2-a348fb616d7a"))
+                .orderBy("m.pid", OrderType.ASC)
+                .orderBy("m.sort",OrderType.ASC)
                 .select(AgencyAuthorizedMenuDto.class)
                 .setFieldValue("agencyId","a.agId")
                 .setFieldValue("menuId","a.menuId");
@@ -89,6 +96,8 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
         //取出所有菜单
         SqlBuilder sqlBuilder1 = HSqlBuilder.hFrom(Menu.class, "m")
                 .where("m.id",menuIds)
+                .orderBy("m.pid", OrderType.ASC)
+                .orderBy("m.sort",OrderType.ASC)
                 .select(MenuDto.class);
         List<MenuDto> menulist = this.queryList(sqlBuilder1);
         List<MenuFunctionDto> functionlist = new ArrayList<>();
@@ -110,6 +119,8 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
         //查询Menu
         SqlBuilder sqlBuilder = HSqlBuilder.hFrom(Menu.class, "m")
                 .where("m.id", uuid)
+                .orderBy("m.pid", OrderType.ASC)
+                .orderBy("m.sort",OrderType.ASC)
                 .select(MenuDto.class);
         MenuDto menuDto = (MenuDto) this.queryForObject(sqlBuilder);
         //查询menuFunction
