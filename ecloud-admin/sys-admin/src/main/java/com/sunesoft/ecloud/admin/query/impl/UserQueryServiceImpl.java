@@ -143,7 +143,7 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
         if(Objects.equals(UserType.SUPER_ADMIN,userType)){
             //如果是超级用户,获取所有菜单及所有功能项
             //获取所有菜单
-            String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.description,m.frontDisc,m.icon,m.pid from sys_menu m ";
+            String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.type,m.description,m.frontDisc,m.icon,m.pid from sys_menu m ";
             menuDtoList = queryList(sql,null,MenuDto.class);
             //获取所有功能项
             String funcSql = "select f.id,f.name,f.menuId,f.resCode,f.resType,f.resName,f.resUrl,f.resRequestType,f.description from sys_menu_func f ";
@@ -151,7 +151,7 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
         }else if(Objects.equals(UserType.AGENCY_ADMIN,userType)){
             //如果是企业管理员用户，找企业的菜单
             //获取菜单
-            String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.description,m.frontDisc,m.icon,m.pid from sys_ag_authmenu am left join sys_menu m on m.id = am.menuId  where am.agId = :agId";
+            String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.type,m.description,m.frontDisc,m.icon,m.pid from sys_ag_authmenu am left join sys_menu m on m.id = am.menuId  where am.agId = :agId";
             Map map = new HashMap();
             map.put("agId",agId.toString());
             menuDtoList = queryList(sql,map,MenuDto.class);
@@ -166,7 +166,7 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
         }else if(Objects.equals(UserType.AGENCY_USER,userType)){
             //如果是普通用户，根据用户的角色去找菜单及权限
             //1.找出用户拥有的所有菜单 （用户-->角色-->菜单）
-            String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.description,m.frontDisc,m.icon,m.pid from sys_user u " +
+            String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.type,m.description,m.frontDisc,m.icon,m.pid from sys_user u " +
                     " INNER JOIN sys_ag_user_role ur on ur.userId = u.id " +
                     " INNER JOIN sys_ag_role_authmenu rm on rm.roleId = ur.roleId " +
                     " INNER JOIN sys_ag_authmenu am on am.id = rm.menuId " +
@@ -215,7 +215,7 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
         if(Objects.equals(UserType.SUPER_ADMIN,userType)){
             //如果是超级用户,获取所有菜单及所有功能项
             //获取所有菜单
-            String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.description,m.frontDisc,m.icon,m.pid from sys_menu m order by m.pid ,m.sort";
+            String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.type,m.description,m.frontDisc,m.icon,m.pid from sys_menu m order by m.pid ,m.sort";
             menuDtoList = queryList(sql,null,UserMenuDto.class);
             //获取所有功能项
             String funcSql = "select f.id,f.name,f.menuId,f.resCode,f.resType,f.resName,f.resUrl,f.resRequestType,f.description from sys_menu_func f ";
@@ -223,7 +223,7 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
         }else if(Objects.equals(UserType.AGENCY_ADMIN,userType)){
             //如果是企业管理员用户，找企业的菜单
             //获取菜单
-            String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.description,m.frontDisc,m.icon,m.pid from sys_ag_authmenu am left join sys_menu m on m.id = am.menuId  where am.agId = :agId order by m.pid ,m.sort";
+            String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.type,m.description,m.frontDisc,m.icon,m.pid from sys_ag_authmenu am left join sys_menu m on m.id = am.menuId  where am.agId = :agId order by m.pid ,m.sort";
             Map map = new HashMap();
             map.put("agId",agId.toString());
             menuDtoList = queryList(sql,map,UserMenuDto.class);
@@ -238,7 +238,7 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
         }else if(Objects.equals(UserType.AGENCY_USER,userType)){
             //如果是普通用户，根据用户的角色去找菜单及权限
             //1.找出用户拥有的所有菜单 （用户-->角色-->菜单）
-            String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.description,m.frontDisc,m.icon,m.pid from sys_user u " +
+            String sql = "select m.id,m.menuIndex,m.routeCode,m.name,m.url,m.sort,m.type,m.description,m.frontDisc,m.icon,m.pid from sys_user u " +
                     " INNER JOIN sys_ag_user_role ur on ur.userId = u.id " +
                     " INNER JOIN sys_ag_role_authmenu rm on rm.roleId = ur.roleId " +
                     " INNER JOIN sys_ag_authmenu am on am.id = rm.menuId " +
