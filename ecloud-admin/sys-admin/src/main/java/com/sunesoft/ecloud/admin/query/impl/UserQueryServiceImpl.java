@@ -14,6 +14,7 @@ import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -44,13 +45,18 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
         if(null == agId){
             throw new IllegalArgumentException("企业id不能为null");
         }
+        String keywords = cretiria.getKeywords();
         PageRequest pageable = new PageRequest(cretiria.getPageIndex(),cretiria.getPageSize(),null);
         StringBuilder sb = new StringBuilder("");
         sb.append("select u.id,u.userName,u.realName,u.callphone,u.email,u.isWorkon,u.create_datetime createDate,org.name organizationName ," +
                 " (select GROUP_CONCAT(r.name) from sys_ag_user_role ur LEFT JOIN sys_ag_role r on r.id = ur.roleId where ur.userId = u.id) roleName " +
                 " from sys_user u " +
                 " LEFT JOIN sys_ag_organization org on org.id = u.structureId " +
-                " where u.agId = '").append(agId).append("' limit ").append(cretiria.getPageIndex()*cretiria.getPageSize()).append(",").append(cretiria.getPageSize());
+                " where u.agId = '").append(agId);
+        if(StringUtils.isNotEmpty(keywords)){
+            sb.append(" and (u.userName like '%"+keywords+"%' or u.realName like '%"+keywords+"%' or u.callphone like '%"+keywords+"%') ");
+        }
+        sb.append("' limit ").append(cretiria.getPageIndex()*cretiria.getPageSize()).append(",").append(cretiria.getPageSize());
         List<UserDto> dtoList = queryList(sb.toString(),null,UserDto.class);
         String queryCount = "select count(*) from sys_user u where u.agId = '"+agId+"'";
         int count = queryCount(queryCount,null);

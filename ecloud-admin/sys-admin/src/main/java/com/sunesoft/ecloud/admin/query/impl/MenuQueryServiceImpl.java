@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -83,12 +84,13 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
         SqlBuilder sqlBuilder = HSqlBuilder.hFrom(AgencyAuthorizedMenu.class, "a")
                 .where("a.agId", UserContext.getAgencyId())
 //                .where("a.agId", UUID.fromString("d2d512f3-0a6c-4373-9ab2-a348fb616d7a"))
-                .orderBy("m.pid", OrderType.ASC)
-                .orderBy("m.sort",OrderType.ASC)
                 .select(AgencyAuthorizedMenuDto.class)
                 .setFieldValue("agencyId","a.agId")
                 .setFieldValue("menuId","a.menuId");
         List<AgencyAuthorizedMenuDto> list = this.queryList(sqlBuilder);
+        if(null == list || list.size() ==0){
+            return new ListResult<>(Collections.emptyList());
+        }
         List<UUID> menuIds = new ArrayList<>();
         for (AgencyAuthorizedMenuDto agencyAuthorizedMenuDto : list) {
             menuIds.add(agencyAuthorizedMenuDto.getMenuId());
