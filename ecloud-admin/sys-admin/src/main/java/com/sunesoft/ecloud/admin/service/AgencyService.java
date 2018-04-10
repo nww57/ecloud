@@ -47,6 +47,6 @@ public interface AgencyService {
      * @param code code
      * @return true：已存在 false :不存在
      */
-    TResult<Boolean> checkAgencyCodeExist(String code);
+    TResult<Boolean> checkAgencyCodeExist(UUID id,String code);
 
 }

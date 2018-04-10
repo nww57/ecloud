@@ -156,7 +156,7 @@ public class UserServiceImpl implements UserService {
         if (!encoder.matches(oldPassword,password)) {
             return new TResult("旧密码错误");
         }
-        setPassword(id, encoder.encode(newPassword),false);
+        userRepository.updatePassword(id, encoder.encode(newPassword),false);
         return (TResult) ResultFactory.success();
     }
 
