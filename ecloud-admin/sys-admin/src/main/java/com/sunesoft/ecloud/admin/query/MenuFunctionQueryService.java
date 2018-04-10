@@ -2,9 +2,7 @@ package com.sunesoft.ecloud.admin.query;
 
 import com.sunesoft.ecloud.adminclient.dtos.MenuFunctionDto;
 import com.sunesoft.ecloud.common.result.ListResult;
-import com.sunesoft.ecloud.common.result.TResult;
 
-import java.util.List;
 import java.util.UUID;
 
 /**

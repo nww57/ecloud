@@ -9,9 +9,9 @@ import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.auth.UserContext;
 import com.sunesoft.ecloud.common.result.ListResult;
+import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -31,7 +31,7 @@ public class AgencyUserController {
      * @return
      */
     @GetMapping("search")
-    public Page<UserDto> search (UserCriteria userCriteria) {
+    public PagedResult<UserDto> search (UserCriteria userCriteria) {
         UUID agId = UUID.fromString(UserContext.getAgencyId());
         userCriteria.setAgId(agId);
         return userQueryService.findUserPaged(userCriteria);

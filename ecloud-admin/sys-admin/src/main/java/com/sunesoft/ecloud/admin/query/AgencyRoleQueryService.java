@@ -2,12 +2,10 @@ package com.sunesoft.ecloud.admin.query;
 
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyRoleCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyRoleDto;
-import com.sunesoft.ecloud.adminclient.dtos.AgencyRoleViewDto;
 import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
-import org.springframework.data.domain.Page;
 
 import java.util.UUID;
 
