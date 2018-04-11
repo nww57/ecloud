@@ -6,6 +6,9 @@ import com.sunesoft.ecloud.admin.repository.AgencyCustomerRepository;
 import com.sunesoft.ecloud.admin.repository.AgencyRepository;
 import com.sunesoft.ecloud.admin.service.AgencyCustomerService;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
+import com.sunesoft.ecloud.adminclient.dtos.CustomerApplicantDto;
+import com.sunesoft.ecloud.adminclient.dtos.CustomerContactsDto;
+import com.sunesoft.ecloud.adminclient.dtos.CustomerInventorDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
@@ -63,6 +66,36 @@ public class AgencyCustomerServiceImpl implements AgencyCustomerService {
     public TResult deleteBatch(UUID... ids) {
         customerRepository.deleteBatch(ids);
         return (TResult) ResultFactory.success();
+    }
+
+    @Override
+    public TResult addOrUpdateCustomerApplicants(CustomerApplicantDto applicantsDto) {
+        return null;
+    }
+
+    @Override
+    public TResult deleteCustomerApplicants(UUID... id) {
+        return null;
+    }
+
+    @Override
+    public TResult addOrUpdateCustomerInventor(CustomerInventorDto inventorDto) {
+        return null;
+    }
+
+    @Override
+    public TResult deleteCustomerInventor(UUID... id) {
+        return null;
+    }
+
+    @Override
+    public TResult addOrUpdateCustomerContacts(CustomerContactsDto contactsDto) {
+        return null;
+    }
+
+    @Override
+    public TResult deleteCustomerContacts(UUID... id) {
+        return null;
     }
 
     private TResult checkParam(AgencyCustomerDto agencyCustomerDto) {
