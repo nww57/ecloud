@@ -83,6 +83,16 @@ public class UserServiceImpl implements UserService {
         User user;
         if (null == id) {
             user = new User();
+            if (Objects.equals(user.getUserType(), UserType.AGENCY_ADMIN)) {
+                user.setAgencyId(userDto.getAgId());
+                user.setPosition(UserPositionType.ADMIN.toString());
+                user.setPassword(encoder.encode(userDto.getPassword()));
+            } else {
+                user.setAgencyId(agId);
+                user.setPosition(UserPositionType.EMPLOYEE.toString());
+                //设置默认密码
+                user.setPassword(encoder.encode("888888"));
+            }
         } else {
             user = userRepository.findOne(id);
         }
@@ -101,16 +111,7 @@ public class UserServiceImpl implements UserService {
             user.setRoleList(roleListEntity);
         }
         BeanUtil.copyPropertiesIgnoreNull(userDto, user);
-        if (Objects.equals(user.getUserType(), UserType.AGENCY_ADMIN)) {
-            user.setAgencyId(userDto.getAgId());
-            user.setPosition(UserPositionType.ADMIN.toString());
-            user.setPassword(encoder.encode(userDto.getPassword()));
-        } else {
-            user.setAgencyId(agId);
-            user.setPosition(UserPositionType.EMPLOYEE.toString());
-            //设置默认密码
-            user.setPassword(encoder.encode("888888"));
-        }
+
         userRepository.saveAndFlush(user);
         return (TResult) ResultFactory.success();
     }
