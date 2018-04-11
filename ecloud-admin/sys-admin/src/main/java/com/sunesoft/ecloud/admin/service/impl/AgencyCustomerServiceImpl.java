@@ -5,6 +5,7 @@ import com.sunesoft.ecloud.admin.domain.agency.AgencyCustomer;
 import com.sunesoft.ecloud.admin.repository.AgencyCustomerRepository;
 import com.sunesoft.ecloud.admin.repository.AgencyRepository;
 import com.sunesoft.ecloud.admin.service.AgencyCustomerService;
+import com.sunesoft.ecloud.adminclient.AgencyType;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
 import com.sunesoft.ecloud.adminclient.dtos.CustomerApplicantDto;
 import com.sunesoft.ecloud.adminclient.dtos.CustomerContactsDto;
@@ -35,6 +36,8 @@ public class AgencyCustomerServiceImpl implements AgencyCustomerService {
 
     @Override
     public TResult addOrUpdateAgencyCustomer(AgencyCustomerDto agencyCustomerDto) {
+
+
         //参数检查
         TResult checkParamResult = checkParam(agencyCustomerDto);
         if(!checkParamResult.getIs_success()){
@@ -45,12 +48,25 @@ public class AgencyCustomerServiceImpl implements AgencyCustomerService {
         AgencyCustomer customer;
         if (null == id) {
             customer = new AgencyCustomer();
+            //检查agency中,是否存在agencyType为Customer且name = agencyustomerDto.getName()的数据
+            //如果已经存在，则当前客户的customerAgencyId为该agency的id,否则添加一个新的agency,type为Customer
+            String name = agencyCustomerDto.getName();
+            Agency customerAgency = agencyRepository.findAgencyByNameEqualsAndaAndAgencyTypeEquals(name, AgencyType.Customer);
+            if(null == customerAgency){
+                customerAgency = new Agency(AgencyType.Customer);
+                customerAgency.setName(name);
+                customerAgency = agencyRepository.saveAndFlush(customerAgency);
+                customer.setCustomerAgencyId(customerAgency.getId());
+            }else{
+               customer.setCustomerAgencyId(customerAgency.getId());
+            }
+            Agency agency = agencyRepository.findOne(agId);
+            customer.setAgency(agency);
         } else {
             customer = customerRepository.findOne(id);
         }
+
         BeanUtil.copyPropertiesIgnoreNull(agencyCustomerDto, customer);
-        Agency agency = agencyRepository.findOne(agId);
-        customer.setAgency(agency);
         customerRepository.saveAndFlush(customer);
         return new TResult<>(agencyCustomerDto);
     }
