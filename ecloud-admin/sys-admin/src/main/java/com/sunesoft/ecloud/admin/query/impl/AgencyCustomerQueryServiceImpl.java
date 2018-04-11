@@ -5,6 +5,9 @@ import com.sunesoft.ecloud.admin.domain.agency.User;
 import com.sunesoft.ecloud.admin.query.AgencyCustomerQueryService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyCustomerCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
+import com.sunesoft.ecloud.adminclient.dtos.CustomerApplicantDto;
+import com.sunesoft.ecloud.adminclient.dtos.CustomerContactsDto;
+import com.sunesoft.ecloud.adminclient.dtos.CustomerInventorDto;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
@@ -13,6 +16,7 @@ import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -56,6 +60,21 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
                 .setFieldValue("consultantId", "u.id")
                 .setFieldValue("consultantName", "u.realName");
         return new TResult<>(this.queryForObject(dtoBuilder));
+    }
+
+    @Override
+    public PagedResult<CustomerApplicantDto> findCustomerApplicantPaged(Pageable pageable, UUID customerId) {
+        return null;
+    }
+
+    @Override
+    public PagedResult<CustomerInventorDto> findCustomerInventorPaged(Pageable pageable, UUID customerId) {
+        return null;
+    }
+
+    @Override
+    public PagedResult<CustomerContactsDto> findCustomerContactsPaged(Pageable pageable, UUID customerId) {
+        return null;
     }
 
 
