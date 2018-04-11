@@ -1,9 +1,7 @@
 package com.sunesoft.ecloud.admin.service.impl;
 
-import com.sunesoft.ecloud.admin.domain.agency.Agency;
-import com.sunesoft.ecloud.admin.domain.agency.AgencyCustomer;
-import com.sunesoft.ecloud.admin.repository.AgencyCustomerRepository;
-import com.sunesoft.ecloud.admin.repository.AgencyRepository;
+import com.sunesoft.ecloud.admin.domain.agency.*;
+import com.sunesoft.ecloud.admin.repository.*;
 import com.sunesoft.ecloud.admin.service.AgencyCustomerService;
 import com.sunesoft.ecloud.adminclient.AgencyType;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
@@ -33,6 +31,12 @@ public class AgencyCustomerServiceImpl implements AgencyCustomerService {
     AgencyRepository agencyRepository;
     @Autowired
     AgencyCustomerRepository customerRepository;
+    @Autowired
+    CustomerApplicantRepository applicantRepository;
+    @Autowired
+    CustomerInventorRepository inventorRepository;
+    @Autowired
+    CustomerContactRepository contactRepository;
 
     @Override
     public TResult addOrUpdateAgencyCustomer(AgencyCustomerDto agencyCustomerDto) {
@@ -86,32 +90,84 @@ public class AgencyCustomerServiceImpl implements AgencyCustomerService {
 
     @Override
     public TResult addOrUpdateCustomerApplicants(CustomerApplicantDto applicantsDto) {
-        return null;
+        UUID customerId = applicantsDto.getCustomerId();
+        UUID id = applicantsDto.getId();
+        if(null == customerId){
+            throw new IllegalArgumentException("客户id不能为null");
+        }
+        CustomerApplicant applicant  = null;
+        if(null ==  id){
+            applicant = new CustomerApplicant();
+        }else{
+            applicant = applicantRepository.findOne(id);
+        }
+        BeanUtil.copyPropertiesIgnoreNull(applicantsDto,applicant);
+        applicantRepository.save(applicant);
+        return ResultFactory.success();
     }
 
     @Override
     public TResult deleteCustomerApplicants(UUID... id) {
-        return null;
+        if(null == id || id.length ==0){
+            throw new IllegalArgumentException("参数错误");
+        }
+        applicantRepository.deleteByIdIn(id);
+        return ResultFactory.success();
     }
 
     @Override
     public TResult addOrUpdateCustomerInventor(CustomerInventorDto inventorDto) {
-        return null;
+
+        UUID customerId = inventorDto.getCustomerId();
+        UUID id = inventorDto.getId();
+        if(null == customerId){
+            throw new IllegalArgumentException("客户id不能为null");
+        }
+        CustomerInventor inventor  = null;
+        if(null ==  id){
+            inventor = new CustomerInventor();
+        }else{
+            inventor = inventorRepository.findOne(id);
+        }
+        BeanUtil.copyPropertiesIgnoreNull(inventorDto,inventor);
+        inventorRepository.save(inventor);
+        return ResultFactory.success();
     }
 
     @Override
     public TResult deleteCustomerInventor(UUID... id) {
-        return null;
+        if(null == id || id.length ==0){
+            throw new IllegalArgumentException("参数错误");
+        }
+        inventorRepository.deleteByIdIn(id);
+        return ResultFactory.success();
     }
 
     @Override
     public TResult addOrUpdateCustomerContacts(CustomerContactsDto contactsDto) {
-        return null;
+        UUID customerId = contactsDto.getCustomerId();
+        UUID id = contactsDto.getId();
+        if(null == customerId){
+            throw new IllegalArgumentException("客户id不能为null");
+        }
+        CustomerContact contact  = null;
+        if(null ==  id){
+            contact = new CustomerContact();
+        }else{
+            contact = contactRepository.findOne(id);
+        }
+        BeanUtil.copyPropertiesIgnoreNull(contactsDto,contact);
+        contactRepository.save(contact);
+        return ResultFactory.success();
     }
 
     @Override
     public TResult deleteCustomerContacts(UUID... id) {
-        return null;
+        if(null == id || id.length ==0){
+            throw new IllegalArgumentException("参数错误");
+        }
+        contactRepository.deleteByIdIn(id);
+        return ResultFactory.success();
     }
 
     private TResult checkParam(AgencyCustomerDto agencyCustomerDto) {

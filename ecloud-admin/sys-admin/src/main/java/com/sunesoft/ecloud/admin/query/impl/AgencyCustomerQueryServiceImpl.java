@@ -1,7 +1,6 @@
 package com.sunesoft.ecloud.admin.query.impl;
 
-import com.sunesoft.ecloud.admin.domain.agency.AgencyCustomer;
-import com.sunesoft.ecloud.admin.domain.agency.User;
+import com.sunesoft.ecloud.admin.domain.agency.*;
 import com.sunesoft.ecloud.admin.query.AgencyCustomerQueryService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyCustomerCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
@@ -63,18 +62,30 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
     }
 
     @Override
-    public PagedResult<CustomerApplicantDto> findCustomerApplicantPaged(Pageable pageable, UUID customerId) {
-        return null;
+    public PagedResult<CustomerApplicantDto> findCustomerApplicantPaged(UUID customerId, Pageable pageable) {
+        SqlBuilder<CustomerApplicantDto> dtoBuilder = HSqlBuilder.hFrom(CustomerApplicant.class, "a")
+                .where("a.customerId", customerId)
+                .pagging(pageable.getPageNumber(),pageable.getPageSize())
+                .select(CustomerApplicantDto.class);
+        return this.queryPaged(dtoBuilder);
     }
 
     @Override
-    public PagedResult<CustomerInventorDto> findCustomerInventorPaged(Pageable pageable, UUID customerId) {
-        return null;
+    public PagedResult<CustomerInventorDto> findCustomerInventorPaged(UUID customerId, Pageable pageable) {
+        SqlBuilder<CustomerInventorDto> dtoBuilder = HSqlBuilder.hFrom(CustomerInventor.class, "i")
+                .where("i.customerId", customerId)
+                .pagging(pageable.getPageNumber(),pageable.getPageSize())
+                .select(CustomerInventorDto.class);
+        return this.queryPaged(dtoBuilder);
     }
 
     @Override
-    public PagedResult<CustomerContactsDto> findCustomerContactsPaged(Pageable pageable, UUID customerId) {
-        return null;
+    public PagedResult<CustomerContactsDto> findCustomerContactsPaged(UUID customerId, Pageable pageable) {
+        SqlBuilder<CustomerContactsDto> dtoBuilder = HSqlBuilder.hFrom(CustomerContact.class, "c")
+                .where("c.customerId", customerId)
+                .pagging(pageable.getPageNumber(),pageable.getPageSize())
+                .select(CustomerContactsDto.class);
+        return this.queryPaged(dtoBuilder);
     }
 
 

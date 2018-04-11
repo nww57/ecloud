@@ -12,7 +12,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "customer_contacts")
-public class CostomerContacts extends IEntity {
+public class CustomerContact extends IEntity {
 
     /**
      * 姓名

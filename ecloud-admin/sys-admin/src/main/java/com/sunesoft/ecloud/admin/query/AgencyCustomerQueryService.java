@@ -39,6 +39,13 @@ public interface AgencyCustomerQueryService {
 
 
 
+    /**
+     *
+     * @param pageable
+     * @param customerId
+     * @return
+     */
+    PagedResult<CustomerApplicantDto> findCustomerApplicantPaged(UUID customerId,Pageable pageable);
 
 
     /**
@@ -47,7 +54,7 @@ public interface AgencyCustomerQueryService {
      * @param customerId
      * @return
      */
-    PagedResult<CustomerApplicantDto> findCustomerApplicantPaged(Pageable pageable, UUID customerId);
+    PagedResult<CustomerInventorDto> findCustomerInventorPaged(UUID customerId,Pageable pageable);
 
 
     /**
@@ -56,16 +63,7 @@ public interface AgencyCustomerQueryService {
      * @param customerId
      * @return
      */
-    PagedResult<CustomerInventorDto> findCustomerInventorPaged(Pageable pageable, UUID customerId);
-
-
-    /**
-     *
-     * @param pageable
-     * @param customerId
-     * @return
-     */
-    PagedResult<CustomerContactsDto> findCustomerContactsPaged(Pageable pageable, UUID customerId);
+    PagedResult<CustomerContactsDto> findCustomerContactsPaged(UUID customerId,Pageable pageable);
 
 
 }
