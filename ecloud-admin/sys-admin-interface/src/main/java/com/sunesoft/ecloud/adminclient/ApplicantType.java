@@ -10,7 +10,20 @@ public enum  ApplicantType {
      */
     PERSONAL,
     /**
-     * 企业
+     * 工矿企业
      */
-    COMPANY
+    INDUSTRIAL_COMPANY,
+    /**
+     *大专院校
+     */
+    COLLEGES,
+    /**
+     * 科研单位
+     */
+    SCIENTIFIC_RESEARCH,
+
+    /**
+     * 事业单位
+     */
+    GOVERNMENT_INSTITUTION
 }
