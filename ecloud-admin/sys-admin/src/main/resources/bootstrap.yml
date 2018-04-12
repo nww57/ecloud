@@ -10,9 +10,9 @@ spring:
 
 eureka:
   instance:
-      statusPageUrlPath: /sysamdin/info
+      statusPageUrlPath: /amdin/info
       metadata-map:
-        management.context-path: /sysamdin
+        management.context-path: /amdin
 
 ecloud:
    agId: d2d512f3-0a6c-4373-9ab2-a348fb616d7a
