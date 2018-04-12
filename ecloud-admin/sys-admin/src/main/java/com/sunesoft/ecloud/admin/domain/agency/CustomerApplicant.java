@@ -2,11 +2,8 @@ package com.sunesoft.ecloud.admin.domain.agency;
 
 import com.sunesoft.ecloud.adminclient.ApplicantType;
 import com.sunesoft.ecloud.hibernate.IEntity;
-import sun.plugin.util.UIUtil;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -34,6 +31,7 @@ public class CustomerApplicant extends IEntity{
      *申请人类型
      */
     @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private ApplicantType type;
 
 
