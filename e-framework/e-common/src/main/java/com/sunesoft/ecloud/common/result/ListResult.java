@@ -14,6 +14,7 @@ public class ListResult<T> extends TResult<List<T>> implements IResult<List<T>>{
     }
 
     public ListResult(String errorMsg){
+        this.setStatusCode(500L);
         this.setResult(new ArrayList<T>());
         setIs_success(false);
         setMessage(errorMsg);

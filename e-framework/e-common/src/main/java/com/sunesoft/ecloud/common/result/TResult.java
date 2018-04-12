@@ -21,7 +21,14 @@ public class TResult<T> implements IResult<T>{
     }
     public TResult(String message){
         is_success = false;
+        this.statusCode = 500L;
         this.message = message;
+    }
+
+    public TResult(String message,Long statusCode){
+        is_success = false;
+        this.message = message;
+        this.statusCode = statusCode;
     }
     public TResult(boolean is_success,String message){
         this.is_success = is_success;

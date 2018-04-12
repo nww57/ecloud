@@ -1,6 +1,6 @@
 package com.sunesoft.ecloud.auth.security.controller;
 
-import com.sunesoft.ecloud.adminclient.clientService.UserServiceClient;
+import com.sunesoft.ecloud.adminclient.clientService.AuthServiceClient;
 import com.sunesoft.ecloud.auth.security.JwtTokenUtil;
 import com.sunesoft.ecloud.auth.security.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 public class UserRestController {
@@ -30,7 +28,7 @@ public class UserRestController {
 
 
     @Autowired
-    UserServiceClient userServiceClient;
+    AuthServiceClient authServiceClient;
 
     @RequestMapping(value = "user", method = RequestMethod.GET)
     public JwtUser getAuthenticatedUser(HttpServletRequest request) {

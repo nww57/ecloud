@@ -2,7 +2,12 @@ package com.sunesoft.ecloud.gateway.filter;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
+import com.sunesoft.ecloud.adminclient.clientService.AuthServiceClient;
 import com.sunesoft.ecloud.adminclient.dtos.MenuFunctionDto;
+import com.sunesoft.ecloud.common.responseMsg.NoAuthorityResponse;
+import com.sunesoft.ecloud.common.responseMsg.TokenErrorResponse;
+import com.sunesoft.ecloud.common.result.ListResult;
+import com.sunesoft.ecloud.common.utils.JsonHelper;
 import com.sunesoft.ecloud.common.utils.StringUtil;
 import com.sunesoft.ecloud.auth.UserContext;
 import com.sunesoft.ecloud.auth.configs.UserAuthConfig;
@@ -19,12 +24,13 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 /**
- *
  * @author zhouzh
  * @create 2018-04-08 8:25
  */
 @Component
 public class AdminAccessFilter extends ZuulFilter {
+
+
     @Value("${jwt.header}")
     private String tokenHeader;
 
@@ -36,10 +42,12 @@ public class AdminAccessFilter extends ZuulFilter {
     private String zuulPrefix;
 
 
-
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+
+    @Autowired
+    AuthServiceClient authServiceClient;
 
     @Override
     public String filterType() {
@@ -60,12 +68,7 @@ public class AdminAccessFilter extends ZuulFilter {
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
-//        JwtUser jwtUser;
-//        try {
-//              jwtUser = getJWTUser(request,ctx);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+
         final String requestUri = request.getRequestURI().substring(zuulPrefix.length());
         final String method = request.getMethod();
         UserContext.setToken(null);
@@ -73,10 +76,22 @@ public class AdminAccessFilter extends ZuulFilter {
         if (isStartWith(requestUri)) {
             return null;
         }
-
-
+        JwtUser jwtUser;
+        try {
+            jwtUser = getJWTUser(request, ctx);
+        } catch (Exception e) {
+            setFailedRequest(JsonHelper.toJson(new TokenErrorResponse(e.getMessage())), 200);
+            return null;
+        }
+        ListResult<MenuFunctionDto> functionDtos = authServiceClient.getFunctions(jwtUser.getId().toString());
+        if (functionDtos.getIs_success() && functionDtos.getResult() != null && functionDtos.getResult().size() > 0) {
+            checkFunctions(requestUri, method, functionDtos.getResult());
+        } else {
+            setFailedRequest(JsonHelper.toJson(new NoAuthorityResponse("no Authentication!")), 200);
+        }
         return null;
     }
+
     /**
      * 返回session中的用户信息
      *
@@ -106,7 +121,7 @@ public class AdminAccessFilter extends ZuulFilter {
      * @param serviceInfo
      * @return
      */
-    private Stream<MenuFunctionDto> getPermissionIfs(final String requestUri, final String method, List<MenuFunctionDto> serviceInfo) {
+    private Boolean checkFunctions(final String requestUri, final String method, List<MenuFunctionDto> serviceInfo) {
         Stream<MenuFunctionDto> result = serviceInfo.parallelStream().filter(new Predicate<MenuFunctionDto>() {
             @Override
             public boolean test(MenuFunctionDto permissionInfo) {
@@ -114,15 +129,14 @@ public class AdminAccessFilter extends ZuulFilter {
                 String uri = url.replaceAll("\\{\\*\\}", "[a-zA-Z\\\\d]+");
                 String regEx = "^" + uri + "$";
                 return (Pattern.compile(regEx).matcher(requestUri).find() || requestUri.startsWith(url + "/"))
-                        && method.equals(permissionInfo.getResRequestType());
+                        && method.equals(permissionInfo.getResRequestType().toString());
             }
         });
 
-        if(result.count()==0){
-//            setFailedRequest(JSON.toJSONString(new TokenForbiddenResponse("Token Forbidden!")), 200);
-
+        if (result.count() == 0) {
+            setFailedRequest(JsonHelper.toJson(new NoAuthorityResponse("no Authentication!")), 200);
         }
-        return null;
+        return true;
     }
 
     /**

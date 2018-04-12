@@ -1,6 +1,7 @@
 package com.sunesoft.ecloud.admin.api;
 
 import com.sunesoft.ecloud.admin.query.UserQueryService;
+import com.sunesoft.ecloud.adminclient.dtos.MenuFunctionDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserMenuDto;
 import com.sunesoft.ecloud.auth.UserContext;
 import com.sunesoft.ecloud.common.result.ListResult;
@@ -25,5 +26,15 @@ public class AuthController {
     @GetMapping("menus")
     public ListResult<UserMenuDto> getMenus () {
         return userQueryService.getUserMenuList(UUID.fromString(UserContext.getUserID()));
+    }
+
+
+    /**
+     * 获取用户权限菜单
+     * @return
+     */
+    @GetMapping("autnfunc")
+    public ListResult<MenuFunctionDto> getFunctions (String userId) {
+        return userQueryService.getUserFuncList(UUID.fromString(userId));
     }
 }

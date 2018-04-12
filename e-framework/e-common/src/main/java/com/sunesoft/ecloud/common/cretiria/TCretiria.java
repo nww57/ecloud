@@ -1,12 +1,11 @@
 package com.sunesoft.ecloud.common.cretiria;
 
-import java.awt.print.Pageable;
 import java.util.HashMap;
 import java.util.Map;
 
 public  class TCretiria {
     private static final long serialVersionUID = 1L;
-    private Integer pageIndex =1;
+    private Integer pageIndex =0;
     private Integer pageSize = 20;
     private Map<String, Object> params = new HashMap<>();
     private String orderBy;

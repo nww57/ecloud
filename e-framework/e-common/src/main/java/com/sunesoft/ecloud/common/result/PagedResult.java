@@ -16,6 +16,7 @@ public class PagedResult<T> extends TResult<List<T>> implements IResult<List<T>>
         this.setMessage(message);
         this.pageIndex = pageIndex;
         this.pageSize = pageSize;
+        this.setStatusCode(500L);
         this.setResult(new ArrayList<T>());
         pageCount = 0;
         totalCount = 0;
@@ -31,7 +32,7 @@ public class PagedResult<T> extends TResult<List<T>> implements IResult<List<T>>
         this.totalCount = totalItemsCount;
     }
 
-    private Integer pageIndex=1;
+    private Integer pageIndex=0;
 
     private Integer pageSize=20;
 
