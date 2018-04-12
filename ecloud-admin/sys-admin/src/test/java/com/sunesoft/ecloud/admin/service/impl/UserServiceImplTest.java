@@ -125,10 +125,10 @@ public class UserServiceImplTest {
     @Test
     public void test6(){
         BCryptPasswordEncoder encoder =new BCryptPasswordEncoder();
-        String s = encoder.encode("888888");
+        String s = encoder.encode("admin");
         System.out.println(s);
         BCryptPasswordEncoder encoder1 =new BCryptPasswordEncoder();
-        System.out.println(encoder1.matches("888888",s));
+        System.out.println(encoder1.matches("admin",s));
     }
 
 

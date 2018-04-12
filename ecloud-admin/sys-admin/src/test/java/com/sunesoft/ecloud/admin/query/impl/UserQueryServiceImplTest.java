@@ -50,7 +50,7 @@ public class UserQueryServiceImplTest {
 
     @Test
     public void getUserIdName(){
-        ListResult<BasicDto> result= userQueryService.getUserIdName();
+        ListResult<BasicDto> result= userQueryService.getUserIdName(UUID.fromString("234"));
         System.out.println(23);
     }
 
