@@ -1,10 +1,12 @@
 package com.sunesoft.ecloud.admin.domain.agency;
 
 import com.sunesoft.ecloud.hibernate.IEntity;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.UUID;
 
 /**
  * Created by jzj on 2018/4/11.
@@ -44,6 +46,14 @@ public class CustomerContact extends IEntity {
     @Column(name = "phone")
     private String phone;
 
+    /**
+     * 所属客户
+     */
+    @Column(name = "customerId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
+    private UUID customerId;
+
+
     public String getName() {
         return name;
     }
@@ -82,5 +92,13 @@ public class CustomerContact extends IEntity {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public UUID getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(UUID customerId) {
+        this.customerId = customerId;
     }
 }

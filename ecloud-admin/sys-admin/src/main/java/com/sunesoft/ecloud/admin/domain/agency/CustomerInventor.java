@@ -2,6 +2,7 @@ package com.sunesoft.ecloud.admin.domain.agency;
 
 import com.sunesoft.ecloud.adminclient.ApplicantType;
 import com.sunesoft.ecloud.hibernate.IEntity;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,7 +46,8 @@ public class CustomerInventor extends IEntity{
     /**
      * 所属客户
      */
-    @Column(name = "customerId")
+    @Column(name = "customerId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
     private UUID customerId;
 
     public String getName() {
