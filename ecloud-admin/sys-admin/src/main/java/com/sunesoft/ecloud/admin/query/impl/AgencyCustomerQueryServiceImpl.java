@@ -69,6 +69,17 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
     }
 
     @Override
+    public TResult<CustomerApplicantDto> findCustomerApplicantById(UUID id) {
+        if(null == id){
+            throw new IllegalArgumentException("参数id不能为null");
+        }
+        SqlBuilder<CustomerApplicantDto> dtoBuilder = HSqlBuilder.hFrom(CustomerApplicant.class, "a")
+                .where("id", id)
+                .select(CustomerApplicantDto.class);
+        return new TResult<>(queryForObject(dtoBuilder));
+    }
+
+    @Override
     public PagedResult<CustomerInventorDto> findCustomerInventorPaged(UUID customerId, Pageable pageable) {
         SqlBuilder<CustomerInventorDto> dtoBuilder = HSqlBuilder.hFrom(CustomerInventor.class, "i")
                 .where("i.customerId", customerId)
@@ -78,12 +89,34 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
     }
 
     @Override
+    public TResult<CustomerInventorDto> findCustomerInventorById(UUID id) {
+        if(null == id){
+            throw new IllegalArgumentException("参数id不能为null");
+        }
+        SqlBuilder<CustomerInventorDto> dtoBuilder = HSqlBuilder.hFrom(CustomerInventor.class, "a")
+                .where("id", id)
+                .select(CustomerInventorDto.class);
+        return new TResult<>(queryForObject(dtoBuilder));
+    }
+
+    @Override
     public PagedResult<CustomerContactDto> findCustomerContactsPaged(UUID customerId, Pageable pageable) {
         SqlBuilder<CustomerContactDto> dtoBuilder = HSqlBuilder.hFrom(CustomerContact.class, "c")
                 .where("c.customerId", customerId)
                 .pagging(pageable.getPageNumber(),pageable.getPageSize())
                 .select(CustomerContactDto.class);
         return this.queryPaged(dtoBuilder);
+    }
+
+    @Override
+    public TResult<CustomerContactDto> findCustomerContactById(UUID id) {
+        if(null == id){
+            throw new IllegalArgumentException("参数id不能为null");
+        }
+        SqlBuilder<CustomerContactDto> dtoBuilder = HSqlBuilder.hFrom(CustomerContact.class, "c")
+                .where("id", id)
+                .select(CustomerInventorDto.class);
+        return new TResult<>(queryForObject(dtoBuilder));
     }
 
 
