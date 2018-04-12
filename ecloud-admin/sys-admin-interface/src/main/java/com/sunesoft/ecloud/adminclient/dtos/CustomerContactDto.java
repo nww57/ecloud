@@ -6,7 +6,7 @@ import java.util.UUID;
  * Created by jzj on 2018/4/11.
  * 客户联系人操作dto
  */
-public class CustomerContactsDto {
+public class CustomerContactDto {
 
     private UUID id;
 

@@ -44,7 +44,7 @@ public class CustomerApplicantDto {
     /**
      *备案有效期
      */
-    private LocalDateTime recordValidDate;
+    private String recordValidDate;
 
 
     /**
@@ -106,11 +106,11 @@ public class CustomerApplicantDto {
         this.record = record;
     }
 
-    public LocalDateTime getRecordValidDate() {
+    public String getRecordValidDate() {
         return recordValidDate;
     }
 
-    public void setRecordValidDate(LocalDateTime recordValidDate) {
+    public void setRecordValidDate(String recordValidDate) {
         this.recordValidDate = recordValidDate;
     }
 
