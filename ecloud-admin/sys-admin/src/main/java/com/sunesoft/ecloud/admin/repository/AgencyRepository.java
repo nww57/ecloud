@@ -28,5 +28,5 @@ public interface AgencyRepository extends BaseRepository<Agency,UUID>,JpaSpecifi
     void deleteLogical(@Param("ids") UUID... ids);
 
 
-    Agency findAgencyByNameEqualsAndaAndAgencyTypeEquals(String name, AgencyType type);
+    Agency findAgencyByNameEqualsAndAgencyTypeEquals(String name, AgencyType type);
 }

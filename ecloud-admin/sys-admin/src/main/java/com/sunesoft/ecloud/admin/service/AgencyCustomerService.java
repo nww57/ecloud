@@ -2,7 +2,7 @@ package com.sunesoft.ecloud.admin.service;
 
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
 import com.sunesoft.ecloud.adminclient.dtos.CustomerApplicantDto;
-import com.sunesoft.ecloud.adminclient.dtos.CustomerContactsDto;
+import com.sunesoft.ecloud.adminclient.dtos.CustomerContactDto;
 import com.sunesoft.ecloud.adminclient.dtos.CustomerInventorDto;
 import com.sunesoft.ecloud.common.result.TResult;
 
@@ -69,7 +69,7 @@ public interface AgencyCustomerService {
      * @param contactsDto 操作参数
      * @return 返回操作结果
      */
-    TResult addOrUpdateCustomerContacts(CustomerContactsDto contactsDto);
+    TResult addOrUpdateCustomerContact(CustomerContactDto contactsDto);
 
 
     /**

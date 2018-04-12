@@ -6,14 +6,13 @@ import com.sunesoft.ecloud.admin.service.AgencyCustomerService;
 import com.sunesoft.ecloud.adminclient.AgencyType;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
 import com.sunesoft.ecloud.adminclient.dtos.CustomerApplicantDto;
-import com.sunesoft.ecloud.adminclient.dtos.CustomerContactsDto;
+import com.sunesoft.ecloud.adminclient.dtos.CustomerContactDto;
 import com.sunesoft.ecloud.adminclient.dtos.CustomerInventorDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -55,7 +54,7 @@ public class AgencyCustomerServiceImpl implements AgencyCustomerService {
             //检查agency中,是否存在agencyType为Customer且name = agencyustomerDto.getName()的数据
             //如果已经存在，则当前客户的customerAgencyId为该agency的id,否则添加一个新的agency,type为Customer
             String name = agencyCustomerDto.getName();
-            Agency customerAgency = agencyRepository.findAgencyByNameEqualsAndaAndAgencyTypeEquals(name, AgencyType.Customer);
+            Agency customerAgency = agencyRepository.findAgencyByNameEqualsAndAgencyTypeEquals(name, AgencyType.Customer);
             if(null == customerAgency){
                 customerAgency = new Agency(AgencyType.Customer);
                 customerAgency.setName(name);
@@ -144,7 +143,7 @@ public class AgencyCustomerServiceImpl implements AgencyCustomerService {
     }
 
     @Override
-    public TResult addOrUpdateCustomerContacts(CustomerContactsDto contactsDto) {
+    public TResult addOrUpdateCustomerContact(CustomerContactDto contactsDto) {
         UUID customerId = contactsDto.getCustomerId();
         UUID id = contactsDto.getId();
         if(null == customerId){

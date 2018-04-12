@@ -5,7 +5,7 @@ import com.sunesoft.ecloud.admin.query.AgencyCustomerQueryService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyCustomerCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
 import com.sunesoft.ecloud.adminclient.dtos.CustomerApplicantDto;
-import com.sunesoft.ecloud.adminclient.dtos.CustomerContactsDto;
+import com.sunesoft.ecloud.adminclient.dtos.CustomerContactDto;
 import com.sunesoft.ecloud.adminclient.dtos.CustomerInventorDto;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
@@ -13,8 +13,6 @@ import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -80,11 +78,11 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
     }
 
     @Override
-    public PagedResult<CustomerContactsDto> findCustomerContactsPaged(UUID customerId, Pageable pageable) {
-        SqlBuilder<CustomerContactsDto> dtoBuilder = HSqlBuilder.hFrom(CustomerContact.class, "c")
+    public PagedResult<CustomerContactDto> findCustomerContactsPaged(UUID customerId, Pageable pageable) {
+        SqlBuilder<CustomerContactDto> dtoBuilder = HSqlBuilder.hFrom(CustomerContact.class, "c")
                 .where("c.customerId", customerId)
                 .pagging(pageable.getPageNumber(),pageable.getPageSize())
-                .select(CustomerContactsDto.class);
+                .select(CustomerContactDto.class);
         return this.queryPaged(dtoBuilder);
     }
 

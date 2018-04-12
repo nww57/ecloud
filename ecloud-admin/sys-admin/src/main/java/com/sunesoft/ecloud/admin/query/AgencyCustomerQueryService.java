@@ -4,12 +4,10 @@ import com.sunesoft.ecloud.adminclient.cretirias.AgencyCustomerCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
 
 import com.sunesoft.ecloud.adminclient.dtos.CustomerApplicantDto;
-import com.sunesoft.ecloud.adminclient.dtos.CustomerContactsDto;
+import com.sunesoft.ecloud.adminclient.dtos.CustomerContactDto;
 import com.sunesoft.ecloud.adminclient.dtos.CustomerInventorDto;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 
@@ -63,7 +61,7 @@ public interface AgencyCustomerQueryService {
      * @param customerId
      * @return
      */
-    PagedResult<CustomerContactsDto> findCustomerContactsPaged(UUID customerId,Pageable pageable);
+    PagedResult<CustomerContactDto> findCustomerContactsPaged(UUID customerId, Pageable pageable);
 
 
 }
