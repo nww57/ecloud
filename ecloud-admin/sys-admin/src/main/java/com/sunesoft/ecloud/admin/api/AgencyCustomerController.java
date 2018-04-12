@@ -4,10 +4,14 @@ import com.sunesoft.ecloud.admin.query.AgencyCustomerQueryService;
 import com.sunesoft.ecloud.admin.service.AgencyCustomerService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyCustomerCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
+import com.sunesoft.ecloud.adminclient.dtos.CustomerApplicantDto;
+import com.sunesoft.ecloud.adminclient.dtos.CustomerContactDto;
+import com.sunesoft.ecloud.adminclient.dtos.CustomerInventorDto;
 import com.sunesoft.ecloud.auth.UserContext;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -72,5 +76,131 @@ public class AgencyCustomerController {
     @DeleteMapping("")
     public void deleteCustomer (@RequestParam UUID... ids) {
         agencyCustomerService.deleteBatch(ids);
+    }
+
+    /**
+     * 申请人查询
+     * @param id （客户id）
+     * @param pageable
+     * @return
+     */
+    @GetMapping("{id}/applicant")
+    public PagedResult<CustomerApplicantDto> applicantSearch (@PathVariable UUID id, Pageable pageable) {
+        return agencyCustomerQueryService.findCustomerApplicantPaged(id, pageable);
+    }
+
+    /**
+     * 申请人详情
+     * @param cid
+     * @param id
+     */
+    @GetMapping("{cid}/applicant/{id}")
+    public void getApplicant (@PathVariable UUID cid, @PathVariable UUID id) {
+//        return agencyCustomerQueryService.
+    }
+
+    /**
+     * 申请人新增
+     * @param customerApplicantDto
+     * @return
+     */
+    @PostMapping("{id}/applicant")
+    public TResult addApplicant (@PathVariable UUID id, @RequestBody CustomerApplicantDto customerApplicantDto) {
+        customerApplicantDto.setCustomerId(id);
+        return agencyCustomerService.addOrUpdateCustomerApplicants(customerApplicantDto);
+    }
+
+    /**
+     * 申请人查询
+     * @param cid (客户id)
+     * @param customerApplicantDto
+     * @param id (申请人id)
+     * @return
+     */
+    @PutMapping("{cid}/applicant/{id}")
+    public TResult updateApplicant (@PathVariable UUID cid,
+                                    @PathVariable UUID id,
+                                    @RequestBody CustomerApplicantDto customerApplicantDto) {
+        customerApplicantDto.setCustomerId(cid);
+        customerApplicantDto.setId(id);
+        return agencyCustomerService.addOrUpdateCustomerApplicants(customerApplicantDto);
+    }
+
+    /**
+     * 发明人查询
+     * @param cid
+     * @param pageable
+     * @return
+     */
+    @GetMapping("{cid}/inventor")
+    public PagedResult<CustomerInventorDto> inventorSearch (@PathVariable UUID cid, Pageable pageable) {
+        return agencyCustomerQueryService.findCustomerInventorPaged(cid, pageable);
+    }
+
+    /**
+     * 发明人新增
+     * @param cid
+     * @param customerInventorDto
+     * @return
+     */
+    @PostMapping("{cid}/inventor")
+    public TResult addInventor (@PathVariable UUID cid, @RequestBody CustomerInventorDto customerInventorDto) {
+        customerInventorDto.setCustomerId(cid);
+        return agencyCustomerService.addOrUpdateCustomerInventor(customerInventorDto);
+    }
+
+    /**
+     * 发明人修改
+     * @param cid
+     * @param id
+     * @param customerInventorDto
+     * @return
+     */
+    @PutMapping("{cid}/inventor/{id}")
+    public TResult updateInventor (@PathVariable UUID cid,
+                                   @PathVariable UUID id,
+                                   @RequestBody CustomerInventorDto customerInventorDto) {
+        customerInventorDto.setCustomerId(cid);
+        customerInventorDto.setId(id);
+        return agencyCustomerService.addOrUpdateCustomerInventor(customerInventorDto);
+    }
+
+    /**
+     * 联系查询
+     * @param cid
+     * @param pageable
+     * @return
+     */
+    @GetMapping("{cid}/contact")
+    public PagedResult<CustomerContactDto> contactSearch (@PathVariable UUID cid, Pageable pageable) {
+        return agencyCustomerQueryService.findCustomerContactsPaged(cid, pageable);
+    }
+
+    /**
+     * 联系人新增
+     * @param cid
+     * @param customerContactDto
+     * @return
+     */
+    @PostMapping("{cid}/contact")
+    public TResult addContact (@PathVariable UUID cid, @RequestBody CustomerContactDto customerContactDto) {
+        customerContactDto.setCustomerId(cid);
+        return agencyCustomerService.addOrUpdateCustomerContact(customerContactDto);
+    }
+
+    /**
+     * 联系人修改
+     * @param cid
+     * @param id
+     * @param customerContactDto
+     * @return
+     */
+    @PutMapping("{cid}/contact/{id}")
+    public TResult updateContact (@PathVariable UUID cid,
+                                  @PathVariable UUID id,
+                                  @RequestBody CustomerContactDto customerContactDto) {
+        customerContactDto.setCustomerId(cid);
+        customerContactDto.setId(id);
+        return agencyCustomerService.addOrUpdateCustomerContact(customerContactDto);
     }
 }

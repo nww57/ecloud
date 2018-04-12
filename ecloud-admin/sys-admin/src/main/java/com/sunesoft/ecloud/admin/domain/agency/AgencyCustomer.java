@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.admin.domain.agency;
 
+import com.sunesoft.ecloud.adminclient.CustomerType;
 import com.sunesoft.ecloud.hibernate.BizEntity;
 import org.hibernate.annotations.Type;
 
@@ -28,6 +29,19 @@ public class AgencyCustomer extends BizEntity{
      */
     @Column(name = "name")
     private String name;
+
+    /**
+     * 客户类型
+     */
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
+    private CustomerType type;
+
+    /**
+     * QQ
+     */
+    @Column(name = "qq")
+    private String qq;
     /**
      * 地区code
      */
@@ -73,6 +87,12 @@ public class AgencyCustomer extends BizEntity{
      */
     @Column(name = "leaderEmail")
     private String leaderEmail;
+
+    /**
+     * 传真
+     */
+    @Column(name = "fax")
+    private String fax;
 
     /**
      * 业务顾问Id
@@ -183,5 +203,29 @@ public class AgencyCustomer extends BizEntity{
 
     public void setCustomerAgencyId(UUID customerAgencyId) {
         this.customerAgencyId = customerAgencyId;
+    }
+
+    public CustomerType getType() {
+        return type;
+    }
+
+    public void setType(CustomerType type) {
+        this.type = type;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
     }
 }

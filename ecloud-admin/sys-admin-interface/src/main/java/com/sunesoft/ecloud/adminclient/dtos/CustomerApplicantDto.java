@@ -19,9 +19,14 @@ public class CustomerApplicantDto {
     private String name;
 
     /**
-     *国家
+     *国家code
      */
-    private String country;
+    private String countryCode;
+
+    /**
+     *国家 名称
+     */
+    private String countryName;
 
     /**
      *申请人类型
@@ -46,13 +51,20 @@ public class CustomerApplicantDto {
      */
     private String recordValidDate;
 
+    /**
+     *地区code
+     */
+    private String areaCode;
 
     /**
-     *地区
+     * 省市区
      */
     private String area;
 
-
+    /**
+     * 详细地址
+     */
+    private String areaDetail;
     /**
      * 所属客户
      */
@@ -74,12 +86,36 @@ public class CustomerApplicantDto {
         this.name = name;
     }
 
-    public String getCountry() {
-        return country;
+    public String getCountryCode() {
+        return countryCode;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
+    }
+
+    public String getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
+    }
+
+    public String getAreaDetail() {
+        return areaDetail;
+    }
+
+    public void setAreaDetail(String areaDetail) {
+        this.areaDetail = areaDetail;
     }
 
     public ApplicantType getType() {

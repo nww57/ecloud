@@ -25,4 +25,12 @@ public interface AgencyAgentService {
      * @return 返回操作结果
      */
     TResult deleteAgencyAgent(UUID... id);
+
+
+    /**
+     * 检查执业证号是否存在
+     * @param licenseCode 执业证号
+     * @return true 已存在， false 不存在
+     */
+    TResult<Boolean> checkLicenseCodeExist(String licenseCode);
 }

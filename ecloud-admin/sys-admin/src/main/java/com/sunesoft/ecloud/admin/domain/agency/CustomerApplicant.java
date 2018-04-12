@@ -23,10 +23,16 @@ public class CustomerApplicant extends IEntity{
     private String name;
 
     /**
-     *国家
+     *国家code
      */
-    @Column(name = "country")
-    private String country;
+    @Column(name = "countryCode")
+    private String countryCode;
+
+    /**
+     *国家 名称
+     */
+    @Column(name = "countryName")
+    private String countryName;
 
     /**
      *申请人类型
@@ -58,10 +64,22 @@ public class CustomerApplicant extends IEntity{
 
 
     /**
-     *地区
+     *地区code
+     */
+    @Column(name = "areaCode")
+    private String areaCode;
+
+    /**
+     * 省市区
      */
     @Column(name = "area")
     private String area;
+
+    /**
+     * 详细地址
+     */
+    @Column(name = "areaDetail")
+    private String areaDetail;
 
 
     /**
@@ -79,12 +97,20 @@ public class CustomerApplicant extends IEntity{
         this.name = name;
     }
 
-    public String getCountry() {
-        return country;
+    public String getCountryCode() {
+        return countryCode;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
     }
 
     public ApplicantType getType() {
@@ -133,5 +159,21 @@ public class CustomerApplicant extends IEntity{
 
     public void setCustomerId(UUID customerId) {
         this.customerId = customerId;
+    }
+
+    public String getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
+    }
+
+    public String getAreaDetail() {
+        return areaDetail;
+    }
+
+    public void setAreaDetail(String areaDetail) {
+        this.areaDetail = areaDetail;
     }
 }
