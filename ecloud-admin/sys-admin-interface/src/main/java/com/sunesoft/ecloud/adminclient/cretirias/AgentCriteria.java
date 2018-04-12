@@ -1,45 +1,34 @@
-package com.sunesoft.ecloud.admin.domain.agency;
+package com.sunesoft.ecloud.adminclient.cretirias;
 
-import com.sunesoft.ecloud.hibernate.IEntity;
-import org.hibernate.annotations.Type;
+import com.sunesoft.ecloud.common.cretiria.TCretiria;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.UUID;
 
 /**
- * Created by jzj on 2018/4/11.
- * 代理人
+ * @Auther: niww
+ * @Date: 2018/4/12/
  */
-@Entity
-@Table(name = "sys_ag_agent")
-public class AgencyAgent extends IEntity{
+public class AgentCriteria extends TCretiria {
+
+    /**
+     * 所属企业id
+     */
+    private UUID agId;
 
     /**
      * 姓名
      */
-    @Column(name = "name")
     private String name;
 
     /**
-     *执证证号
+     *执业证号
      */
-    @Column(name = "licenseCode")
     private String licenseCode;
 
     /**
-     *手机号
+     * 手机
      */
-    @Column(name = "mobile")
     private String mobile;
-
-    /**
-     *所属企业
-     */
-    @Column(name = "agId",columnDefinition = "char(36)")
-    @Type(type = "uuid-char")
-    private UUID agId;
 
     public String getName() {
         return name;
