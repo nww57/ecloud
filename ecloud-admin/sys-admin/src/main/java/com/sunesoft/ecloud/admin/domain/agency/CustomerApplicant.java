@@ -6,6 +6,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -60,7 +61,7 @@ public class CustomerApplicant extends IEntity{
      *备案有效期
      */
     @Column(name = "recordValidDate")
-    private LocalDateTime recordValidDate;
+    private Date recordValidDate;
 
 
     /**
@@ -137,11 +138,11 @@ public class CustomerApplicant extends IEntity{
         this.record = record;
     }
 
-    public LocalDateTime getRecordValidDate() {
+    public Date getRecordValidDate() {
         return recordValidDate;
     }
 
-    public void setRecordValidDate(LocalDateTime recordValidDate) {
+    public void setRecordValidDate(Date recordValidDate) {
         this.recordValidDate = recordValidDate;
     }
 

@@ -633,7 +633,7 @@ public abstract class BeanUtil {
 							}
 							//处理String ->Date
 							Class cl = writeMethod.getParameterTypes()[0];
-							if(cl==Date.class || cl == LocalDateTime.class || cl == LocalDate.class){
+							if(cl==Date.class){
 								SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 								writeMethod.invoke(target, format.parse((String)value));
 							}else{
