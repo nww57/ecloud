@@ -135,6 +135,11 @@ public class Agency extends IEntity{
         this.serverStatus = ServerStatusType.ENABLE;
     }
 
+    public Agency(AgencyType agencyType) {
+        this.agencyType = agencyType;
+        this.serverStatus = ServerStatusType.ENABLE;
+    }
+
     public String getCode() {
         return code;
     }

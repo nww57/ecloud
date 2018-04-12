@@ -1,6 +1,7 @@
 package com.sunesoft.ecloud.admin.repository;
 
 import com.sunesoft.ecloud.admin.domain.agency.Agency;
+import com.sunesoft.ecloud.adminclient.AgencyType;
 import com.sunesoft.ecloud.hibernate.repository.BaseRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -25,4 +26,7 @@ public interface AgencyRepository extends BaseRepository<Agency,UUID>,JpaSpecifi
     @Modifying
     @Query(value = "update Agency set is_active = false where id in :ids")
     void deleteLogical(@Param("ids") UUID... ids);
+
+
+    Agency findAgencyByNameEqualsAndAgencyTypeEquals(String name, AgencyType type);
 }

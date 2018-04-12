@@ -20,6 +20,7 @@ import com.sunesoft.ecloud.adminclient.dtos.UserLoginDto;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
+import com.sunesoft.ecloud.common.utils.IPUtil;
 import com.sunesoft.ecloud.common.utils.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.persistence.criteria.Predicate;
 import javax.servlet.http.HttpServletRequest;
@@ -81,6 +83,16 @@ public class UserServiceImpl implements UserService {
         User user;
         if (null == id) {
             user = new User();
+            if (Objects.equals(user.getUserType(), UserType.AGENCY_ADMIN)) {
+                user.setAgencyId(userDto.getAgId());
+                user.setPosition(UserPositionType.ADMIN.toString());
+                user.setPassword(encoder.encode(userDto.getPassword()));
+            } else {
+                user.setAgencyId(agId);
+                user.setPosition(UserPositionType.EMPLOYEE.toString());
+                //设置默认密码
+                user.setPassword(encoder.encode("888888"));
+            }
         } else {
             user = userRepository.findOne(id);
         }
@@ -99,16 +111,7 @@ public class UserServiceImpl implements UserService {
             user.setRoleList(roleListEntity);
         }
         BeanUtil.copyPropertiesIgnoreNull(userDto, user);
-        if (Objects.equals(user.getUserType(), UserType.AGENCY_ADMIN)) {
-            user.setAgencyId(userDto.getAgId());
-            user.setPosition(UserPositionType.ADMIN.toString());
-            user.setPassword(encoder.encode(userDto.getPassword()));
-        } else {
-            user.setAgencyId(agId);
-            user.setPosition(UserPositionType.EMPLOYEE.toString());
-            //设置默认密码
-            user.setPassword(encoder.encode("888888"));
-        }
+
         userRepository.saveAndFlush(user);
         return (TResult) ResultFactory.success();
     }
@@ -207,7 +210,10 @@ public class UserServiceImpl implements UserService {
         if(!encoder.matches(password,user.getPassword())){
             return new TResult<>(new LoginResultDto(null,LoginResultStatus.ERROR_PASSWORD));
         }else{
-            //todo： 设置登录ip及最后一次登录时间
+            // 设置登录ip及最后一次登录时间
+            HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+            String ip = IPUtil.getClientIp(request);
+            userRepository.updateLoginIPAndLastLoginDatetime(user.getId(),ip);
             UserLoginDto dto = new UserLoginDto();
             BeanUtil.copyProperties(user,dto);
             return new TResult<>(new LoginResultDto(dto,LoginResultStatus.SUCCESS));

@@ -16,6 +16,9 @@ import java.util.*;
 @Table(name = "sys_ag_customer")
 public class AgencyCustomer extends BizEntity{
 
+
+    private UUID customerAgencyId;
+
     @ManyToOne
     @JoinColumn(name = "agId")
     private Agency agency;
@@ -172,5 +175,13 @@ public class AgencyCustomer extends BizEntity{
 
     public void setConsultantId(UUID consultantId) {
         this.consultantId = consultantId;
+    }
+
+    public UUID getCustomerAgencyId() {
+        return customerAgencyId;
+    }
+
+    public void setCustomerAgencyId(UUID customerAgencyId) {
+        this.customerAgencyId = customerAgencyId;
     }
 }
