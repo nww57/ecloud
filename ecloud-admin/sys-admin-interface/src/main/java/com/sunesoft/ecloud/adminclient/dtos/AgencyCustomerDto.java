@@ -84,6 +84,11 @@ import java.util.UUID;
      */
     private String qq;
 
+    /**
+     * 传真
+     */
+    private String fax;
+
     public UUID getAgId() {
         return agId;
     }
@@ -219,5 +224,13 @@ import java.util.UUID;
 
     public void setQq(String qq) {
         this.qq = qq;
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
     }
 }

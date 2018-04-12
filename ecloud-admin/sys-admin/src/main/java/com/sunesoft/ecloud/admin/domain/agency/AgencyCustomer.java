@@ -89,6 +89,12 @@ public class AgencyCustomer extends BizEntity{
     private String leaderEmail;
 
     /**
+     * 传真
+     */
+    @Column(name = "fax")
+    private String fax;
+
+    /**
      * 业务顾问Id
      */
     @Column(name = "consultantId",columnDefinition = "char(36)")
@@ -213,5 +219,13 @@ public class AgencyCustomer extends BizEntity{
 
     public void setQq(String qq) {
         this.qq = qq;
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
     }
 }
