@@ -3,6 +3,7 @@ package com.sunesoft.ecloud.admin.query.impl;
 import com.sunesoft.ecloud.admin.domain.agency.Agency;
 import com.sunesoft.ecloud.admin.domain.agency.AgencyAuthorizedMenu;
 import com.sunesoft.ecloud.admin.query.AgencyQueryService;
+import com.sunesoft.ecloud.adminclient.AgencyType;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyDto;
@@ -35,7 +36,8 @@ public class AgencyQueryServiceImpl extends GenericQuery implements AgencyQueryS
     @Override
     public PagedResult<AgencyDto> findAgencyPaged(AgencyCriteria criteria) {
         String keywords = criteria.getKeywords();
-        SqlBuilder builder = HSqlBuilder.hFrom(Agency.class, "agency");
+        SqlBuilder builder = HSqlBuilder.hFrom(Agency.class, "agency")
+                .where("agency.agencyType", AgencyType.Customer.toString());
         if(StringUtils.isNotEmpty(keywords)){
             builder.and("(agency.name like '%"+keywords+"%' or agency.code like '%"+keywords+"%' or agency.leader like '%"+keywords+"%' or agency.cellphone like '%"+keywords+"%')");
         }

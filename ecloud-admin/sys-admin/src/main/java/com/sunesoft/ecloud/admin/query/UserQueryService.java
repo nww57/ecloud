@@ -54,7 +54,14 @@ public interface UserQueryService {
      * 获取企业下所有用户的id，name
      * @return 返回查询结果
      */
-    ListResult<BasicDto> getUserIdName();
+    ListResult<BasicDto> getUserIdName(UUID agId);
+
+    /**
+     * 获取该机构下 角色为“业务顾问” 的人员信息
+     * @param agId
+     * @return
+     */
+    ListResult<BasicDto> getUserConsultantIdName(UUID agId);
 
     /**
      * 获取用户职位列表

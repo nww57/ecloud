@@ -112,12 +112,27 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
 
 
     @Override
-    public ListResult<BasicDto> getUserIdName() {
+    public ListResult<BasicDto> getUserIdName(UUID agId) {
+        if(null == agId){
+            throw new IllegalArgumentException("企业id不能为null");
+        }
         //获取所有负责人
         SqlBuilder<BasicDto> userBuilder = HSqlBuilder.hFrom(User.class, "u")
+                .where("u.agId",agId)
                 .setFieldValue("name", "u.realName")
                 .select(BasicDto.class);
         List<BasicDto> userList = queryList(userBuilder);
+        return new ListResult<>(userList);
+    }
+
+    @Override
+    public ListResult<BasicDto> getUserConsultantIdName(UUID agId) {
+        if(null == agId){
+            throw new IllegalArgumentException("企业id不能为null");
+        }
+        String sql ="select u.id,u.realName from sys_ag_role r left join sys_ag_user_role ur on ur.roleId = r.id left jion sys_user u on ur.userId = u.id where r.agId = '" +agId +"' and r.name='业务顾问'";
+        //获取所有负责人
+        List<BasicDto> userList = queryList(sql,null,BasicDto.class);
         return new ListResult<>(userList);
     }
 

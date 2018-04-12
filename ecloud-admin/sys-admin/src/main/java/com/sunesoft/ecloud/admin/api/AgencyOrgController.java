@@ -42,7 +42,8 @@ public class AgencyOrgController {
      */
     @GetMapping("collection")
     public ListResult<BasicDto> collection () {
-        return organizationQueryServicce.getOrganizationIdName();
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
+        return organizationQueryServicce.getOrganizationIdName(agId);
     }
 
     /**
