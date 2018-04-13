@@ -17,7 +17,8 @@ import java.util.*;
 @Table(name = "sys_ag_customer")
 public class AgencyCustomer extends BizEntity{
 
-
+    @Column(name = "customerAgencyId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
     private UUID customerAgencyId;
 
     @ManyToOne
