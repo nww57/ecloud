@@ -1,10 +1,15 @@
 package com.sunesoft.ecloud.admin.query;
 
+import com.sunesoft.ecloud.admin.domain.agency.CustomerContact;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyCustomerCriteria;
+import com.sunesoft.ecloud.adminclient.cretirias.CustomerApplicantCriteria;
+import com.sunesoft.ecloud.adminclient.cretirias.CustomerContactCriteria;
+import com.sunesoft.ecloud.adminclient.cretirias.CustomerInventorCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
 import com.sunesoft.ecloud.adminclient.dtos.CustomerApplicantDto;
 import com.sunesoft.ecloud.adminclient.dtos.CustomerContactDto;
 import com.sunesoft.ecloud.adminclient.dtos.CustomerInventorDto;
+import com.sunesoft.ecloud.common.cretiria.TCretiria;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.data.domain.Pageable;
@@ -38,10 +43,10 @@ public interface AgencyCustomerQueryService {
     /**
      * 查找客户申请人列表
      * @param customerId 客户id
-     * @param pageable  分页参数
+     * @param criteria  分页参数
      * @return 返回查询结果
      */
-    PagedResult<CustomerApplicantDto> findCustomerApplicantPaged(UUID customerId,Pageable pageable);
+    PagedResult<CustomerApplicantDto> findCustomerApplicantPaged(UUID customerId, CustomerApplicantCriteria criteria);
 
     /**
      * 根据id 查找客户申请人信息
@@ -54,10 +59,10 @@ public interface AgencyCustomerQueryService {
     /**
      * 查找客户发明人列表
      * @param customerId 客户id
-     * @param pageable 分页参数
+     * @param criteria 分页参数
      * @return 返回查询结果
      */
-    PagedResult<CustomerInventorDto> findCustomerInventorPaged(UUID customerId,Pageable pageable);
+    PagedResult<CustomerInventorDto> findCustomerInventorPaged(UUID customerId,CustomerInventorCriteria criteria);
 
     /**
      * 根据id 查找客户发明人信息
@@ -69,10 +74,10 @@ public interface AgencyCustomerQueryService {
     /**
      * 查找客户联系人信息
      * @param customerId 客户id
-     * @param pageable 分页参数
+     * @param criteria 分页参数
      * @return 返回查询结果
      */
-    PagedResult<CustomerContactDto> findCustomerContactsPaged(UUID customerId, Pageable pageable);
+    PagedResult<CustomerContactDto> findCustomerContactsPaged(UUID customerId, CustomerContactCriteria criteria);
 
     /**
      * 根据id 查找客户联系人信息

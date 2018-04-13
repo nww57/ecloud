@@ -3,10 +3,14 @@ package com.sunesoft.ecloud.admin.query.impl;
 import com.sunesoft.ecloud.admin.domain.agency.*;
 import com.sunesoft.ecloud.admin.query.AgencyCustomerQueryService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyCustomerCriteria;
+import com.sunesoft.ecloud.adminclient.cretirias.CustomerApplicantCriteria;
+import com.sunesoft.ecloud.adminclient.cretirias.CustomerContactCriteria;
+import com.sunesoft.ecloud.adminclient.cretirias.CustomerInventorCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
 import com.sunesoft.ecloud.adminclient.dtos.CustomerApplicantDto;
 import com.sunesoft.ecloud.adminclient.dtos.CustomerContactDto;
 import com.sunesoft.ecloud.adminclient.dtos.CustomerInventorDto;
+import com.sunesoft.ecloud.common.cretiria.TCretiria;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
@@ -60,10 +64,10 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
     }
 
     @Override
-    public PagedResult<CustomerApplicantDto> findCustomerApplicantPaged(UUID customerId, Pageable pageable) {
+    public PagedResult<CustomerApplicantDto> findCustomerApplicantPaged(UUID customerId, CustomerApplicantCriteria criteria) {
         SqlBuilder<CustomerApplicantDto> dtoBuilder = HSqlBuilder.hFrom(CustomerApplicant.class, "a")
                 .where("a.customerId", customerId)
-                .pagging(pageable.getPageNumber(),pageable.getPageSize())
+                .pagging(criteria.getPageIndex(),criteria.getPageSize())
                 .select(CustomerApplicantDto.class);
         return this.queryPaged(dtoBuilder);
     }
@@ -80,10 +84,10 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
     }
 
     @Override
-    public PagedResult<CustomerInventorDto> findCustomerInventorPaged(UUID customerId, Pageable pageable) {
+    public PagedResult<CustomerInventorDto> findCustomerInventorPaged(UUID customerId, CustomerInventorCriteria criteria) {
         SqlBuilder<CustomerInventorDto> dtoBuilder = HSqlBuilder.hFrom(CustomerInventor.class, "i")
                 .where("i.customerId", customerId)
-                .pagging(pageable.getPageNumber(),pageable.getPageSize())
+                .pagging(criteria.getPageIndex(),criteria.getPageSize())
                 .select(CustomerInventorDto.class);
         return this.queryPaged(dtoBuilder);
     }
@@ -100,10 +104,10 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
     }
 
     @Override
-    public PagedResult<CustomerContactDto> findCustomerContactsPaged(UUID customerId, Pageable pageable) {
+    public PagedResult<CustomerContactDto> findCustomerContactsPaged(UUID customerId, CustomerContactCriteria criteria) {
         SqlBuilder<CustomerContactDto> dtoBuilder = HSqlBuilder.hFrom(CustomerContact.class, "c")
                 .where("c.customerId", customerId)
-                .pagging(pageable.getPageNumber(),pageable.getPageSize())
+                .pagging(criteria.getPageIndex(),criteria.getPageSize())
                 .select(CustomerContactDto.class);
         return this.queryPaged(dtoBuilder);
     }
