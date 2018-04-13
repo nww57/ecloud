@@ -44,7 +44,7 @@ public class AgencyUserController {
     @GetMapping("collection")
     public ListResult<BasicDto> getList () {
         UUID agId = UUID.fromString(UserContext.getAgencyId());
-        return userQueryService.getUserIdName(agId);
+        return userQueryService.getUserConsultantIdName(agId);
     }
 
     /**

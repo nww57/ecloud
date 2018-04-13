@@ -3,6 +3,9 @@ package com.sunesoft.ecloud.admin.api;
 import com.sunesoft.ecloud.admin.query.AgencyCustomerQueryService;
 import com.sunesoft.ecloud.admin.service.AgencyCustomerService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyCustomerCriteria;
+import com.sunesoft.ecloud.adminclient.cretirias.CustomerApplicantCriteria;
+import com.sunesoft.ecloud.adminclient.cretirias.CustomerContactCriteria;
+import com.sunesoft.ecloud.adminclient.cretirias.CustomerInventorCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
 import com.sunesoft.ecloud.adminclient.dtos.CustomerApplicantDto;
 import com.sunesoft.ecloud.adminclient.dtos.CustomerContactDto;
@@ -81,12 +84,12 @@ public class AgencyCustomerController {
     /**
      * 申请人查询
      * @param id （客户id）
-     * @param pageable
+     * @param criteria
      * @return
      */
     @GetMapping("{id}/applicant")
-    public PagedResult<CustomerApplicantDto> applicantSearch (@PathVariable UUID id, Pageable pageable) {
-        return agencyCustomerQueryService.findCustomerApplicantPaged(id, pageable);
+    public PagedResult<CustomerApplicantDto> applicantSearch (@PathVariable UUID id, CustomerApplicantCriteria criteria) {
+        return agencyCustomerQueryService.findCustomerApplicantPaged(id, criteria);
     }
 
     /**
@@ -111,7 +114,7 @@ public class AgencyCustomerController {
     }
 
     /**
-     * 申请人查询
+     * 申请人更新
      * @param cid (客户id)
      * @param customerApplicantDto
      * @param id (申请人id)
@@ -127,14 +130,23 @@ public class AgencyCustomerController {
     }
 
     /**
+     * 删除申请人
+     * @param ids
+     */
+    @DeleteMapping("applicant")
+    public void deleteApplicant (@RequestParam UUID... ids) {
+        agencyCustomerService.deleteCustomerApplicants(ids);
+    }
+
+    /**
      * 发明人查询
      * @param cid
-     * @param pageable
+     * @param criteria
      * @return
      */
     @GetMapping("{cid}/inventor")
-    public PagedResult<CustomerInventorDto> inventorSearch (@PathVariable UUID cid, Pageable pageable) {
-        return agencyCustomerQueryService.findCustomerInventorPaged(cid, pageable);
+    public PagedResult<CustomerInventorDto> inventorSearch (@PathVariable UUID cid, CustomerInventorCriteria criteria) {
+        return agencyCustomerQueryService.findCustomerInventorPaged(cid, criteria);
     }
 
     /**
@@ -166,14 +178,25 @@ public class AgencyCustomerController {
     }
 
     /**
+     * 删除发明人
+     * @param ids
+     */
+    @DeleteMapping("inventor")
+    public void deleteInventor (@RequestParam UUID... ids) {
+        agencyCustomerService.deleteCustomerInventor(ids);
+    }
+
+
+
+    /**
      * 联系查询
      * @param cid
-     * @param pageable
+     * @param criteria
      * @return
      */
     @GetMapping("{cid}/contact")
-    public PagedResult<CustomerContactDto> contactSearch (@PathVariable UUID cid, Pageable pageable) {
-        return agencyCustomerQueryService.findCustomerContactsPaged(cid, pageable);
+    public PagedResult<CustomerContactDto> contactSearch (@PathVariable UUID cid, CustomerContactCriteria criteria) {
+        return agencyCustomerQueryService.findCustomerContactsPaged(cid, criteria);
     }
 
     /**
@@ -202,5 +225,14 @@ public class AgencyCustomerController {
         customerContactDto.setCustomerId(cid);
         customerContactDto.setId(id);
         return agencyCustomerService.addOrUpdateCustomerContact(customerContactDto);
+    }
+
+    /**
+     * 删除联系人
+     * @param ids
+     */
+    @DeleteMapping("contact")
+    public void deleteContact (@RequestParam UUID... ids) {
+        agencyCustomerService.deleteCustomerContacts(ids);
     }
 }
