@@ -27,20 +27,14 @@ public class AgencyAgentQueryServiceImpl extends GenericQuery implements AgencyA
         if(null == criteria.getAgId()){
             throw new IllegalArgumentException("企业id不能为null");
         }
-        Map<String,Object> param = new HashMap<>();
-        param.put("a.agId",criteria.getAgId());
-        if(StringUtils.isNotEmpty(criteria.getName())){
-            param.put("a.name","%"+criteria.getName()+"%");
-        }
-        if(StringUtils.isNotEmpty(criteria.getName())){
-            param.put("a.licenseCode","%"+criteria.getLicenseCode()+"%");
-        }
-        if(StringUtils.isNotEmpty(criteria.getName())){
-            param.put("a.mobile","%"+criteria.getMobile()+"%");
-        }
+
         SqlBuilder<AgentDto> dtoBuilder = HSqlBuilder.hFrom(AgencyAgent.class, "a")
-                .where(param)
-                .pagging(criteria.getPageIndex(),criteria.getPageSize())
+                .where("agId",criteria.getAgId());
+                if(StringUtils.isNotEmpty(criteria.getKeywords())){
+                    String keywords = criteria.getKeywords();
+                    dtoBuilder.and(" (a.name like '%"+keywords+"%' or a.licenseCode like '%"+keywords+"%' or a.mobile like '%"+keywords+"%' ) ");
+                }
+        dtoBuilder.pagging(criteria.getPageIndex(),criteria.getPageSize())
                 .select(AgentDto.class);
         return this.queryPaged(dtoBuilder);
     }

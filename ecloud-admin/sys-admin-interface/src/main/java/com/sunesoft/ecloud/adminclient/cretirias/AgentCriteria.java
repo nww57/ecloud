@@ -30,6 +30,11 @@ public class AgentCriteria extends TCretiria {
      */
     private String mobile;
 
+    /**
+     * 关键字
+     */
+    private String keywords;
+
     public String getName() {
         return name;
     }
@@ -60,5 +65,13 @@ public class AgentCriteria extends TCretiria {
 
     public void setAgId(UUID agId) {
         this.agId = agId;
+    }
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
     }
 }
