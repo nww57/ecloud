@@ -2,6 +2,7 @@ package com.sunesoft.ecloud.admin.query.impl;
 
 import com.sunesoft.ecloud.admin.query.AgencyCustomerQueryService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyCustomerCriteria;
+import com.sunesoft.ecloud.adminclient.cretirias.CustomerApplicantCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
 import com.sunesoft.ecloud.adminclient.dtos.CustomerApplicantDto;
 import com.sunesoft.ecloud.common.result.PagedResult;
@@ -45,8 +46,8 @@ public class AgencyCustomerQueryServiceImplTest {
 
     @Test
     public void  findCustomerApplicantPaged() throws Exception{
-        PageRequest page = new PageRequest(0,10,null);
-        PagedResult<CustomerApplicantDto> pagedResult = queryService.findCustomerApplicantPaged(UUID.fromString("569e07c9-0ebf-4002-88da-87c2777d82f2"),page);
+        CustomerApplicantCriteria criteria =new CustomerApplicantCriteria();
+        PagedResult<CustomerApplicantDto> pagedResult = queryService.findCustomerApplicantPaged(UUID.fromString("569e07c9-0ebf-4002-88da-87c2777d82f2"),criteria);
         System.out.println(23);
     }
 
