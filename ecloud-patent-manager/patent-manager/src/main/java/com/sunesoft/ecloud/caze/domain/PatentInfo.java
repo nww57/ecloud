@@ -16,6 +16,13 @@ import java.util.UUID;
 @Table(name = "patent_info")
 public class PatentInfo extends IEntity{
 
+    /**
+     * 所属企业Id
+     */
+    @Column(name = "agId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
+    private UUID agId;
+
     @ManyToOne
     @JoinColumn(name = "caseId")
     private CaseInfo caseInfo;
@@ -90,5 +97,13 @@ public class PatentInfo extends IEntity{
 
     public void setFeeReduceRate(BigDecimal feeReduceRate) {
         this.feeReduceRate = feeReduceRate;
+    }
+
+    public UUID getAgId() {
+        return agId;
+    }
+
+    public void setAgId(UUID agId) {
+        this.agId = agId;
     }
 }

@@ -3,6 +3,7 @@ package com.sunesoft.ecloud.admin.api;
 import com.sunesoft.ecloud.admin.query.UserQueryService;
 import com.sunesoft.ecloud.admin.service.UserService;
 import com.sunesoft.ecloud.adminclient.cretirias.UserCriteria;
+import com.sunesoft.ecloud.adminclient.dtos.LoginResultDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserBasicDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserPositionDto;
@@ -131,5 +132,10 @@ public class UserController {
         userCriteria.setUserName("zhouzh");
         PagedResult<UserDto> userPaged = userQueryService.findUserPaged(userCriteria);
         return userPaged;
+    }
+
+    @GetMapping(value = "/testlogin")
+    public TResult<LoginResultDto> testLogin(){
+        return userService.userLogin("admin","admin");
     }
 }

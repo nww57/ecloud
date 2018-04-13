@@ -11,6 +11,11 @@ import java.util.UUID;
  */
 public class CaseInfoDto {
 
+    /**
+     * 所属企业id
+     */
+    private UUID agId;
+
     private UUID id;
 
     /**
@@ -45,6 +50,11 @@ public class CaseInfoDto {
      *备注
      */
     private String comments;
+
+    /**
+     * 立案人姓名
+     */
+    private String creatorName;
 
     public String getCaseName() {
         return caseName;
@@ -92,5 +102,21 @@ public class CaseInfoDto {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public String getCreatorName() {
+        return creatorName;
+    }
+
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
+    }
+
+    public UUID getAgId() {
+        return agId;
+    }
+
+    public void setAgId(UUID agId) {
+        this.agId = agId;
     }
 }

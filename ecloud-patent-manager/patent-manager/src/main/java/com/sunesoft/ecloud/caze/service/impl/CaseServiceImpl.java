@@ -61,14 +61,14 @@ public class CaseServiceImpl implements CaseService {
             CaseType caseType = caseInfo.getCaseType();
             // 创建专利
             if(Objects.equals(CaseType.INVENTION_PATENT,caseType)){
-                createPatent(caseInfo,new PatentInfoDto(caseInfo.getCaseName(),caseInfo.getCustomerId(),PatentType.INVENTION_PATENT,caseInfo.getFeeReduceRate()));
+                createPatent(caseInfo,new PatentInfoDto(caseInfo.getAgId(),caseInfo.getCaseName(),caseInfo.getCustomerId(),PatentType.INVENTION_PATENT,caseInfo.getFeeReduceRate()));
             }else if(Objects.equals(CaseType.UTILITYMODEL_PATENT,caseType)){
-                createPatent(caseInfo,new PatentInfoDto(caseInfo.getCaseName(),caseInfo.getCustomerId(),PatentType.UTILITYMODEL_PATENT,caseInfo.getFeeReduceRate()));
+                createPatent(caseInfo,new PatentInfoDto(caseInfo.getAgId(),caseInfo.getCaseName(),caseInfo.getCustomerId(),PatentType.UTILITYMODEL_PATENT,caseInfo.getFeeReduceRate()));
             }else if(Objects.equals(CaseType.DESIGN_PATENT,caseType)){
-                createPatent(caseInfo,new PatentInfoDto(caseInfo.getCaseName(),caseInfo.getCustomerId(),PatentType.DESIGN_PATENT,caseInfo.getFeeReduceRate()));
+                createPatent(caseInfo,new PatentInfoDto(caseInfo.getAgId(),caseInfo.getCaseName(),caseInfo.getCustomerId(),PatentType.DESIGN_PATENT,caseInfo.getFeeReduceRate()));
             }else if(Objects.equals(CaseType.SAMEDAYAPPLY_PATENT,caseType)){
-                createPatent(caseInfo,new PatentInfoDto(caseInfo.getCaseName(),caseInfo.getCustomerId(),PatentType.INVENTION_PATENT,caseInfo.getFeeReduceRate()));
-                createPatent(caseInfo,new PatentInfoDto(caseInfo.getCaseName(),caseInfo.getCustomerId(),PatentType.UTILITYMODEL_PATENT,caseInfo.getFeeReduceRate()));
+                createPatent(caseInfo,new PatentInfoDto(caseInfo.getAgId(),caseInfo.getCaseName(),caseInfo.getCustomerId(),PatentType.INVENTION_PATENT,caseInfo.getFeeReduceRate()));
+                createPatent(caseInfo,new PatentInfoDto(caseInfo.getAgId(),caseInfo.getCaseName(),caseInfo.getCustomerId(),PatentType.UTILITYMODEL_PATENT,caseInfo.getFeeReduceRate()));
             }else{
                 throw new IllegalArgumentException("无效的案件类型");
             }

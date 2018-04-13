@@ -3,11 +3,15 @@ package com.sunesoft.ecloud.caseclient.criterias;
 import com.sunesoft.ecloud.caseclient.PatentType;
 import com.sunesoft.ecloud.common.cretiria.TCretiria;
 
+import java.util.UUID;
+
 /**
  * @Auther: niww
  * @Date: 2018/4/13/013
  */
 public class CaseInfoQueryCriteria extends TCretiria {
+
+    private UUID agId;
 
     /**
      *案件编号
@@ -138,5 +142,13 @@ public class CaseInfoQueryCriteria extends TCretiria {
 
     public void setPatentType(PatentType patentType) {
         this.patentType = patentType;
+    }
+
+    public UUID getAgId() {
+        return agId;
+    }
+
+    public void setAgId(UUID agId) {
+        this.agId = agId;
     }
 }

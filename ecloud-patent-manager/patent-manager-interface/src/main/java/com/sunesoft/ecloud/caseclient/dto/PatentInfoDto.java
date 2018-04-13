@@ -11,6 +11,8 @@ import java.util.UUID;
  */
 public class PatentInfoDto {
 
+    private UUID agId;
+
     private UUID caseId;
 
     private String patentName;
@@ -24,19 +26,29 @@ public class PatentInfoDto {
     public PatentInfoDto() {
     }
 
-    public PatentInfoDto(String patentName, UUID customerId, PatentType patentType, BigDecimal feeReduceRate) {
+    public PatentInfoDto(UUID agId,String patentName, UUID customerId, PatentType patentType, BigDecimal feeReduceRate) {
+        this.agId = agId;
         this.patentName = patentName;
         this.customerId = customerId;
         this.patentType = patentType;
         this.feeReduceRate = feeReduceRate;
     }
 
-    public PatentInfoDto(UUID caseId, String patentName, UUID customerId, PatentType patentType, BigDecimal feeReduceRate) {
+    public PatentInfoDto(UUID agId,UUID caseId, String patentName, UUID customerId, PatentType patentType, BigDecimal feeReduceRate) {
+        this.agId = agId;
         this.caseId = caseId;
         this.patentName = patentName;
         this.customerId = customerId;
         this.patentType = patentType;
         this.feeReduceRate = feeReduceRate;
+    }
+
+    public UUID getAgId() {
+        return agId;
+    }
+
+    public void setAgId(UUID agId) {
+        this.agId = agId;
     }
 
     public UUID getCaseId() {
