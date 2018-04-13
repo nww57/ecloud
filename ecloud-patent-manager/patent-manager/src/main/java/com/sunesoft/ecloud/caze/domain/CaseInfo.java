@@ -2,10 +2,9 @@ package com.sunesoft.ecloud.caze.domain;
 
 import com.sunesoft.ecloud.caseclient.CaseType;
 import com.sunesoft.ecloud.hibernate.IEntity;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.UUID;
 
@@ -31,11 +30,13 @@ public class CaseInfo extends IEntity {
      *案件类型
      */
     @Column(name = "caseType")
+    @Enumerated(EnumType.STRING)
     private CaseType caseType;
     /**
      *客户id
      */
-    @Column(name = "customerId")
+    @Column(name = "customerId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
     private UUID customerId;
     /**
      *费减比列
@@ -52,9 +53,14 @@ public class CaseInfo extends IEntity {
      * todo 委托书
      */
 
+
     /**
      * todo 交底资料
      */
+
+    public CaseInfo() {
+        this.caseNo = "C"+UUID.randomUUID().toString().substring(0,8);
+    }
 
     public String getCaseNo() {
         return caseNo;

@@ -1,6 +1,8 @@
 package com.sunesoft.ecloud.caze.domain;
 
+import com.sunesoft.ecloud.caseclient.PatentType;
 import com.sunesoft.ecloud.hibernate.IEntity;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -18,7 +20,8 @@ public class PatentInfo extends IEntity{
     @JoinColumn(name = "caseId")
     private CaseInfo caseInfo;
 
-    @Column(name = "customerId")
+    @Column(name = "customerId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
     private UUID customerId;
 
     @Column(name = "patentNo")
@@ -28,10 +31,18 @@ public class PatentInfo extends IEntity{
     private String patentName;
 
     @Column(name = "patentType")
-    private String patentType;
+    @Enumerated(EnumType.STRING)
+    private PatentType patentType;
 
     @Column(name = "reduceRate")
     private BigDecimal feeReduceRate;
+
+    public PatentInfo() {
+    }
+
+    public PatentInfo(CaseInfo caseInfo) {
+        this.caseInfo = caseInfo;
+    }
 
     public CaseInfo getCaseInfo() {
         return caseInfo;
@@ -65,11 +76,11 @@ public class PatentInfo extends IEntity{
         this.patentName = patentName;
     }
 
-    public String getPatentType() {
+    public PatentType getPatentType() {
         return patentType;
     }
 
-    public void setPatentType(String patentType) {
+    public void setPatentType(PatentType patentType) {
         this.patentType = patentType;
     }
 

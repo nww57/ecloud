@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.caze.domain;
 
+import com.sunesoft.ecloud.caseclient.CaseCustomerRequestType;
 import com.sunesoft.ecloud.hibernate.IEntity;
 import org.hibernate.annotations.Type;
 
@@ -25,7 +26,8 @@ public class CaseCustomerRequest extends IEntity{
      *要求类型
      */
     @Column(name = "type")
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private CaseCustomerRequestType requestType;
 
     /**
      *标题
@@ -70,12 +72,12 @@ public class CaseCustomerRequest extends IEntity{
         this.description = description;
     }
 
-    public String getType() {
-        return type;
+    public CaseCustomerRequestType getRequestType() {
+        return requestType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setRequestType(CaseCustomerRequestType requestType) {
+        this.requestType = requestType;
     }
 
     public UUID getFileId() {

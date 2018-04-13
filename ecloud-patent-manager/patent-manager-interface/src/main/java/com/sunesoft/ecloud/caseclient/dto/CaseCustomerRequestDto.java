@@ -1,5 +1,7 @@
 package com.sunesoft.ecloud.caseclient.dto;
 
+import com.sunesoft.ecloud.caseclient.CaseCustomerRequestType;
+
 import java.util.UUID;
 
 /**
@@ -8,12 +10,18 @@ import java.util.UUID;
  */
 public class CaseCustomerRequestDto {
 
+
+    /**
+     * 案件id
+     */
+    private UUID caseId;
+
     private UUID id;
 
     /**
      * 要求类型
      */
-    private String requestType;
+    private CaseCustomerRequestType requestType;
 
     /**
      *标题
@@ -25,6 +33,14 @@ public class CaseCustomerRequestDto {
      */
     private String description;
 
+    public UUID getCaseId() {
+        return caseId;
+    }
+
+    public void setCaseId(UUID caseId) {
+        this.caseId = caseId;
+    }
+
     public UUID getId() {
         return id;
     }
@@ -33,11 +49,11 @@ public class CaseCustomerRequestDto {
         this.id = id;
     }
 
-    public String getRequestType() {
+    public CaseCustomerRequestType getRequestType() {
         return requestType;
     }
 
-    public void setRequestType(String requestType) {
+    public void setRequestType(CaseCustomerRequestType requestType) {
         this.requestType = requestType;
     }
 

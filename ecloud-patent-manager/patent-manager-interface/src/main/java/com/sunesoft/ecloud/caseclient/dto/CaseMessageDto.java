@@ -9,6 +9,11 @@ import java.util.UUID;
 public class CaseMessageDto {
 
     /**
+     * 案件id
+     */
+    private UUID caseId;
+
+    /**
      * 留言人id
      */
     private UUID userId;
@@ -32,5 +37,13 @@ public class CaseMessageDto {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public UUID getCaseId() {
+        return caseId;
+    }
+
+    public void setCaseId(UUID caseId) {
+        this.caseId = caseId;
     }
 }
