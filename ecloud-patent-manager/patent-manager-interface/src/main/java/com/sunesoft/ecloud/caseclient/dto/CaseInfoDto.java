@@ -19,6 +19,11 @@ public class CaseInfoDto {
     private UUID id;
 
     /**
+     * 案件号
+     */
+    private String caseNo;
+
+    /**
      * 案件名称
      */
     private String caseName;
@@ -54,7 +59,7 @@ public class CaseInfoDto {
     /**
      * 立案人姓名
      */
-    private String creatorName;
+    private String caseCreatorName;
 
     public String getCaseName() {
         return caseName;
@@ -104,12 +109,20 @@ public class CaseInfoDto {
         this.id = id;
     }
 
-    public String getCreatorName() {
-        return creatorName;
+    public String getCaseNo() {
+        return caseNo;
     }
 
-    public void setCreatorName(String creatorName) {
-        this.creatorName = creatorName;
+    public void setCaseNo(String caseNo) {
+        this.caseNo = caseNo;
+    }
+
+    public String getCaseCreatorName() {
+        return caseCreatorName;
+    }
+
+    public void setCaseCreatorName(String caseCreatorName) {
+        this.caseCreatorName = caseCreatorName;
     }
 
     public UUID getAgId() {
