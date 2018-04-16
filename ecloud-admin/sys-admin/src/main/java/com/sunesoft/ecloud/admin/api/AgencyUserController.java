@@ -102,4 +102,10 @@ public class AgencyUserController {
         return userService.deleteUserBatch(ids);
     }
 
+
+    @GetMapping("realandrolename")
+    public TResult<UserDto> getUserRealNameAndRoleName(@PathVariable("userId")String userId){
+        return userQueryService.getUserRealNameAndRolName(UUID.fromString(userId));
+    }
+
 }

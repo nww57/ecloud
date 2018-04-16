@@ -14,6 +14,11 @@ public class CaseMessageDto {
     private UUID caseId;
 
     /**
+     * 留言人id
+     */
+    private UUID messagerId;
+
+    /**
      * 留言人姓名
      */
     private String messagerRealName;
@@ -58,5 +63,13 @@ public class CaseMessageDto {
 
     public void setCaseId(UUID caseId) {
         this.caseId = caseId;
+    }
+
+    public UUID getMessagerId() {
+        return messagerId;
+    }
+
+    public void setMessagerId(UUID messagerId) {
+        this.messagerId = messagerId;
     }
 }

@@ -91,4 +91,12 @@ public interface UserQueryService {
      * @return 返回功能列表
      */
     ListResult<MenuFunctionDto> getUserFuncList(UUID id);
+
+
+    /**
+     * 获取用户的真实姓名及角色名
+     * @param id
+     * @return
+     */
+    TResult<UserDto> getUserRealNameAndRolName(UUID id);
 }

@@ -12,16 +12,10 @@ import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
-import com.sunesoft.ecloud.common.utils.BeanUtil;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -344,6 +338,16 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
             throw new IllegalArgumentException("无效的用户类型");
         }
         return new ListResult<>(functionDtoList);
+    }
+
+    @Override
+    public TResult<UserDto> getUserRealNameAndRolName(UUID id) {
+        if(null == id){
+            throw new IllegalArgumentException("参数id不能为null");
+        }
+        String sql = "select u.realName,group_concat(r.name) roleName from sys_user u left join sys_ag_user_role ur on u.id = ur.userid left join sys_ag_role r on r.id = ur.roleId where u.id = '"+id+"'";
+        UserDto userDto =  queryForObject(sql,null,UserDto.class);
+        return new TResult<>(userDto);
     }
 
 
