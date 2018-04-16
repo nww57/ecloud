@@ -34,6 +34,7 @@ public class CaseMessage extends IEntity {
      *留言内容
      */
     @Column(name = "content")
+    @Type(type = "text")
     private String content;
 
     /**

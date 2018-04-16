@@ -3,6 +3,7 @@ package com.sunesoft.ecloud.caseclient.criterias;
 import com.sunesoft.ecloud.caseclient.PatentType;
 import com.sunesoft.ecloud.common.cretiria.TCretiria;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 /**
@@ -42,7 +43,7 @@ public class CaseInfoQueryCriteria extends TCretiria {
     /**
      *费减比列
      */
-    private String feeReduceRate;
+    private BigDecimal feeReduceRate;
 
     /**
      *立案起始时间
@@ -120,11 +121,11 @@ public class CaseInfoQueryCriteria extends TCretiria {
         this.caseCreatorName = caseCreatorName;
     }
 
-    public String getFeeReduceRate() {
+    public BigDecimal getFeeReduceRate() {
         return feeReduceRate;
     }
 
-    public void setFeeReduceRate(String feeReduceRate) {
+    public void setFeeReduceRate(BigDecimal feeReduceRate) {
         this.feeReduceRate = feeReduceRate;
     }
 
