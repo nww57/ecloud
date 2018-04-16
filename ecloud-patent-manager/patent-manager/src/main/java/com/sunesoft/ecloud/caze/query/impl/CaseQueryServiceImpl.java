@@ -60,23 +60,23 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
         Map<String, Object> params = new HashMap<>();
         if (StringUtils.isNotEmpty(criteria.getCaseNo())) {
             sql.append(" and ci.caseNo like :caseNo");
-            params.put("caseNo", "%"+criteria.getCaseNo()+"%");
+            params.put("caseNo", "%" + criteria.getCaseNo() + "%");
         }
         if (StringUtils.isNotEmpty(criteria.getCaseName())) {
             sql.append(" and ci.caseName like :caseName");
-            params.put("caseName", "%"+criteria.getCaseName()+"%");
+            params.put("caseName", "%" + criteria.getCaseName() + "%");
         }
         if (StringUtils.isNotEmpty(criteria.getCustomerName())) {
             sql.append(" and ac.NAME like :customerName");
-            params.put("customerName", "%"+criteria.getCustomerName()+"%");
+            params.put("customerName", "%" + criteria.getCustomerName() + "%");
         }
         if (StringUtils.isNotEmpty(criteria.getCaseCreatorName())) {
             sql.append(" and ci.creatorName like :creatorName");
-            params.put("creatorName", "%"+criteria.getCaseCreatorName()+"%");
+            params.put("creatorName", "%" + criteria.getCaseCreatorName() + "%");
         }
         if (StringUtils.isNotEmpty(criteria.getConsultantName())) {
             sql.append(" and u.realName like :consultantName");
-            params.put("consultantName", "%"+criteria.getConsultantName()+"%");
+            params.put("consultantName", "%" + criteria.getConsultantName() + "%");
         }
         if (StringUtils.isNotEmpty(criteria.getCaseCreateDateStart())) {
             sql.append(" and ci.create_datetime >= :caseCreateDateStart");
@@ -92,11 +92,11 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
         }
         if (StringUtils.isNotEmpty(criteria.getPatentNo())) {
             sql.append(" and patentNo like :patentNo");
-            params.put("patentNo", "%"+criteria.getPatentNo()+"%");
+            params.put("patentNo", "%" + criteria.getPatentNo() + "%");
         }
         if (null != criteria.getPatentType()) {
             sql.append(" and patentType like :patentType");
-            params.put("patentType", "%"+criteria.getPatentType().name()+"%");
+            params.put("patentType", "%" + criteria.getPatentType().name() + "%");
         }
         sql.append(" group by ci.id");
         PagedResult<CasePatentInfoDto> infoList = queryPaged(criteria.getPageIndex(), criteria.getPageSize(), sql.toString(), params, CasePatentInfoDto.class);
@@ -141,6 +141,9 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
 
     @Override
     public PagedResult<CaseCustomerRequestDto> queryCaseCustomerRequestByPaged(UUID id, TCretiria criteria) {
+        if (null == id) {
+            throw new IllegalArgumentException("案件id不能为null");
+        }
         SqlBuilder<CaseCustomerRequestDto> sqlBuilder = HSqlBuilder.hFrom(CaseCustomerRequest.class, "r")
                 .where("r.caseId", id)
                 .pagging(criteria.getPageIndex(), criteria.getPageSize())
@@ -150,6 +153,9 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
 
     @Override
     public PagedResult<CaseMessageListDto> queryCaseMessageByPaged(UUID id, TCretiria criteria) {
+        if (null == id) {
+            throw new IllegalArgumentException("案件id不能为null");
+        }
         SqlBuilder<CaseMessageListDto> sqlBuilder = HSqlBuilder.hFrom(CaseMessage.class, "c")
                 .where("c.caseId", id)
                 .pagging(criteria.getPageIndex(), criteria.getPageSize())
