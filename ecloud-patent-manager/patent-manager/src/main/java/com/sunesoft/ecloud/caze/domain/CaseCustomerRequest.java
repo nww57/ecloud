@@ -25,7 +25,7 @@ public class CaseCustomerRequest extends IEntity{
     /**
      *要求类型
      */
-    @Column(name = "type")
+    @Column(name = "requestType")
     @Enumerated(EnumType.STRING)
     private CaseCustomerRequestType requestType;
 

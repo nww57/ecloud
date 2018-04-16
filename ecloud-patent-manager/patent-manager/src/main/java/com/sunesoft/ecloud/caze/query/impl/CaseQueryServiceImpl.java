@@ -57,7 +57,8 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
                 " LEFT JOIN sys_ag_customer ac ON ci.customerId = ac.id  " +
                 " LEFT JOIN sys_user u ON u.id = ac.consultantId  " +
                 " LEFT JOIN patent_info p ON p.caseId = ci.id  where 1=1 and ci.agId = '" +criteria.getAgId() +"' ");
-        //参数设置
+        //TODO 参数设置
+        sql.append(" group by ci.id");
         PagedResult<CasePatentInfoDto> infoList = queryPaged(criteria.getPageIndex(),criteria.getPageSize(),sql.toString(),new HashMap<>(),CasePatentInfoDto.class);
         List<CaseInfoListDto> dtoList = new ArrayList<>();
         infoList.getResult().forEach(info->{
@@ -110,7 +111,7 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
     @Override
     public PagedResult<CaseMessageListDto> queryCaseMessageByPaged(UUID id, TCretiria criteria) {
         SqlBuilder<CaseMessageListDto> sqlBuilder = HSqlBuilder.hFrom(CaseMessage.class, "c")
-                .where("caseId",id)
+                .where("c.caseId",id)
                 .pagging(criteria.getPageIndex(),criteria.getPageSize())
                 .select(CaseMessageListDto.class)
                 .setFieldValue("messageDate","c.create_datetime");

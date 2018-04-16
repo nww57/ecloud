@@ -14,21 +14,34 @@ public class CaseMessageDto {
     private UUID caseId;
 
     /**
-     * 留言人id
+     * 留言人姓名
      */
-    private UUID userId;
+    private String messagerRealName;
+
+    /**
+     * 留言人角色名
+     */
+    private String messagerRoleName;
 
     /**
      * 留言内容
      */
     private String content;
 
-    public UUID getUserId() {
-        return userId;
+    public String getMessagerRealName() {
+        return messagerRealName;
     }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
+    public void setMessagerRealName(String messagerRealName) {
+        this.messagerRealName = messagerRealName;
+    }
+
+    public String getMessagerRoleName() {
+        return messagerRoleName;
+    }
+
+    public void setMessagerRoleName(String messagerRoleName) {
+        this.messagerRoleName = messagerRoleName;
     }
 
     public String getContent() {

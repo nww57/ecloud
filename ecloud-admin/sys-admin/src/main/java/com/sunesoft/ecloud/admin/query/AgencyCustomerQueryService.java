@@ -5,11 +5,9 @@ import com.sunesoft.ecloud.adminclient.cretirias.AgencyCustomerCriteria;
 import com.sunesoft.ecloud.adminclient.cretirias.CustomerApplicantCriteria;
 import com.sunesoft.ecloud.adminclient.cretirias.CustomerContactCriteria;
 import com.sunesoft.ecloud.adminclient.cretirias.CustomerInventorCriteria;
-import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
-import com.sunesoft.ecloud.adminclient.dtos.CustomerApplicantDto;
-import com.sunesoft.ecloud.adminclient.dtos.CustomerContactDto;
-import com.sunesoft.ecloud.adminclient.dtos.CustomerInventorDto;
+import com.sunesoft.ecloud.adminclient.dtos.*;
 import com.sunesoft.ecloud.common.cretiria.TCretiria;
+import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.data.domain.Pageable;
@@ -86,4 +84,11 @@ public interface AgencyCustomerQueryService {
      */
     TResult<CustomerContactDto> findCustomerContactById(UUID id);
 
+
+    /**
+     * 获取企业下客户的基本信息
+     * @param agId 企业id
+     * @return 返回查询结果
+     */
+    ListResult<AgencyCustomerBasicDto> getAgencyCustomerBasicInfo(UUID agId);
 }

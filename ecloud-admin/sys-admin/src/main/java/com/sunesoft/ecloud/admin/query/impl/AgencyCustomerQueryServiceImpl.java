@@ -6,11 +6,9 @@ import com.sunesoft.ecloud.adminclient.cretirias.AgencyCustomerCriteria;
 import com.sunesoft.ecloud.adminclient.cretirias.CustomerApplicantCriteria;
 import com.sunesoft.ecloud.adminclient.cretirias.CustomerContactCriteria;
 import com.sunesoft.ecloud.adminclient.cretirias.CustomerInventorCriteria;
-import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
-import com.sunesoft.ecloud.adminclient.dtos.CustomerApplicantDto;
-import com.sunesoft.ecloud.adminclient.dtos.CustomerContactDto;
-import com.sunesoft.ecloud.adminclient.dtos.CustomerInventorDto;
+import com.sunesoft.ecloud.adminclient.dtos.*;
 import com.sunesoft.ecloud.common.cretiria.TCretiria;
+import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
@@ -121,6 +119,21 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
                 .where("id", id)
                 .select(CustomerInventorDto.class);
         return new TResult<>(queryForObject(dtoBuilder));
+    }
+
+    @Override
+    public ListResult<AgencyCustomerBasicDto> getAgencyCustomerBasicInfo(UUID agId) {
+        if(null == agId){
+            throw new IllegalArgumentException("企业id不能为null");
+        }
+        SqlBuilder<AgencyCustomerBasicDto> dtoBuilder = HSqlBuilder.hFrom(AgencyCustomer.class, "ac")
+                .leftJoin(User.class,"u")
+                .on("u.id = ac.consultantId")
+                .where("agId", agId)
+                .select(AgencyCustomerBasicDto.class)
+                .setFieldValue("leaderName","ac.leaderName")
+                .setFieldValue("consultantName","u.realName");
+        return new ListResult<>(queryList(dtoBuilder));
     }
 
 

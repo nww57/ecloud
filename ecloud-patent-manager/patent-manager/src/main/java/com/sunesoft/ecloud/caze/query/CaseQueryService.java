@@ -5,6 +5,7 @@ import com.sunesoft.ecloud.caseclient.dto.CaseCustomerRequestDto;
 import com.sunesoft.ecloud.caseclient.dto.CaseInfoListDto;
 import com.sunesoft.ecloud.caseclient.dto.CaseMessageListDto;
 import com.sunesoft.ecloud.common.cretiria.TCretiria;
+import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 

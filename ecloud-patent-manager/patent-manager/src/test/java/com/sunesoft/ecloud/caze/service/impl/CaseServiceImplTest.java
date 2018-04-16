@@ -39,7 +39,7 @@ public class CaseServiceImplTest {
         dto.setComments("备注");
         dto.setCustomerId(UUID.fromString("696f3f81-f3bb-4ebc-99f0-9c3a5decfdf2"));
         dto.setFeeReduceRate(new BigDecimal("1"));
-        dto.setCreatorName("test");
+        dto.setCaseCreatorName("test");
         TResult re = caseService.addOrUpdateCase(dto);
         System.out.println(23);
     }
@@ -47,7 +47,7 @@ public class CaseServiceImplTest {
     @Test
     public void addOrUpdateCaseCustomerRequest() throws Exception {
         CaseCustomerRequestDto dto = new CaseCustomerRequestDto();
-        dto.setCaseId(UUID.fromString("7ddb2840-11b3-4b9f-a556-d296e4fdfe4c"));
+        dto.setCaseId(UUID.fromString("9cac8eaf-cd2d-4a9d-81ef-2526a71bd5fe"));
         dto.setRequestType(CaseCustomerRequestType.PAYOFFICIALFEEBYSELF);
         dto.setTitle("");
         dto.setDescription("我要官费自缴");
@@ -59,7 +59,7 @@ public class CaseServiceImplTest {
     @Test
     public void addOrUpdateCaseMessage() throws Exception {
         CaseMessageDto messageDto = new CaseMessageDto();
-        messageDto.setCaseId(UUID.fromString("7ddb2840-11b3-4b9f-a556-d296e4fdfe4c"));
+        messageDto.setCaseId(UUID.fromString("9cac8eaf-cd2d-4a9d-81ef-2526a71bd5fe"));
         messageDto.setContent("来看看的");
         TResult result = caseService.addOrUpdateCaseMessage(messageDto);
         System.out.println(23);

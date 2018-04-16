@@ -110,7 +110,6 @@ public class CaseServiceImpl implements CaseService {
         if(null == caseInfo){
             throw new IllegalArgumentException("无效的案件id");
         }
-        UUID userId = dto.getUserId();
         CaseMessage message = new CaseMessage();
         message.setCaseInfo(caseInfo);
         message.setContent(dto.getContent());

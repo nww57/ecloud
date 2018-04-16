@@ -133,9 +133,4 @@ public class UserController {
         PagedResult<UserDto> userPaged = userQueryService.findUserPaged(userCriteria);
         return userPaged;
     }
-
-    @GetMapping(value = "/testlogin")
-    public TResult<LoginResultDto> testLogin(){
-        return userService.userLogin("admin","admin");
-    }
 }
