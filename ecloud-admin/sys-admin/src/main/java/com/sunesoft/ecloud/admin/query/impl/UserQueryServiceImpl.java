@@ -132,7 +132,7 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
         if(null == agId){
             throw new IllegalArgumentException("企业id不能为null");
         }
-        String sql ="select u.id,u.realName from sys_ag_role r left join sys_ag_user_role ur on ur.roleId = r.id left join sys_user u on ur.userId = u.id where r.agId = '" +agId +"' and r.name='业务顾问'";
+        String sql ="select u.id,u.realName name from sys_ag_role r left join sys_ag_user_role ur on ur.roleId = r.id left join sys_user u on ur.userId = u.id where r.agId = '" +agId +"' and r.name='业务顾问'";
         //获取所有负责人
         List<BasicDto> userList = queryList(sql,null,BasicDto.class);
         return new ListResult<>(userList);
