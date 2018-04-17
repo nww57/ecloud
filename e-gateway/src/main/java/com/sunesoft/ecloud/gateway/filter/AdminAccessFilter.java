@@ -10,7 +10,6 @@ import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.utils.JsonHelper;
 import com.sunesoft.ecloud.common.utils.StringUtil;
 import com.sunesoft.ecloud.auth.UserContext;
-import com.sunesoft.ecloud.auth.configs.UserAuthConfig;
 import com.sunesoft.ecloud.auth.jwt.JwtTokenUtil;
 import com.sunesoft.ecloud.auth.jwt.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +46,7 @@ public class AdminAccessFilter extends ZuulFilter {
 
 
     @Autowired
-    AuthServiceClient authServiceClient;
+    private AuthServiceClient authServiceClient;
 
     @Override
     public String filterType() {
