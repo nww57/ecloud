@@ -52,7 +52,7 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
                 " case_info ci  " +
                 " LEFT JOIN sys_ag_customer ac ON ci.customerId = ac.id  " +
                 " LEFT JOIN sys_user u ON u.id = ac.consultantId  " +
-                " LEFT JOIN patent_info p ON p.caseId = ci.id  where 1=1 and ci.agId = '" + criteria.getAgId() + "' ");
+                " LEFT JOIN patent_info p ON p.caseId = ci.id  where ci.is_active = 1 and ci.agId = '" + criteria.getAgId() + "' ");
         // 参数设置
         Map<String, Object> params = new HashMap<>();
         if (StringUtils.isNotEmpty(criteria.getCaseNo())) {
@@ -131,7 +131,7 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
                 " case_info ci  " +
                 " LEFT JOIN sys_ag_customer ac ON ci.customerId = ac.id  " +
                 " LEFT JOIN sys_user u ON u.id = ac.consultantId  " +
-                " LEFT JOIN patent_info p ON p.caseId = ci.id  where 1=1 and ci.id = " + id;
+                " LEFT JOIN patent_info p ON p.caseId = ci.id  where 1=1 and ci.id = '" + id+"'";
         CasePatentInfoDto info = queryForObject(sql, null, CasePatentInfoDto.class);
         return new TResult<>(transform(info));
     }
