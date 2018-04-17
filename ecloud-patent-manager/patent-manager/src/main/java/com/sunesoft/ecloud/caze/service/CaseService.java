@@ -21,6 +21,13 @@ public interface CaseService {
      */
     TResult addOrUpdateCase(CaseInfoDto dto);
 
+    /**
+     * 删除案件
+     * @param ids 案件id
+     * @return 返回操作结果
+     */
+    TResult deleteCase(UUID... ids);
+
 
     /**
      * 创建/修改客户要求

@@ -88,6 +88,17 @@ public class CaseServiceImpl implements CaseService {
     }
 
     @Override
+    public TResult deleteCase(UUID... ids) {
+        if(null == ids || ids.length ==0){
+            throw new IllegalArgumentException("案件id不能为null");
+        }
+        //逻辑删除
+        caseRepository.deleteBatch(ids);
+        //todo 删除专利信息
+        return ResultFactory.success();
+    }
+
+    @Override
     public TResult addOrUpdateCaseCustomerRequest(CaseCustomerRequestDto dto) {
 
         UUID id = dto.getId();
