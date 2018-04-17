@@ -14,7 +14,7 @@ public class CommonConstants {
     public static final Integer EX_OTHER_CODE = 500;
     public static final String CONTEXT_KEY_AGENCY_ID = "currentAgencyId";
     public static final String CONTEXT_KEY_USER_ID = "currentUserId";
-    public static final String CONTEXT_KEY_REALNAME = "currentUserName";
+    public static final String CONTEXT_KEY_REALNAME = "currentUserRealName";
     public static final String CONTEXT_KEY_USER_NAME = "currentUserName";
     public static final String CONTEXT_KEY_USER_TOKEN = "currentUserToken";
     public static final String JWT_KEY_USER_ID = "id";
