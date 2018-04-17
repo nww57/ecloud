@@ -131,7 +131,7 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
                 .on("u.id = ac.consultantId")
                 .where("agId", agId)
                 .select(AgencyCustomerBasicDto.class)
-                .setFieldValue("leaderName","ac.leaderName")
+                .setFieldValue("leaderName","ac.leader")
                 .setFieldValue("consultantName","u.realName");
         return new ListResult<>(queryList(dtoBuilder));
     }
