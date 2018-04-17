@@ -1,6 +1,7 @@
-package com.sunesoft.ecloud.admin.config;
+package com.sunesoft.ecloud.caze.config;
 
-import com.sunesoft.ecloud.admin.interceptor.UserAuthRestInterceptor;
+
+import com.sunesoft.ecloud.caze.interceptor.UserAuthRestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -13,8 +14,6 @@ import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,7 +21,7 @@ import java.util.List;
  * @author ace
  * @date 2017/9/8
  */
-@Configuration("admimWebConfig")
+@Configuration("caseWebConfig")
 @Primary
 public class WebConfiguration implements WebMvcConfigurer {
 
