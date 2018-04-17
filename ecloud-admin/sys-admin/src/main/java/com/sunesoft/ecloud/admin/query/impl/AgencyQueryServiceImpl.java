@@ -37,7 +37,7 @@ public class AgencyQueryServiceImpl extends GenericQuery implements AgencyQueryS
     public PagedResult<AgencyDto> findAgencyPaged(AgencyCriteria criteria) {
         String keywords = criteria.getKeywords();
         SqlBuilder builder = HSqlBuilder.hFrom(Agency.class, "agency")
-                .where("agency.agencyType", AgencyType.Customer.toString());
+                .where("agency.agencyType", AgencyType.ServiceAgency.toString());
         if(StringUtils.isNotEmpty(keywords)){
             builder.and("(agency.name like '%"+keywords+"%' or agency.code like '%"+keywords+"%' or agency.leader like '%"+keywords+"%' or agency.cellphone like '%"+keywords+"%')");
         }
