@@ -35,6 +35,6 @@ public interface AgencyOrganizationQueryService {
      * 获取机构id，名称
      * @return 返回查询结果
      */
-    ListResult<BasicDto> getOrganizationIdName();
+    ListResult<BasicDto> getOrganizationIdName(UUID agId);
 
 }

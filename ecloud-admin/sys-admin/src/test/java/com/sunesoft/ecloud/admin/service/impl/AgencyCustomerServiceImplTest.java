@@ -1,16 +1,20 @@
 package com.sunesoft.ecloud.admin.service.impl;
 
 import com.sunesoft.ecloud.admin.service.AgencyCustomerService;
+import com.sunesoft.ecloud.adminclient.ApplicantType;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
+import com.sunesoft.ecloud.adminclient.dtos.CustomerApplicantDto;
+import com.sunesoft.ecloud.adminclient.dtos.CustomerContactDto;
+import com.sunesoft.ecloud.adminclient.dtos.CustomerInventorDto;
+import com.sunesoft.ecloud.common.result.TResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
-
-import static org.junit.Assert.*;
 
 /**
  * @Auther: niww
@@ -50,4 +54,54 @@ public class AgencyCustomerServiceImplTest {
         customerService.deleteBatch(UUID.fromString("98ca3092-cc29-4214-a67b-4064878d890b"),UUID.fromString("d93cf511-3c1f-4562-905c-93c68b3bee00"));
     }
 
+    @Test
+    public void addOrUpdateCustomerApplicants() throws Exception{
+        for(int i= 0;i<14;i++) {
+            CustomerApplicantDto dto = new CustomerApplicantDto();
+            dto.setCustomerId(UUID.fromString("569e07c9-0ebf-4002-88da-87c2777d82f2"));
+            dto.setName("申请人"+i);
+            dto.setType(ApplicantType.INDUSTRIAL_COMPANY);
+            dto.setCode("320425363652142536");
+            dto.setRecord(true);
+            dto.setRecordValidDate("2018-4-12 10:55:20");
+            dto.setArea("江苏常州");
+            TResult result = customerService.addOrUpdateCustomerApplicants(dto);
+        }
+        System.out.println(23);
+    }
+
+    @Test
+    public void deleteCustomerApplicants(){
+        customerService.deleteCustomerApplicants(UUID.fromString("2596f3c9-8055-49f6-9e98-e71477307004"),UUID.fromString("29c34b5f-392a-400b-a976-03cae1b9d2db"),UUID.fromString("33e6b009-7a29-4d3d-8007-f5082294b325"));
+        System.out.println(23);
+    }
+
+    @Test
+    public void addOrUpdateCustomerInventor() throws Exception{
+        for(int i= 0;i<14;i++) {
+            CustomerInventorDto dto = new CustomerInventorDto();
+            dto.setCustomerId(UUID.fromString("569e07c9-0ebf-4002-88da-87c2777d82f2"));
+            dto.setName("发明人"+i);
+            dto.setCountry("中国");
+            dto.setCode("320425363652142536");
+            dto.setOpen(true);
+            TResult result = customerService.addOrUpdateCustomerInventor(dto);
+        }
+        System.out.println(23);
+    }
+
+    @Test
+    public void addOrUpdateCustomerContacts() throws Exception{
+        for(int i= 0;i<14;i++) {
+            CustomerContactDto dto = new CustomerContactDto();
+            dto.setCustomerId(UUID.fromString("569e07c9-0ebf-4002-88da-87c2777d82f2"));
+            dto.setName("客户联系人"+i);
+            dto.setMobile("12345678934");
+            dto.setEmail("234@qq.com");
+            dto.setQq("2323234");
+            dto.setPhone("02585321547");
+            TResult result = customerService.addOrUpdateCustomerContact(dto);
+        }
+        System.out.println(23);
+    }
 }

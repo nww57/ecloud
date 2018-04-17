@@ -12,16 +12,10 @@ import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
-import com.sunesoft.ecloud.common.utils.BeanUtil;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -101,8 +95,10 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
             List<UUID> roleId = new ArrayList<>();
             List<String> roleName = new ArrayList<>();
             roleList.forEach(role -> {
-                roleId.add(role.getId());
-                roleName.add(role.getName());
+                if(null != role.getId()){
+                    roleId.add(role.getId());
+                    roleName.add(role.getName());
+                }
             });
             userInfo.setRoleIdList(roleId);
             userInfo.setRoleNameList(roleName);
@@ -112,12 +108,27 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
 
 
     @Override
-    public ListResult<BasicDto> getUserIdName() {
+    public ListResult<BasicDto> getUserIdName(UUID agId) {
+        if(null == agId){
+            throw new IllegalArgumentException("企业id不能为null");
+        }
         //获取所有负责人
         SqlBuilder<BasicDto> userBuilder = HSqlBuilder.hFrom(User.class, "u")
+                .where("u.agId",agId)
                 .setFieldValue("name", "u.realName")
                 .select(BasicDto.class);
         List<BasicDto> userList = queryList(userBuilder);
+        return new ListResult<>(userList);
+    }
+
+    @Override
+    public ListResult<BasicDto> getUserConsultantIdName(UUID agId) {
+        if(null == agId){
+            throw new IllegalArgumentException("企业id不能为null");
+        }
+        String sql ="select u.id,u.realName name from sys_ag_role r left join sys_ag_user_role ur on ur.roleId = r.id left join sys_user u on ur.userId = u.id where r.agId = '" +agId +"' and r.name='业务顾问'";
+        //获取所有负责人
+        List<BasicDto> userList = queryList(sql,null,BasicDto.class);
         return new ListResult<>(userList);
     }
 
@@ -327,6 +338,16 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
             throw new IllegalArgumentException("无效的用户类型");
         }
         return new ListResult<>(functionDtoList);
+    }
+
+    @Override
+    public TResult<UserDto> getUserRealNameAndRolName(UUID id) {
+        if(null == id){
+            throw new IllegalArgumentException("参数id不能为null");
+        }
+        String sql = "select u.realName,group_concat(r.name) roleName from sys_user u left join sys_ag_user_role ur on u.id = ur.userid left join sys_ag_role r on r.id = ur.roleId where u.id = '"+id+"'";
+        UserDto userDto =  queryForObject(sql,null,UserDto.class);
+        return new TResult<>(userDto);
     }
 
 

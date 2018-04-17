@@ -33,11 +33,11 @@ public class MenuServiceImplTest {
         MenuDto menuDto=new MenuDto();
 //        menuDto.setId(UUID.fromString("5612c844-5d55-4a26-916d-51ce17efc0c7"));
 
-        menuDto.setName("HHHHHHHH");
+        menuDto.setName("MMMMMMMM");
         menuDto.setSort(4);
-        menuDto.setDescription("HHHHHHHHHHHHHHH");
+        menuDto.setDescription("MMMMMMMM");
         menuDto.setType(MenuType.LINK);
-        menuDto.setPid(UUID.fromString("f7f3b5cf-3f6e-4a95-affe-5c6b49d3bbc9"));
+        menuDto.setPid(UUID.fromString("fdb86d80-03d5-45cc-83ea-0eae3b537b80"));
 
 //        MenuSimpleDto menuSimpleDto=new MenuSimpleDto();
 //        menuSimpleDto.setId(UUID.fromString("d22222bf-c28f-4d00-8682-f445f64460ba"));

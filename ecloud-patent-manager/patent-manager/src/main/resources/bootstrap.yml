@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: sys-case
+  cloud:
+    config:
+      uri: http://localhost:8888
+      fail-fast: true
+      password: admin
+      username: user
+
+eureka:
+  instance:
+      statusPageUrlPath: /case/info
+      metadata-map:
+        management.context-path: /case

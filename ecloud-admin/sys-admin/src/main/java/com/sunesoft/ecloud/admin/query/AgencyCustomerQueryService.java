@@ -1,15 +1,16 @@
 package com.sunesoft.ecloud.admin.query;
 
+import com.sunesoft.ecloud.admin.domain.agency.CustomerContact;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyCustomerCriteria;
-import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
-
-import com.sunesoft.ecloud.adminclient.dtos.CustomerApplicantDto;
-import com.sunesoft.ecloud.adminclient.dtos.CustomerContactDto;
-import com.sunesoft.ecloud.adminclient.dtos.CustomerInventorDto;
+import com.sunesoft.ecloud.adminclient.cretirias.CustomerApplicantCriteria;
+import com.sunesoft.ecloud.adminclient.cretirias.CustomerContactCriteria;
+import com.sunesoft.ecloud.adminclient.cretirias.CustomerInventorCriteria;
+import com.sunesoft.ecloud.adminclient.dtos.*;
+import com.sunesoft.ecloud.common.cretiria.TCretiria;
+import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.data.domain.Pageable;
-
 
 import java.util.UUID;
 
@@ -38,30 +39,56 @@ public interface AgencyCustomerQueryService {
 
 
     /**
-     *
-     * @param pageable
-     * @param customerId
-     * @return
+     * 查找客户申请人列表
+     * @param customerId 客户id
+     * @param criteria  分页参数
+     * @return 返回查询结果
      */
-    PagedResult<CustomerApplicantDto> findCustomerApplicantPaged(UUID customerId,Pageable pageable);
+    PagedResult<CustomerApplicantDto> findCustomerApplicantPaged(UUID customerId, CustomerApplicantCriteria criteria);
+
+    /**
+     * 根据id 查找客户申请人信息
+     * @param id id
+     * @return 返回查询结果
+     */
+    TResult<CustomerApplicantDto> findCustomerApplicantById(UUID id);
 
 
     /**
-     *
-     * @param pageable
-     * @param customerId
-     * @return
+     * 查找客户发明人列表
+     * @param customerId 客户id
+     * @param criteria 分页参数
+     * @return 返回查询结果
      */
-    PagedResult<CustomerInventorDto> findCustomerInventorPaged(UUID customerId,Pageable pageable);
+    PagedResult<CustomerInventorDto> findCustomerInventorPaged(UUID customerId,CustomerInventorCriteria criteria);
+
+    /**
+     * 根据id 查找客户发明人信息
+     * @param id id
+     * @return 返回查询结果
+     */
+    TResult<CustomerInventorDto> findCustomerInventorById(UUID id);
+
+    /**
+     * 查找客户联系人信息
+     * @param customerId 客户id
+     * @param criteria 分页参数
+     * @return 返回查询结果
+     */
+    PagedResult<CustomerContactDto> findCustomerContactsPaged(UUID customerId, CustomerContactCriteria criteria);
+
+    /**
+     * 根据id 查找客户联系人信息
+     * @param id id
+     * @return 返回查询结果
+     */
+    TResult<CustomerContactDto> findCustomerContactById(UUID id);
 
 
     /**
-     *
-     * @param pageable
-     * @param customerId
-     * @return
+     * 获取企业下客户的基本信息
+     * @param agId 企业id
+     * @return 返回查询结果
      */
-    PagedResult<CustomerContactDto> findCustomerContactsPaged(UUID customerId, Pageable pageable);
-
-
+    ListResult<AgencyCustomerBasicDto> getAgencyCustomerBasicInfo(UUID agId);
 }

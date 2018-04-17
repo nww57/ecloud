@@ -11,6 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableDiscoveryClient
 @EnableFeignClients({"com.sunesoft.ecloud.adminclient.clientService"})
 @EnableZuulProxy
+@EnableFeignClients({"com.sunesoft.ecloud.adminclient.clientService"})
+
 @ComponentScan({"com.sunesoft.ecloud"})
 public class GatewayApplication {
 

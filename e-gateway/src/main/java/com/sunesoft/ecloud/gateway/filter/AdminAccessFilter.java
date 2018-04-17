@@ -10,10 +10,12 @@ import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.utils.JsonHelper;
 import com.sunesoft.ecloud.common.utils.StringUtil;
 import com.sunesoft.ecloud.auth.UserContext;
+import com.sunesoft.ecloud.auth.configs.UserAuthConfig;
 import com.sunesoft.ecloud.auth.jwt.JwtTokenUtil;
 import com.sunesoft.ecloud.auth.jwt.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +48,8 @@ public class AdminAccessFilter extends ZuulFilter {
 
 
     @Autowired
-    private AuthServiceClient authServiceClient;
+    @Lazy
+    AuthServiceClient authServiceClient;
 
     @Override
     public String filterType() {
@@ -125,7 +128,7 @@ public class AdminAccessFilter extends ZuulFilter {
             @Override
             public boolean test(MenuFunctionDto permissionInfo) {
                 String url = permissionInfo.getResUrl();
-                String uri = url.replaceAll("\\{\\*\\}", "[a-zA-Z\\\\d]+");
+                String uri = url.replaceAll("\\{\\*\\}", "[0-9a-zA-Z-\\\\d]+");
                 String regEx = "^" + uri + "$";
                 return (Pattern.compile(regEx).matcher(requestUri).find() || requestUri.startsWith(url + "/"))
                         && method.equals(permissionInfo.getResRequestType().toString());

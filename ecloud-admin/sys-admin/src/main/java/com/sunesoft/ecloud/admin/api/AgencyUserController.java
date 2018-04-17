@@ -43,7 +43,8 @@ public class AgencyUserController {
      */
     @GetMapping("collection")
     public ListResult<BasicDto> getList () {
-        return userQueryService.getUserIdName();
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
+        return userQueryService.getUserConsultantIdName(agId);
     }
 
     /**
@@ -99,6 +100,12 @@ public class AgencyUserController {
     @DeleteMapping("")
     public TResult delete (@RequestParam UUID... ids) {
         return userService.deleteUserBatch(ids);
+    }
+
+
+    @GetMapping("realandrolename")
+    public TResult<UserDto> getUserRealNameAndRoleName(@PathVariable("userId")String userId){
+        return userQueryService.getUserRealNameAndRolName(UUID.fromString(userId));
     }
 
 }

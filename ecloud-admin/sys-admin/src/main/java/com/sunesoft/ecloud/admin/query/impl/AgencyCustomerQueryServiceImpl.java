@@ -3,10 +3,12 @@ package com.sunesoft.ecloud.admin.query.impl;
 import com.sunesoft.ecloud.admin.domain.agency.*;
 import com.sunesoft.ecloud.admin.query.AgencyCustomerQueryService;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyCustomerCriteria;
-import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
-import com.sunesoft.ecloud.adminclient.dtos.CustomerApplicantDto;
-import com.sunesoft.ecloud.adminclient.dtos.CustomerContactDto;
-import com.sunesoft.ecloud.adminclient.dtos.CustomerInventorDto;
+import com.sunesoft.ecloud.adminclient.cretirias.CustomerApplicantCriteria;
+import com.sunesoft.ecloud.adminclient.cretirias.CustomerContactCriteria;
+import com.sunesoft.ecloud.adminclient.cretirias.CustomerInventorCriteria;
+import com.sunesoft.ecloud.adminclient.dtos.*;
+import com.sunesoft.ecloud.common.cretiria.TCretiria;
+import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
@@ -60,30 +62,78 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
     }
 
     @Override
-    public PagedResult<CustomerApplicantDto> findCustomerApplicantPaged(UUID customerId, Pageable pageable) {
+    public PagedResult<CustomerApplicantDto> findCustomerApplicantPaged(UUID customerId, CustomerApplicantCriteria criteria) {
         SqlBuilder<CustomerApplicantDto> dtoBuilder = HSqlBuilder.hFrom(CustomerApplicant.class, "a")
                 .where("a.customerId", customerId)
-                .pagging(pageable.getPageNumber(),pageable.getPageSize())
+                .pagging(criteria.getPageIndex(),criteria.getPageSize())
                 .select(CustomerApplicantDto.class);
         return this.queryPaged(dtoBuilder);
     }
 
     @Override
-    public PagedResult<CustomerInventorDto> findCustomerInventorPaged(UUID customerId, Pageable pageable) {
+    public TResult<CustomerApplicantDto> findCustomerApplicantById(UUID id) {
+        if(null == id){
+            throw new IllegalArgumentException("参数id不能为null");
+        }
+        SqlBuilder<CustomerApplicantDto> dtoBuilder = HSqlBuilder.hFrom(CustomerApplicant.class, "a")
+                .where("id", id)
+                .select(CustomerApplicantDto.class);
+        return new TResult<>(queryForObject(dtoBuilder));
+    }
+
+    @Override
+    public PagedResult<CustomerInventorDto> findCustomerInventorPaged(UUID customerId, CustomerInventorCriteria criteria) {
         SqlBuilder<CustomerInventorDto> dtoBuilder = HSqlBuilder.hFrom(CustomerInventor.class, "i")
                 .where("i.customerId", customerId)
-                .pagging(pageable.getPageNumber(),pageable.getPageSize())
+                .pagging(criteria.getPageIndex(),criteria.getPageSize())
                 .select(CustomerInventorDto.class);
         return this.queryPaged(dtoBuilder);
     }
 
     @Override
-    public PagedResult<CustomerContactDto> findCustomerContactsPaged(UUID customerId, Pageable pageable) {
+    public TResult<CustomerInventorDto> findCustomerInventorById(UUID id) {
+        if(null == id){
+            throw new IllegalArgumentException("参数id不能为null");
+        }
+        SqlBuilder<CustomerInventorDto> dtoBuilder = HSqlBuilder.hFrom(CustomerInventor.class, "a")
+                .where("id", id)
+                .select(CustomerInventorDto.class);
+        return new TResult<>(queryForObject(dtoBuilder));
+    }
+
+    @Override
+    public PagedResult<CustomerContactDto> findCustomerContactsPaged(UUID customerId, CustomerContactCriteria criteria) {
         SqlBuilder<CustomerContactDto> dtoBuilder = HSqlBuilder.hFrom(CustomerContact.class, "c")
                 .where("c.customerId", customerId)
-                .pagging(pageable.getPageNumber(),pageable.getPageSize())
+                .pagging(criteria.getPageIndex(),criteria.getPageSize())
                 .select(CustomerContactDto.class);
         return this.queryPaged(dtoBuilder);
+    }
+
+    @Override
+    public TResult<CustomerContactDto> findCustomerContactById(UUID id) {
+        if(null == id){
+            throw new IllegalArgumentException("参数id不能为null");
+        }
+        SqlBuilder<CustomerContactDto> dtoBuilder = HSqlBuilder.hFrom(CustomerContact.class, "c")
+                .where("id", id)
+                .select(CustomerInventorDto.class);
+        return new TResult<>(queryForObject(dtoBuilder));
+    }
+
+    @Override
+    public ListResult<AgencyCustomerBasicDto> getAgencyCustomerBasicInfo(UUID agId) {
+        if(null == agId){
+            throw new IllegalArgumentException("企业id不能为null");
+        }
+        SqlBuilder<AgencyCustomerBasicDto> dtoBuilder = HSqlBuilder.hFrom(AgencyCustomer.class, "ac")
+                .leftJoin(User.class,"u")
+                .on("u.id = ac.consultantId")
+                .where("agId", agId)
+                .select(AgencyCustomerBasicDto.class)
+                .setFieldValue("leaderName","ac.leaderName")
+                .setFieldValue("consultantName","u.realName");
+        return new ListResult<>(queryList(dtoBuilder));
     }
 
 

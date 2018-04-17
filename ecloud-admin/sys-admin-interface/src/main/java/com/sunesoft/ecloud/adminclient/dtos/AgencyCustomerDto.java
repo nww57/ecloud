@@ -1,7 +1,7 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
-import java.util.Date;
-import java.util.List;
+import com.sunesoft.ecloud.adminclient.CustomerType;
+
 import java.util.UUID;
 
 /**
@@ -73,6 +73,21 @@ import java.util.UUID;
      * 按键数量
      */
     private Integer caseNumber;
+
+    /**
+     * 客户类型
+     */
+    private CustomerType type;
+
+    /**
+     * QQ
+     */
+    private String qq;
+
+    /**
+     * 传真
+     */
+    private String fax;
 
     public UUID getAgId() {
         return agId;
@@ -193,5 +208,29 @@ import java.util.UUID;
 
     public void setCaseNumber(Integer caseNumber) {
         this.caseNumber = caseNumber;
+    }
+
+    public CustomerType getType() {
+        return type;
+    }
+
+    public void setType(CustomerType type) {
+        this.type = type;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
     }
 }

@@ -8,6 +8,8 @@ import java.util.UUID;
  */
 public class AgentDto {
 
+    private UUID id;
+
     /**
      *姓名
      */
@@ -58,5 +60,13 @@ public class AgentDto {
 
     public void setAgId(UUID agId) {
         this.agId = agId;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 }

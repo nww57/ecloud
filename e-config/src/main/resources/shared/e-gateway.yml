@@ -37,7 +37,7 @@ zuul:
 
 gate:
   ignore:
-    startWith: /ua
+    startWith: /ua,/admin/auth/menus
 
 server:
   port: 4000

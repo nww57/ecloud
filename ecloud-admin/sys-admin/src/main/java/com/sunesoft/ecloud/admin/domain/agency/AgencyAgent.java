@@ -1,6 +1,7 @@
 package com.sunesoft.ecloud.admin.domain.agency;
 
 import com.sunesoft.ecloud.hibernate.IEntity;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,7 +37,8 @@ public class AgencyAgent extends IEntity{
     /**
      *所属企业
      */
-    @Column(name = "agId")
+    @Column(name = "agId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
     private UUID agId;
 
     public String getName() {
@@ -61,5 +63,13 @@ public class AgencyAgent extends IEntity{
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public UUID getAgId() {
+        return agId;
+    }
+
+    public void setAgId(UUID agId) {
+        this.agId = agId;
     }
 }

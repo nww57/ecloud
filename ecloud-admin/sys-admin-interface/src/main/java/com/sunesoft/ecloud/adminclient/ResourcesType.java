@@ -14,5 +14,7 @@ public enum ResourcesType {
 
     DELETE,
 
-    VIEW
+    VIEW,
+
+    LINK
 }

@@ -64,8 +64,10 @@ public class AgencyOrganizationQueryServiceImpl extends GenericQuery implements 
     }
 
     @Override
-    public ListResult<BasicDto> getOrganizationIdName() {
-
+    public ListResult<BasicDto> getOrganizationIdName(UUID agId) {
+        if(null == agId){
+            throw new IllegalArgumentException("企业id不能为null");
+        }
         SqlBuilder<BasicDto> userBuilder = HSqlBuilder.hFrom(AgencyOrganization.class,"org")
                 .select(BasicDto.class);
         List<BasicDto> orgList = queryList(userBuilder);

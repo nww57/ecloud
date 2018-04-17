@@ -47,7 +47,7 @@ public class AgencyOrganizationQueryServiceImplTest {
 
     @Test
     public void getOrganizationIdName() throws Exception {
-        ListResult<BasicDto> s = queryService.getOrganizationIdName();
+        ListResult<BasicDto> s = queryService.getOrganizationIdName(UUID.fromString("234"));
         System.out.println(23);
     }
 

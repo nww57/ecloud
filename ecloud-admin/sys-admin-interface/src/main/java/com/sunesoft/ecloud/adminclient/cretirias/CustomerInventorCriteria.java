@@ -3,7 +3,8 @@ package com.sunesoft.ecloud.adminclient.cretirias;
 import com.sunesoft.ecloud.common.cretiria.TCretiria;
 
 /**
- * Created by jzj on 2018/4/11.
+ * @Auther: niww
+ * @Date: 2018/4/13/013
  */
-public class AgentCretiria extends TCretiria {
+public class CustomerInventorCriteria extends TCretiria {
 }
