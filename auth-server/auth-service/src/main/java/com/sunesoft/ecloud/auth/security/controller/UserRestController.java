@@ -1,6 +1,5 @@
 package com.sunesoft.ecloud.auth.security.controller;
 
-import com.sunesoft.ecloud.adminclient.clientService.AuthServiceClient;
 import com.sunesoft.ecloud.auth.security.JwtTokenUtil;
 import com.sunesoft.ecloud.auth.security.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +25,6 @@ public class UserRestController {
     @Qualifier("jwtUserDetailsService")
     private UserDetailsService userDetailsService;
 
-
-    @Autowired
-    AuthServiceClient authServiceClient;
 
     @RequestMapping(value = "user", method = RequestMethod.GET)
     public JwtUser getAuthenticatedUser(HttpServletRequest request) {
