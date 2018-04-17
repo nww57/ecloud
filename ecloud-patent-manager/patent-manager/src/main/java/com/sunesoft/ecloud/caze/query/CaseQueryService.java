@@ -2,6 +2,7 @@ package com.sunesoft.ecloud.caze.query;
 
 import com.sunesoft.ecloud.caseclient.criterias.CaseInfoQueryCriteria;
 import com.sunesoft.ecloud.caseclient.dto.CaseCustomerRequestDto;
+import com.sunesoft.ecloud.caseclient.dto.CaseInfoColumnConfigureDto;
 import com.sunesoft.ecloud.caseclient.dto.CaseInfoListDto;
 import com.sunesoft.ecloud.caseclient.dto.CaseMessageListDto;
 import com.sunesoft.ecloud.common.cretiria.TCretiria;
@@ -46,4 +47,12 @@ public interface CaseQueryService {
      * @return 返回查询结果
      */
     PagedResult<CaseMessageListDto> queryCaseMessageByPaged(UUID id, TCretiria criteria);
+
+
+    /**
+     * 查询用户的 案件列表自定义配置项
+     * @param userId 用户id
+     * @return 返回查询结果
+     */
+    TResult<CaseInfoColumnConfigureDto> queryUserCaseInfoColumnConfigure(UUID userId);
 }

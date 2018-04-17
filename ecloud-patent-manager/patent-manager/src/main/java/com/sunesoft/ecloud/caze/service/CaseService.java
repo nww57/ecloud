@@ -1,9 +1,12 @@
 package com.sunesoft.ecloud.caze.service;
 
 import com.sunesoft.ecloud.caseclient.dto.CaseCustomerRequestDto;
+import com.sunesoft.ecloud.caseclient.dto.CaseInfoColumnConfigureDto;
 import com.sunesoft.ecloud.caseclient.dto.CaseInfoDto;
 import com.sunesoft.ecloud.caseclient.dto.CaseMessageDto;
 import com.sunesoft.ecloud.common.result.TResult;
+
+import java.util.UUID;
 
 /**
  * @Auther: niww
@@ -33,4 +36,12 @@ public interface CaseService {
      * @return 返回操作结果
      */
     TResult addOrUpdateCaseMessage(CaseMessageDto dto);
+
+
+    /**
+     * 配置案件查询列表项
+     * @param dto 配置参数
+     * @return 返回操作结果
+     */
+    TResult configureCaseQueryColumn(CaseInfoColumnConfigureDto dto);
 }

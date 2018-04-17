@@ -3,18 +3,9 @@ package com.sunesoft.ecloud.caze.service.impl;
 
 import com.sunesoft.ecloud.caseclient.CaseType;
 import com.sunesoft.ecloud.caseclient.PatentType;
-import com.sunesoft.ecloud.caseclient.dto.CaseCustomerRequestDto;
-import com.sunesoft.ecloud.caseclient.dto.CaseInfoDto;
-import com.sunesoft.ecloud.caseclient.dto.CaseMessageDto;
-import com.sunesoft.ecloud.caseclient.dto.PatentInfoDto;
-import com.sunesoft.ecloud.caze.domain.CaseCustomerRequest;
-import com.sunesoft.ecloud.caze.domain.CaseInfo;
-import com.sunesoft.ecloud.caze.domain.CaseMessage;
-import com.sunesoft.ecloud.caze.domain.PatentInfo;
-import com.sunesoft.ecloud.caze.repository.CaseCustomerRequestRepository;
-import com.sunesoft.ecloud.caze.repository.CaseInfoRepository;
-import com.sunesoft.ecloud.caze.repository.CaseMessageRepository;
-import com.sunesoft.ecloud.caze.repository.PatentInfoRepository;
+import com.sunesoft.ecloud.caseclient.dto.*;
+import com.sunesoft.ecloud.caze.domain.*;
+import com.sunesoft.ecloud.caze.repository.*;
 import com.sunesoft.ecloud.caze.service.CaseService;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
@@ -24,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -44,6 +34,8 @@ public class CaseServiceImpl implements CaseService {
     CaseMessageRepository caseMessageRepository;
     @Autowired
     CaseCustomerRequestRepository caseCustomerRequestRepository;
+    @Autowired
+    CaseInfoColumnConfigureRepository columnConfigureRepository;
 
 
     @Override
@@ -129,12 +121,28 @@ public class CaseServiceImpl implements CaseService {
         if (null == caseInfo) {
             throw new IllegalArgumentException("无效的案件id");
         }
+        if(null == dto.getMessagerId()){
+            throw new IllegalArgumentException("未设置留言人id");
+        }
+//        TResult<UserDto> user = userClient.getUserRealNameAndRoleName();
         CaseMessage message = new CaseMessage();
         message.setCaseInfo(caseInfo);
         message.setContent(dto.getContent());
-        message.setMessagerRealName("业务顾问");
-        message.setMessagerRoleName("张三");
+        message.setMessagerRealName("张三");
+        message.setMessagerRoleName("业务顾问");
         caseMessageRepository.saveAndFlush(message);
+        return ResultFactory.success();
+    }
+
+    @Override
+    public TResult configureCaseQueryColumn(CaseInfoColumnConfigureDto dto) {
+        if(null == dto.getUserId() || StringUtils.isEmpty(dto.getConfigure())){
+            throw new IllegalArgumentException("参数不能为null");
+        }
+        CaseInfoColumnConfigure configureEntity = new CaseInfoColumnConfigure();
+        configureEntity.setUserId(dto.getUserId());
+        configureEntity.setConfigure(dto.getConfigure());
+        columnConfigureRepository.saveAndFlush(configureEntity);
         return ResultFactory.success();
     }
 

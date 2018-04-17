@@ -3,10 +3,7 @@ package com.sunesoft.ecloud.caze.query.impl;
 import com.sunesoft.ecloud.caseclient.PatentType;
 import com.sunesoft.ecloud.caseclient.criterias.CaseInfoQueryCriteria;
 import com.sunesoft.ecloud.caseclient.dto.*;
-import com.sunesoft.ecloud.caze.domain.CaseCustomerRequest;
-import com.sunesoft.ecloud.caze.domain.CaseInfo;
-import com.sunesoft.ecloud.caze.domain.CaseMessage;
-import com.sunesoft.ecloud.caze.domain.PatentInfo;
+import com.sunesoft.ecloud.caze.domain.*;
 import com.sunesoft.ecloud.caze.query.CaseQueryService;
 import com.sunesoft.ecloud.common.cretiria.TCretiria;
 import com.sunesoft.ecloud.common.result.PagedResult;
@@ -83,7 +80,7 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
             params.put("caseCreateDateStart", criteria.getCaseCreateDateStart());
         }
         if (StringUtils.isNotEmpty(criteria.getCaseCreateDateEnd())) {
-            sql.append(" and ci.create_datetime <= :caseCrateDateEnd");
+            sql.append(" and ci.create_datetime <= :caseCreateDateEnd");
             params.put("caseCreateDateEnd", criteria.getCaseCreateDateEnd());
         }
         if (null != criteria.getFeeReduceRate()) {
@@ -163,6 +160,17 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
                 .setFieldValue("messageDate", "c.create_datetime");
         return queryPaged(sqlBuilder);
 
+    }
+
+    @Override
+    public TResult<CaseInfoColumnConfigureDto> queryUserCaseInfoColumnConfigure(UUID userId) {
+        if(null == userId){
+            throw new IllegalArgumentException("用户id不能为null");
+        }
+        SqlBuilder<CaseInfoColumnConfigureDto> sqlBuilder = HSqlBuilder.hFrom(CaseInfoColumnConfigure.class, "c")
+                .where("userId", userId)
+                .select(CaseInfoColumnConfigureDto.class);
+        return new TResult<>(queryForObject(sqlBuilder));
     }
 
     private CaseInfoListDto transform(CasePatentInfoDto info) {
