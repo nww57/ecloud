@@ -1,12 +1,11 @@
 package com.sunesoft.ecloud.caze.api;
 
 
+import com.sunesoft.ecloud.adminclient.clientService.UserServiceClient;
+import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.auth.UserContext;
 import com.sunesoft.ecloud.caseclient.criterias.CaseInfoQueryCriteria;
-import com.sunesoft.ecloud.caseclient.dto.CaseCustomerRequestDto;
-import com.sunesoft.ecloud.caseclient.dto.CaseInfoColumnConfigureDto;
-import com.sunesoft.ecloud.caseclient.dto.CaseInfoDto;
-import com.sunesoft.ecloud.caseclient.dto.CaseInfoListDto;
+import com.sunesoft.ecloud.caseclient.dto.*;
 import com.sunesoft.ecloud.caze.query.CaseQueryService;
 import com.sunesoft.ecloud.caze.service.CaseService;
 import com.sunesoft.ecloud.common.cretiria.TCretiria;
@@ -28,8 +27,8 @@ public class CaseController {
     CaseQueryService caseQueryService;
     @Autowired
     CaseService caseService;
-    UUID agID=UUID.fromString("01d134d6-3eef-4b60-9979-c6392554da25");
-    UUID userID=UUID.fromString("fc98e1ca-92f0-4f2e-b68c-f0129978c1bf");
+    @Autowired
+    UserServiceClient userServiceClient;
 
     /**
      * 查询案件列表
@@ -38,7 +37,8 @@ public class CaseController {
      */
     @GetMapping("search")
     public PagedResult<CaseInfoListDto> search(CaseInfoQueryCriteria criteria){
-        criteria.setAgId(agID);
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
+        criteria.setAgId(agId);
         return caseQueryService.queryCaseInfoByPaged(criteria);
     }
 
@@ -53,15 +53,16 @@ public class CaseController {
     }
 
     /**
-     * 查询案件对应客户要求
-     * @param id
-     * @param criteria
+     * 删除案件
+     * @param ids
      * @return
      */
-    @GetMapping("{id}/customerRequest")
-    public PagedResult<CaseCustomerRequestDto> getCustomerRequest(@PathVariable UUID id,TCretiria criteria){
-        return caseQueryService.queryCaseCustomerRequestByPaged(id,criteria);
+    @DeleteMapping("")
+    public TResult deleteCase(@RequestParam UUID... ids){
+        return caseService.deleteCase(ids);
     }
+
+
 
     /**
      * 查询用户配置项
@@ -69,6 +70,7 @@ public class CaseController {
      */
     @GetMapping("config")
     public TResult<CaseInfoColumnConfigureDto> getConfig(){
+        UUID userID = UUID.fromString(UserContext.getUserID());
         return caseQueryService.queryUserCaseInfoColumnConfigure(userID);
     }
 
@@ -79,6 +81,7 @@ public class CaseController {
      */
     @PostMapping("config")
     public TResult setConfig(@RequestBody CaseInfoColumnConfigureDto dto){
+        UUID userID = UUID.fromString(UserContext.getUserID());
         dto.setUserId(userID);
         return caseService.configureCaseQueryColumn(dto);
     }
@@ -90,20 +93,96 @@ public class CaseController {
      */
     @PostMapping("")
     public TResult addCase(@RequestBody CaseInfoDto dto){
-        dto.setAgId(agID);
-        dto.setCaseCreatorName("测试");
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
+        dto.setAgId(agId);
+        dto.setCaseCreatorName(UserContext.getRealName());
         return caseService.addOrUpdateCase(dto);
     }
 
     /**
-     * 获取案件对应客户要求
+     * 更新案件信息
      * @param cid
-     * @param cretiria
      * @return
      */
-    @GetMapping("{cid}/customerRequest")
-    public PagedResult<CaseCustomerRequestDto> getCustomerRequestList(@PathVariable UUID cid,TCretiria cretiria){
-        return caseQueryService.queryCaseCustomerRequestByPaged(cid,cretiria);
+    @PutMapping("{cid}")
+    public TResult updateCase(@PathVariable UUID cid,@RequestBody CaseInfoDto dto){
+        return caseService.addOrUpdateCase(dto);
     }
+
+    /**
+     * 查询案件对应客户要求
+     * @param id
+     * @param criteria
+     * @return
+     */
+    @GetMapping("{id}/customerRequest")
+    public PagedResult<CaseCustomerRequestDto> getCustomerRequest(@PathVariable UUID id,TCretiria criteria){
+        return caseQueryService.queryCaseCustomerRequestByPaged(id,criteria);
+    }
+
+    /**
+     * 新增客户要求
+     * @param cid
+     * @param dto
+     * @return
+     */
+    @PostMapping("{cid}/customerRequest")
+    public TResult addCustomerRequest(@PathVariable UUID cid,@RequestBody CaseCustomerRequestDto dto){
+        dto.setCaseId(cid);
+        return caseService.addOrUpdateCaseCustomerRequest(dto);
+    }
+
+    /**
+     * 更新客户要求
+     * @param cid
+     * @param dto
+     * @return
+     */
+    @PutMapping("{cid}/customerRequest/{id}")
+    public TResult updateCustomerRequest(@PathVariable UUID cid,@PathVariable UUID id,@RequestBody CaseCustomerRequestDto dto){
+        dto.setCaseId(cid);
+        return caseService.addOrUpdateCaseCustomerRequest(dto);
+    }
+
+    /**
+     * 删除客户要求
+     * @param ids
+     * @return
+     */
+    @DeleteMapping("customerRequest")
+    public TResult deleteCustomerRequest(@RequestParam UUID... ids){
+        return caseService.deleteCaseCustomerRequest(ids);
+    }
+
+    /**
+     * 创建留言
+     * @param dto
+     * @return
+     */
+    @PostMapping("{cid}/caseMessage")
+    public TResult createCaseMessage(@PathVariable UUID cid,CaseMessageDto dto){
+        dto.setCaseId(cid);
+        UUID userID = UUID.fromString(UserContext.getUserID());
+        dto.setMessagerId(userID);
+        TResult<UserDto> result = userServiceClient.getUserRealNameAndRoleName(userID);
+        UserDto userDto=result.getResult();
+        dto.setMessagerRoleName(userDto.getRoleName());
+        dto.setMessagerRealName(userDto.getRealName());
+        return caseService.addOrUpdateCaseMessage(dto);
+    }
+
+    /**
+     * 查询案件留言列表
+     * @param cid
+     * @param criteria
+     * @return
+     */
+    @GetMapping("{cid}/caseMessage")
+    public PagedResult<CaseMessageListDto> getCaseMessage(@PathVariable UUID cid,TCretiria criteria){
+        return caseQueryService.queryCaseMessageByPaged(cid,criteria);
+    }
+
+
+
 
 }
