@@ -1,4 +1,4 @@
-package com.sunesoft.ecloud.admin.interceptor;
+package com.sunesoft.ecloud.adminclient.interceptor;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;

@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.caze.api;
 
+
 import com.sunesoft.ecloud.auth.UserContext;
 import com.sunesoft.ecloud.caseclient.criterias.CaseInfoQueryCriteria;
 import com.sunesoft.ecloud.caseclient.dto.CaseCustomerRequestDto;
@@ -13,6 +14,7 @@ import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.UUID;
 
@@ -103,6 +105,5 @@ public class CaseController {
     public PagedResult<CaseCustomerRequestDto> getCustomerRequestList(@PathVariable UUID cid,TCretiria cretiria){
         return caseQueryService.queryCaseCustomerRequestByPaged(cid,cretiria);
     }
-
 
 }

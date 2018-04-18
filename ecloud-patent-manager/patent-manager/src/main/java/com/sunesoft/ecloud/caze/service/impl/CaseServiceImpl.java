@@ -1,6 +1,8 @@
 package com.sunesoft.ecloud.caze.service.impl;
 
 
+import com.sunesoft.ecloud.adminclient.clientService.UserServiceClient;
+import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.caseclient.CaseType;
 import com.sunesoft.ecloud.caseclient.PatentType;
 import com.sunesoft.ecloud.caseclient.dto.*;
@@ -36,6 +38,8 @@ public class CaseServiceImpl implements CaseService {
     CaseCustomerRequestRepository caseCustomerRequestRepository;
     @Autowired
     CaseInfoColumnConfigureRepository columnConfigureRepository;
+    @Autowired
+    UserServiceClient userServiceClient;
 
 
     @Override
@@ -132,15 +136,15 @@ public class CaseServiceImpl implements CaseService {
         if (null == caseInfo) {
             throw new IllegalArgumentException("无效的案件id");
         }
-        if(null == dto.getMessagerId()){
-            throw new IllegalArgumentException("未设置留言人id");
+        if(null == dto.getMessagerId() || StringUtils.isEmpty(dto.getMessagerRealName())){
+            throw new IllegalArgumentException("未设置留言人信息");
         }
-//        TResult<UserDto> user = userClient.getUserRealNameAndRoleName();
         CaseMessage message = new CaseMessage();
         message.setCaseInfo(caseInfo);
         message.setContent(dto.getContent());
-        message.setMessagerRealName("张三");
-        message.setMessagerRoleName("业务顾问");
+        message.setMessagerId(dto.getMessagerId());
+        message.setMessagerRealName(dto.getMessagerRealName());
+        message.setMessagerRoleName(dto.getMessagerRoleName());
         caseMessageRepository.saveAndFlush(message);
         return ResultFactory.success();
     }

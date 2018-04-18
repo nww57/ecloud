@@ -19,6 +19,12 @@ public class CaseMessage extends IEntity {
     private CaseInfo caseInfo;
 
     /**
+     * 留言人id
+     */
+    @Column(name = "messagerId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
+    private UUID messagerId;
+    /**
      * 留言人角色名
      */
     @Column(name = "messagerRoleName")
@@ -33,8 +39,7 @@ public class CaseMessage extends IEntity {
     /**
      *留言内容
      */
-    @Column(name = "content")
-    @Type(type = "text")
+    @Column(name = "content",columnDefinition="TEXT")
     private String content;
 
     /**
@@ -82,5 +87,13 @@ public class CaseMessage extends IEntity {
 
     public void setFileId(UUID fileId) {
         this.fileId = fileId;
+    }
+
+    public UUID getMessagerId() {
+        return messagerId;
+    }
+
+    public void setMessagerId(UUID messagerId) {
+        this.messagerId = messagerId;
     }
 }

@@ -42,9 +42,6 @@ public class MenuQueryServiceImpl extends GenericQuery implements MenuQueryServi
     @Autowired
     MenuRepository menuRepository;
 
-    @Value("${ecloud.agId}")
-    private UUID agId;
-
     @Override
     public ListResult<MenuDto> findAllMenu() {//要有功能的
         //取出所有菜单

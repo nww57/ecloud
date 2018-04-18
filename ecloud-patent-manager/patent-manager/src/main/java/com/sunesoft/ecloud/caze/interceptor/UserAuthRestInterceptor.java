@@ -1,4 +1,4 @@
-package com.sunesoft.ecloud.admin.interceptor;
+package com.sunesoft.ecloud.caze.interceptor;
 
 import com.sunesoft.ecloud.auth.UserContext;
 import com.sunesoft.ecloud.auth.exeption.AgencyNotFoundException;

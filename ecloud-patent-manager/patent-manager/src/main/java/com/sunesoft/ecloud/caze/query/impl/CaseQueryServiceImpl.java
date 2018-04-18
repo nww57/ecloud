@@ -119,7 +119,8 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
                 " ci.feeReduceRate,  " +
                 " ci.create_datetime caseCreateDate,  " +
                 " ci.comments,  " +
-                " ac. NAME customerName,  " +
+                " ac.id customerId , "+
+                " ac.NAME customerName,  " +
                 " ac.leader customerLeader,  " +
                 " ac.leaderMobile customerLeaderMobile,  " +
                 " u.realName customerConsultantName,  " +
