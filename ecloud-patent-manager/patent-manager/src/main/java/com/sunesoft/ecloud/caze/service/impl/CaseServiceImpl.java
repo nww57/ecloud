@@ -47,7 +47,7 @@ public class CaseServiceImpl implements CaseService {
         if (null == dto.getId() && null == dto.getAgId()) {
             throw new IllegalArgumentException("企业id不能为null");
         }
-        if (StringUtils.isEmpty(dto.getCaseCreatorName())) {
+        if (null == dto.getId() && StringUtils.isEmpty(dto.getCaseCreatorName())) {
             throw new IllegalArgumentException("未设置立案人姓名");
         }
         if (null == dto.getCaseType()) {
