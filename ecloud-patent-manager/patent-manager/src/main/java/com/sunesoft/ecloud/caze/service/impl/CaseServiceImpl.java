@@ -126,6 +126,15 @@ public class CaseServiceImpl implements CaseService {
     }
 
     @Override
+    public TResult deleteCaseCustomerRequest(UUID... id) {
+        if(null ==id || id.length ==0){
+            throw new IllegalArgumentException("参数不能为null");
+        }
+        caseCustomerRequestRepository.deleteBatch(id);
+        return ResultFactory.success();
+    }
+
+    @Override
     public TResult addOrUpdateCaseMessage(CaseMessageDto dto) {
         UUID caseId = dto.getCaseId();
         if (null == caseId) {

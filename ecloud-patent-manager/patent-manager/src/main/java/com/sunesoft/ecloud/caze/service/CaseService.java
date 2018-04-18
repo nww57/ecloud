@@ -36,6 +36,13 @@ public interface CaseService {
      */
     TResult addOrUpdateCaseCustomerRequest(CaseCustomerRequestDto dto);
 
+    /**
+     * 删除客户要求
+     * @param id id
+     * @return 返回操作结果
+     */
+    TResult deleteCaseCustomerRequest(UUID... id);
+
 
     /**
      * 创建/修改 案件留言
