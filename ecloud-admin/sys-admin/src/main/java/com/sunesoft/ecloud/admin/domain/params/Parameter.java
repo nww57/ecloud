@@ -2,10 +2,7 @@ package com.sunesoft.ecloud.admin.domain.params;
 
 import com.sunesoft.ecloud.hibernate.IEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.UUID;
 
 /**
@@ -14,58 +11,58 @@ import java.util.UUID;
  * @Date: 2018/4/13
  */
 @Entity
-@Table(name = "sys_parameters", schema = "ecloud", catalog = "")
-public class Parameters extends IEntity {
+@Table(name = "sys_parameter", schema = "ecloud", catalog = "")
+public class Parameter extends IEntity {
 
     /**
-     *隶属于参数类型的ID
+     *隶属于参数类型
      */
-    @JoinColumn(name = "typeId")
-    @ManyToOne
-    private UUID typeId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "parameterId")
+    private ParameterType parameterType;
 
-    @JoinColumn(name = "paramName")
+    @Column(name = "paramName")
     private String paramName;
 
-    @JoinColumn(name = "paramKey")
+    @Column(name = "paramKey")
     private String paramKey;
 
-    @JoinColumn(name = "paramValue")
+    @Column(name = "paramValue")
     private String paramValue;
 
-    @JoinColumn(name = "paramDesc")
+    @Column(name = "paramDesc")
     private String paramDesc;
 
-    @JoinColumn(name = "paramSort")
+    @Column(name = "paramSort")
     private Integer paramSort;
 
-    @JoinColumn(name = "remark")
+    @Column(name = "remark")
     private String remark;
 
-    @JoinColumn(name = "attr1")
+    @Column(name = "attr1")
     private String attr1;
 
-    @JoinColumn(name = "attr2")
+    @Column(name = "attr2")
     private String attr2;
 
-    @JoinColumn(name = "attr3")
+    @Column(name = "attr3")
     private String attr3;
 
-    @JoinColumn(name = "attr4")
+    @Column(name = "attr4")
     private String attr4;
 
-    @JoinColumn(name = "attr5")
+    @Column(name = "attr5")
     private String attr5;
 
-    @JoinColumn(name = "attr6")
+    @Column(name = "attr6")
     private String attr6;
 
-    public UUID getTypeId() {
-        return typeId;
+    public ParameterType getParameterType() {
+        return parameterType;
     }
 
-    public void setTypeId(UUID typeId) {
-        this.typeId = typeId;
+    public void setParameterType(ParameterType parameterType) {
+        this.parameterType = parameterType;
     }
 
     public String getParamName() {

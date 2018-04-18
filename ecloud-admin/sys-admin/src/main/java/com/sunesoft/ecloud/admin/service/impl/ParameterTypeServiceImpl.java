@@ -1,9 +1,61 @@
 package com.sunesoft.ecloud.admin.service.impl;
 
+import com.sun.tools.corba.se.idl.constExpr.Expression;
+import com.sunesoft.ecloud.admin.domain.params.ParameterType;
+import com.sunesoft.ecloud.admin.repository.ParameterTypeRepository;
+import com.sunesoft.ecloud.admin.service.ParameterTypeService;
+import com.sunesoft.ecloud.adminclient.dtos.ParameterTypeDto;
+import com.sunesoft.ecloud.common.result.TResult;
+import com.sunesoft.ecloud.common.utils.BeanUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
+
+import static com.sun.tools.corba.se.idl.constExpr.Expression.one;
+import static java.awt.SystemColor.menu;
+
 /**
  * @author: jiangzhenjing
  * @date: 2018/4/17 下午4:28
  * -
  */
-public class ParameterTypeServiceImpl {
+@Service
+@Transactional
+public class ParameterTypeServiceImpl implements ParameterTypeService {
+
+    @Autowired
+    ParameterTypeRepository parameterTypeRepository;
+
+
+    @Override
+    public TResult<ParameterTypeDto> addOrUpdate(ParameterTypeDto dto) {
+        ParameterType parameterType;
+        if (dto.getId() != null) {//修改
+            parameterType = parameterTypeRepository.findOne(dto.getId());
+        } else {//新增
+            parameterType = new ParameterType();
+        }
+        BeanUtil.copyPropertiesIgnoreNull(dto, parameterType);
+        ParameterType result =parameterTypeRepository.save(parameterType);
+        if (dto.getPid() != null && dto.getId()==null) {//有父节点，并且是新增菜单
+            ParameterType one = parameterTypeRepository.findOne(dto.getPid());//父级菜单
+            if (one != null) {
+                one.getChildren().add(parameterType);
+                parameterType.setParentParamType(one);
+            }
+            result = parameterTypeRepository.save(parameterType);
+        }
+        return new TResult(result);
+    }
+
+    @Override
+    public TResult<ParameterTypeDto> delete(UUID uuid) {
+        if (uuid != null) {
+            parameterTypeRepository.delete(uuid);
+            return new TResult<>(true, "删除成功！");
+        }
+        return new TResult<>(false, "删除失败！");
+    }
 }

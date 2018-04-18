@@ -1,25 +1,26 @@
-package com.sunesoft.ecloud.admin.query;
+package com.sunesoft.ecloud.admin.service;
 
 import com.sunesoft.ecloud.adminclient.dtos.ParameterTypeDto;
 import com.sunesoft.ecloud.common.result.TResult;
+
 import java.util.UUID;
 
 /**
  * @author: jiangzhenjing
  * @date: 2018/4/17 下午3:30
- * -参数类型查询接口
+ * -参数类型操作接口
  */
-public interface ParameterTypeQueryService {
+public interface ParameterTypeService {
 
     /**
-     * 根据id查询参数类型
+     * 新增修改接口
      */
-    TResult<ParameterTypeDto> queryParaneterTypeById(UUID uuid);
+    TResult<ParameterTypeDto> addOrUpdate(ParameterTypeDto dto);
 
 
     /**
-     * 查询所有参数类型
+     * 删除接口
      */
-    TResult<ParameterTypeDto> queryAllParaneterType();
+    TResult<ParameterTypeDto> delete(UUID uuid);
 
 }
