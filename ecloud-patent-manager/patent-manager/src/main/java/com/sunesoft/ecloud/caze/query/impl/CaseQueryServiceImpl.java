@@ -154,13 +154,17 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
         if (null == id) {
             throw new IllegalArgumentException("案件id不能为null");
         }
-        SqlBuilder<CaseMessageListDto> sqlBuilder = HSqlBuilder.hFrom(CaseMessage.class, "c")
-                .where("c.caseId", id)
-                .pagging(criteria.getPageIndex(), criteria.getPageSize())
-                .select(CaseMessageListDto.class)
-                .setFieldValue("messageDate", "c.create_datetime");
-        return queryPaged(sqlBuilder);
-
+        String sql = "select DATE_FORMAT(m.create_datetime, '%Y-%c-%d %h:%i:%s') messageDate,m.content,m.messagerId,u.realName messagerRealName,GROUP_CONCAT(r.name) messagerRoleName  from case_message m LEFT JOIN sys_user u on m.messagerId = u.id " +
+                " LEFT JOIN sys_ag_user_role ur on ur.userId = u.id " +
+                " LEFT JOIN sys_ag_role r on ur.roleId = r.id " +
+                " GROUP BY m.id,u.id ";
+        return queryPaged(criteria.getPageIndex(),criteria.getPageSize(),sql,null,CaseMessageListDto.class);
+//        SqlBuilder<CaseMessageListDto> sqlBuilder = HSqlBuilder.hFrom(CaseMessage.class, "c")
+//                .where("c.caseId", id)
+//                .pagging(criteria.getPageIndex(), criteria.getPageSize())
+//                .select(CaseMessageListDto.class)
+//                .setFieldValue("messageDate", "c.create_datetime");
+//        return queryPaged(sqlBuilder);
     }
 
     @Override

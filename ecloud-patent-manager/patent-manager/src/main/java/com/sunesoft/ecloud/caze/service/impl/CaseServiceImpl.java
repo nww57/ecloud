@@ -144,7 +144,7 @@ public class CaseServiceImpl implements CaseService {
         if (null == caseInfo) {
             throw new IllegalArgumentException("无效的案件id");
         }
-        if (null == dto.getMessagerId() || StringUtils.isEmpty(dto.getMessagerRealName())) {
+        if (null == dto.getMessagerId()) {
             throw new IllegalArgumentException("未设置留言人信息");
         }
         CaseMessage message = new CaseMessage();
