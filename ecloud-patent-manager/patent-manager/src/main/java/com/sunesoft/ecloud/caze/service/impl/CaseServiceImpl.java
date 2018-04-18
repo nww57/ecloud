@@ -1,6 +1,7 @@
 package com.sunesoft.ecloud.caze.service.impl;
 
 
+import com.sunesoft.ecloud.adminclient.clientService.UserServiceClient;
 import com.sunesoft.ecloud.caseclient.CaseType;
 import com.sunesoft.ecloud.caseclient.PatentType;
 import com.sunesoft.ecloud.caseclient.dto.*;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -36,15 +39,17 @@ public class CaseServiceImpl implements CaseService {
     CaseCustomerRequestRepository caseCustomerRequestRepository;
     @Autowired
     CaseInfoColumnConfigureRepository columnConfigureRepository;
+    @Autowired
+    UserServiceClient userServiceClient;
 
 
     @Override
     public TResult addOrUpdateCase(CaseInfoDto dto) {
         //检查参数
-        if (null == dto.getAgId()) {
+        if (null == dto.getId() && null == dto.getAgId()) {
             throw new IllegalArgumentException("企业id不能为null");
         }
-        if (StringUtils.isEmpty(dto.getCaseCreatorName())) {
+        if (null == dto.getId() && StringUtils.isEmpty(dto.getCaseCreatorName())) {
             throw new IllegalArgumentException("未设置立案人姓名");
         }
         if (null == dto.getCaseType()) {
@@ -63,6 +68,8 @@ public class CaseServiceImpl implements CaseService {
         CaseInfo caseInfo;
         if (null == caseId) {
             caseInfo = new CaseInfo();
+            String caseNo = caseRepository.generateCaseNo(dto.getAgId().toString());
+            caseInfo.setCaseNo(caseNo);
         } else {
             caseInfo = caseRepository.findOne(caseId);
         }
@@ -85,6 +92,17 @@ public class CaseServiceImpl implements CaseService {
             }
         }
         return new TResult<>(caseInfo.getId());
+    }
+
+    @Override
+    public TResult deleteCase(UUID... ids) {
+        if (null == ids || ids.length == 0) {
+            throw new IllegalArgumentException("案件id不能为null");
+        }
+        //逻辑删除
+        caseRepository.deleteBatch(ids);
+        //todo 删除专利信息
+        return ResultFactory.success();
     }
 
     @Override
@@ -112,31 +130,64 @@ public class CaseServiceImpl implements CaseService {
     }
 
     @Override
+    public TResult deleteCaseCustomerRequest(UUID... id) {
+        if (null == id || id.length == 0) {
+            throw new IllegalArgumentException("参数不能为null");
+        }
+        caseCustomerRequestRepository.deleteBatch(id);
+        return ResultFactory.success();
+    }
+
+    @Override
     public TResult addOrUpdateCaseMessage(CaseMessageDto dto) {
-        UUID caseId = dto.getCaseId();
-        if (null == caseId) {
-            throw new IllegalArgumentException("案件id不能为null");
+        UUID id = dto.getId();
+        if (null == id) {
+            UUID caseId = dto.getCaseId();
+            if (null == caseId) {
+                throw new IllegalArgumentException("案件id不能为null");
+            }
+            CaseInfo caseInfo = caseRepository.findOne(caseId);
+            if (null == caseInfo) {
+                throw new IllegalArgumentException("无效的案件id");
+            }
+            if (null == dto.getMessagerId()) {
+                throw new IllegalArgumentException("未设置留言人信息");
+            }
+            CaseMessage message = new CaseMessage();
+            message.setCaseInfo(caseInfo);
+            message.setContent(dto.getContent());
+            message.setMessagerId(dto.getMessagerId());
+            message.setMessagerRealName(dto.getMessagerRealName());
+            message.setMessagerRoleName(dto.getMessagerRoleName());
+            caseMessageRepository.saveAndFlush(message);
+        } else {
+            CaseMessage message = caseMessageRepository.findOne(id);
+            message.setContent(dto.getContent());
+            caseMessageRepository.saveAndFlush(message);
         }
-        CaseInfo caseInfo = caseRepository.findOne(caseId);
-        if (null == caseInfo) {
-            throw new IllegalArgumentException("无效的案件id");
+        return ResultFactory.success();
+    }
+
+    @Override
+    public TResult deleteCaseMessage(UUID userId, UUID... id) {
+        if (null == userId || null == id || id.length == 0) {
+            throw new IllegalArgumentException("参数不正确");
         }
-        if(null == dto.getMessagerId()){
-            throw new IllegalArgumentException("未设置留言人id");
+        List<String> idString = new ArrayList<>();
+        for (int i = 0; i < id.length; i++) {
+            idString.add(id[i].toString());
         }
-//        TResult<UserDto> user = userClient.getUserRealNameAndRoleName();
-        CaseMessage message = new CaseMessage();
-        message.setCaseInfo(caseInfo);
-        message.setContent(dto.getContent());
-        message.setMessagerRealName("张三");
-        message.setMessagerRoleName("业务顾问");
-        caseMessageRepository.saveAndFlush(message);
+        List<String> userIdList = caseMessageRepository.queryMessager(idString);
+        if (userIdList.size() > 1 || !Objects.equals(userId.toString(), userIdList.get(0))) {
+            return new TResult("不能删除其他人的留言");
+        }
+        caseMessageRepository.deleteBatch(id);
         return ResultFactory.success();
     }
 
     @Override
     public TResult configureCaseQueryColumn(CaseInfoColumnConfigureDto dto) {
-        if(null == dto.getUserId() || StringUtils.isEmpty(dto.getConfigure())){
+        if (null == dto.getUserId() || StringUtils.isEmpty(dto.getConfigure())) {
             throw new IllegalArgumentException("参数不能为null");
         }
         CaseInfoColumnConfigure configureEntity = new CaseInfoColumnConfigure();

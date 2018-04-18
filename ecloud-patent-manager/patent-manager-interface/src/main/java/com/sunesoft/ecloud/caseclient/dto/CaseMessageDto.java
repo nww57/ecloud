@@ -8,6 +8,9 @@ import java.util.UUID;
  */
 public class CaseMessageDto {
 
+    private UUID id;
+
+
     /**
      * 案件id
      */
@@ -71,5 +74,13 @@ public class CaseMessageDto {
 
     public void setMessagerId(UUID messagerId) {
         this.messagerId = messagerId;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 }

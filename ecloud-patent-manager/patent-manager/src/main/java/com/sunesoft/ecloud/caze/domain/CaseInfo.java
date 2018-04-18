@@ -75,7 +75,7 @@ public class CaseInfo extends IEntity {
     private String creatorName;
 
     public CaseInfo() {
-        this.caseNo = "C"+UUID.randomUUID().toString().substring(0,6);
+
     }
 
     public String getCaseNo() {

@@ -33,9 +33,6 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @Value("${ecloud.agId}")
-    private UUID agId;
-
     /**
      * 用户基本信息
      * @return

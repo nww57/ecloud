@@ -6,11 +6,9 @@ import com.sunesoft.ecloud.adminclient.cretirias.AgencyCustomerCriteria;
 import com.sunesoft.ecloud.adminclient.cretirias.CustomerApplicantCriteria;
 import com.sunesoft.ecloud.adminclient.cretirias.CustomerContactCriteria;
 import com.sunesoft.ecloud.adminclient.cretirias.CustomerInventorCriteria;
-import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
-import com.sunesoft.ecloud.adminclient.dtos.CustomerApplicantDto;
-import com.sunesoft.ecloud.adminclient.dtos.CustomerContactDto;
-import com.sunesoft.ecloud.adminclient.dtos.CustomerInventorDto;
+import com.sunesoft.ecloud.adminclient.dtos.*;
 import com.sunesoft.ecloud.auth.UserContext;
+import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -235,4 +233,16 @@ public class AgencyCustomerController {
     public void deleteContact (@RequestParam UUID... ids) {
         agencyCustomerService.deleteCustomerContacts(ids);
     }
+
+    /**
+     * 获取机构下对应客户列表
+     * @param
+     * @return
+     */
+    @GetMapping("agencyCustomer")
+    public ListResult<AgencyCustomerBasicDto> getAgencyCustomer(){
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
+        return agencyCustomerQueryService.getAgencyCustomerBasicInfo(agId);
+    }
+
 }

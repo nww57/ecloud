@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.UUID;
 
@@ -48,7 +49,7 @@ public class CaseServiceImplTest {
     public void addOrUpdateCaseCustomerRequest() throws Exception {
         CaseCustomerRequestDto dto = new CaseCustomerRequestDto();
         dto.setCaseId(UUID.fromString("9cac8eaf-cd2d-4a9d-81ef-2526a71bd5fe"));
-        dto.setRequestType(CaseCustomerRequestType.PAYOFFICIALFEEBYSELF);
+        dto.setRequestType(CaseCustomerRequestType.PAYOFFICIALFEEBYSELF_DEMAND);
         dto.setTitle("");
         dto.setDescription("我要官费自缴");
         TResult result = caseService.addOrUpdateCaseCustomerRequest(dto);
@@ -60,8 +61,15 @@ public class CaseServiceImplTest {
     public void addOrUpdateCaseMessage() throws Exception {
         CaseMessageDto messageDto = new CaseMessageDto();
         messageDto.setCaseId(UUID.fromString("9cac8eaf-cd2d-4a9d-81ef-2526a71bd5fe"));
-        messageDto.setContent("来看看的");
+        messageDto.setMessagerId(UUID.fromString("a0924fac-4270-4fbc-b2ac-af823ecdcc66"));
+        messageDto.setContent("来看看的2");
         TResult result = caseService.addOrUpdateCaseMessage(messageDto);
+        System.out.println(23);
+    }
+
+    @Test
+    public void deleteCaseCustomerRequest(){
+        caseService.deleteCaseCustomerRequest(UUID.fromString("6059904c-9463-4553-ab2f-f2e322110f01"));
         System.out.println(23);
     }
 
