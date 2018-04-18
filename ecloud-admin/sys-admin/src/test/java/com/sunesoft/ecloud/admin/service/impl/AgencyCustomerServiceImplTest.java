@@ -1,5 +1,7 @@
 package com.sunesoft.ecloud.admin.service.impl;
 
+import com.sunesoft.ecloud.admin.domain.agency.AgencyCustomer;
+import com.sunesoft.ecloud.admin.repository.AgencyCustomerRepository;
 import com.sunesoft.ecloud.admin.service.AgencyCustomerService;
 import com.sunesoft.ecloud.adminclient.ApplicantType;
 import com.sunesoft.ecloud.adminclient.dtos.AgencyCustomerDto;
@@ -26,6 +28,8 @@ public class AgencyCustomerServiceImplTest {
 
     @Autowired
     AgencyCustomerService customerService;
+    @Autowired
+    AgencyCustomerRepository customerRepository;
 
     @Test
     public void addOrUpdateAgencyCustomer() throws Exception {
@@ -64,7 +68,7 @@ public class AgencyCustomerServiceImplTest {
             dto.setCode("320425363652142536");
             dto.setRecord(true);
             dto.setRecordValidDate("2018-4-12 10:55:20");
-            dto.setArea("江苏常州");
+//            dto.setArea("江苏常州");
             TResult result = customerService.addOrUpdateCustomerApplicants(dto);
         }
         System.out.println(23);
@@ -82,7 +86,7 @@ public class AgencyCustomerServiceImplTest {
             CustomerInventorDto dto = new CustomerInventorDto();
             dto.setCustomerId(UUID.fromString("569e07c9-0ebf-4002-88da-87c2777d82f2"));
             dto.setName("发明人"+i);
-            dto.setCountry("中国");
+//            dto.setCountry("中国");
             dto.setCode("320425363652142536");
             dto.setOpen(true);
             TResult result = customerService.addOrUpdateCustomerInventor(dto);
@@ -102,6 +106,12 @@ public class AgencyCustomerServiceImplTest {
             dto.setPhone("02585321547");
             TResult result = customerService.addOrUpdateCustomerContact(dto);
         }
+        System.out.println(23);
+    }
+
+    @Test
+    public void test(){
+        AgencyCustomer customer = customerRepository.findOne(UUID.fromString("ebde1070-5faa-4f74-a22e-963a819bdef7"));
         System.out.println(23);
     }
 }
