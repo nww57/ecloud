@@ -49,6 +49,7 @@ public class UserQueryServiceImpl extends GenericQuery implements UserQueryServi
         if (StringUtils.isNotEmpty(keywords)) {
             sb.append(" and (u.userName like '%" + keywords + "%' or u.realName like '%" + keywords + "%' or u.callphone like '%" + keywords + "%') ");
         }
+        sb.append(" order by u.create_datetime desc");
         sb.append(" limit ").append(cretiria.getPageIndex() * cretiria.getPageSize()).append(",").append(cretiria.getPageSize());
         List<UserDto> dtoList = queryList(sb.toString(), null, UserDto.class);
         String queryCount = "select count(*) from sys_user u where u.agId = '" + agId + "'";
