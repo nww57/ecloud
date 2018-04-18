@@ -1,64 +1,48 @@
-package com.sunesoft.ecloud.admin.domain.params;
+package com.sunesoft.ecloud.adminclient.dtos;
 
-import com.sunesoft.ecloud.hibernate.IEntity;
+import com.sunesoft.ecloud.common.TreeEntity;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 参数类型表
- * @author: Zhouzh
- * @Date: 2018/4/13
+ * @author: jiangzhenjing
+ * @date: 2018/4/17 下午3:12
+ * -
  */
-@Entity
-@Table(name = "sys_parameter_type", schema = "ecloud", catalog = "")
-public class ParameterType extends IEntity {
+public class ParameterTypeDto extends TreeEntity {
 
-    @Column(name = "paramTypeName")
     private String paramTypeName;
 
-    @Column(name = "paramTypeCode")
     private String paramTypeCode;
 
-    @Column(name = "paramTypeDesc")
     private String paramTypeDesc;
 
-    @Column(name = "remark")
     private String remark;
 
     /**
      *参数类型关联参数
      */
-    @OneToMany(mappedBy = "parameterType")
-    private List<Parameter> parameterList;
+    private List<ParameterDto> parameterList;
 
     /**
      *参数类型父节点
      */
-    @ManyToOne
-    @JoinColumn(name = "pid")
-    private ParameterType parentParamType;
+    private ParameterTypeDto parentParamType;
 
     /**
      *参数类型子节点
      */
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "parentParamType")
-    private List<ParameterType> children = new ArrayList<>();
+    private List<ParameterTypeDto> children = new ArrayList<>();
 
-    @Column(name = "attr1")
     private String attr1;
 
-    @Column(name = "attr2")
     private String attr2;
 
-    @Column(name = "attr3")
     private String attr3;
 
-    @Column(name = "attr4")
     private String attr4;
 
-    @Column(name = "attr5")
     private String attr5;
 
     public String getParamTypeName() {
@@ -93,27 +77,27 @@ public class ParameterType extends IEntity {
         this.remark = remark;
     }
 
-    public List<Parameter> getParameterList() {
+    public List<ParameterDto> getParameterList() {
         return parameterList;
     }
 
-    public void setParameterList(List<Parameter> parameterList) {
+    public void setParameterList(List<ParameterDto> parameterList) {
         this.parameterList = parameterList;
     }
 
-    public ParameterType getParentParamType() {
+    public ParameterTypeDto getParentParamType() {
         return parentParamType;
     }
 
-    public void setParentParamType(ParameterType parentParamType) {
+    public void setParentParamType(ParameterTypeDto parentParamType) {
         this.parentParamType = parentParamType;
     }
 
-    public List<ParameterType> getChildren() {
+    public List<ParameterTypeDto> getChildren() {
         return children;
     }
 
-    public void setChildren(List<ParameterType> children) {
+    public void setChildren(List children) {
         this.children = children;
     }
 
