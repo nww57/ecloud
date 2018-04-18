@@ -8,6 +8,7 @@ import com.sunesoft.ecloud.caze.query.CaseQueryService;
 import com.sunesoft.ecloud.common.cretiria.TCretiria;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
+import com.sunesoft.ecloud.common.sqlBuilderTool.OrderType;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import com.sunesoft.ecloud.common.utils.StringUtil;
@@ -95,7 +96,7 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
             sql.append(" and patentType like :patentType");
             params.put("patentType", "%" + criteria.getPatentType().name() + "%");
         }
-        sql.append(" group by ci.id");
+        sql.append(" group by ci.id order by ci.create_datetime desc");
         PagedResult<CasePatentInfoDto> infoList = queryPaged(criteria.getPageIndex(), criteria.getPageSize(), sql.toString(), params, CasePatentInfoDto.class);
         List<CaseInfoListDto> dtoList = new ArrayList<>();
         infoList.getResult().forEach(info -> {
@@ -145,6 +146,7 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
         SqlBuilder<CaseCustomerRequestDto> sqlBuilder = HSqlBuilder.hFrom(CaseCustomerRequest.class, "r")
                 .where("r.caseId", id)
                 .pagging(criteria.getPageIndex(), criteria.getPageSize())
+                .orderBy("create_datetime", OrderType.DESC)
                 .select(CaseCustomerRequestDto.class);
         return queryPaged(sqlBuilder);
     }
