@@ -68,6 +68,8 @@ public class CaseServiceImpl implements CaseService {
         CaseInfo caseInfo;
         if (null == caseId) {
             caseInfo = new CaseInfo();
+            String caseNo = caseRepository.generateCaseNo(dto.getAgId().toString());
+            caseInfo.setCaseNo(caseNo);
         } else {
             caseInfo = caseRepository.findOne(caseId);
         }
