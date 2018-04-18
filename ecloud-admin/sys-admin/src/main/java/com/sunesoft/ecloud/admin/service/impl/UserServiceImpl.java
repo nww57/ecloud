@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
         BeanUtil.copyPropertiesIgnoreNull(userDto, user);
 
         userRepository.saveAndFlush(user);
-        return (TResult) ResultFactory.success();
+        return new TResult<>(user.getId());
     }
 
 
