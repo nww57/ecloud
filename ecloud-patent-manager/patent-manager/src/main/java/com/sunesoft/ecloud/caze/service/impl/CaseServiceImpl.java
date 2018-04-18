@@ -2,7 +2,6 @@ package com.sunesoft.ecloud.caze.service.impl;
 
 
 import com.sunesoft.ecloud.adminclient.clientService.UserServiceClient;
-import com.sunesoft.ecloud.adminclient.dtos.UserDto;
 import com.sunesoft.ecloud.caseclient.CaseType;
 import com.sunesoft.ecloud.caseclient.PatentType;
 import com.sunesoft.ecloud.caseclient.dto.*;
@@ -45,7 +44,7 @@ public class CaseServiceImpl implements CaseService {
     @Override
     public TResult addOrUpdateCase(CaseInfoDto dto) {
         //检查参数
-        if (null == dto.getAgId()) {
+        if (null == dto.getId() && null == dto.getAgId()) {
             throw new IllegalArgumentException("企业id不能为null");
         }
         if (StringUtils.isEmpty(dto.getCaseCreatorName())) {
@@ -93,7 +92,7 @@ public class CaseServiceImpl implements CaseService {
 
     @Override
     public TResult deleteCase(UUID... ids) {
-        if(null == ids || ids.length ==0){
+        if (null == ids || ids.length == 0) {
             throw new IllegalArgumentException("案件id不能为null");
         }
         //逻辑删除
@@ -136,7 +135,7 @@ public class CaseServiceImpl implements CaseService {
         if (null == caseInfo) {
             throw new IllegalArgumentException("无效的案件id");
         }
-        if(null == dto.getMessagerId() || StringUtils.isEmpty(dto.getMessagerRealName())){
+        if (null == dto.getMessagerId() || StringUtils.isEmpty(dto.getMessagerRealName())) {
             throw new IllegalArgumentException("未设置留言人信息");
         }
         CaseMessage message = new CaseMessage();
@@ -151,7 +150,7 @@ public class CaseServiceImpl implements CaseService {
 
     @Override
     public TResult configureCaseQueryColumn(CaseInfoColumnConfigureDto dto) {
-        if(null == dto.getUserId() || StringUtils.isEmpty(dto.getConfigure())){
+        if (null == dto.getUserId() || StringUtils.isEmpty(dto.getConfigure())) {
             throw new IllegalArgumentException("参数不能为null");
         }
         CaseInfoColumnConfigure configureEntity = new CaseInfoColumnConfigure();
