@@ -56,25 +56,47 @@ public class CustomerApplicant extends IEntity{
     @Column(name = "record")
     private Boolean record;
 
-
     /**
      *备案有效期
      */
     @Column(name = "recordValidDate")
     private Date recordValidDate;
 
+    /**
+     * 省code
+     */
+    @Column(name = "provinceCode")
+    private String provinceCode;
 
     /**
-     *地区code
+     * 省名
      */
-    @Column(name = "areaCode")
-    private String areaCode;
+    @Column(name = "provinceName")
+    private String provinceName;
 
     /**
-     * 省市区
+     * 市code
      */
-    @Column(name = "area")
-    private String area;
+    @Column(name = "cityCode")
+    private String cityCode;
+
+    /**
+     * 市名
+     */
+    @Column(name = "cityName")
+    private String cityName;
+
+    /**
+     * 区code
+     */
+    @Column(name = "districtCode")
+    private String districtCode;
+
+    /**
+     * 区名
+     */
+    @Column(name = "districtName")
+    private String districtName;
 
     /**
      * 详细地址
@@ -146,14 +168,6 @@ public class CustomerApplicant extends IEntity{
         this.recordValidDate = recordValidDate;
     }
 
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
-
     public UUID getCustomerId() {
         return customerId;
     }
@@ -162,19 +176,59 @@ public class CustomerApplicant extends IEntity{
         this.customerId = customerId;
     }
 
-    public String getAreaCode() {
-        return areaCode;
-    }
-
-    public void setAreaCode(String areaCode) {
-        this.areaCode = areaCode;
-    }
-
     public String getAreaDetail() {
         return areaDetail;
     }
 
     public void setAreaDetail(String areaDetail) {
         this.areaDetail = areaDetail;
+    }
+
+    public String getProvinceCode() {
+        return provinceCode;
+    }
+
+    public void setProvinceCode(String provinceCode) {
+        this.provinceCode = provinceCode;
+    }
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
+
+    public String getCityCode() {
+        return cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getDistrictCode() {
+        return districtCode;
+    }
+
+    public void setDistrictCode(String districtCode) {
+        this.districtCode = districtCode;
+    }
+
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
     }
 }
