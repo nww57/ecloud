@@ -51,6 +51,13 @@ public interface CaseService {
      */
     TResult addOrUpdateCaseMessage(CaseMessageDto dto);
 
+    /**
+     * 删除案件留言
+     * @param userId 留言用户id
+     * @param id 留言id
+     * @return 返回操作结果
+     */
+    TResult deleteCaseMessage(UUID userId,UUID... id);
 
     /**
      * 配置案件查询列表项
