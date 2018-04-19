@@ -8,6 +8,7 @@ import com.sunesoft.ecloud.caze.query.CaseQueryService;
 import com.sunesoft.ecloud.common.cretiria.TCretiria;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
+import com.sunesoft.ecloud.common.sqlBuilderTool.OrderType;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import com.sunesoft.ecloud.common.utils.StringUtil;
@@ -36,7 +37,7 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
                 " ci.caseNo,  " +
                 " ci.caseName,  " +
                 " ci.caseType,  " +
-                " ci.creatorName,  " +
+                " ci.caseCreatorName,  " +
                 " ci.feeReduceRate,  " +
                 " ci.create_datetime caseCreateDate,  " +
                 " ci.comments,  " +
@@ -52,7 +53,7 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
                 " case_info ci  " +
                 " LEFT JOIN sys_ag_customer ac ON ci.customerId = ac.id  " +
                 " LEFT JOIN sys_user u ON u.id = ac.consultantId  " +
-                " LEFT JOIN patent_info p ON p.caseId = ci.id  where 1=1 and ci.agId = '" + criteria.getAgId() + "' ");
+                " LEFT JOIN patent_info p ON p.caseId = ci.id  where ci.is_active = 1 and ci.agId = '" + criteria.getAgId() + "' ");
         // 参数设置
         Map<String, Object> params = new HashMap<>();
         if (StringUtils.isNotEmpty(criteria.getCaseNo())) {
@@ -95,7 +96,7 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
             sql.append(" and patentType like :patentType");
             params.put("patentType", "%" + criteria.getPatentType().name() + "%");
         }
-        sql.append(" group by ci.id");
+        sql.append(" group by ci.id order by ci.create_datetime desc");
         PagedResult<CasePatentInfoDto> infoList = queryPaged(criteria.getPageIndex(), criteria.getPageSize(), sql.toString(), params, CasePatentInfoDto.class);
         List<CaseInfoListDto> dtoList = new ArrayList<>();
         infoList.getResult().forEach(info -> {
@@ -115,11 +116,12 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
                 " ci.caseNo,  " +
                 " ci.caseName,  " +
                 " ci.caseType,  " +
-                " ci.creatorName,  " +
+                " ci.caseCreatorName,  " +
                 " ci.feeReduceRate,  " +
                 " ci.create_datetime caseCreateDate,  " +
                 " ci.comments,  " +
-                " ac. NAME customerName,  " +
+                " ac.id customerId , "+
+                " ac.NAME customerName,  " +
                 " ac.leader customerLeader,  " +
                 " ac.leaderMobile customerLeaderMobile,  " +
                 " u.realName customerConsultantName,  " +
@@ -131,7 +133,7 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
                 " case_info ci  " +
                 " LEFT JOIN sys_ag_customer ac ON ci.customerId = ac.id  " +
                 " LEFT JOIN sys_user u ON u.id = ac.consultantId  " +
-                " LEFT JOIN patent_info p ON p.caseId = ci.id  where 1=1 and ci.id = " + id;
+                " LEFT JOIN patent_info p ON p.caseId = ci.id  where 1=1 and ci.id = '" + id+"'";
         CasePatentInfoDto info = queryForObject(sql, null, CasePatentInfoDto.class);
         return new TResult<>(transform(info));
     }
@@ -144,6 +146,7 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
         SqlBuilder<CaseCustomerRequestDto> sqlBuilder = HSqlBuilder.hFrom(CaseCustomerRequest.class, "r")
                 .where("r.caseId", id)
                 .pagging(criteria.getPageIndex(), criteria.getPageSize())
+                .orderBy("create_datetime", OrderType.DESC)
                 .select(CaseCustomerRequestDto.class);
         return queryPaged(sqlBuilder);
     }
@@ -153,13 +156,17 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
         if (null == id) {
             throw new IllegalArgumentException("案件id不能为null");
         }
-        SqlBuilder<CaseMessageListDto> sqlBuilder = HSqlBuilder.hFrom(CaseMessage.class, "c")
-                .where("c.caseId", id)
-                .pagging(criteria.getPageIndex(), criteria.getPageSize())
-                .select(CaseMessageListDto.class)
-                .setFieldValue("messageDate", "c.create_datetime");
-        return queryPaged(sqlBuilder);
-
+        String sql = "select DATE_FORMAT(m.create_datetime, '%Y-%c-%d %h:%i:%s') messageDate,m.content,m.messagerId,u.realName messagerRealName,GROUP_CONCAT(r.name) messagerRoleName  from case_message m LEFT JOIN sys_user u on m.messagerId = u.id " +
+                " LEFT JOIN sys_ag_user_role ur on ur.userId = u.id " +
+                " LEFT JOIN sys_ag_role r on ur.roleId = r.id where m.caseId = '"+id+"' "+
+                " GROUP BY m.id,u.id order by m.create_datetime desc";
+        return queryPaged(criteria.getPageIndex(),criteria.getPageSize(),sql,null,CaseMessageListDto.class);
+//        SqlBuilder<CaseMessageListDto> sqlBuilder = HSqlBuilder.hFrom(CaseMessage.class, "c")
+//                .where("c.caseId", id)
+//                .pagging(criteria.getPageIndex(), criteria.getPageSize())
+//                .select(CaseMessageListDto.class)
+//                .setFieldValue("messageDate", "c.create_datetime");
+//        return queryPaged(sqlBuilder);
     }
 
     @Override

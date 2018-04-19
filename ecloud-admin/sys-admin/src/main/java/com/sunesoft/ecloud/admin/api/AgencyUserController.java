@@ -103,9 +103,9 @@ public class AgencyUserController {
     }
 
 
-    @GetMapping("realandrolename")
-    public TResult<UserDto> getUserRealNameAndRoleName(@PathVariable("userId")String userId){
-        return userQueryService.getUserRealNameAndRolName(UUID.fromString(userId));
+    @PostMapping("real_role_name")
+    public TResult<UserDto> getUserRealNameAndRoleName(@RequestParam UUID userId){
+        return userQueryService.getUserRealNameAndRolName(userId);
     }
 
 }

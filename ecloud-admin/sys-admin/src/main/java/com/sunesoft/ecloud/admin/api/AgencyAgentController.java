@@ -57,5 +57,19 @@ public class AgencyAgentController {
         agencyAgentService.deleteAgencyAgent(ids);
     }
 
+    /**
+     * 更新代理人
+     * @param id
+     * @param agentDto
+     * @return
+     */
+    @PutMapping("{id}")
+    public TResult updateAgent(@PathVariable UUID id,@RequestBody AgentDto agentDto){
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
+        agentDto.setAgId(agId);
+        agentDto.setId(id);
+        return agencyAgentService.addOrUpdateAgencyAgent(agentDto);
+    }
+
 
 }

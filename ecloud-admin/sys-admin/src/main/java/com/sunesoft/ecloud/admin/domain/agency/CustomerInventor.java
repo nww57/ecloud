@@ -25,10 +25,16 @@ public class CustomerInventor extends IEntity{
     private String name;
 
     /**
-     *国家
+     *国家code
      */
-    @Column(name = "country")
-    private String country;
+    @Column(name = "countryCode")
+    private String countryCode;
+
+    /**
+     *国家name
+     */
+    @Column(name = "countryName")
+    private String countryName;
 
     /**
      *身份证/机构代码
@@ -58,12 +64,20 @@ public class CustomerInventor extends IEntity{
         this.name = name;
     }
 
-    public String getCountry() {
-        return country;
+    public String getCountryCode() {
+        return countryCode;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
     }
 
     public String getCode() {

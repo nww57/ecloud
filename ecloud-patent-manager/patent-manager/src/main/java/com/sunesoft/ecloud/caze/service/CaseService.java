@@ -21,6 +21,13 @@ public interface CaseService {
      */
     TResult addOrUpdateCase(CaseInfoDto dto);
 
+    /**
+     * 删除案件
+     * @param ids 案件id
+     * @return 返回操作结果
+     */
+    TResult deleteCase(UUID... ids);
+
 
     /**
      * 创建/修改客户要求
@@ -28,6 +35,13 @@ public interface CaseService {
      * @return 返回操作结果
      */
     TResult addOrUpdateCaseCustomerRequest(CaseCustomerRequestDto dto);
+
+    /**
+     * 删除客户要求
+     * @param id id
+     * @return 返回操作结果
+     */
+    TResult deleteCaseCustomerRequest(UUID... id);
 
 
     /**
@@ -37,6 +51,13 @@ public interface CaseService {
      */
     TResult addOrUpdateCaseMessage(CaseMessageDto dto);
 
+    /**
+     * 删除案件留言
+     * @param userId 留言用户id
+     * @param id 留言id
+     * @return 返回操作结果
+     */
+    TResult deleteCaseMessage(UUID userId,UUID... id);
 
     /**
      * 配置案件查询列表项

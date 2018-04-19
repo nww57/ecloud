@@ -10,6 +10,7 @@ import com.sunesoft.ecloud.adminclient.dtos.AgencyDto;
 import com.sunesoft.ecloud.adminclient.dtos.BasicDto;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
+import com.sunesoft.ecloud.common.sqlBuilderTool.OrderType;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
 import com.sunesoft.ecloud.hibernate.IEntity;
 import com.sunesoft.ecloud.hibernate.repository.HibernateQuery;
@@ -42,6 +43,7 @@ public class AgencyQueryServiceImpl extends GenericQuery implements AgencyQueryS
             builder.and("(agency.name like '%"+keywords+"%' or agency.code like '%"+keywords+"%' or agency.leader like '%"+keywords+"%' or agency.cellphone like '%"+keywords+"%')");
         }
         builder.pagging(criteria.getPageIndex(), criteria.getPageSize())
+                .orderBy("create_datetime", OrderType.DESC)
                 .select(AgencyDto.class);
         return this.queryPaged(builder);
     }

@@ -6,6 +6,7 @@ import com.sunesoft.ecloud.adminclient.cretirias.AgentCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgentDto;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
+import com.sunesoft.ecloud.common.sqlBuilderTool.OrderType;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
@@ -35,6 +36,7 @@ public class AgencyAgentQueryServiceImpl extends GenericQuery implements AgencyA
                     dtoBuilder.and(" (a.name like '%"+keywords+"%' or a.licenseCode like '%"+keywords+"%' or a.mobile like '%"+keywords+"%' ) ");
                 }
         dtoBuilder.pagging(criteria.getPageIndex(),criteria.getPageSize())
+                .orderBy("create_datetime", OrderType.DESC)
                 .select(AgentDto.class);
         return this.queryPaged(dtoBuilder);
     }

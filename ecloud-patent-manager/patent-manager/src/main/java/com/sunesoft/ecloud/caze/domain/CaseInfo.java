@@ -71,11 +71,11 @@ public class CaseInfo extends IEntity {
     /**
      * 立案人姓名
      */
-    @Column(name = "creatorName")
-    private String creatorName;
+    @Column(name = "caseCreatorName")
+    private String caseCreatorName;
 
     public CaseInfo() {
-        this.caseNo = "C"+UUID.randomUUID().toString().substring(0,6);
+
     }
 
     public String getCaseNo() {
@@ -126,12 +126,12 @@ public class CaseInfo extends IEntity {
         this.comments = comments;
     }
 
-    public String getCreatorName() {
-        return creatorName;
+    public String getCaseCreatorName() {
+        return caseCreatorName;
     }
 
-    public void setCreatorName(String creatorName) {
-        this.creatorName = creatorName;
+    public void setCaseCreatorName(String caseCreatorName) {
+        this.caseCreatorName = caseCreatorName;
     }
 
     public UUID getAgId() {

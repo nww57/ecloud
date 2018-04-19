@@ -11,6 +11,7 @@ import com.sunesoft.ecloud.common.cretiria.TCretiria;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
+import com.sunesoft.ecloud.common.sqlBuilderTool.OrderType;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
@@ -66,6 +67,7 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
         SqlBuilder<CustomerApplicantDto> dtoBuilder = HSqlBuilder.hFrom(CustomerApplicant.class, "a")
                 .where("a.customerId", customerId)
                 .pagging(criteria.getPageIndex(),criteria.getPageSize())
+                .orderBy("create_datetime", OrderType.DESC)
                 .select(CustomerApplicantDto.class);
         return this.queryPaged(dtoBuilder);
     }
@@ -131,7 +133,7 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
                 .on("u.id = ac.consultantId")
                 .where("agId", agId)
                 .select(AgencyCustomerBasicDto.class)
-                .setFieldValue("leaderName","ac.leaderName")
+                .setFieldValue("leaderName","ac.leader")
                 .setFieldValue("consultantName","u.realName");
         return new ListResult<>(queryList(dtoBuilder));
     }

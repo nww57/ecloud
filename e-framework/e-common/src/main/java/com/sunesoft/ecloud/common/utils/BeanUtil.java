@@ -634,8 +634,7 @@ public abstract class BeanUtil {
 							//处理String ->Date
 							Class cl = writeMethod.getParameterTypes()[0];
 							if(cl==Date.class){
-								SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-								writeMethod.invoke(target, format.parse((String)value));
+								writeMethod.invoke(target, DateUtil.parse((String)value));
 							}else{
 								writeMethod.invoke(target, value);
 							}

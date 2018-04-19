@@ -77,18 +77,7 @@ public class AgencyServiceImpl extends HibernateQuery implements AgencyService {
         } else {//修改
             agency = agencyRepository.findOne(id);
         }
-        BeanUtil.copyProperties(agencyDto, agency, new String[]{"agencyType", "serverStatus"});
-        try {
-            if(null != agencyDto.getServerEndDate()){
-                agency.setServerEndDate(DateUtils.parseDate(agencyDto.getServerEndDate(), new String[]{"yyyy-MM-dd HH:mm:ss"}));
-            }
-            if(null != agencyDto.getRegisterDate()){
-                agency.setRegisterDate(DateUtils.parseDate(agencyDto.getRegisterDate(), new String[]{"yyyy-MM-dd"}));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        BeanUtil.copyPropertiesIgnoreNull(agencyDto, agency);
         // 配置菜单
         agency = agencyRepository.saveAndFlush(agency);
         List<UUID> menuIds = agencyDto.getMenuIds();
