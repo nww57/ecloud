@@ -119,7 +119,7 @@ public class AgencyServiceImpl extends HibernateQuery implements AgencyService {
                 AgencyAuthorizedMenu authMenu;
                 for (Menu menu : menus) {
                     authMenu = new AgencyAuthorizedMenu();
-                    authMenu.setAgencyId(agId);
+                    authMenu.setAgId(agId);
                     authMenu.setMenu(menu);
                     authMenuList.add(authMenu);
                 }
