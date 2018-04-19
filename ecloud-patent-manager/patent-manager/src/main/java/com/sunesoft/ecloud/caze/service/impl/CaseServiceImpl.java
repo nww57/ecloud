@@ -62,7 +62,7 @@ public class CaseServiceImpl implements CaseService {
             return new TResult("请选择所属客户客户");
         }
         if (StringUtils.isEmpty(dto.getCaseName())) {
-            return new TResult("请填写案件案件名称");
+            return new TResult("请填写案件名称");
         }
         UUID caseId = dto.getId();
         CaseInfo caseInfo;
@@ -90,6 +90,9 @@ public class CaseServiceImpl implements CaseService {
             } else {
                 throw new IllegalArgumentException("无效的案件类型");
             }
+        }else{
+            //更新专利信息
+            patentRepository.updatePatentInfo(caseId,dto.getCustomerId(),dto.getFeeReduceRate());
         }
         return new TResult<>(caseInfo.getId());
     }

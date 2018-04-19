@@ -37,7 +37,7 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
                 " ci.caseNo,  " +
                 " ci.caseName,  " +
                 " ci.caseType,  " +
-                " ci.creatorName,  " +
+                " ci.caseCreatorName,  " +
                 " ci.feeReduceRate,  " +
                 " ci.create_datetime caseCreateDate,  " +
                 " ci.comments,  " +
@@ -116,7 +116,7 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
                 " ci.caseNo,  " +
                 " ci.caseName,  " +
                 " ci.caseType,  " +
-                " ci.creatorName,  " +
+                " ci.caseCreatorName,  " +
                 " ci.feeReduceRate,  " +
                 " ci.create_datetime caseCreateDate,  " +
                 " ci.comments,  " +
