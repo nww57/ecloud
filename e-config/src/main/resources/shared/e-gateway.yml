@@ -34,15 +34,15 @@ zuul:
         url: http://localhost:5010
         stripPrefix: false
         sensitiveHeaders:
-   admin-service:
+    file-service:
         path: /file/**
-        url: http://sys-file
+        url: http://localhost:5020
         stripPrefix: false
         sensitiveHeaders:
 
 gate:
   ignore:
-    startWith: /ua,/admin/auth/menus
+    startWith: /ua,/admin/auth/menus,/file
 
 server:
   port: 4000
