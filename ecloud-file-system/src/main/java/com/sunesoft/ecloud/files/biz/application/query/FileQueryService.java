@@ -23,21 +23,55 @@ public interface FileQueryService {
      * @return
      */
     List<FileInfoDto> GetFileInfo(FileCriteria fileCriteria);
-    //检索
+
+    /**
+     * 查询单个文件
+     * @param fileCriteria
+     * @return
+     */
     FileInfoDto GetFileOne(FileCriteria fileCriteria);
-    //检索
+
+    /**
+     * 根据目录查询目录下的文件
+     * @param agId
+     * @param pathId
+     * @return
+     */
     List<FileInfoDto> GetFileInfo(UUID agId,UUID pathId);
 
+    /**
+     * 查询文件目录包含文件
+     * @param fileCriteria
+     * @return
+     */
     List<PathWithFileDto> GetPathWithFileInfo(FileCriteria fileCriteria);
 
-    //查询所有目录
+    /**
+     * 根据根目录查询所有文件
+     * @param agId
+     * @param baseRoot
+     * @return
+     */
     PathWithFileDto GetFilePath(UUID agId, String baseRoot);
 
-    //查询所有目录
+    /**
+     * 查询模板目录
+     * @return
+     */
     List<FilePathDto> GetFilePathTempleteAll();
 
+    /**
+     * 根据类型查看完整模板目录
+     * @param pathType
+     * @return
+     */
     FilePathDto getFilePathTempleteByType(PathType pathType);
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     FilePathDto getFilePathById(UUID id);
 
     DownloadFileDto getFileById(UUID agId,UUID id);
