@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.admin.domain.agency;
 
+import com.sunesoft.ecloud.hibernate.BizEntity;
 import com.sunesoft.ecloud.hibernate.IEntity;
 import org.hibernate.annotations.Type;
 
@@ -14,7 +15,7 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "sys_ag_agent")
-public class AgencyAgent extends IEntity{
+public class AgencyAgent extends BizEntity{
 
     /**
      * 姓名
@@ -33,13 +34,6 @@ public class AgencyAgent extends IEntity{
      */
     @Column(name = "mobile")
     private String mobile;
-
-    /**
-     *所属企业
-     */
-    @Column(name = "agId",columnDefinition = "char(36)")
-    @Type(type = "uuid-char")
-    private UUID agId;
 
     public String getName() {
         return name;
@@ -65,11 +59,5 @@ public class AgencyAgent extends IEntity{
         this.mobile = mobile;
     }
 
-    public UUID getAgId() {
-        return agId;
-    }
 
-    public void setAgId(UUID agId) {
-        this.agId = agId;
-    }
 }

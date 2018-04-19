@@ -84,11 +84,11 @@ public class UserServiceImpl implements UserService {
         if (null == id) {
             user = new User();
             if (Objects.equals(user.getUserType(), UserType.AGENCY_ADMIN)) {
-                user.setAgencyId(userDto.getAgId());
+                user.setAgId(userDto.getAgId());
                 user.setPosition(UserPositionType.ADMIN.toString());
                 user.setPassword(encoder.encode(userDto.getPassword()));
             } else {
-                user.setAgencyId(agId);
+                user.setAgId(agId);
                 user.setPosition(UserPositionType.EMPLOYEE.toString());
                 //设置默认密码
                 user.setPassword(encoder.encode("888888"));
@@ -198,7 +198,7 @@ public class UserServiceImpl implements UserService {
             return new TResult<>(new LoginResultDto(null, LoginResultStatus.ERROR_USERNAME));
         }
         if(!Objects.equals(user.getUserType(),UserType.SUPER_ADMIN)){
-            UUID agId = user.getAgencyId();
+            UUID agId = user.getAgId();
             Agency agency = agencyRepository.findOne(agId);
             if(!agency.getIs_active()){
                 return new TResult<>(new LoginResultDto(null, LoginResultStatus.ERROR_USERNAME));

@@ -121,10 +121,6 @@ public class User extends BizEntity{
             inverseJoinColumns = {@JoinColumn(name = "roleId")})
     private List<AgencyRole> roleList = new ArrayList<>();
 
-    @Column(name = "agId",columnDefinition = "char(36)")
-    @Type(type = "uuid-char")
-    private UUID agencyId;
-
 
     private Date lastPasswordResetDate;
     /**
@@ -295,15 +291,6 @@ public class User extends BizEntity{
     public void setPosition(String position) {
         this.position = position;
     }
-
-    public UUID getAgencyId() {
-        return agencyId;
-    }
-
-    public void setAgencyId(UUID agencyId) {
-        this.agencyId = agencyId;
-    }
-
 
 
     public Boolean getNeedChangePassword() {
