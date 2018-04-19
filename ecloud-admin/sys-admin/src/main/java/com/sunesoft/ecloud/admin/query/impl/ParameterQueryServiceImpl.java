@@ -30,7 +30,8 @@ public class ParameterQueryServiceImpl extends GenericQuery implements Parameter
     @Override
     public ListResult<ParameterDto> queryParaneterByTypeId(UUID uuid) {
         SqlBuilder sqlBuilder = HSqlBuilder.hFrom(Parameter.class, "p")
-                .where("p.typeId", uuid);
+                .where("p.parameterId", uuid)
+                .select(ParameterDto.class);
         List<ParameterDto> list = this.queryList(sqlBuilder);
         return new ListResult(list);
     }
@@ -38,14 +39,16 @@ public class ParameterQueryServiceImpl extends GenericQuery implements Parameter
     @Override
     public TResult<ParameterDto> queryParaneterById(UUID uuid) {
         SqlBuilder sqlBuilder = HSqlBuilder.hFrom(Parameter.class, "p")
-                .where("p.id", uuid);
+                .where("p.id", uuid)
+                .select(ParameterDto.class);
         ParameterDto parameterDto = (ParameterDto)this.queryForObject(sqlBuilder);
         return new TResult<>(parameterDto);
     }
 
     @Override
     public ListResult<ParameterDto> queryAllParaneter() {
-        SqlBuilder sqlBuilder = HSqlBuilder.hFrom(Parameter.class, "p");
+        SqlBuilder sqlBuilder = HSqlBuilder.hFrom(Parameter.class, "p")
+                .select(ParameterDto.class);
         List<ParameterDto> list = this.queryList(sqlBuilder);
         return new ListResult(list);
     }

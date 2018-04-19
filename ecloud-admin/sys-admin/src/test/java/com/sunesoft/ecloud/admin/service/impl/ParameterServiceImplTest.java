@@ -29,9 +29,10 @@ public class ParameterServiceImplTest {
     @Test
     public void addOrUpdate() throws Exception {
         ParameterDto parameterDto=new ParameterDto();
-        parameterDto.setParamName("aaaaa");
-        parameterService.addOrUpdate(parameterDto, UUID.fromString(""));
-
+        parameterDto.setParamName("AAAAAAAAAAAAA");
+//        parameterDto.setTypeId(UUID.fromString("cf1fa17f-f97d-4dc3-831e-32421940ecfe"));
+        parameterService.addOrUpdate(parameterDto, UUID.fromString("cf1fa17f-f97d-4dc3-831e-32421940ecfe"));
+        System.out.println("11111111");
     }
 
     @Test
