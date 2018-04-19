@@ -9,6 +9,7 @@ import com.sunesoft.ecloud.files.biz.application.dtos.FileRelateDto;
 import com.sunesoft.ecloud.files.biz.application.service.FileInfoService;
 import com.sunesoft.ecloud.files.biz.domain.FileInfos;
 import com.sunesoft.ecloud.files.biz.domain.FilePath;
+import com.sunesoft.ecloud.files.biz.domain.enums.PathType;
 import com.sunesoft.ecloud.files.biz.repository.FileInfosRepository;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +51,15 @@ public class FileInfoServiceImpl implements FileInfoService {
             path.setId(fileInfoDto.getFile_path_id());
             fileInfos.setFilePath(path);
         }
-        String filePath = basePath + fileInfos.getAgId().toString() + "/" + fileInfos.getBaseRoot()+"/" ;
-        if (!StringUtil.isEmpty(fileInfos.getBizType()) && !fileInfos.getBizType().equals("temp"))
-            filePath +=  fileInfos.getBizType()+"/";
+        String filePath = basePath + fileInfos.getAgId().toString() + "/";
+        if(fileInfoDto.getRequirePathType()==null) {
+            fileInfoDto.setRequirePathType(PathType.Oth);
+        }
+        filePath +=  fileInfoDto.getRequirePathType().toString()+"/";
+        if (!StringUtil.isEmpty(fileInfos.getBizType()) && !fileInfos.getBizType().equals("temp")) {
+            filePath += fileInfos.getBizType() + "/";
+        }
+        filePath+=fileInfos.getBaseRoot()+"/";
         fileInfos.setRealPath(filePath);
         fileInfosRepository.save(fileInfos);
 
@@ -85,9 +92,13 @@ public class FileInfoServiceImpl implements FileInfoService {
             String tempPath = fileInfos.getRealPath();
             BeanUtil.copyPropertiesIgnoreNull(relateDto,fileInfos);
             //重新构造路径
-            String filePath = basePath + fileInfos.getAgId().toString() + "/" + fileInfos.getBaseRoot()+"/";
+            String filePath = basePath + fileInfos.getAgId().toString() + "/";
+
+            if(StringUtil.isEmpty(relateDto.getRequirePathType())){
+                filePath +=  relateDto.getRequirePathType().toString()+"/";            }
             if (!StringUtil.isEmpty(fileInfos.getBizType()) && !fileInfos.getBizType().equals("temp"))
                 filePath +=  fileInfos.getBizType()+"/";
+            filePath+=fileInfos.getBaseRoot()+"/";
             fileInfos.setRealPath(filePath);
             File source = new File(tempPath+fileInfos.getFileName());
             File target = new File(filePath+fileInfos.getFileName());

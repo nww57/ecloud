@@ -22,7 +22,7 @@ public class FileInfoDto {
 
 
     @SqlIgnore
-    private PathType requirePathType;
+    private PathType requirePathType=PathType.Oth;
     /**
      * 是否覆盖
      */

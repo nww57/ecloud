@@ -1,6 +1,7 @@
 package com.sunesoft.ecloud.caze.domain;
 
 import com.sunesoft.ecloud.caseclient.PatentType;
+import com.sunesoft.ecloud.hibernate.BizEntity;
 import com.sunesoft.ecloud.hibernate.IEntity;
 import org.hibernate.annotations.Type;
 
@@ -14,14 +15,9 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "patent_info")
-public class PatentInfo extends IEntity{
+public class PatentInfo extends BizEntity{
 
-    /**
-     * 所属企业Id
-     */
-    @Column(name = "agId",columnDefinition = "char(36)")
-    @Type(type = "uuid-char")
-    private UUID agId;
+
 
     @ManyToOne
     @JoinColumn(name = "caseId")
@@ -99,11 +95,5 @@ public class PatentInfo extends IEntity{
         this.feeReduceRate = feeReduceRate;
     }
 
-    public UUID getAgId() {
-        return agId;
-    }
 
-    public void setAgId(UUID agId) {
-        this.agId = agId;
-    }
 }

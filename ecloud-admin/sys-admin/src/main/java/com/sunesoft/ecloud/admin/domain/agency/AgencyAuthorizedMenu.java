@@ -15,14 +15,8 @@ import java.util.*;
  */
 @Entity
 @Table(name = "sys_ag_authmenu")
-public class AgencyAuthorizedMenu extends IEntity {
+public class AgencyAuthorizedMenu extends BizEntity {
 
-    /**
-     * 机构id
-     */
-    @Column(name = "agId",columnDefinition = "char(36)")
-    @Type(type = "uuid-char")
-    private UUID agencyId;
 
     /**
      * 菜单
@@ -39,13 +33,6 @@ public class AgencyAuthorizedMenu extends IEntity {
         this.menu = menu;
     }
 
-    public UUID getAgencyId() {
-        return agencyId;
-    }
-
-    public void setAgencyId(UUID agencyId) {
-        this.agencyId = agencyId;
-    }
 
 
 
