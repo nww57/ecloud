@@ -34,7 +34,7 @@ zuul:
         url: http://localhost:5010
         stripPrefix: false
         sensitiveHeaders:
-   admin-service:
+    admin-service:
         path: /file/**
         url: http://sys-file
         stripPrefix: false
@@ -42,7 +42,7 @@ zuul:
 
 gate:
   ignore:
-    startWith: /ua,/admin/auth/menus
+    startWith: /ua,/admin/auth/menus,/file
 
 server:
   port: 4000
