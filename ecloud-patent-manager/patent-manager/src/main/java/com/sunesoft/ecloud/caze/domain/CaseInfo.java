@@ -1,6 +1,7 @@
 package com.sunesoft.ecloud.caze.domain;
 
 import com.sunesoft.ecloud.caseclient.CaseType;
+import com.sunesoft.ecloud.hibernate.BizEntity;
 import com.sunesoft.ecloud.hibernate.IEntity;
 import org.apache.commons.lang.time.DateUtils;
 import org.hibernate.annotations.Type;
@@ -15,14 +16,8 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "case_info")
-public class CaseInfo extends IEntity {
+public class CaseInfo extends BizEntity {
 
-    /**
-     * 所属企业Id
-     */
-    @Column(name = "agId",columnDefinition = "char(36)")
-    @Type(type = "uuid-char")
-    private UUID agId;
 
     /**
      * 案件编号
@@ -134,11 +129,4 @@ public class CaseInfo extends IEntity {
         this.caseCreatorName = caseCreatorName;
     }
 
-    public UUID getAgId() {
-        return agId;
-    }
-
-    public void setAgId(UUID agId) {
-        this.agId = agId;
-    }
 }
