@@ -1,12 +1,12 @@
 package com.sunesoft.ecloud.files.biz.application.query;
 
 
-import com.sunesoft.ecloud.common.result.PagedResult;
-import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.files.biz.application.criterias.FileCriteria;
 import com.sunesoft.ecloud.files.biz.application.dtos.DownloadFileDto;
 import com.sunesoft.ecloud.files.biz.application.dtos.FileInfoDto;
 import com.sunesoft.ecloud.files.biz.application.dtos.FilePathDto;
+import com.sunesoft.ecloud.files.biz.application.dtos.PathWithFileDto;
+import com.sunesoft.ecloud.files.biz.domain.enums.PathType;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,16 +17,28 @@ import java.util.UUID;
  */
 public interface FileQueryService {
 
-    //检索
+    /**
+     * 查询文件信息
+     * @param fileCriteria
+     * @return
+     */
     List<FileInfoDto> GetFileInfo(FileCriteria fileCriteria);
+    //检索
+    FileInfoDto GetFileOne(FileCriteria fileCriteria);
+    //检索
+    List<FileInfoDto> GetFileInfo(UUID agId,UUID pathId);
 
-    PagedResult<FileInfoDto> GetFileInfoPaged(FileCriteria fileCriteria);
+    List<PathWithFileDto> GetPathWithFileInfo(FileCriteria fileCriteria);
+
     //查询所有目录
-    List<FilePathDto> GetFilePath(UUID id);
+    PathWithFileDto GetFilePath(UUID agId, String baseRoot);
+
     //查询所有目录
-    List<FilePathDto> GetFilePath(UUID agId,String  baseRoot);
+    List<FilePathDto> GetFilePathTempleteAll();
+
+    FilePathDto getFilePathTempleteByType(PathType pathType);
 
     FilePathDto getFilePathById(UUID id);
 
-    DownloadFileDto getFileById(UUID id);
+    DownloadFileDto getFileById(UUID agId,UUID id);
 }

@@ -2,14 +2,13 @@ package com.sunesoft.ecloud.files.biz.application.dtos;
 
 import com.sunesoft.ecloud.files.biz.domain.enums.PathType;
 
-import java.io.InputStream;
 import java.util.UUID;
 
 /**
  * @author: Zhouzh
  * @Date: 2018/4/17
  */
-public class FileUploadDto {
+public class FileRelateDto {
 
     /**
      * 如果是覆盖，则需提供覆盖的文件id
@@ -17,15 +16,9 @@ public class FileUploadDto {
     private UUID id;
 
     /**
-     * 是否覆盖
-     */
-    private Boolean isCovered= false;
-
-    /**
      * 文件要求的路径模板
      */
     private PathType requirePathType;
-
 
     /**
      * 业务类型（申请文件/补正文件/等）
@@ -45,13 +38,9 @@ public class FileUploadDto {
 
     private String remark;
 
-    public Boolean getCovered() {
-        return isCovered;
-    }
 
-    public void setCovered(Boolean covered) {
-        isCovered = covered;
-    }
+    private UUID pathId;
+
 
     public String getBizType() {
         return bizType;
@@ -99,5 +88,13 @@ public class FileUploadDto {
 
     public void setRequirePathType(PathType requirePathType) {
         this.requirePathType = requirePathType;
+    }
+
+    public UUID getPathId() {
+        return pathId;
+    }
+
+    public void setPathId(UUID pathId) {
+        this.pathId = pathId;
     }
 }
