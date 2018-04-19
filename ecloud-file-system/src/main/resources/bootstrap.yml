@@ -12,3 +12,6 @@ eureka:
       statusPageUrlPath: /file/info
       metadata-map:
         management.context-path: /file
+
+file:
+  basePath: D:/ecloudFile/

@@ -30,10 +30,15 @@ zuul:
         stripPrefix: false
         sensitiveHeaders:
     admin-service:
-            path: /admin/**
-            url: http://localhost:5010
-            stripPrefix: false
-            sensitiveHeaders:
+        path: /admin/**
+        url: http://localhost:5010
+        stripPrefix: false
+        sensitiveHeaders:
+   admin-service:
+        path: /file/**
+        url: http://sys-file
+        stripPrefix: false
+        sensitiveHeaders:
 
 gate:
   ignore:

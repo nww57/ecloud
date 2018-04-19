@@ -1,6 +1,5 @@
 package com.sunesoft.ecloud.admin.service.impl;
 
-import com.sun.tools.corba.se.idl.constExpr.Expression;
 import com.sunesoft.ecloud.admin.domain.params.ParameterType;
 import com.sunesoft.ecloud.admin.repository.ParameterTypeRepository;
 import com.sunesoft.ecloud.admin.service.ParameterTypeService;
@@ -12,9 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
-
-import static com.sun.tools.corba.se.idl.constExpr.Expression.one;
-import static java.awt.SystemColor.menu;
 
 /**
  * @author: jiangzhenjing

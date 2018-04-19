@@ -1,14 +1,17 @@
 package com.sunesoft.ecloud.files.biz.domain;
 
+import com.sunesoft.ecloud.files.biz.domain.enums.PathType;
 import com.sunesoft.ecloud.hibernate.BizEntity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name="file_path")
 public class FilePath extends BizEntity {
+
 
     private String baseRoot;// 存储案件编号
 
@@ -20,15 +23,18 @@ public class FilePath extends BizEntity {
 
     private Boolean hasParent;
 
+    private String pathIndex;
+
     @ManyToOne
     @JoinColumn(name="parent_id")
     private FilePath parent;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL, CascadeType.PERSIST})
     @JoinColumn(name="parent_id")
-    private List<FilePath> childPaths;
+    private List<FilePath> childPaths= new ArrayList<>();
 
-
+    @Enumerated(EnumType.STRING)
+    private PathType pathType;
 
     private Boolean isTempleteData;
 
@@ -102,5 +108,21 @@ public class FilePath extends BizEntity {
 
     public void setPathCode(String pathCode) {
         this.pathCode = pathCode;
+    }
+
+    public PathType getPathType() {
+        return pathType;
+    }
+
+    public void setPathType(PathType pathType) {
+        this.pathType = pathType;
+    }
+
+    public String getPathIndex() {
+        return pathIndex;
+    }
+
+    public void setPathIndex(String pathIndex) {
+        this.pathIndex = pathIndex;
     }
 }

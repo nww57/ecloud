@@ -1,5 +1,10 @@
 package com.sunesoft.ecloud.files.biz.application.dtos;
 
+import com.sunesoft.ecloud.common.sqlBuilderTool.annotations.AliasName;
+import com.sunesoft.ecloud.common.sqlBuilderTool.annotations.FieldWithoutCheck;
+import com.sunesoft.ecloud.files.biz.domain.enums.PathType;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,6 +16,8 @@ public class FilePathDto {
 
     private UUID id;
 
+    private UUID agId;
+
     private String baseRoot;// 存储案件编号
 
     private String pathName;
@@ -19,11 +26,15 @@ public class FilePathDto {
 
     private Boolean hasParent;
 
+    private String pathIndex;
 
-    private List<FilePathDto> childs;
+    private Boolean isTempleteData;
 
+    private PathType pathType;
 
-    List<FileInfoDto> listFiles;
+    @AliasName("parent_id")
+    @FieldWithoutCheck
+    private UUID parentId;
 
     public UUID getId() {
         return id;
@@ -65,11 +76,44 @@ public class FilePathDto {
         this.hasParent = hasParent;
     }
 
-    public List<FileInfoDto> getListFiles() {
-        return listFiles;
+
+    public String getPathIndex() {
+        return pathIndex;
     }
 
-    public void setListFiles(List<FileInfoDto> listFiles) {
-        this.listFiles = listFiles;
+    public void setPathIndex(String pathIndex) {
+        this.pathIndex = pathIndex;
+    }
+
+    public UUID getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(UUID parentId) {
+        this.parentId = parentId;
+    }
+
+    public UUID getAgId() {
+        return agId;
+    }
+
+    public void setAgId(UUID agId) {
+        this.agId = agId;
+    }
+
+    public Boolean getTempleteData() {
+        return isTempleteData;
+    }
+
+    public void setTempleteData(Boolean templeteData) {
+        isTempleteData = templeteData;
+    }
+
+    public PathType getPathType() {
+        return pathType;
+    }
+
+    public void setPathType(PathType pathType) {
+        this.pathType = pathType;
     }
 }

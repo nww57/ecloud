@@ -22,6 +22,8 @@ public class FileInfos extends BizEntity {
      */
     private String docType;
 
+
+
     private Integer typeFileCount;
      /**
      * 扩展名
@@ -30,7 +32,7 @@ public class FileInfos extends BizEntity {
     /**
      * 文件大小
      */
-    private Integer fileSize;
+    private Long fileSize;
     /**
      * 文件名
      */
@@ -45,6 +47,9 @@ public class FileInfos extends BizEntity {
     private Boolean is_latestVersion;
 
     private String md5;
+
+    private String realPath;
+
     /**
      * 文件路径
      */
@@ -113,11 +118,11 @@ public class FileInfos extends BizEntity {
         this.md5 = md5;
     }
 
-    public Integer getFileSize() {
+    public Long getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(Integer fileSize) {
+    public void setFileSize(Long fileSize) {
         this.fileSize = fileSize;
     }
 
@@ -200,5 +205,13 @@ public class FileInfos extends BizEntity {
 
     public void setAttr5(String attr5) {
         this.attr5 = attr5;
+    }
+
+    public String getRealPath() {
+        return realPath;
+    }
+
+    public void setRealPath(String realPath) {
+        this.realPath = realPath;
     }
 }

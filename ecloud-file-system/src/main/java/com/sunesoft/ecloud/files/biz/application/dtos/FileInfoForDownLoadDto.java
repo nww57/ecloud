@@ -12,7 +12,7 @@ import java.util.UUID;
  * @author: Zhouzh
  * @Date: 2018/4/16
  */
-public class FileInfoDto {
+public class FileInfoForDownLoadDto {
 
     private UUID id;
 
@@ -81,6 +81,11 @@ public class FileInfoDto {
      * 版本号(20180416-01)
      */
     private String versionNo;
+
+
+
+    private String realPath;
+
 
     public UUID getId() {
         return id;
@@ -209,5 +214,13 @@ public class FileInfoDto {
 
     public void setVersionNo(String versionNo) {
         this.versionNo = versionNo;
+    }
+
+    public String getRealPath() {
+        return realPath;
+    }
+
+    public void setRealPath(String realPath) {
+        this.realPath = realPath;
     }
 }
