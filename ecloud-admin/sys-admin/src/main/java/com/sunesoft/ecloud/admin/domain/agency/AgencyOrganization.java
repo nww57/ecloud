@@ -1,6 +1,7 @@
 package com.sunesoft.ecloud.admin.domain.agency;
 
 import com.sunesoft.ecloud.hibernate.BizEntity;
+import com.sunesoft.ecloud.hibernate.IEntity;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -15,7 +16,7 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "sys_ag_organization")
-public class AgencyOrganization extends BizEntity{
+public class AgencyOrganization extends IEntity{
 
 
     /**
