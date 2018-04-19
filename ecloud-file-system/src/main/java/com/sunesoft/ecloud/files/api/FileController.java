@@ -7,11 +7,11 @@ import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.files.biz.application.criterias.FileCriteria;
 import com.sunesoft.ecloud.files.biz.application.dtos.DownloadFileDto;
+import com.sunesoft.ecloud.files.biz.application.dtos.FileInfoDto;
 import com.sunesoft.ecloud.files.biz.application.dtos.FileRelateDto;
 import com.sunesoft.ecloud.files.biz.application.dtos.FileUploadDto;
 import com.sunesoft.ecloud.files.biz.application.query.FileQueryService;
 import com.sunesoft.ecloud.files.biz.application.service.FileInfoService;
-import com.sunesoft.ecloud.files.biz.application.dtos.FileInfoDto;
 import com.sunesoft.ecloud.files.biz.application.service.FilePathService;
 import com.sunesoft.ecloud.files.biz.domain.FilePath;
 import com.sunesoft.ecloud.files.biz.domain.enums.PathType;
@@ -27,9 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -117,6 +116,8 @@ public class FileController {
             result = new TResult(false, "请选择要上传的文件！");
             return result;
         }
+
+        List<UUID> upId = new ArrayList<>();
 //        List<MultipartFile> myfiles = ((DefaultMultipartHttpServletRequest) request).getFiles("files");
         //如果只是上传一个文件,则只需要MultipartFile类型接收文件即可,而且无需显式指定@RequestParam注解
         //如果想上传多个文件,那么这里就要用MultipartFile[]类型来接收文件,并且要指定@RequestParam注解
@@ -144,6 +145,7 @@ public class FileController {
                         fileUploadDto.getRequirePathType());
                 fileInfoDto.setFile_path_id(pathByType.getId());
                 TResult upload = fileInfoService.upload(fileInfoDto);
+                upId.add((UUID)upload.getResult());
 
                 //这里不必处理IO流关闭的问题,因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉
                 //此处也可以使用Spring提供的MultipartFile.transferTo(File dest)方法实现文件的上传
@@ -155,7 +157,7 @@ public class FileController {
                 return result;
             }
         }
-        return ResultFactory.error("no file found");
+        return ResultFactory.success(upId);
     }
 
 
