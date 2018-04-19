@@ -14,4 +14,4 @@ eureka:
         management.context-path: /file
 
 file:
-  basePath: D:/ecloudFile/
+  basePath: E:/ecloudFile/

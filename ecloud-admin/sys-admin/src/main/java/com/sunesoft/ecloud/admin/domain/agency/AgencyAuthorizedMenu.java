@@ -1,6 +1,7 @@
 package com.sunesoft.ecloud.admin.domain.agency;
 
 import com.sunesoft.ecloud.admin.domain.menu.Menu;
+import com.sunesoft.ecloud.hibernate.BizEntity;
 import com.sunesoft.ecloud.hibernate.IEntity;
 import org.hibernate.annotations.Type;
 

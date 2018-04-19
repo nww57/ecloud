@@ -2,6 +2,7 @@ package com.sunesoft.ecloud.admin.domain.agency;
 
 import com.sunesoft.ecloud.adminclient.CustomerType;
 import com.sunesoft.ecloud.hibernate.BizEntity;
+import com.sunesoft.ecloud.hibernate.IEntity;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -15,7 +16,7 @@ import java.util.*;
  */
 @Entity
 @Table(name = "sys_ag_customer")
-public class AgencyCustomer extends BizEntity{
+public class AgencyCustomer extends IEntity{
 
     @Column(name = "customerAgencyId",columnDefinition = "char(36)")
     @Type(type = "uuid-char")

@@ -62,7 +62,7 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
             role = roleRepository.findOne(id);
         }
         BeanUtil.copyPropertiesIgnoreNull(agencyRoleDto,role);
-        role.setAgencyId(agId);
+        role.setAgId(agId);
         roleRepository.saveAndFlush(role);
         //设置权限
         Map<UUID,List<UUID>> authList = agencyRoleDto.getAuthList();

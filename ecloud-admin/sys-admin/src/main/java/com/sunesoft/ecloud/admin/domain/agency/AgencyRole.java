@@ -34,10 +34,6 @@ public class AgencyRole extends BizEntity {
     @Column(name="description")
     private String description;
 
-    @Column(name = "agId",columnDefinition = "char(36)")
-    @Type(type = "uuid-char")
-    private UUID agencyId;
-
     public String getName() {
         return name;
     }
@@ -62,11 +58,4 @@ public class AgencyRole extends BizEntity {
         this.description = description;
     }
 
-    public UUID getAgencyId() {
-        return agencyId;
-    }
-
-    public void setAgencyId(UUID agencyId) {
-        this.agencyId = agencyId;
-    }
 }
