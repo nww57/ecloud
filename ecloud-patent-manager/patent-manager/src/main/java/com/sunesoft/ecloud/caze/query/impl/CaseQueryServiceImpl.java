@@ -88,15 +88,19 @@ public class CaseQueryServiceImpl extends GenericQuery implements CaseQueryServi
             sql.append(" and ci.feeReduceRate = :feeReduceRate");
             params.put("feeReduceRate", criteria.getFeeReduceRate());
         }
+        sql.append(" group by ci.id ");
+        if(StringUtils.isNotEmpty(criteria.getPatentNo()) || null != criteria.getPatentType()){
+            sql.append(" having 1=1 ");
+        }
         if (StringUtils.isNotEmpty(criteria.getPatentNo())) {
-            sql.append(" and patentNo like :patentNo");
+            sql.append(" and patentNo like :patentNo ");
             params.put("patentNo", "%" + criteria.getPatentNo() + "%");
         }
         if (null != criteria.getPatentType()) {
             sql.append(" and patentType like :patentType");
             params.put("patentType", "%" + criteria.getPatentType().name() + "%");
         }
-        sql.append(" group by ci.id order by ci.create_datetime desc");
+        sql.append(" order by ci.create_datetime desc ");
         PagedResult<CasePatentInfoDto> infoList = queryPaged(criteria.getPageIndex(), criteria.getPageSize(), sql.toString(), params, CasePatentInfoDto.class);
         List<CaseInfoListDto> dtoList = new ArrayList<>();
         infoList.getResult().forEach(info -> {
