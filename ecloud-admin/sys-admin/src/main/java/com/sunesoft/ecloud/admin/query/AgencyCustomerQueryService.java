@@ -12,6 +12,7 @@ import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -47,6 +48,13 @@ public interface AgencyCustomerQueryService {
     PagedResult<CustomerApplicantDto> findCustomerApplicantPaged(UUID customerId, CustomerApplicantCriteria criteria);
 
     /**
+     * 查找客户申请人列表
+     * @param customerId 客户id
+     * @return 返回查询结果
+     */
+    ListResult<BasicDto> findCustomerApplicantList(UUID customerId);
+
+    /**
      * 根据id 查找客户申请人信息
      * @param id id
      * @return 返回查询结果
@@ -63,6 +71,13 @@ public interface AgencyCustomerQueryService {
     PagedResult<CustomerInventorDto> findCustomerInventorPaged(UUID customerId,CustomerInventorCriteria criteria);
 
     /**
+     * 查找客户发明人列表
+     * @param customerId 客户id
+     * @return 返回查询结果
+     */
+    ListResult<BasicDto> findCustomerInventorList(UUID customerId);
+
+    /**
      * 根据id 查找客户发明人信息
      * @param id id
      * @return 返回查询结果
@@ -76,6 +91,13 @@ public interface AgencyCustomerQueryService {
      * @return 返回查询结果
      */
     PagedResult<CustomerContactDto> findCustomerContactsPaged(UUID customerId, CustomerContactCriteria criteria);
+
+    /**
+     * 查找客户联系人信息
+     * @param customerId 客户id
+     * @return 返回查询结果
+     */
+    ListResult<BasicDto> findCustomerContactsList(UUID customerId);
 
     /**
      * 根据id 查找客户联系人信息
