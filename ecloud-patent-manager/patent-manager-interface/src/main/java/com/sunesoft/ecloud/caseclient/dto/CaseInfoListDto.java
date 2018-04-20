@@ -28,10 +28,7 @@ public class CaseInfoListDto extends CaseInfoDto{
      */
     private String customerConsultantName;
 
-    /**
-     * 立案人
-     */
-    private String caseCreatorName;
+
 
     /**
      * 立案时间
@@ -74,14 +71,6 @@ public class CaseInfoListDto extends CaseInfoDto{
 
     public void setCustomerConsultantName(String customerConsultantName) {
         this.customerConsultantName = customerConsultantName;
-    }
-
-    public String getCaseCreatorName() {
-        return caseCreatorName;
-    }
-
-    public void setCaseCreatorName(String caseCreatorName) {
-        this.caseCreatorName = caseCreatorName;
     }
 
     public String getCaseCreateDate() {
