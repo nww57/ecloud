@@ -29,19 +29,19 @@ public class ParameterQueryServiceImplTest {
 
     @Test
     public void queryParaneterByTypeId() throws Exception {
-        ListResult<ParameterDto> parameterDtoListResult = parameterQueryService.queryParaneterByTypeId(UUID.fromString("cf1fa17f-f97d-4dc3-831e-32421940ecfe"));
+        ListResult<ParameterDto> parameterDtoListResult = parameterQueryService.queryParameterByTypeId(UUID.fromString("cf1fa17f-f97d-4dc3-831e-32421940ecfe"));
         System.out.println(JsonHelper.toJson(parameterDtoListResult));
     }
 
     @Test
     public void queryParaneterById() throws Exception {
-        TResult<ParameterDto> parameterDtoTResult = parameterQueryService.queryParaneterById(UUID.fromString("f625d6dd-c52a-49da-b038-a9b59037c5d0"));
+        TResult<ParameterDto> parameterDtoTResult = parameterQueryService.queryParameterById(UUID.fromString("f625d6dd-c52a-49da-b038-a9b59037c5d0"));
         System.out.println(JsonHelper.toJson(parameterDtoTResult));
     }
 
     @Test
     public void queryAllParaneter() throws Exception {
-        ListResult<ParameterDto> parameterDtoListResult = parameterQueryService.queryAllParaneter();
+        ListResult<ParameterDto> parameterDtoListResult = parameterQueryService.queryAllParameter();
         System.out.println(JsonHelper.toJson(parameterDtoListResult));
 
     }

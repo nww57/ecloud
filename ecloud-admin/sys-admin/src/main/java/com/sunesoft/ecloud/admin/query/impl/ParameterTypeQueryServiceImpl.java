@@ -24,7 +24,7 @@ import java.util.UUID;
 @SuppressWarnings("All")
 public class ParameterTypeQueryServiceImpl extends GenericQuery implements ParameterTypeQueryService{
     @Override
-    public TResult<ParameterTypeDto> queryParaneterTypeById(UUID uuid) {
+    public TResult<ParameterTypeDto> queryParameterTypeById(UUID uuid) {
         SqlBuilder sqlBuilder = HSqlBuilder.hFrom(ParameterType.class, "p")
                 .where("p.id", uuid)
                 .select(ParameterTypeDto.class);
@@ -33,7 +33,7 @@ public class ParameterTypeQueryServiceImpl extends GenericQuery implements Param
     }
 
     @Override
-    public ListResult<ParameterTypeDto> queryAllParaneterType() {
+    public ListResult<ParameterTypeDto> queryAllParameterType() {
         SqlBuilder sqlBuilder = HSqlBuilder.hFrom(ParameterType.class, "p")
                 .select(ParameterTypeDto.class);
         List<ParameterTypeDto> list = this.queryList(sqlBuilder);
