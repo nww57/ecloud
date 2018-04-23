@@ -60,7 +60,7 @@ public class CustomerApplicant extends IEntity{
      *备案有效期
      */
     @Column(name = "recordValidDate")
-    private Date recordValidDate;
+    private LocalDateTime recordValidDate;
 
     /**
      * 省code
@@ -160,11 +160,11 @@ public class CustomerApplicant extends IEntity{
         this.record = record;
     }
 
-    public Date getRecordValidDate() {
+    public LocalDateTime getRecordValidDate() {
         return recordValidDate;
     }
 
-    public void setRecordValidDate(Date recordValidDate) {
+    public void setRecordValidDate(LocalDateTime recordValidDate) {
         this.recordValidDate = recordValidDate;
     }
 

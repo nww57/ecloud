@@ -1,7 +1,10 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sunesoft.ecloud.adminclient.CustomerType;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
@@ -45,7 +48,9 @@ import java.util.UUID;
     /**
      *签约时间
      */
-    private String signDate;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime signDate;
     /**
      *客户负责人
      */
@@ -170,11 +175,11 @@ import java.util.UUID;
         this.street = street;
     }
 
-    public String getSignDate() {
+    public LocalDateTime getSignDate() {
         return signDate;
     }
 
-    public void setSignDate(String signDate) {
+    public void setSignDate(LocalDateTime signDate) {
         this.signDate = signDate;
     }
 

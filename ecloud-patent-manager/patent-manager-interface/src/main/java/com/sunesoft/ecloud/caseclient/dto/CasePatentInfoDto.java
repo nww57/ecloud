@@ -1,8 +1,9 @@
 package com.sunesoft.ecloud.caseclient.dto;
 
-import com.sunesoft.ecloud.caseclient.PatentType;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.UUID;
+import java.time.LocalDateTime;
 
 /**
  * @Author: niww
@@ -33,7 +34,9 @@ public class CasePatentInfoDto extends CaseInfoDto{
     /**
      * 立案时间
      */
-    private String caseCreateDate;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime caseCreateDate;
 
 
     private String patentId;
@@ -87,11 +90,11 @@ public class CasePatentInfoDto extends CaseInfoDto{
 
 
 
-    public String getCaseCreateDate() {
+    public LocalDateTime getCaseCreateDate() {
         return caseCreateDate;
     }
 
-    public void setCaseCreateDate(String caseCreateDate) {
+    public void setCaseCreateDate(LocalDateTime caseCreateDate) {
         this.caseCreateDate = caseCreateDate;
     }
 

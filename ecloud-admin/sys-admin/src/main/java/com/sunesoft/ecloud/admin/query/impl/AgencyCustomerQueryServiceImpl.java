@@ -44,6 +44,7 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
             dtoBuilder.and(" (c.name like '%" + keywords + "%' or c.leader like '%" + keywords + "%' or c.leaderMobile like '%" + keywords + "%' )");
         }
         dtoBuilder.pagging(criteria.getPageIndex(), criteria.getPageSize())
+                .orderBy("c.create_datetime",OrderType.DESC)
                 .select(AgencyCustomerDto.class)
                 .setFieldValue("consultantId", "u.id")
                 .setFieldValue("consultantName", "u.realName");

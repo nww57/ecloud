@@ -130,13 +130,13 @@ public class GenericListExtractor<T extends Collection> implements ResultSetExtr
         } else if (filedType == String.class) {
             return rs.getString(i);
         } else if (filedType == Date.class) {
-            return rs.getDate(i);
+            return rs.getTimestamp(i);
         } else if (filedType == LocalDate.class) {
             //todo
-            return rs.getDate(i).toLocalDate();
+            return null==rs.getDate(i)?null:rs.getDate(i).toLocalDate();
         } else if (filedType == LocalDateTime.class) {
             //todo
-            return rs.getDate(i);
+            return null==rs.getTimestamp(i)?null:rs.getTimestamp(i).toLocalDateTime();
         } else if (filedType == UUID.class) {
             if (rs.getString(i) != null)
                 return UUID.fromString(rs.getString(i));
