@@ -5,6 +5,7 @@ import com.sunesoft.ecloud.admin.repository.ParameterTypeRepository;
 import com.sunesoft.ecloud.admin.service.ParameterTypeService;
 import com.sunesoft.ecloud.adminclient.dtos.ParameterTypeDto;
 import com.sunesoft.ecloud.common.result.TResult;
+import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,7 @@ public class ParameterTypeServiceImpl implements ParameterTypeService {
             }
             result = parameterTypeRepository.save(parameterType);
         }
-        return new TResult(result);
+        return (TResult) ResultFactory.success(result.getId());
     }
 
     @Override
