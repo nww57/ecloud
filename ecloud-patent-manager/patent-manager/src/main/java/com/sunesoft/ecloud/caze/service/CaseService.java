@@ -6,6 +6,7 @@ import com.sunesoft.ecloud.caseclient.dto.CaseInfoDto;
 import com.sunesoft.ecloud.caseclient.dto.CaseMessageDto;
 import com.sunesoft.ecloud.common.result.TResult;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 /**
@@ -20,6 +21,15 @@ public interface CaseService {
      * @return 返回操作结果
      */
     TResult addOrUpdateCase(CaseInfoDto dto);
+
+
+    /**
+     * 设置案件费减比列
+     * @param caseId
+     * @param feeReduceRate
+     * @return
+     */
+    TResult setCaseFeeReduceRate(UUID caseId, BigDecimal feeReduceRate);
 
     /**
      * 删除案件

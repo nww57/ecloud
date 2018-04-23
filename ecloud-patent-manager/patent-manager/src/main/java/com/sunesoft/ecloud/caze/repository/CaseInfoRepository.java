@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 /**
@@ -22,4 +23,7 @@ public interface CaseInfoRepository extends BaseRepository<CaseInfo,UUID>{
     @Procedure(procedureName = "generate_caseNo")
     String generateCaseNo(@Param("agId") String agId);
 
+    @Modifying
+    @Query(value = "update CaseInfo set feeReduceRate = :feeReduceRate where id = :caseId")
+    void setFeeReduceRate(@Param("caseId") UUID caseId, @Param("feeReduceRate") BigDecimal feeReduceRate);
 }
