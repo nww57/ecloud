@@ -18,4 +18,11 @@ public interface PatentInfoRepository extends BaseRepository<PatentInfo,UUID>{
     @Modifying
     @Query(value = "update PatentInfo set customerId = :customerId,feeReduceRate = :feeReduceRate where caseInfo.id = :caseId")
     void updatePatentInfo(@Param("caseId") UUID caseId, @Param("customerId") UUID customerId, @Param("feeReduceRate") BigDecimal feeReduceRate);
+
+    @Modifying
+    @Query(value = "update PatentInfo set feeReduceRate = :feeReduceRate where caseInfo.id = :caseId")
+    void setFeeReduceRate(UUID caseId, BigDecimal feeReduceRate);
+
+    @Query(value = "update PatentInfo set is_active = 0 where caseInfo.id in :ids")
+    void deleteBatch(@Param("ids") UUID... ids);
 }

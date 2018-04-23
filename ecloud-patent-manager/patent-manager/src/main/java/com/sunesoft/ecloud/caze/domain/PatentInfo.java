@@ -7,6 +7,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.UUID;
 
 /**
@@ -18,27 +19,49 @@ import java.util.UUID;
 public class PatentInfo extends BizEntity{
 
 
-
+    /**
+     * 所属案件
+     */
     @ManyToOne
     @JoinColumn(name = "caseId")
     private CaseInfo caseInfo;
 
+    /**
+     * 所属客户
+     */
     @Column(name = "customerId",columnDefinition = "char(36)")
     @Type(type = "uuid-char")
     private UUID customerId;
 
+    /**
+     * 专利号
+     */
     @Column(name = "patentNo")
     private String patentNo;
 
+    /**
+     * 专利名称
+     */
     @Column(name = "patentName")
     private String patentName;
 
+    /**
+     * 专利类型
+     */
     @Column(name = "patentType")
     @Enumerated(EnumType.STRING)
     private PatentType patentType;
 
+    /**
+     * 费减比例
+     */
     @Column(name = "reduceRate")
     private BigDecimal feeReduceRate;
+
+    /**
+     * 技术领域
+     */
+    private BigInteger techDomain;
 
     public PatentInfo() {
     }
@@ -95,5 +118,11 @@ public class PatentInfo extends BizEntity{
         this.feeReduceRate = feeReduceRate;
     }
 
+    public BigInteger getTechDomain() {
+        return techDomain;
+    }
 
+    public void setTechDomain(BigInteger techDomain) {
+        this.techDomain = techDomain;
+    }
 }

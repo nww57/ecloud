@@ -45,7 +45,7 @@ public class CaseInfo extends BizEntity {
      *费减比列
      */
     @Column(name = "feeReduceRate")
-    private BigDecimal feeReduceRate;
+    private BigDecimal feeReduceRate = BigDecimal.ONE;
     /**
      *备注
      */

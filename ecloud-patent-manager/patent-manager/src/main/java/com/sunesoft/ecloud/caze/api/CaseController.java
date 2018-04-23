@@ -106,6 +106,9 @@ public class CaseController {
      */
     @PutMapping("{cid}")
     public TResult updateCase(@PathVariable UUID cid,@RequestBody CaseInfoDto dto){
+//        UUID agId = UUID.fromString(UserContext.getAgencyId());
+//        dto.setAgId(agId);
+        dto.setId(cid);
         return caseService.addOrUpdateCase(dto);
     }
 
@@ -160,14 +163,10 @@ public class CaseController {
      * @return
      */
     @PostMapping("{cid}/caseMessage")
-    public TResult createCaseMessage(@PathVariable UUID cid,CaseMessageDto dto){
+    public TResult createCaseMessage(@PathVariable UUID cid,@RequestBody  CaseMessageDto dto){
         dto.setCaseId(cid);
         UUID userID = UUID.fromString(UserContext.getUserID());
         dto.setMessagerId(userID);
-        TResult<UserDto> result = userServiceClient.getUserRealNameAndRoleName(userID);
-        UserDto userDto=result.getResult();
-        dto.setMessagerRoleName(userDto.getRoleName());
-        dto.setMessagerRealName(userDto.getRealName());
         return caseService.addOrUpdateCaseMessage(dto);
     }
 
