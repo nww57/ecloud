@@ -16,6 +16,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
@@ -36,11 +38,11 @@ public class CaseServiceImplTest {
         CaseInfoDto dto = new CaseInfoDto();
         dto.setAgId(UUID.fromString("01d134d6-3eef-4b60-9979-c6392554da25"));
         dto.setCaseType(CaseType.SAMEDAYAPPLY_PATENT);
-        dto.setCaseName("一个水龙头");
-        dto.setComments("备注");
+        dto.setCaseName("一种洒水车");
+        dto.setComments("看看能不能添加caseNo");
         dto.setCustomerId(UUID.fromString("696f3f81-f3bb-4ebc-99f0-9c3a5decfdf2"));
         dto.setFeeReduceRate(new BigDecimal("1"));
-        dto.setCaseCreatorName("test");
+        dto.setCaseCreatorName("hhhhadf");
         TResult re = caseService.addOrUpdateCase(dto);
         System.out.println(23);
     }
@@ -71,6 +73,20 @@ public class CaseServiceImplTest {
     public void deleteCaseCustomerRequest(){
         caseService.deleteCaseCustomerRequest(UUID.fromString("6059904c-9463-4553-ab2f-f2e322110f01"));
         System.out.println(23);
+    }
+
+    @Test
+    public void deleteCase(){
+        caseService.deleteCase(UUID.fromString("a4c8362b-9e8e-4a08-a1eb-71ebd87e86da"));
+        System.out.println(23);
+    }
+
+    @Test
+    public void testLocalDatetime(){
+        LocalDateTime time = LocalDateTime.now();
+        System.out.println(time.toString());
+        System.out.println(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(time));
+
     }
 
 }

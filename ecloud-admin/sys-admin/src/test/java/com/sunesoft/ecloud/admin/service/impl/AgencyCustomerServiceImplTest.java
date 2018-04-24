@@ -42,7 +42,7 @@ public class AgencyCustomerServiceImplTest {
         dto.setCity("市辖区");
         dto.setDistrict("东城区");
         dto.setStreet("高新区XXX");
-        dto.setSignDate("2018-04-03 11:06:52");
+        dto.setSignDate(LocalDateTime.now());
         dto.setConsultantId(UUID.fromString("0f35220d-718e-4e53-b260-cb329d7fb407"));
         customerService.addOrUpdateAgencyCustomer(dto);
         System.out.println(23);
@@ -67,7 +67,7 @@ public class AgencyCustomerServiceImplTest {
             dto.setType(ApplicantType.INDUSTRIAL_COMPANY);
             dto.setCode("320425363652142536");
             dto.setRecord(true);
-            dto.setRecordValidDate("2018-4-12 10:55:20");
+            dto.setRecordValidDate(LocalDateTime.now());
 //            dto.setArea("江苏常州");
             TResult result = customerService.addOrUpdateCustomerApplicants(dto);
         }

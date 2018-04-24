@@ -1,7 +1,9 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sunesoft.ecloud.adminclient.UserType;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
@@ -78,7 +80,8 @@ public class UserBasicDto extends BasicDto{
     /**
      * 创建时间
      */
-    private String createDate;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createDate;
 
     /**
      * 所属企业id
@@ -199,11 +202,11 @@ public class UserBasicDto extends BasicDto{
         this.position = position;
     }
 
-    public String getCreateDate() {
+    public LocalDateTime getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(String createDate) {
+    public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
     }
 

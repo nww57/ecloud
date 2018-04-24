@@ -1,6 +1,8 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sunesoft.ecloud.adminclient.ApplicantType;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -47,7 +49,9 @@ public class CustomerApplicantDto {
     /**
      *备案有效期
      */
-    private String recordValidDate;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern  = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime recordValidDate;
 
     /**
      * 省code
@@ -152,11 +156,11 @@ public class CustomerApplicantDto {
         this.record = record;
     }
 
-    public String getRecordValidDate() {
+    public LocalDateTime getRecordValidDate() {
         return recordValidDate;
     }
 
-    public void setRecordValidDate(String recordValidDate) {
+    public void setRecordValidDate(LocalDateTime recordValidDate) {
         this.recordValidDate = recordValidDate;
     }
 

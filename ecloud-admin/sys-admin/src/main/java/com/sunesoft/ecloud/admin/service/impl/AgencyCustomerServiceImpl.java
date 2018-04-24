@@ -185,9 +185,9 @@ public class AgencyCustomerServiceImpl implements AgencyCustomerService {
         if (StringUtils.isEmpty(agencyCustomerDto.getLeaderEmail())) {
             return new TResult<>("邮箱不能为空");
         }
-        if (StringUtils.isEmpty(agencyCustomerDto.getSignDate())) {
+        if (null == agencyCustomerDto.getSignDate()) {
             return new TResult<>("签约时间不能为空");
         }
-        return (TResult) ResultFactory.success();
+        return ResultFactory.success();
     }
 }

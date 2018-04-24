@@ -6,6 +6,7 @@ import com.sunesoft.ecloud.hibernate.IEntity;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -73,7 +74,7 @@ public class AgencyCustomer extends IEntity{
      *签约时间
      */
     @Column(name = "signDate")
-    private Date signDate;
+    private LocalDateTime signDate;
     /**
      *客户负责人
      */
@@ -159,11 +160,11 @@ public class AgencyCustomer extends IEntity{
         this.street = street;
     }
 
-    public Date getSignDate() {
+    public LocalDateTime getSignDate() {
         return signDate;
     }
 
-    public void setSignDate(Date signDate) {
+    public void setSignDate(LocalDateTime signDate) {
         this.signDate = signDate;
     }
 
