@@ -22,7 +22,7 @@ public class ParameterDto {
     private String paramName;
 
     /**
-     * 参数键
+     * 参数键（这里是否可理解为参数编码，待确认）
      */
     private String paramKey;
 
@@ -46,13 +46,25 @@ public class ParameterDto {
      */
     private String remark;
 
-    private String attr1;
+    /**
+     * 默认显示（中文显示）
+     */
+    private String defaultDisplay;
 
-    private String attr2;
+    /**
+     * 英文显示
+     */
+    private String englishDisplay;
 
-    private String attr3;
+    /**
+     * 最后更新人
+     */
+    private String renewing;
 
-    private String attr4;
+    /**
+     * 最后更新人Id
+     */
+    private String renewingId;
 
     private String attr5;
 
@@ -122,36 +134,36 @@ public class ParameterDto {
         this.remark = remark;
     }
 
-    public String getAttr1() {
-        return attr1;
+    public String getDefaultDisplay() {
+        return defaultDisplay;
     }
 
-    public void setAttr1(String attr1) {
-        this.attr1 = attr1;
+    public void setDefaultDisplay(String defaultDisplay) {
+        this.defaultDisplay = defaultDisplay;
     }
 
-    public String getAttr2() {
-        return attr2;
+    public String getEnglishDisplay() {
+        return englishDisplay;
     }
 
-    public void setAttr2(String attr2) {
-        this.attr2 = attr2;
+    public void setEnglishDisplay(String englishDisplay) {
+        this.englishDisplay = englishDisplay;
     }
 
-    public String getAttr3() {
-        return attr3;
+    public String getRenewing() {
+        return renewing;
     }
 
-    public void setAttr3(String attr3) {
-        this.attr3 = attr3;
+    public void setRenewing(String renewing) {
+        this.renewing = renewing;
     }
 
-    public String getAttr4() {
-        return attr4;
+    public String getRenewingId() {
+        return renewingId;
     }
 
-    public void setAttr4(String attr4) {
-        this.attr4 = attr4;
+    public void setRenewingId(String renewingId) {
+        this.renewingId = renewingId;
     }
 
     public String getAttr5() {
