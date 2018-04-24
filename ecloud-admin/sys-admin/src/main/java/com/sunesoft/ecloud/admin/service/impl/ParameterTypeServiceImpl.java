@@ -27,7 +27,7 @@ public class ParameterTypeServiceImpl implements ParameterTypeService {
 
 
     @Override
-    public TResult<ParameterTypeDto> addOrUpdate(ParameterTypeDto dto) {
+    public TResult addOrUpdate(ParameterTypeDto dto) {
         ParameterType parameterType;
         if (dto.getId() != null) {//修改
             parameterType = parameterTypeRepository.findOne(dto.getId());
@@ -48,7 +48,7 @@ public class ParameterTypeServiceImpl implements ParameterTypeService {
     }
 
     @Override
-    public TResult<ParameterTypeDto> delete(UUID uuid) {
+    public TResult delete(UUID uuid) {
         if (uuid != null) {
             parameterTypeRepository.delete(uuid);
             return new TResult<>(true, "删除成功！");
