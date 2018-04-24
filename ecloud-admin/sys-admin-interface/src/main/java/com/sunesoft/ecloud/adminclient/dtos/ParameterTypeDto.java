@@ -12,12 +12,24 @@ import java.util.List;
  */
 public class ParameterTypeDto extends TreeEntity {
 
+    /**
+     * 参数类型名
+     */
     private String paramTypeName;
 
+    /**
+     *参数类型编码
+     */
     private String paramTypeCode;
 
+    /**
+     *参数类型描述
+     */
     private String paramTypeDesc;
 
+    /**
+     * 备注
+     */
     private String remark;
 
     /**

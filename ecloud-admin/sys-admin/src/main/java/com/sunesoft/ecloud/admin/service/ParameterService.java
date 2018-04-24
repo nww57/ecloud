@@ -3,6 +3,7 @@ package com.sunesoft.ecloud.admin.service;
 import com.sunesoft.ecloud.adminclient.dtos.ParameterDto;
 import com.sunesoft.ecloud.common.result.TResult;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -22,7 +23,7 @@ public interface ParameterService {
     /**
      * 删除接口
      */
-    TResult<ParameterDto> delete(UUID uuid);
+    TResult<ParameterDto> delete(List<UUID> ids);
 
 
 }

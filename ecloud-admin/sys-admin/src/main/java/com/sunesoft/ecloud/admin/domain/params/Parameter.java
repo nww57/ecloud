@@ -21,21 +21,39 @@ public class Parameter extends IEntity {
     @JoinColumn(name = "parameterId")
     private ParameterType parameterType;
 
+    /**
+     * 参数名
+     */
     @Column(name = "paramName")
     private String paramName;
 
+    /**
+     *参数键
+     */
     @Column(name = "paramKey")
     private String paramKey;
 
+    /**
+     *参数值
+     */
     @Column(name = "paramValue")
     private String paramValue;
 
+    /**
+     *参数描述
+     */
     @Column(name = "paramDesc")
     private String paramDesc;
 
+    /**
+     *参数排序
+     */
     @Column(name = "paramSort")
     private Integer paramSort;
 
+    /**
+     *备注
+     */
     @Column(name = "remark")
     private String remark;
 

@@ -11,18 +11,39 @@ public class ParameterDto {
 
     private  UUID id;
 
+    /**
+     * 类型ID
+     */
     private UUID typeId;
 
+    /**
+     * 参数名
+     */
     private String paramName;
 
+    /**
+     * 参数键
+     */
     private String paramKey;
 
+    /**
+     * 参数值
+     */
     private String paramValue;
 
+    /**
+     * 参数描述
+     */
     private String paramDesc;
 
+    /**
+     * 参数序号
+     */
     private Integer paramSort;
 
+    /**
+     * 备注
+     */
     private String remark;
 
     private String attr1;
