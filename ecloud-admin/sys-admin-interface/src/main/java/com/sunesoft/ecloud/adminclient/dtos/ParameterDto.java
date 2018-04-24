@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
@@ -66,7 +67,10 @@ public class ParameterDto {
      */
     private String renewingId;
 
-    private String attr5;
+    /**
+     * 最后更新时间
+     */
+    private LocalDateTime last_update_time;
 
     private String attr6;
 
@@ -166,12 +170,12 @@ public class ParameterDto {
         this.renewingId = renewingId;
     }
 
-    public String getAttr5() {
-        return attr5;
+    public LocalDateTime getLast_update_time() {
+        return last_update_time;
     }
 
-    public void setAttr5(String attr5) {
-        this.attr5 = attr5;
+    public void setLast_update_time(LocalDateTime last_update_time) {
+        this.last_update_time = LocalDateTime.now();
     }
 
     public String getAttr6() {
