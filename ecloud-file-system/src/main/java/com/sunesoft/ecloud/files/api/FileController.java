@@ -144,7 +144,8 @@ public class FileController {
                         fileUploadDto.getDocType(),
                         fileUploadDto.getRequirePathType());
                 fileInfoDto.setFile_path_id(pathByType.getId());
-                TResult upload = fileInfoService.upload(fileInfoDto);
+                TResult upload = fileInfoService.uploadByCaseNo(fileInfoDto);
+//                TResult upload = fileInfoService.upload(fileInfoDto);
                 upId.add((UUID)upload.getResult());
 
                 //这里不必处理IO流关闭的问题,因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉
