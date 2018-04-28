@@ -100,10 +100,8 @@ public class AgencyCustomerServiceImplTest {
             CustomerContactDto dto = new CustomerContactDto();
             dto.setCustomerId(UUID.fromString("569e07c9-0ebf-4002-88da-87c2777d82f2"));
             dto.setName("客户联系人"+i);
-            dto.setMobile("12345678934");
             dto.setEmail("234@qq.com");
             dto.setQq("2323234");
-            dto.setPhone("02585321547");
             TResult result = customerService.addOrUpdateCustomerContact(dto);
         }
         System.out.println(23);
