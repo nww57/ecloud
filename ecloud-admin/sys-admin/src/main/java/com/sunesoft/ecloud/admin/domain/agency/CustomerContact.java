@@ -23,10 +23,10 @@ public class CustomerContact extends IEntity {
     private String name;
 
     /**
-     * 手机
+     * 联系方式
      */
-    @Column(name = "mobile")
-    private String mobile;
+    @Column(name = "cellphone")
+    private String cellphone;
 
     /**
      * 邮箱
@@ -40,11 +40,6 @@ public class CustomerContact extends IEntity {
     @Column(name = "qq")
     private String qq;
 
-    /**
-     * 座机
-     */
-    @Column(name = "phone")
-    private String phone;
 
     /**
      * 所属客户
@@ -62,14 +57,6 @@ public class CustomerContact extends IEntity {
         this.name = name;
     }
 
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -84,14 +71,6 @@ public class CustomerContact extends IEntity {
 
     public void setQq(String qq) {
         this.qq = qq;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public UUID getCustomerId() {

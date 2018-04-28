@@ -16,9 +16,9 @@ public class CustomerContactDto {
     private String name;
 
     /**
-     * 手机
+     * 联系方式
      */
-    private String mobile;
+    private String cellphone;
 
     /**
      * 邮箱
@@ -29,11 +29,6 @@ public class CustomerContactDto {
      * QQ
      */
     private String qq;
-
-    /**
-     * 座机
-     */
-    private String phone;
 
     /**
      * 所属客户
@@ -57,14 +52,6 @@ public class CustomerContactDto {
         this.name = name;
     }
 
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -81,19 +68,19 @@ public class CustomerContactDto {
         this.qq = qq;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public UUID getCustomerId() {
         return customerId;
     }
 
     public void setCustomerId(UUID customerId) {
         this.customerId = customerId;
+    }
+
+    public String getCellphone() {
+        return cellphone;
+    }
+
+    public void setCellphone(String cellphone) {
+        this.cellphone = cellphone;
     }
 }

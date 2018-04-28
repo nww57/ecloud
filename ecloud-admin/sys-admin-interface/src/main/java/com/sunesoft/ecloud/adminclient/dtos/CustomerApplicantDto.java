@@ -92,6 +92,16 @@ public class CustomerApplicantDto {
      */
     private UUID customerId;
 
+    /**
+     * 经常居所地
+     */
+    private String liveAddress;
+
+    /**
+     * 用户代码
+     */
+    private String userCode;
+
     public UUID getId() {
         return id;
     }
@@ -218,5 +228,21 @@ public class CustomerApplicantDto {
 
     public void setDistrictName(String districtName) {
         this.districtName = districtName;
+    }
+
+    public String getLiveAddress() {
+        return liveAddress;
+    }
+
+    public void setLiveAddress(String liveAddress) {
+        this.liveAddress = liveAddress;
+    }
+
+    public String getUserCode() {
+        return userCode;
+    }
+
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
     }
 }
