@@ -15,12 +15,12 @@ public interface ParameterTypeService {
     /**
      * 新增修改接口
      */
-    TResult<ParameterTypeDto> addOrUpdate(ParameterTypeDto dto);
+    TResult addOrUpdate(ParameterTypeDto dto);
 
 
     /**
      * 删除接口
      */
-    TResult<ParameterTypeDto> delete(UUID uuid);
+    TResult delete(UUID uuid);
 
 }

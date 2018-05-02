@@ -1,7 +1,11 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sunesoft.ecloud.adminclient.ServerStatusType;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -36,12 +40,16 @@ public class AgencyBasicDto {
     /**
      *服务起始时间
      */
-    private String serverStartDate;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime serverStartDate;
 
     /**
      *服务结束时间
      */
-    private String serverEndDate;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime serverEndDate;
 
     public UUID getId() {
         return id;
@@ -91,20 +99,20 @@ public class AgencyBasicDto {
         this.serverStatus = serverStatus;
     }
 
-    public String getServerEndDate() {
+    public LocalDateTime getServerEndDate() {
         return serverEndDate;
     }
 
-    public void setServerEndDate(String serverEndDate) {
+    public void setServerEndDate(LocalDateTime serverEndDate) {
         this.serverEndDate = serverEndDate;
     }
 
 
-    public String getServerStartDate() {
+    public LocalDateTime getServerStartDate() {
         return serverStartDate;
     }
 
-    public void setServerStartDate(String serverStartDate) {
+    public void setServerStartDate(LocalDateTime serverStartDate) {
         this.serverStartDate = serverStartDate;
     }
 }

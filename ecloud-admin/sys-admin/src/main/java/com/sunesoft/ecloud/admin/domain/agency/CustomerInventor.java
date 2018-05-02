@@ -56,6 +56,12 @@ public class CustomerInventor extends IEntity{
     @Type(type = "uuid-char")
     private UUID customerId;
 
+    /**
+     * 联系方式
+     */
+    @Column(name = "cellphone")
+    private String cellphone;
+
     public String getName() {
         return name;
     }
@@ -102,5 +108,13 @@ public class CustomerInventor extends IEntity{
 
     public void setCustomerId(UUID customerId) {
         this.customerId = customerId;
+    }
+
+    public String getCellphone() {
+        return cellphone;
+    }
+
+    public void setCellphone(String cellphone) {
+        this.cellphone = cellphone;
     }
 }

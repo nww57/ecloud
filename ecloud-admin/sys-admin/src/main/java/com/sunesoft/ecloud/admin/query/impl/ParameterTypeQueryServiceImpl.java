@@ -24,16 +24,18 @@ import java.util.UUID;
 @SuppressWarnings("All")
 public class ParameterTypeQueryServiceImpl extends GenericQuery implements ParameterTypeQueryService{
     @Override
-    public TResult<ParameterTypeDto> queryParaneterTypeById(UUID uuid) {
+    public TResult<ParameterTypeDto> queryParameterTypeById(UUID uuid) {
         SqlBuilder sqlBuilder = HSqlBuilder.hFrom(ParameterType.class, "p")
-                .where("p.id", uuid);
+                .where("p.id", uuid)
+                .select(ParameterTypeDto.class);
         ParameterTypeDto parameterTypeDto = (ParameterTypeDto)this.queryForObject(sqlBuilder);
         return new TResult<>(parameterTypeDto);
     }
 
     @Override
-    public ListResult<ParameterTypeDto> queryAllParaneterType() {
-        SqlBuilder sqlBuilder = HSqlBuilder.hFrom(ParameterType.class, "p");
+    public ListResult<ParameterTypeDto> queryAllParameterType() {
+        SqlBuilder sqlBuilder = HSqlBuilder.hFrom(ParameterType.class, "p")
+                .select(ParameterTypeDto.class);
         List<ParameterTypeDto> list = this.queryList(sqlBuilder);
         List<ParameterTypeDto> listResult = TreeUtils.transformationTree(list);
         return new ListResult(listResult);

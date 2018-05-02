@@ -8,6 +8,8 @@ import org.hibernate.action.internal.OrphanRemovalAction;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,7 +48,7 @@ public class Agency extends IEntity{
      *注册时间
      */
     @Column(name = "registerDate")
-    private Date registerDate;
+    private LocalDate registerDate;
 
     /**
      * 地区code
@@ -119,12 +121,12 @@ public class Agency extends IEntity{
      *服务起始时间
      */
     @Column(name = "serverStartDate")
-    private Date serverStartDate;
+    private LocalDateTime serverStartDate;
     /**
      *服务结束时间
      */
     @Column(name = "serverEndDate")
-    private Date serverEndDate;
+    private LocalDateTime serverEndDate;
 
     @OneToMany(mappedBy = "agency")
     private List<AgencyCustomer> customers = new ArrayList<>();
@@ -166,11 +168,11 @@ public class Agency extends IEntity{
     }
 
 
-    public Date getRegisterDate() {
+    public LocalDate getRegisterDate() {
         return registerDate;
     }
 
-    public void setRegisterDate(Date registerDate) {
+    public void setRegisterDate(LocalDate registerDate) {
         this.registerDate = registerDate;
     }
 
@@ -241,19 +243,19 @@ public class Agency extends IEntity{
         this.serverStatus = serverStatus;
     }
 
-    public Date getServerStartDate() {
+    public LocalDateTime getServerStartDate() {
         return serverStartDate;
     }
 
-    public void setServerStartDate(Date serverStartDate) {
+    public void setServerStartDate(LocalDateTime serverStartDate) {
         this.serverStartDate = serverStartDate;
     }
 
-    public Date getServerEndDate() {
+    public LocalDateTime getServerEndDate() {
         return serverEndDate;
     }
 
-    public void setServerEndDate(Date serverEndDate) {
+    public void setServerEndDate(LocalDateTime serverEndDate) {
         this.serverEndDate = serverEndDate;
     }
 

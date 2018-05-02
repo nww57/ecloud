@@ -1,11 +1,13 @@
 package com.sunesoft.ecloud.caze.domain;
 
 import com.sunesoft.ecloud.caseclient.PatentType;
+import com.sunesoft.ecloud.hibernate.BizEntity;
 import com.sunesoft.ecloud.hibernate.IEntity;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.UUID;
 
 /**
@@ -14,35 +16,52 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "patent_info")
-public class PatentInfo extends IEntity{
+public class PatentInfo extends BizEntity{
+
 
     /**
-     * 所属企业Id
+     * 所属案件
      */
-    @Column(name = "agId",columnDefinition = "char(36)")
-    @Type(type = "uuid-char")
-    private UUID agId;
-
     @ManyToOne
     @JoinColumn(name = "caseId")
     private CaseInfo caseInfo;
 
+    /**
+     * 所属客户
+     */
     @Column(name = "customerId",columnDefinition = "char(36)")
     @Type(type = "uuid-char")
     private UUID customerId;
 
+    /**
+     * 专利号
+     */
     @Column(name = "patentNo")
     private String patentNo;
 
+    /**
+     * 专利名称
+     */
     @Column(name = "patentName")
     private String patentName;
 
+    /**
+     * 专利类型
+     */
     @Column(name = "patentType")
     @Enumerated(EnumType.STRING)
     private PatentType patentType;
 
+    /**
+     * 费减比例
+     */
     @Column(name = "reduceRate")
     private BigDecimal feeReduceRate;
+
+    /**
+     * 技术领域
+     */
+    private BigInteger techDomain;
 
     public PatentInfo() {
     }
@@ -99,11 +118,11 @@ public class PatentInfo extends IEntity{
         this.feeReduceRate = feeReduceRate;
     }
 
-    public UUID getAgId() {
-        return agId;
+    public BigInteger getTechDomain() {
+        return techDomain;
     }
 
-    public void setAgId(UUID agId) {
-        this.agId = agId;
+    public void setTechDomain(BigInteger techDomain) {
+        this.techDomain = techDomain;
     }
 }

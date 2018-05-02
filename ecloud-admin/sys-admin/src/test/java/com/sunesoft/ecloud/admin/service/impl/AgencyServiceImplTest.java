@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,7 +37,7 @@ public class AgencyServiceImplTest {
             dto.setName("超级管理员所属企业");
             dto.setCode("sune");
             dto.setCountry("中国");
-            dto.setRegisterDate("2018-3-27");
+            dto.setRegisterDate(LocalDate.now());
             dto.setLeader("张伟asdf");
             dto.setEmail("123@qq.com");
             dto.setCellphone("1596146415");
@@ -44,7 +47,7 @@ public class AgencyServiceImplTest {
             dto.setDistrict("武进区");
             dto.setStreet("科教称城");
             dto.setZipcode("213100");
-            dto.setServerEndDate("2019-3-27 13:23:23");
+            dto.setServerEndDate(LocalDateTime.now());
 
 //        List<UUID> uuidList = new ArrayList<UUID>(){{
 //            add(UUID.fromString("5612c844-5d55-4a26-916d-51ce17efc0c7"));

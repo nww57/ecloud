@@ -3,6 +3,7 @@ package com.sunesoft.ecloud.caseclient.dto;
 import com.sunesoft.ecloud.caseclient.CaseType;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -44,14 +45,6 @@ public class CaseInfoDto {
     private BigDecimal feeReduceRate;
 
     /**
-     * todo 委托书
-     */
-
-    /**
-     * todo 交底资料
-     */
-
-    /**
      *备注
      */
     private String comments;
@@ -60,6 +53,13 @@ public class CaseInfoDto {
      * 立案人姓名
      */
     private String caseCreatorName;
+
+
+    /**
+     * 客户联系人
+     */
+    private List<UUID> customerContactList;
+
 
     public String getCaseName() {
         return caseName;
@@ -131,5 +131,13 @@ public class CaseInfoDto {
 
     public void setAgId(UUID agId) {
         this.agId = agId;
+    }
+
+    public List<UUID> getCustomerContactList() {
+        return customerContactList;
+    }
+
+    public void setCustomerContactList(List<UUID> customerContactList) {
+        this.customerContactList = customerContactList;
     }
 }

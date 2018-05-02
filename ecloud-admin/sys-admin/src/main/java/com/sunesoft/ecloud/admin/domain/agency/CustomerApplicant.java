@@ -60,7 +60,7 @@ public class CustomerApplicant extends IEntity{
      *备案有效期
      */
     @Column(name = "recordValidDate")
-    private Date recordValidDate;
+    private LocalDateTime recordValidDate;
 
     /**
      * 省code
@@ -112,6 +112,18 @@ public class CustomerApplicant extends IEntity{
     @Type(type = "uuid-char")
     private UUID customerId;
 
+    /**
+     * 经常居所地
+     */
+    @Column(name = "liveAddress")
+    private String liveAddress;
+
+    /**
+     * 用户代码
+     */
+    @Column(name = "userCode")
+    private String userCode;
+
     public String getName() {
         return name;
     }
@@ -160,11 +172,11 @@ public class CustomerApplicant extends IEntity{
         this.record = record;
     }
 
-    public Date getRecordValidDate() {
+    public LocalDateTime getRecordValidDate() {
         return recordValidDate;
     }
 
-    public void setRecordValidDate(Date recordValidDate) {
+    public void setRecordValidDate(LocalDateTime recordValidDate) {
         this.recordValidDate = recordValidDate;
     }
 
@@ -230,5 +242,21 @@ public class CustomerApplicant extends IEntity{
 
     public void setDistrictName(String districtName) {
         this.districtName = districtName;
+    }
+
+    public String getLiveAddress() {
+        return liveAddress;
+    }
+
+    public void setLiveAddress(String liveAddress) {
+        this.liveAddress = liveAddress;
+    }
+
+    public String getUserCode() {
+        return userCode;
+    }
+
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
     }
 }

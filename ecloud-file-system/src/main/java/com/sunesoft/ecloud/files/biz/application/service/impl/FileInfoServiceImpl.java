@@ -12,6 +12,7 @@ import com.sunesoft.ecloud.files.biz.domain.FilePath;
 import com.sunesoft.ecloud.files.biz.domain.enums.PathType;
 import com.sunesoft.ecloud.files.biz.repository.FileInfosRepository;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -65,6 +67,51 @@ public class FileInfoServiceImpl implements FileInfoService {
         filePath+=fileInfos.getBaseRoot()+"/";
         fileInfos.setRealPath(filePath);
         fileInfos.setIs_latestVersion(true);
+        fileInfosRepository.save(fileInfos);
+
+        File filepath = new File(filePath);
+        if (filepath.exists()) {
+            try {
+                filepath.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        File file = new File(filePath, fileInfos.getFileName());
+        try {
+            FileUtils.copyInputStreamToFile(fileInfoDto.getInputStream(), file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ResultFactory.success(fileInfos.getId());
+    }
+
+    @Override
+    public TResult uploadByCaseNo(FileInfoDto fileInfoDto) {
+        FileInfos fileInfos = new FileInfos();
+
+        if (fileInfoDto.getCovered()) {
+            fileInfos = fileInfosRepository.findOne(fileInfoDto.getId());
+        }
+        BeanUtil.copyPropertiesIgnoreNull(fileInfoDto, fileInfos);
+        if (fileInfoDto.getFile_path_id() != null) {
+            FilePath path = new FilePath();
+            path.setId(fileInfoDto.getFile_path_id());
+            fileInfos.setFilePath(path);
+        }
+        String filePath = basePath + fileInfos.getAgId().toString() + "/";
+        if(fileInfoDto.getRequirePathType()==null) {
+            fileInfoDto.setRequirePathType(PathType.Oth);
+        }
+        filePath +=  fileInfoDto.getRequirePathType().toString()+"/";
+        filePath += fileInfos.getBaseRoot()+"/";
+        if (!StringUtil.isEmpty(fileInfos.getBizType()) && !fileInfos.getBizType().equals("temp")) {
+            filePath += fileInfos.getBizType() + "/";
+        }
+        if(StringUtils.isNotEmpty(fileInfos.getDocType()) && !"temp".equals(fileInfos.getDocType())){
+            filePath += fileInfos.getDocType() + "/";
+        }
+        fileInfos.setRealPath(filePath);
         fileInfosRepository.save(fileInfos);
 
         File filepath = new File(filePath);

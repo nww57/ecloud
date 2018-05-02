@@ -31,9 +31,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.URI;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -631,13 +628,7 @@ public abstract class BeanUtil {
 							if (!Modifier.isPublic(writeMethod.getDeclaringClass().getModifiers())) {
 								writeMethod.setAccessible(true);
 							}
-							//处理String ->Date
-							Class cl = writeMethod.getParameterTypes()[0];
-							if(cl==Date.class){
-								writeMethod.invoke(target, DateUtil.parse((String)value));
-							}else{
-								writeMethod.invoke(target, value);
-							}
+							writeMethod.invoke(target, value);
 						}
 
 					} catch (Throwable ex) {

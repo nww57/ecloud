@@ -40,6 +40,11 @@ public class CustomerInventorDto {
      */
     private UUID customerId;
 
+    /**
+     * 联系方式
+     */
+    private String cellphone;
+
     public UUID getId() {
         return id;
     }
@@ -94,5 +99,13 @@ public class CustomerInventorDto {
 
     public void setCustomerId(UUID customerId) {
         this.customerId = customerId;
+    }
+
+    public String getCellphone() {
+        return cellphone;
+    }
+
+    public void setCellphone(String cellphone) {
+        this.cellphone = cellphone;
     }
 }

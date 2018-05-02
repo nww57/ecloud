@@ -1,5 +1,10 @@
 package com.sunesoft.ecloud.caseclient.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,15 +33,14 @@ public class CaseInfoListDto extends CaseInfoDto{
      */
     private String customerConsultantName;
 
-    /**
-     * 立案人
-     */
-    private String caseCreatorName;
+
 
     /**
      * 立案时间
      */
-    private String caseCreateDate;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime caseCreateDate;
 
     /**
      * 专利信息
@@ -76,19 +80,11 @@ public class CaseInfoListDto extends CaseInfoDto{
         this.customerConsultantName = customerConsultantName;
     }
 
-    public String getCaseCreatorName() {
-        return caseCreatorName;
-    }
-
-    public void setCaseCreatorName(String caseCreatorName) {
-        this.caseCreatorName = caseCreatorName;
-    }
-
-    public String getCaseCreateDate() {
+    public LocalDateTime getCaseCreateDate() {
         return caseCreateDate;
     }
 
-    public void setCaseCreateDate(String caseCreateDate) {
+    public void setCaseCreateDate(LocalDateTime caseCreateDate) {
         this.caseCreateDate = caseCreateDate;
     }
 

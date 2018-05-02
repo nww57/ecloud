@@ -1,9 +1,11 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sunesoft.ecloud.adminclient.AgencyType;
-import com.sunesoft.ecloud.adminclient.ServerStatusType;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,7 +26,9 @@ public class AgencyDto extends AgencyBasicDto{
     /**
      *注册时间
      */
-    private String registerDate;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern  = "yyyy-MM-dd")
+    private LocalDate registerDate;
     /**
      * 地区code
      */
@@ -135,11 +139,11 @@ public class AgencyDto extends AgencyBasicDto{
         this.country = country;
     }
 
-    public String getRegisterDate() {
+    public LocalDate getRegisterDate() {
         return registerDate;
     }
 
-    public void setRegisterDate(String registerDate) {
+    public void setRegisterDate(LocalDate registerDate) {
         this.registerDate = registerDate;
     }
 

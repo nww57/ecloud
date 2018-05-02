@@ -21,35 +21,65 @@ public class Parameter extends IEntity {
     @JoinColumn(name = "parameterId")
     private ParameterType parameterType;
 
+    /**
+     * 参数名
+     */
     @Column(name = "paramName")
     private String paramName;
 
+    /**
+     *参数键（这里是否可理解为参数编码，待确认）
+     */
     @Column(name = "paramKey")
     private String paramKey;
 
+    /**
+     *参数值
+     */
     @Column(name = "paramValue")
     private String paramValue;
 
+    /**
+     *参数描述
+     */
     @Column(name = "paramDesc")
     private String paramDesc;
 
+    /**
+     *参数排序
+     */
     @Column(name = "paramSort")
     private Integer paramSort;
 
+    /**
+     *备注
+     */
     @Column(name = "remark")
     private String remark;
 
-    @Column(name = "attr1")
-    private String attr1;
+    /**
+     * 默认显示（中文显示）
+     */
+    @Column(name = "defaultDisplay")
+    private String defaultDisplay;
 
-    @Column(name = "attr2")
-    private String attr2;
+    /**
+     * 英文显示
+     */
+    @Column(name = "englishDisplay")
+    private String englishDisplay;
 
-    @Column(name = "attr3")
-    private String attr3;
+    /**
+     * 最后更新人
+     */
+    @Column(name = "renewing")
+    private String renewing;
 
-    @Column(name = "attr4")
-    private String attr4;
+    /**
+     * 最后更新人Id
+     */
+    @Column(name = "renewingId")
+    private String renewingId;
 
     @Column(name = "attr5")
     private String attr5;
@@ -113,36 +143,36 @@ public class Parameter extends IEntity {
         this.remark = remark;
     }
 
-    public String getAttr1() {
-        return attr1;
+    public String getDefaultDisplay() {
+        return defaultDisplay;
     }
 
-    public void setAttr1(String attr1) {
-        this.attr1 = attr1;
+    public void setDefaultDisplay(String defaultDisplay) {
+        this.defaultDisplay = defaultDisplay;
     }
 
-    public String getAttr2() {
-        return attr2;
+    public String getEnglishDisplay() {
+        return englishDisplay;
     }
 
-    public void setAttr2(String attr2) {
-        this.attr2 = attr2;
+    public void setEnglishDisplay(String englishDisplay) {
+        this.englishDisplay = englishDisplay;
     }
 
-    public String getAttr3() {
-        return attr3;
+    public String getRenewing() {
+        return renewing;
     }
 
-    public void setAttr3(String attr3) {
-        this.attr3 = attr3;
+    public void setRenewing(String renewing) {
+        this.renewing = renewing;
     }
 
-    public String getAttr4() {
-        return attr4;
+    public String getRenewingId() {
+        return renewingId;
     }
 
-    public void setAttr4(String attr4) {
-        this.attr4 = attr4;
+    public void setRenewingId(String renewingId) {
+        this.renewingId = renewingId;
     }
 
     public String getAttr5() {

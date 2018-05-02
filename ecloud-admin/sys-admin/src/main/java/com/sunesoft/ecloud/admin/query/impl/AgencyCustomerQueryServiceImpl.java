@@ -44,6 +44,7 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
             dtoBuilder.and(" (c.name like '%" + keywords + "%' or c.leader like '%" + keywords + "%' or c.leaderMobile like '%" + keywords + "%' )");
         }
         dtoBuilder.pagging(criteria.getPageIndex(), criteria.getPageSize())
+                .orderBy("c.create_datetime",OrderType.DESC)
                 .select(AgencyCustomerDto.class)
                 .setFieldValue("consultantId", "u.id")
                 .setFieldValue("consultantName", "u.realName");
@@ -73,6 +74,17 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
     }
 
     @Override
+    public ListResult<BasicDto> findCustomerApplicantList(UUID customerId) {
+        if(null == customerId){
+            throw new IllegalArgumentException("参数customerId不能为null");
+        }
+        SqlBuilder<BasicDto> dtoBuilder = HSqlBuilder.hFrom(CustomerApplicant.class, "a")
+                .where("a.customerId", customerId)
+                .select(BasicDto.class);
+        return new ListResult<>(queryList(dtoBuilder));
+    }
+
+    @Override
     public TResult<CustomerApplicantDto> findCustomerApplicantById(UUID id) {
         if(null == id){
             throw new IllegalArgumentException("参数id不能为null");
@@ -93,6 +105,17 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
     }
 
     @Override
+    public ListResult<BasicDto> findCustomerInventorList(UUID customerId) {
+        if(null == customerId){
+            throw new IllegalArgumentException("参数customerId不能为null");
+        }
+        SqlBuilder<BasicDto> dtoBuilder = HSqlBuilder.hFrom(CustomerInventor.class, "i")
+                .where("i.customerId", customerId)
+                .select(BasicDto.class);
+        return new ListResult<>(queryList(dtoBuilder));
+    }
+
+    @Override
     public TResult<CustomerInventorDto> findCustomerInventorById(UUID id) {
         if(null == id){
             throw new IllegalArgumentException("参数id不能为null");
@@ -110,6 +133,17 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
                 .pagging(criteria.getPageIndex(),criteria.getPageSize())
                 .select(CustomerContactDto.class);
         return this.queryPaged(dtoBuilder);
+    }
+
+    @Override
+    public ListResult<BasicDto> findCustomerContactsList(UUID customerId) {
+        if(null == customerId){
+            throw new IllegalArgumentException("参数customerId不能为null");
+        }
+        SqlBuilder<BasicDto> dtoBuilder = HSqlBuilder.hFrom(CustomerContact.class, "c")
+                .where("c.customerId", customerId)
+                .select(BasicDto.class);
+        return new ListResult<>(queryList(dtoBuilder));
     }
 
     @Override

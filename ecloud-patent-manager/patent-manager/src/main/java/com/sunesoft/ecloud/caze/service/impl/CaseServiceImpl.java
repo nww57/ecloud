@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -98,13 +99,24 @@ public class CaseServiceImpl implements CaseService {
     }
 
     @Override
+    public TResult setCaseFeeReduceRate(UUID caseId, BigDecimal feeReduceRate) {
+        if(null == caseId || null == feeReduceRate){
+            throw new IllegalArgumentException("无效的参数caseId="+caseId+";feeReduceRate="+feeReduceRate);
+        }
+        caseRepository.setFeeReduceRate(caseId,feeReduceRate);
+        patentRepository.setFeeReduceRate(caseId,feeReduceRate);
+        return ResultFactory.success();
+    }
+
+    @Override
     public TResult deleteCase(UUID... ids) {
         if (null == ids || ids.length == 0) {
             throw new IllegalArgumentException("案件id不能为null");
         }
         //逻辑删除
         caseRepository.deleteBatch(ids);
-        //todo 删除专利信息
+        //删除专利信息
+        patentRepository.deleteBatch(ids);
         return ResultFactory.success();
     }
 

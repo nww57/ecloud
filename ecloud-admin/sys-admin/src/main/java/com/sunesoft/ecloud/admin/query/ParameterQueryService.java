@@ -16,18 +16,18 @@ public interface ParameterQueryService {
     /**
      * 根据参数类型查询参数
      */
-    ListResult<ParameterDto> queryParaneterByTypeId(UUID uuid);
+    ListResult<ParameterDto> queryParameterByTypeId(UUID uuid);
 
 
     /**
      * 根据参数id查询参数
      */
-    TResult<ParameterDto> queryParaneterById(UUID uuid);
+    TResult<ParameterDto> queryParameterById(UUID uuid);
 
 
     /**
      * 查询所有参数
      */
-    ListResult<ParameterDto> queryAllParaneter();
+    ListResult<ParameterDto> queryAllParameter();
 
 }

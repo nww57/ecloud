@@ -5,6 +5,7 @@ import com.sunesoft.ecloud.admin.repository.ParameterTypeRepository;
 import com.sunesoft.ecloud.admin.service.ParameterTypeService;
 import com.sunesoft.ecloud.adminclient.dtos.ParameterTypeDto;
 import com.sunesoft.ecloud.common.result.TResult;
+import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class ParameterTypeServiceImpl implements ParameterTypeService {
 
 
     @Override
-    public TResult<ParameterTypeDto> addOrUpdate(ParameterTypeDto dto) {
+    public TResult addOrUpdate(ParameterTypeDto dto) {
         ParameterType parameterType;
         if (dto.getId() != null) {//修改
             parameterType = parameterTypeRepository.findOne(dto.getId());
@@ -43,11 +44,11 @@ public class ParameterTypeServiceImpl implements ParameterTypeService {
             }
             result = parameterTypeRepository.save(parameterType);
         }
-        return new TResult(result);
+        return (TResult) ResultFactory.success(result.getId());
     }
 
     @Override
-    public TResult<ParameterTypeDto> delete(UUID uuid) {
+    public TResult delete(UUID uuid) {
         if (uuid != null) {
             parameterTypeRepository.delete(uuid);
             return new TResult<>(true, "删除成功！");

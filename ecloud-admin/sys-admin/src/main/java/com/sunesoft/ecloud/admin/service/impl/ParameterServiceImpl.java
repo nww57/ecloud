@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -54,9 +55,11 @@ public class ParameterServiceImpl implements ParameterService {
     }
 
     @Override
-    public TResult<ParameterDto> delete(UUID uuid) {
-        if (uuid != null) {
-            parameterRepository.delete(uuid);
+    public TResult<ParameterDto> delete(List<UUID> ids) {
+        if (ids.size() != 0) {
+            for (UUID id : ids) {
+                parameterRepository.delete(id);
+            }
             return new TResult<>(true, "删除成功！");
         }
         return new TResult<>(false, "删除失败！");
