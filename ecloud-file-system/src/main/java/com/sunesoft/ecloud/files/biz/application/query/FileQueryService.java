@@ -75,4 +75,7 @@ public interface FileQueryService {
     FilePathDto getFilePathById(UUID id);
 
     DownloadFileDto getFileById(UUID agId,UUID id);
+    DownloadFileDto getPublicFile(UUID id);
+
+    DownloadFileDto getImageFileByName(FileCriteria criteria);
 }

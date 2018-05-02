@@ -51,7 +51,10 @@ public class FileInfoServiceImpl implements FileInfoService {
             path.setId(fileInfoDto.getFile_path_id());
             fileInfos.setFilePath(path);
         }
-        String filePath = basePath + fileInfos.getAgId().toString() + "/";
+        String filePath = basePath ;
+        if(fileInfoDto.getRequirePathType()!=PathType.Globle){
+            filePath+= fileInfos.getAgId().toString() + "/";
+        }
         if(fileInfoDto.getRequirePathType()==null) {
             fileInfoDto.setRequirePathType(PathType.Oth);
         }
@@ -61,6 +64,7 @@ public class FileInfoServiceImpl implements FileInfoService {
         }
         filePath+=fileInfos.getBaseRoot()+"/";
         fileInfos.setRealPath(filePath);
+        fileInfos.setIs_latestVersion(true);
         fileInfosRepository.save(fileInfos);
 
         File filepath = new File(filePath);
@@ -120,12 +124,7 @@ public class FileInfoServiceImpl implements FileInfoService {
         FileInfos fileInfos = fileInfosRepository.findOne(fileInfoId);
         if(agId.equals(fileInfos.getAgId())) {
             fileInfosRepository.delete(fileInfoId);
-            File source = new File(fileInfos.getRealPath() + fileInfos.getFileName());
 
-            try {
-                source.delete();
-            } catch (Exception ex) {
-            } //DoNothing here
             return ResultFactory.success();
         }else{
             return ResultFactory.error("no Authority delete");
