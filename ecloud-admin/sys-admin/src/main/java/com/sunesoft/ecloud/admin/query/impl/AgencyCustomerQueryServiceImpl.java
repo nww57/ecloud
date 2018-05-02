@@ -13,6 +13,7 @@ import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.OrderType;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
+import com.sunesoft.ecloud.common.utils.StringUtil;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
 import org.apache.commons.lang.StringUtils;
@@ -42,6 +43,27 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
                 .where("c.agId", agId);
         if (StringUtils.isNotEmpty(keywords)) {
             dtoBuilder.and(" (c.name like '%" + keywords + "%' or c.leader like '%" + keywords + "%' or c.leaderMobile like '%" + keywords + "%' )");
+        }
+        if(StringUtils.isNotEmpty(criteria.getCustomerName())){
+            dtoBuilder.and(" c.name like '%"+criteria.getCustomerName()+"%' ");
+        }
+        if(StringUtils.isNotEmpty(criteria.getLeader())){
+            dtoBuilder.and(" c.leader like '%"+criteria.getLeader()+"%' ");
+        }
+        if(StringUtils.isNotEmpty(criteria.getLeaderMobile())){
+            dtoBuilder.and(" c.leaderMobile like '%"+criteria.getLeaderMobile()+"%' ");
+        }
+        if(StringUtils.isNotEmpty(criteria.getLeaderEmail())){
+            dtoBuilder.and(" c.leaderEmail like '%"+criteria.getLeaderEmail()+"%' ");
+        }
+        if(StringUtils.isNotEmpty(criteria.getConsultantName())){
+            dtoBuilder.and(" u.realName like '%"+criteria.getCustomerName()+"%' ");
+        }
+        if(StringUtils.isNotEmpty(criteria.getSignDateStart())){
+            dtoBuilder.and(" c.signDate >= '"+criteria.getSignDateStart()+"' ");
+        }
+        if(StringUtils.isNotEmpty(criteria.getSignDateEnd())){
+            dtoBuilder.and(" c.signDate <= '"+criteria.getSignDateEnd()+"' ");
         }
         dtoBuilder.pagging(criteria.getPageIndex(), criteria.getPageSize())
                 .orderBy("c.create_datetime",OrderType.DESC)
