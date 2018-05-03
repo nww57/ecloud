@@ -47,7 +47,7 @@ public class AgencyCustomerQueryServiceImplTest {
     @Test
     public void  findCustomerApplicantPaged() throws Exception{
         CustomerApplicantCriteria criteria =new CustomerApplicantCriteria();
-        PagedResult<CustomerApplicantDto> pagedResult = queryService.findCustomerApplicantPaged(UUID.fromString("569e07c9-0ebf-4002-88da-87c2777d82f2"),criteria);
+        PagedResult<CustomerApplicantDto> pagedResult = queryService.findCustomerApplicantPaged(UUID.fromString("7f4bb71b-17ec-49b4-b98b-e578db212a6e"),criteria);
         System.out.println(23);
     }
 
