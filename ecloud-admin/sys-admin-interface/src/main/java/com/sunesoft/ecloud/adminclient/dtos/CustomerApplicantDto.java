@@ -38,7 +38,7 @@ public class CustomerApplicantDto {
     /**
      *身份证号码/统一会信用代码
      */
-    private String IDCode;
+    private String idCode;
 
     /**
      *是否通过国知局费减备案
@@ -143,12 +143,12 @@ public class CustomerApplicantDto {
         this.type = type;
     }
 
-    public String getIDCode() {
-        return IDCode;
+    public String getIdCode() {
+        return idCode;
     }
 
-    public void setIDCode(String IDCode) {
-        this.IDCode = IDCode;
+    public void setIdCode(String idCode) {
+        this.idCode = idCode;
     }
 
     public Boolean getRecord() {

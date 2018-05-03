@@ -39,8 +39,8 @@ public class CustomerInventor extends IEntity{
     /**
      *身份证
      */
-    @Column(name = "IDCode")
-    private String IDCode;
+    @Column(name = "idCode")
+    private String idCode;
 
     /**
      *是否公开
@@ -86,12 +86,12 @@ public class CustomerInventor extends IEntity{
         this.countryName = countryName;
     }
 
-    public String getIDCode() {
-        return IDCode;
+    public String getIdCode() {
+        return idCode;
     }
 
-    public void setIDCode(String IDCode) {
-        this.IDCode = IDCode;
+    public void setIdCode(String idCode) {
+        this.idCode = idCode;
     }
 
     public Boolean getOpen() {

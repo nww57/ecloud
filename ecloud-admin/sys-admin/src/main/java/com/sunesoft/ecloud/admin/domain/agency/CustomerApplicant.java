@@ -46,8 +46,8 @@ public class CustomerApplicant extends IEntity{
     /**
      *身份证号码/统一会信用代码
      */
-    @Column(name = "IDCode")
-    private String IDCode;
+    @Column(name = "idCode")
+    private String idCode;
 
 
     /**
@@ -151,12 +151,12 @@ public class CustomerApplicant extends IEntity{
         this.type = type;
     }
 
-    public String getIDCode() {
-        return IDCode;
+    public String getIdCode() {
+        return idCode;
     }
 
-    public void setIDCode(String IDCode) {
-        this.IDCode = IDCode;
+    public void setIdCode(String idCode) {
+        this.idCode = idCode;
     }
 
     public Boolean getRecord() {
