@@ -12,6 +12,7 @@ import java.util.UUID;
 /**
  * @Auther: niww
  * @Date: 2018/4/13/013
+ * 案件
  */
 public interface CaseService {
 

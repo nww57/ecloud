@@ -1,21 +1,25 @@
-package com.sunesoft.ecloud.admin.domain.agency;
+package com.sunesoft.ecloud.caze.domain;
 
-import com.sunesoft.ecloud.hibernate.BizEntity;
 import com.sunesoft.ecloud.hibernate.IEntity;
-import org.hibernate.annotations.Type;
+import com.sunesoft.ecloud.hibernate.PatEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.util.UUID;
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
- * Created by jzj on 2018/4/11.
- * 代理人
+ * @Auther: niww
+ * @Date: 2018/5/3/003
  */
 @Entity
-@Table(name = "sys_ag_agent")
-public class AgencyAgent extends BizEntity{
+@Table(name = "pat_agent", schema = "springcloud", catalog = "")
+public class PatAgent extends PatEntity{
+
+    /**
+     * 所属专利
+     */
+    @ManyToOne
+    @JoinColumn(name = "patentId")
+    private ContractPatentInfo patentInfo;
 
     /**
      * 姓名

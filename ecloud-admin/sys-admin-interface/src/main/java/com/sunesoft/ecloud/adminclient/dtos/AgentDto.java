@@ -21,9 +21,9 @@ public class AgentDto {
     private String licenseCode;
 
     /**
-     *手机
+     *联系方式
      */
-    private String mobile;
+    private String cellphone;
 
     /**
      *所属企业
@@ -46,12 +46,12 @@ public class AgentDto {
         this.licenseCode = licenseCode;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getCellphone() {
+        return cellphone;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setCellphone(String cellphone) {
+        this.cellphone = cellphone;
     }
 
     public UUID getAgId() {
