@@ -27,7 +27,7 @@ public class CustomerInventorDto {
     /**
      *身份证/机构代码
      */
-    private String code;
+    private String IDCode;
 
     /**
      *是否公开
@@ -77,12 +77,12 @@ public class CustomerInventorDto {
         this.countryName = countryName;
     }
 
-    public String getCode() {
-        return code;
+    public String getIDCode() {
+        return IDCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setIDCode(String IDCode) {
+        this.IDCode = IDCode;
     }
 
     public Boolean getOpen() {

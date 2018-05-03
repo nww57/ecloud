@@ -44,10 +44,10 @@ public class CustomerApplicant extends IEntity{
 
 
     /**
-     *身份证/机构代码
+     *身份证号码/统一会信用代码
      */
-    @Column(name = "code")
-    private String code;
+    @Column(name = "IDCode")
+    private String IDCode;
 
 
     /**
@@ -56,11 +56,6 @@ public class CustomerApplicant extends IEntity{
     @Column(name = "record")
     private Boolean record;
 
-    /**
-     *备案有效期
-     */
-    @Column(name = "recordValidDate")
-    private LocalDateTime recordValidDate;
 
     /**
      * 省code
@@ -156,12 +151,12 @@ public class CustomerApplicant extends IEntity{
         this.type = type;
     }
 
-    public String getCode() {
-        return code;
+    public String getIDCode() {
+        return IDCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setIDCode(String IDCode) {
+        this.IDCode = IDCode;
     }
 
     public Boolean getRecord() {
@@ -170,14 +165,6 @@ public class CustomerApplicant extends IEntity{
 
     public void setRecord(Boolean record) {
         this.record = record;
-    }
-
-    public LocalDateTime getRecordValidDate() {
-        return recordValidDate;
-    }
-
-    public void setRecordValidDate(LocalDateTime recordValidDate) {
-        this.recordValidDate = recordValidDate;
     }
 
     public UUID getCustomerId() {

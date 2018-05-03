@@ -36,22 +36,15 @@ public class CustomerApplicantDto {
     private ApplicantType type;
 
     /**
-     *身份证/机构代码
+     *身份证号码/统一会信用代码
      */
-    private String code;
+    private String IDCode;
 
     /**
      *是否通过国知局费减备案
      */
     private Boolean record;
 
-
-    /**
-     *备案有效期
-     */
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern  = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime recordValidDate;
 
     /**
      * 省code
@@ -150,12 +143,12 @@ public class CustomerApplicantDto {
         this.type = type;
     }
 
-    public String getCode() {
-        return code;
+    public String getIDCode() {
+        return IDCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setIDCode(String IDCode) {
+        this.IDCode = IDCode;
     }
 
     public Boolean getRecord() {
@@ -164,14 +157,6 @@ public class CustomerApplicantDto {
 
     public void setRecord(Boolean record) {
         this.record = record;
-    }
-
-    public LocalDateTime getRecordValidDate() {
-        return recordValidDate;
-    }
-
-    public void setRecordValidDate(LocalDateTime recordValidDate) {
-        this.recordValidDate = recordValidDate;
     }
 
     public UUID getCustomerId() {
