@@ -80,6 +80,12 @@ public class CustomerApplicantDto {
      * 详细地址
      */
     private String areaDetail;
+
+    /**
+     * 邮编
+     */
+    private String zipCode;
+
     /**
      * 所属客户
      */
@@ -229,5 +235,13 @@ public class CustomerApplicantDto {
 
     public void setUserCode(String userCode) {
         this.userCode = userCode;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 }

@@ -99,6 +99,11 @@ public class CustomerApplicant extends IEntity{
     @Column(name = "areaDetail")
     private String areaDetail;
 
+    /**
+     * 邮编
+     */
+    @Column(name = "zipCode")
+    private String zipCode;
 
     /**
      * 所属客户
@@ -245,5 +250,13 @@ public class CustomerApplicant extends IEntity{
 
     public void setUserCode(String userCode) {
         this.userCode = userCode;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 }

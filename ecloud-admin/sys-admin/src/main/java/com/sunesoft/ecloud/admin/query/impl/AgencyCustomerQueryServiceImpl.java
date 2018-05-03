@@ -175,7 +175,7 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
         }
         SqlBuilder<CustomerContactDto> dtoBuilder = HSqlBuilder.hFrom(CustomerContact.class, "c")
                 .where("id", id)
-                .select(CustomerInventorDto.class);
+                .select(CustomerContactDto.class);
         return new TResult<>(queryForObject(dtoBuilder));
     }
 

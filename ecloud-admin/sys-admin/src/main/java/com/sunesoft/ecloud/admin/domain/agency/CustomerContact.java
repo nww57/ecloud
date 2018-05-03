@@ -80,4 +80,12 @@ public class CustomerContact extends IEntity {
     public void setCustomerId(UUID customerId) {
         this.customerId = customerId;
     }
+
+    public String getCellphone() {
+        return cellphone;
+    }
+
+    public void setCellphone(String cellphone) {
+        this.cellphone = cellphone;
+    }
 }
