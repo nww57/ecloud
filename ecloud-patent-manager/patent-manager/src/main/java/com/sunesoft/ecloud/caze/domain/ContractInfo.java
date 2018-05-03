@@ -22,13 +22,13 @@ public class ContractInfo extends IEntity{
     /**
      * 合同编号
      */
-    @Column(name = "code")
-    private String code;
+    @Column(name = "contractNo")
+    private String contractNo;
     /**
      * 合同名称
      */
-    @Column(name = "name")
-    private String name;
+    @Column(name = "contractName")
+    private String contractName;
     /**
      *客户id
      */
@@ -87,20 +87,20 @@ public class ContractInfo extends IEntity{
     @Column(name = "unpaidPrice")
     private BigDecimal unpaidPrice;
 
-    public String getCode() {
-        return code;
+    public String getContractNo() {
+        return contractNo;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setContractNo(String contractNo) {
+        this.contractNo = contractNo;
     }
 
-    public String getName() {
-        return name;
+    public String getContractName() {
+        return contractName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setContractName(String contractName) {
+        this.contractName = contractName;
     }
 
     public UUID getCustomerId() {

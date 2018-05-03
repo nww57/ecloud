@@ -15,14 +15,16 @@ import java.util.UUID;
  */
 public class ContractDto {
 
+    private UUID id;
+
     /**
      * 合同编号
      */
-    private String code;
+    private String contractNo;
     /**
      * 合同名称
      */
-    private String name;
+    private String contractName;
     /**
      *客户id
      */
@@ -98,20 +100,28 @@ public class ContractDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
     private LocalDateTime createDate;
 
-    public String getCode() {
-        return code;
+    public UUID getId() {
+        return id;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getContractNo() {
+        return contractNo;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setContractNo(String contractNo) {
+        this.contractNo = contractNo;
+    }
+
+    public String getContractName() {
+        return contractName;
+    }
+
+    public void setContractName(String contractName) {
+        this.contractName = contractName;
     }
 
     public UUID getCustomerId() {

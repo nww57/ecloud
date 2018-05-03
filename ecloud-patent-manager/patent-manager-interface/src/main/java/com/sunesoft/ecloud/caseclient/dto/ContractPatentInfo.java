@@ -3,6 +3,7 @@ package com.sunesoft.ecloud.caseclient.dto;
 import com.sunesoft.ecloud.caseclient.PatentType;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 /**
  * @Auther: niww
@@ -11,17 +12,45 @@ import java.math.BigDecimal;
  */
 public class ContractPatentInfo {
 
+    private UUID id;
+
+    /**
+     * 专利类型
+     */
     private PatentType patentType;
 
+    /**
+     *案件号
+     */
     private String caseNo;
 
+    /**专利名称
+     *
+     */
     private String patentName;
 
+    /**
+     *总费用
+     */
     private BigDecimal totalPrice;
 
+    /**
+     *官费
+     */
     private BigDecimal officialPrice;
 
+    /**
+     *代理费
+     */
     private BigDecimal agencyPrice;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     public PatentType getPatentType() {
         return patentType;

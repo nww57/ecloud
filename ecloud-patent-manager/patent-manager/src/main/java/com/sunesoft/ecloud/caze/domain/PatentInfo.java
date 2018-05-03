@@ -17,7 +17,7 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "pat_contract_patent_info", schema = "springcloud", catalog = "")
-public class ContractPatentInfo extends IEntity{
+public class PatentInfo extends IEntity{
 
     /**
      * 所属合同

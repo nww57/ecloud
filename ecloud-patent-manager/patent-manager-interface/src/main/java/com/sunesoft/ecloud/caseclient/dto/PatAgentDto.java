@@ -1,38 +1,48 @@
-package com.sunesoft.ecloud.caze.domain;
+package com.sunesoft.ecloud.caseclient.dto;
 
-import com.sunesoft.ecloud.hibernate.IEntity;
-import com.sunesoft.ecloud.hibernate.PatEntity;
-
-import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.UUID;
 
 /**
- * @Auther: niww
- * @Date: 2018/5/3/003
+ * @Author: niww
+ * @Date: 2018/5/3
  */
-@Entity
-@Table(name = "pat_agent", schema = "springcloud", catalog = "")
-public class PatAgent extends PatEntity{
+public class PatAgentDto {
 
 
+    private UUID id;
+
+    private UUID patentId;
 
     /**
      * 姓名
      */
-    @Column(name = "name")
     private String name;
 
     /**
      *执证证号
      */
-    @Column(name = "licenseCode")
     private String licenseCode;
 
     /**
      *联系方式
      */
-    @Column(name = "cellphone")
     private String cellphone;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public UUID getPatentId() {
+        return patentId;
+    }
+
+    public void setPatentId(UUID patentId) {
+        this.patentId = patentId;
+    }
 
     public String getName() {
         return name;

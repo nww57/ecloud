@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 /**
  * @Auther: niww
@@ -11,6 +12,9 @@ import java.time.LocalDate;
  * 未受理通知书
  */
 public class DismissedNoticeDto {
+
+    private UUID id;
+
     /**
      * 案件号
      */
@@ -49,6 +53,14 @@ public class DismissedNoticeDto {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate sendFileDate;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     public String getCaseNo() {
         return caseNo;

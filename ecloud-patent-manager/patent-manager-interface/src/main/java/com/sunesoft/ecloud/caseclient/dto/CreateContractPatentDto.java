@@ -11,6 +11,8 @@ import java.util.UUID;
  */
 public class CreateContractPatentDto {
 
+    private UUID id;
+
     /**
      * 所属合同
      */
@@ -30,6 +32,14 @@ public class CreateContractPatentDto {
      * 专利名称
      */
     private String patentName;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     public UUID getContractId() {
         return contractId;
