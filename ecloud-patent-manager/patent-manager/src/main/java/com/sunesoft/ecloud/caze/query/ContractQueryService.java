@@ -20,7 +20,7 @@ public interface ContractQueryService{
      * @param criteria 查询参数
      * @return 返回查询结果
      */
-    PagedResult<ContractDto> queryContractByPaged(ContractQueryCriteria criteria);
+    PagedResult<ContractDto> queryContractPaged(ContractQueryCriteria criteria);
 
 
     /**

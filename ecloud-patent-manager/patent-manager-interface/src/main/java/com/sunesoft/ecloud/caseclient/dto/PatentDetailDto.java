@@ -43,7 +43,7 @@ public class PatentDetailDto {
     /**
      * 工程师组长
      */
-    private String engineerMasterName;
+    private String engineerLeaderName;
 
 
     /**
@@ -215,11 +215,11 @@ public class PatentDetailDto {
         this.priorityClaimsList = priorityClaimsList;
     }
 
-    public String getEngineerMasterName() {
-        return engineerMasterName;
+    public String getEngineerLeaderName() {
+        return engineerLeaderName;
     }
 
-    public void setEngineerMasterName(String engineerMasterName) {
-        this.engineerMasterName = engineerMasterName;
+    public void setEngineerLeaderName(String engineerLeaderName) {
+        this.engineerLeaderName = engineerLeaderName;
     }
 }

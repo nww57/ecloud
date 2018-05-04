@@ -2,6 +2,7 @@ package com.sunesoft.ecloud.caseclient.dto;
 
 import com.sunesoft.ecloud.caseclient.enums.TechnologyEnum;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -23,7 +24,7 @@ public class UpdatePatentDto {
     /**
      * 工程师组长
      */
-    private UUID engineerMasterId;
+    private UUID engineerLeaderId;
 
     /**
      *技术领域
@@ -50,6 +51,11 @@ public class UpdatePatentDto {
      */
     private boolean isReqPriority;
 
+    /**
+     * 优先权项内容
+     */
+    private List<PatPriorityClaimsDto> priorityClaimsList;
+
     public UUID getPatentId() {
         return patentId;
     }
@@ -66,12 +72,12 @@ public class UpdatePatentDto {
         this.patentName = patentName;
     }
 
-    public UUID getEngineerMasterId() {
-        return engineerMasterId;
+    public UUID getEngineerLeaderId() {
+        return engineerLeaderId;
     }
 
-    public void setEngineerMasterId(UUID engineerMasterId) {
-        this.engineerMasterId = engineerMasterId;
+    public void setEngineerLeaderId(UUID engineerLeaderId) {
+        this.engineerLeaderId = engineerLeaderId;
     }
 
     public TechnologyEnum getTechDomain() {
@@ -112,5 +118,13 @@ public class UpdatePatentDto {
 
     public void setReqPriority(boolean reqPriority) {
         isReqPriority = reqPriority;
+    }
+
+    public List<PatPriorityClaimsDto> getPriorityClaimsList() {
+        return priorityClaimsList;
+    }
+
+    public void setPriorityClaimsList(List<PatPriorityClaimsDto> priorityClaimsList) {
+        this.priorityClaimsList = priorityClaimsList;
     }
 }

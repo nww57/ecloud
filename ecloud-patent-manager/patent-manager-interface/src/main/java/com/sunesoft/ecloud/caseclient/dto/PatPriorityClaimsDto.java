@@ -5,6 +5,7 @@ import java.util.UUID;
 /**
  * @Author: niww
  * @Date: 2018/5/3
+ * 优先权项DTO
  */
 public class PatPriorityClaimsDto {
 

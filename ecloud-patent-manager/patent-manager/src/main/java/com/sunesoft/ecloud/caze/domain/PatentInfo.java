@@ -142,6 +142,9 @@ public class PatentInfo extends IEntity{
     @Column(name = "totalPrice")
     private BigDecimal totalPrice;
 
+    @OneToOne
+    private PatActor patActor;
+
     public ContractInfo getContractInfo() {
         return contractInfo;
     }
@@ -301,5 +304,13 @@ public class PatentInfo extends IEntity{
 
     public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public PatActor getPatActor() {
+        return patActor;
+    }
+
+    public void setPatActor(PatActor patActor) {
+        this.patActor = patActor;
     }
 }
