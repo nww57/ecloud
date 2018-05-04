@@ -98,7 +98,7 @@ public class AgencyAgentServiceImpl implements AgencyAgentService {
         if(StringUtils.isEmpty(agentDto.getLicenseCode())){
             return new TResult("执业证号不能为null");
         }
-        if(StringUtils.isEmpty(agentDto.getMobile())){
+        if(StringUtils.isEmpty(agentDto.getCellphone())){
             return new TResult("手机号不能为null");
         }
         TResult<Boolean> checkResult = checkLicenseCodeExist(agentDto.getAgId(),agentDto.getId(),agentDto.getLicenseCode());
