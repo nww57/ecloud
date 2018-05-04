@@ -159,11 +159,6 @@ public class PatentInfo extends BizEntity{
     @Column(name = "applicationSameDayCaseNo")
     private String applicationSameDayCaseNo;
 
-    @OneToOne
-    private PatActor patActor;
-
-    @OneToOne
-    private PatCustomerDemand customerDemand;
 
     public PatentInfo() {
         this.patentNode = PatentNode.NEW;
@@ -334,13 +329,6 @@ public class PatentInfo extends BizEntity{
         this.totalPrice = totalPrice;
     }
 
-    public PatActor getPatActor() {
-        return patActor;
-    }
-
-    public void setPatActor(PatActor patActor) {
-        this.patActor = patActor;
-    }
 
     public boolean isApplicationSameDay() {
         return isApplicationSameDay;
@@ -358,11 +346,4 @@ public class PatentInfo extends BizEntity{
         this.applicationSameDayCaseNo = applicationSameDayCaseNo;
     }
 
-    public PatCustomerDemand getCustomerDemand() {
-        return customerDemand;
-    }
-
-    public void setCustomerDemand(PatCustomerDemand customerDemand) {
-        this.customerDemand = customerDemand;
-    }
 }

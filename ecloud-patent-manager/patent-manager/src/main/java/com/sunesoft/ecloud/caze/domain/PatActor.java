@@ -18,7 +18,8 @@ public class PatActor extends IEntity{
     /**
      * 所属专利
      */
-    @OneToOne(mappedBy = "patActor")
+    @OneToOne
+    @JoinColumn(name = "patentId")
     private PatentInfo patentInfo;
 
     /**

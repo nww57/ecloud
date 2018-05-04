@@ -97,13 +97,7 @@ public class PatentServiceImpl implements PatentService {
         if(null != dto.getTechDomain()){
             info.setTechDomain(dto.getTechDomain());
         }
-        if(null != dto.getEngineerLeaderId()){
-            info.getPatActor().setEngineerLeaderId(dto.getEngineerLeaderId());
-        }
-        PatCustomerDemand demand = info.getCustomerDemand();
-        if(null == demand){
-            demand = new PatCustomerDemand();
-        }
+        PatCustomerDemand demand = new PatCustomerDemand();
         demand.setPatentInfo(info);
         demand.setIsAdvancePublicity(dto.getIsAdvancePublicity());
         demand.setIsFeeReduce(dto.getIsFeeReduce());

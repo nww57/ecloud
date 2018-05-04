@@ -16,7 +16,8 @@ public class PatCustomerDemand extends IEntity {
     /**
      * 所属专利
      */
-    @OneToOne(mappedBy = "customerDemand")
+    @OneToOne
+    @JoinColumn(name = "patentId")
     private PatentInfo patentInfo;
 
     /**
