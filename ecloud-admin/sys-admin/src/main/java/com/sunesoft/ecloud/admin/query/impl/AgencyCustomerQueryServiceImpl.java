@@ -188,6 +188,7 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
                 .leftJoin(User.class,"u")
                 .on("u.id = ac.consultantId")
                 .where("agId", agId)
+                .orderBy("ac.create_datetime",OrderType.DESC)
                 .select(AgencyCustomerBasicDto.class)
                 .setFieldValue("leaderName","ac.leader")
                 .setFieldValue("consultantName","u.realName");

@@ -142,6 +142,18 @@ public class PatentInfo extends IEntity{
     @Column(name = "totalPrice")
     private BigDecimal totalPrice;
 
+    /**
+     * 是否同日申请
+     */
+    @Column(name = "isApplicationSameDay")
+    private boolean isApplicationSameDay;
+
+    /**
+     * 同日申请案件号
+     */
+    @Column(name = "applicationSameDayCaseNo")
+    private String applicationSameDayCaseNo;
+
     @OneToOne
     private PatActor patActor;
 
@@ -312,5 +324,21 @@ public class PatentInfo extends IEntity{
 
     public void setPatActor(PatActor patActor) {
         this.patActor = patActor;
+    }
+
+    public boolean isApplicationSameDay() {
+        return isApplicationSameDay;
+    }
+
+    public void setApplicationSameDay(boolean applicationSameDay) {
+        isApplicationSameDay = applicationSameDay;
+    }
+
+    public String getApplicationSameDayCaseNo() {
+        return applicationSameDayCaseNo;
+    }
+
+    public void setApplicationSameDayCaseNo(String applicationSameDayCaseNo) {
+        this.applicationSameDayCaseNo = applicationSameDayCaseNo;
     }
 }

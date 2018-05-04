@@ -33,6 +33,16 @@ public class CreateContractPatentDto {
      */
     private String patentName;
 
+    /**
+     * 是否同日申请
+     */
+    private boolean isApplicationSameDay;
+
+    /**
+     * 同日申请案件号
+     */
+    private String applicationSameDayCaseNo;
+
     public UUID getId() {
         return id;
     }
@@ -71,5 +81,21 @@ public class CreateContractPatentDto {
 
     public void setPatentName(String patentName) {
         this.patentName = patentName;
+    }
+
+    public boolean isApplicationSameDay() {
+        return isApplicationSameDay;
+    }
+
+    public void setApplicationSameDay(boolean applicationSameDay) {
+        isApplicationSameDay = applicationSameDay;
+    }
+
+    public String getApplicationSameDayCaseNo() {
+        return applicationSameDayCaseNo;
+    }
+
+    public void setApplicationSameDayCaseNo(String applicationSameDayCaseNo) {
+        this.applicationSameDayCaseNo = applicationSameDayCaseNo;
     }
 }
