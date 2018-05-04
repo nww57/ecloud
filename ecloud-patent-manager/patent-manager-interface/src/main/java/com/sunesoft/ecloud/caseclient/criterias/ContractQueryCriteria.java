@@ -2,12 +2,16 @@ package com.sunesoft.ecloud.caseclient.criterias;
 
 import com.sunesoft.ecloud.common.cretiria.TCretiria;
 
+import java.util.UUID;
+
 /**
  * @Author: niww
  * @Date: 2018/5/3
  * 合同查询参数
  */
 public class ContractQueryCriteria extends TCretiria{
+
+    private UUID agId;
 
     /**
      *合同编号
@@ -38,6 +42,14 @@ public class ContractQueryCriteria extends TCretiria{
      * 创建时间 -结束
      */
     private String createDateEnd;
+
+    public UUID getAgId() {
+        return agId;
+    }
+
+    public void setAgId(UUID agId) {
+        this.agId = agId;
+    }
 
     public String getContractNo() {
         return contractNo;

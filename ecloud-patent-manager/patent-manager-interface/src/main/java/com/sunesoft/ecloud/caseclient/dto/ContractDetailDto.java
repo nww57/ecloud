@@ -15,5 +15,11 @@ public class ContractDetailDto extends ContractDto {
      */
     private List<ContractPatentInfo> patentInfoList;
 
+    public List<ContractPatentInfo> getPatentInfoList() {
+        return patentInfoList;
+    }
 
+    public void setPatentInfoList(List<ContractPatentInfo> patentInfoList) {
+        this.patentInfoList = patentInfoList;
+    }
 }

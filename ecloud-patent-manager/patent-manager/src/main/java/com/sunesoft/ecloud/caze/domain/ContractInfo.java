@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.caze.domain;
 
+import com.sunesoft.ecloud.hibernate.BizEntity;
 import com.sunesoft.ecloud.hibernate.IEntity;
 import org.hibernate.annotations.Type;
 
@@ -17,7 +18,7 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "pat_contract_info", schema = "springcloud", catalog = "")
-public class ContractInfo extends IEntity{
+public class ContractInfo extends BizEntity{
 
     /**
      * 合同编号
@@ -74,7 +75,7 @@ public class ContractInfo extends IEntity{
     /**
      *未开票金额
      */
-    @Column(name = "code")
+    @Column(name = "uninvoicedPrice")
     private BigDecimal uninvoicedPrice;
     /**
      *已付款金额
@@ -86,6 +87,13 @@ public class ContractInfo extends IEntity{
      */
     @Column(name = "unpaidPrice")
     private BigDecimal unpaidPrice;
+
+    /**
+     *业务销售人员/案源人
+     */
+    @Column(name = "creatorId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
+    private UUID creatorId;
 
     public String getContractNo() {
         return contractNo;
@@ -189,5 +197,13 @@ public class ContractInfo extends IEntity{
 
     public void setUnpaidPrice(BigDecimal unpaidPrice) {
         this.unpaidPrice = unpaidPrice;
+    }
+
+    public UUID getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(UUID creatorId) {
+        this.creatorId = creatorId;
     }
 }

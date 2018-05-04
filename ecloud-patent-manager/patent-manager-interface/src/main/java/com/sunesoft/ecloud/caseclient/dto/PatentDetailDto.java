@@ -1,6 +1,6 @@
 package com.sunesoft.ecloud.caseclient.dto;
 
-import com.sunesoft.ecloud.caseclient.PatentType;
+import com.sunesoft.ecloud.caseclient.enums.PatentType;
 import com.sunesoft.ecloud.caseclient.enums.TechnologyEnum;
 
 import java.util.List;

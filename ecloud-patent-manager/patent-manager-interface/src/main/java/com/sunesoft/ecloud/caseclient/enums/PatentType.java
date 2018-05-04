@@ -1,4 +1,4 @@
-package com.sunesoft.ecloud.caseclient;
+package com.sunesoft.ecloud.caseclient.enums;
 
 /**
  * @Auther: niww

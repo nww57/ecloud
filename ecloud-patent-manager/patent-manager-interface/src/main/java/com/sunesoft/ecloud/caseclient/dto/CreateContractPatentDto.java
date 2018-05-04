@@ -1,6 +1,6 @@
 package com.sunesoft.ecloud.caseclient.dto;
 
-import com.sunesoft.ecloud.caseclient.PatentType;
+import com.sunesoft.ecloud.caseclient.enums.PatentType;
 
 import java.util.UUID;
 
@@ -12,6 +12,11 @@ import java.util.UUID;
 public class CreateContractPatentDto {
 
     private UUID id;
+
+    /**
+     * 所属企业
+     */
+    private UUID agId;
 
     /**
      * 所属合同
@@ -97,5 +102,13 @@ public class CreateContractPatentDto {
 
     public void setApplicationSameDayCaseNo(String applicationSameDayCaseNo) {
         this.applicationSameDayCaseNo = applicationSameDayCaseNo;
+    }
+
+    public UUID getAgId() {
+        return agId;
+    }
+
+    public void setAgId(UUID agId) {
+        this.agId = agId;
     }
 }

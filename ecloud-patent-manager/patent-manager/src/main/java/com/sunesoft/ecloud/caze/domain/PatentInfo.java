@@ -1,6 +1,9 @@
 package com.sunesoft.ecloud.caze.domain;
 
+import com.sunesoft.ecloud.caseclient.enums.PatentNode;
+import com.sunesoft.ecloud.caseclient.enums.PatentType;
 import com.sunesoft.ecloud.caseclient.enums.TechnologyEnum;
+import com.sunesoft.ecloud.hibernate.BizEntity;
 import com.sunesoft.ecloud.hibernate.IEntity;
 import org.hibernate.annotations.Type;
 
@@ -17,7 +20,7 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "pat_contract_patent_info", schema = "springcloud", catalog = "")
-public class PatentInfo extends IEntity{
+public class PatentInfo extends BizEntity{
 
     /**
      * 所属合同
@@ -59,16 +62,17 @@ public class PatentInfo extends IEntity{
     private String caseNo;
 
     /**
-     *案件状态
+     *专利节点
      */
-    @Column(name = "caseStatus")
-    private String caseStatus;
+    @Column(name = "patentNode")
+    private PatentNode patentNode;
 
     /**
      *专利类型
      */
+    @Enumerated(EnumType.STRING)
     @Column(name = "patentType")
-    private String patentType;
+    private PatentType patentType;
 
     /**
      *专利名称
@@ -115,6 +119,7 @@ public class PatentInfo extends IEntity{
     /**
      *技术领域
      */
+    @Enumerated(EnumType.STRING)
     @Column(name = "techDomain")
     private TechnologyEnum techDomain;
 
@@ -156,6 +161,14 @@ public class PatentInfo extends IEntity{
 
     @OneToOne
     private PatActor patActor;
+
+    public PatentInfo() {
+        this.patentNode = PatentNode.NEW;
+    }
+
+    public PatentInfo(PatentNode patentNode) {
+        this.patentNode = patentNode;
+    }
 
     public ContractInfo getContractInfo() {
         return contractInfo;
@@ -206,19 +219,19 @@ public class PatentInfo extends IEntity{
         this.caseNo = caseNo;
     }
 
-    public String getCaseStatus() {
-        return caseStatus;
+    public PatentNode getPatentNode() {
+        return patentNode;
     }
 
-    public void setCaseStatus(String caseStatus) {
-        this.caseStatus = caseStatus;
+    public void setPatentNode(PatentNode patentNode) {
+        this.patentNode = patentNode;
     }
 
-    public String getPatentType() {
+    public PatentType getPatentType() {
         return patentType;
     }
 
-    public void setPatentType(String patentType) {
+    public void setPatentType(PatentType patentType) {
         this.patentType = patentType;
     }
 

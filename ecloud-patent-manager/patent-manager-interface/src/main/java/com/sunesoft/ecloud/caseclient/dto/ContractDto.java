@@ -18,6 +18,11 @@ public class ContractDto {
     private UUID id;
 
     /**
+     * 所属企业
+     */
+    private UUID agId;
+
+    /**
      * 合同编号
      */
     private String contractNo;
@@ -99,6 +104,14 @@ public class ContractDto {
      */
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
     private LocalDateTime createDate;
+
+    public UUID getAgId() {
+        return agId;
+    }
+
+    public void setAgId(UUID agId) {
+        this.agId = agId;
+    }
 
     public UUID getId() {
         return id;

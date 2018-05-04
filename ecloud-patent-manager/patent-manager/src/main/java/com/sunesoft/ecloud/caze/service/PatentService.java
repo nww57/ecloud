@@ -13,6 +13,13 @@ import java.util.UUID;
 public interface PatentService {
 
     /**
+     * 获取案件号
+     * @param agId
+     * @return
+     */
+    TResult generateCaseNo(UUID agId);
+
+    /**
      * 创建合同案件（专利）信息
      * @param dto 参数
      * @return 返回操作结果

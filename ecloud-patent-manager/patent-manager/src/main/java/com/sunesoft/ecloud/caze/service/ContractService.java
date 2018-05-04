@@ -13,12 +13,25 @@ import java.util.UUID;
 public interface ContractService {
 
     /**
+     * 获取合同号
+     * @param agId
+     * @return
+     */
+    TResult generateContractNo(UUID agId);
+
+    /**
      * 创建/修改合同
      * @param dto 参数
      * @return 返回操作结果
      */
     TResult addOrUpdateContract(ContractDto dto);
 
+    /**
+     * 删除合同信息
+     * @param id id
+     * @return 返回操作结果
+     */
+    TResult deleteContract(UUID id);
 
     /**
      * 删除合同信息
