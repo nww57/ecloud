@@ -46,7 +46,7 @@ public class ContractInfo extends BizEntity{
     /**
      *案源人
      */
-    @Column(name = "salesmanId",columnDefinition = "char(36)")
+    @Column(name = "introducerId",columnDefinition = "char(36)")
     @Type(type = "uuid-char")
     private UUID introducerId;
     /**

@@ -68,9 +68,9 @@ public class PatentServiceImpl implements PatentService {
         PatentInfo info = new PatentInfo();
         BeanUtil.copyPropertiesIgnoreNull(dto,info);
         info.setContractInfo(contractInfo);
-        PatActor actor =  new PatActor();
-        actor.setCaseCreatorId(dto.getCreatorId());
-        info.setPatActor(actor);
+//        PatActor actor =  new PatActor();
+//        actor.setCaseCreatorId(dto.getCreatorId());
+//        info.setPatActor(actor);
         patentInfoRepository.saveAndFlush(info);
         //记录节点
         PatFlow flow = new PatFlow();
@@ -100,16 +100,17 @@ public class PatentServiceImpl implements PatentService {
         if(null != dto.getEngineerLeaderId()){
             info.getPatActor().setEngineerLeaderId(dto.getEngineerLeaderId());
         }
-        patentInfoRepository.save(info);
-        PatCustomerDemand demand = new PatCustomerDemand();
+        PatCustomerDemand demand = info.getCustomerDemand();
+        if(null == demand){
+            demand = new PatCustomerDemand();
+        }
         demand.setPatentInfo(info);
         demand.setIsAdvancePublicity(dto.getIsAdvancePublicity());
         demand.setIsFeeReduce(dto.getIsFeeReduce());
         demand.setIsRealTrial(dto.getIsRealTrial());
         demand.setIsReqPriority(dto.getIsReqPriority());
-        
-
-        return null;
+        patentInfoRepository.save(info);
+        return ResultFactory.success();
     }
 
     @Override

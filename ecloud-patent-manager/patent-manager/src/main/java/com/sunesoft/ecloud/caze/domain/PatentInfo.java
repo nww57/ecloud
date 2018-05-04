@@ -162,6 +162,9 @@ public class PatentInfo extends BizEntity{
     @OneToOne
     private PatActor patActor;
 
+    @OneToOne
+    private PatCustomerDemand customerDemand;
+
     public PatentInfo() {
         this.patentNode = PatentNode.NEW;
     }
@@ -353,5 +356,13 @@ public class PatentInfo extends BizEntity{
 
     public void setApplicationSameDayCaseNo(String applicationSameDayCaseNo) {
         this.applicationSameDayCaseNo = applicationSameDayCaseNo;
+    }
+
+    public PatCustomerDemand getCustomerDemand() {
+        return customerDemand;
+    }
+
+    public void setCustomerDemand(PatCustomerDemand customerDemand) {
+        this.customerDemand = customerDemand;
     }
 }
