@@ -1,6 +1,7 @@
 package com.sunesoft.ecloud.caze.service;
 
 import com.sunesoft.ecloud.caseclient.dto.CreateContractPatentDto;
+import com.sunesoft.ecloud.caseclient.dto.UpdatePatentDto;
 import com.sunesoft.ecloud.common.result.TResult;
 
 import java.util.UUID;
@@ -25,6 +26,13 @@ public interface PatentService {
      * @return 返回操作结果
      */
     TResult addPatent(CreateContractPatentDto dto);
+
+    /**
+     * 完善专利信息
+     * @param dto 参数
+     * @return 返回操作结果
+     */
+    TResult updatePatent(UpdatePatentDto dto);
 
     /**
      * 删除专利

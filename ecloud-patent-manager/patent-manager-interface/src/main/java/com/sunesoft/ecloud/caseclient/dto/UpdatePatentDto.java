@@ -88,35 +88,35 @@ public class UpdatePatentDto {
         this.techDomain = techDomain;
     }
 
-    public boolean isRealTrial() {
+    public boolean getIsRealTrial() {
         return isRealTrial;
     }
 
-    public void setRealTrial(boolean realTrial) {
+    public void setIsRealTrial(boolean realTrial) {
         isRealTrial = realTrial;
     }
 
-    public boolean isAdvancePublicity() {
+    public boolean getIsAdvancePublicity() {
         return isAdvancePublicity;
     }
 
-    public void setAdvancePublicity(boolean advancePublicity) {
+    public void setIsAdvancePublicity(boolean advancePublicity) {
         isAdvancePublicity = advancePublicity;
     }
 
-    public boolean isFeeReduce() {
+    public boolean getIsFeeReduce() {
         return isFeeReduce;
     }
 
-    public void setFeeReduce(boolean feeReduce) {
+    public void setIsFeeReduce(boolean feeReduce) {
         isFeeReduce = feeReduce;
     }
 
-    public boolean isReqPriority() {
+    public boolean getIsReqPriority() {
         return isReqPriority;
     }
 
-    public void setReqPriority(boolean reqPriority) {
+    public void setIsReqPriority(boolean reqPriority) {
         isReqPriority = reqPriority;
     }
 

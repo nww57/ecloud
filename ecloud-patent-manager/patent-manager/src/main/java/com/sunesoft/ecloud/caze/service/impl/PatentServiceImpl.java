@@ -1,10 +1,9 @@
 package com.sunesoft.ecloud.caze.service.impl;
 
 import com.sunesoft.ecloud.caseclient.dto.CreateContractPatentDto;
+import com.sunesoft.ecloud.caseclient.dto.UpdatePatentDto;
 import com.sunesoft.ecloud.caseclient.enums.PatentNode;
-import com.sunesoft.ecloud.caze.domain.ContractInfo;
-import com.sunesoft.ecloud.caze.domain.PatFlow;
-import com.sunesoft.ecloud.caze.domain.PatentInfo;
+import com.sunesoft.ecloud.caze.domain.*;
 import com.sunesoft.ecloud.caze.repository.ContractInfoRepository;
 import com.sunesoft.ecloud.caze.repository.PatFlowRepository;
 import com.sunesoft.ecloud.caze.repository.PatentInfoRepository;
@@ -69,6 +68,9 @@ public class PatentServiceImpl implements PatentService {
         PatentInfo info = new PatentInfo();
         BeanUtil.copyPropertiesIgnoreNull(dto,info);
         info.setContractInfo(contractInfo);
+        PatActor actor =  new PatActor();
+        actor.setCaseCreatorId(dto.getCreatorId());
+        info.setPatActor(actor);
         patentInfoRepository.saveAndFlush(info);
         //记录节点
         PatFlow flow = new PatFlow();
@@ -77,6 +79,37 @@ public class PatentServiceImpl implements PatentService {
         flow.setPatentInfo(info);
         flowRepository.saveAndFlush(flow);
         return ResultFactory.success();
+    }
+
+    @Override
+    public TResult updatePatent(UpdatePatentDto dto) {
+        UUID patentId = dto.getPatentId();
+        if(null == patentId){
+            throw new IllegalArgumentException("无效的参数patentId");
+        }
+        PatentInfo info = patentInfoRepository.findOne(patentId);
+        if(null == info){
+            throw new IllegalArgumentException("无效的参数patentId");
+        }
+        if(StringUtils.isNotEmpty(dto.getPatentName())){
+            info.setPatentName(dto.getPatentName());
+        }
+        if(null != dto.getTechDomain()){
+            info.setTechDomain(dto.getTechDomain());
+        }
+        if(null != dto.getEngineerLeaderId()){
+            info.getPatActor().setEngineerLeaderId(dto.getEngineerLeaderId());
+        }
+        patentInfoRepository.save(info);
+        PatCustomerDemand demand = new PatCustomerDemand();
+        demand.setPatentInfo(info);
+        demand.setIsAdvancePublicity(dto.getIsAdvancePublicity());
+        demand.setIsFeeReduce(dto.getIsFeeReduce());
+        demand.setIsRealTrial(dto.getIsRealTrial());
+        demand.setIsReqPriority(dto.getIsReqPriority());
+        
+
+        return null;
     }
 
     @Override

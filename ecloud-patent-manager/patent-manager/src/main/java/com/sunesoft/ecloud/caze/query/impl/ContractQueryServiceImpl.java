@@ -52,11 +52,14 @@ public class ContractQueryServiceImpl extends GenericQuery implements ContractQu
                 " u.realName salesmanName," +
                 " pci.middlemanFee," +
                 " pci.creatorId," +
-                " u2.realName creatorName" +
+                " u2.realName creatorName," +
+                " pci.introducerId ," +
+                " u3.realName introducerName " +
                 " from pat_contract_info pci " +
                 " LEFT JOIN sys_ag_customer ac on ac.id = pci.customerId" +
                 " LEFT JOIN sys_user u on u.id = pci.salesmanId" +
                 " left JOIN sys_user u2 on u2.id = pci.creatorId" +
+                " left JOIN sys_user u3 on u3.id = pci.introducerId" +
                 " where pci.is_active = 1");
         sb.append(" and pci.agId = :agId");
         Map<String, Object> param = new HashMap<>();
@@ -111,10 +114,13 @@ public class ContractQueryServiceImpl extends GenericQuery implements ContractQu
                 " ac.name customerName," +
                 " pci.salesmanId," +
                 " u.realName salesmanName," +
-                " pci.middlemanFee " +
+                " pci.middlemanFee, " +
+                " pci.introducerId ," +
+                " u3.realName introducerName " +
                 " from pat_contract_info pci " +
                 " LEFT JOIN sys_ag_customer ac on ac.id = pci.customerId" +
                 " LEFT JOIN sys_user u on u.id = pci.salesmanId" +
+                " left JOIN sys_user u3 on u3.id = pci.introducerId" +
                 " where pci.is_active = 1 and pci.id = '"+id+"'");
         ContractDetailDto dto = queryForObject(sb.toString(),null,ContractDetailDto.class);
         //获取合同专利

@@ -37,11 +37,18 @@ public class ContractInfo extends BizEntity{
     @Type(type = "uuid-char")
     private UUID customerId;
     /**
-     *业务销售人员/案源人
+     *业务销售人员
      */
     @Column(name = "salesmanId",columnDefinition = "char(36)")
     @Type(type = "uuid-char")
     private UUID salesmanId;
+
+    /**
+     *案源人
+     */
+    @Column(name = "salesmanId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
+    private UUID introducerId;
     /**
      *介绍费
      */
@@ -205,5 +212,13 @@ public class ContractInfo extends BizEntity{
 
     public void setCreatorId(UUID creatorId) {
         this.creatorId = creatorId;
+    }
+
+    public UUID getIntroducerId() {
+        return introducerId;
+    }
+
+    public void setIntroducerId(UUID introducerId) {
+        this.introducerId = introducerId;
     }
 }

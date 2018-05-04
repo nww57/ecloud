@@ -19,6 +19,11 @@ public class CreateContractPatentDto {
     private UUID agId;
 
     /**
+     * 创建者
+     */
+    private UUID creatorId;
+
+    /**
      * 所属合同
      */
     private UUID contractId;
@@ -110,5 +115,13 @@ public class CreateContractPatentDto {
 
     public void setAgId(UUID agId) {
         this.agId = agId;
+    }
+
+    public UUID getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(UUID creatorId) {
+        this.creatorId = creatorId;
     }
 }

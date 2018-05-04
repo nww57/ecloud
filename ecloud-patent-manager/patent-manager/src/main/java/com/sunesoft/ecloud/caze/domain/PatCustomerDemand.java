@@ -24,7 +24,7 @@ public class PatCustomerDemand extends IEntity {
      *同时提实审
      */
     @Column(name="isRealTrial")
-    private boolean isRealTrial;
+    private boolean isRealTrial ;
 
     /**
      *提前公布
@@ -52,35 +52,35 @@ public class PatCustomerDemand extends IEntity {
         this.patentInfo = patentInfo;
     }
 
-    public boolean isRealTrial() {
+    public boolean getIsRealTrial() {
         return isRealTrial;
     }
 
-    public void setRealTrial(boolean realTrial) {
+    public void setIsRealTrial(boolean realTrial) {
         isRealTrial = realTrial;
     }
 
-    public boolean isAdvancePublicity() {
+    public boolean getIsAdvancePublicity() {
         return isAdvancePublicity;
     }
 
-    public void setAdvancePublicity(boolean advancePublicity) {
+    public void setIsAdvancePublicity(boolean advancePublicity) {
         isAdvancePublicity = advancePublicity;
     }
 
-    public boolean isFeeReduce() {
+    public boolean getIsFeeReduce() {
         return isFeeReduce;
     }
 
-    public void setFeeReduce(boolean feeReduce) {
+    public void setIsFeeReduce(boolean feeReduce) {
         isFeeReduce = feeReduce;
     }
 
-    public boolean isReqPriority() {
+    public boolean getIsReqPriority() {
         return isReqPriority;
     }
 
-    public void setReqPriority(boolean reqPriority) {
+    public void setIsReqPriority(boolean reqPriority) {
         isReqPriority = reqPriority;
     }
 }

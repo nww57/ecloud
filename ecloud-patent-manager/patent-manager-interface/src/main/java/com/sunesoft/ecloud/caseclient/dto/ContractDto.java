@@ -40,15 +40,25 @@ public class ContractDto {
     private String customerName;
 
     /**
-     *业务销售人员/案源人
+     *业务销售人员
      */
     private UUID salesmanId;
 
 
     /**
-     *业务销售人员/案源人 姓名
+     *业务销售人员 姓名
      */
     private String salesmanName;
+
+    /**
+     *案源人
+     */
+    private UUID introducerId;
+
+    /**
+     * 案源人姓名
+     */
+    private String introducerName;
 
     /**
      *介绍费
@@ -263,5 +273,21 @@ public class ContractDto {
 
     public void setSalesmanName(String salesmanName) {
         this.salesmanName = salesmanName;
+    }
+
+    public UUID getIntroducerId() {
+        return introducerId;
+    }
+
+    public void setIntroducerId(UUID introducerId) {
+        this.introducerId = introducerId;
+    }
+
+    public String getIntroducerName() {
+        return introducerName;
+    }
+
+    public void setIntroducerName(String introducerName) {
+        this.introducerName = introducerName;
     }
 }
