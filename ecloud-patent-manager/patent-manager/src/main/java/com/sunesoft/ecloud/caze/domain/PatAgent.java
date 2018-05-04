@@ -1,10 +1,8 @@
 package com.sunesoft.ecloud.caze.domain;
 
 import com.sunesoft.ecloud.hibernate.IEntity;
-import com.sunesoft.ecloud.hibernate.PatEntity;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 /**
  * @Auther: niww
@@ -12,9 +10,14 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "pat_agent", schema = "springcloud", catalog = "")
-public class PatAgent extends PatEntity{
+public class PatAgent extends IEntity{
 
-
+    /**
+     * 所属专利
+     */
+    @ManyToOne
+    @JoinColumn(name = "patentId")
+    private PatentInfo patentInfo;
 
     /**
      * 姓名
@@ -56,5 +59,13 @@ public class PatAgent extends PatEntity{
 
     public void setCellphone(String cellphone) {
         this.cellphone = cellphone;
+    }
+
+    public PatentInfo getPatentInfo() {
+        return patentInfo;
+    }
+
+    public void setPatentInfo(PatentInfo patentInfo) {
+        this.patentInfo = patentInfo;
     }
 }

@@ -1,12 +1,9 @@
 package com.sunesoft.ecloud.caze.domain;
 
 import com.sunesoft.ecloud.adminclient.ApplicantType;
-import com.sunesoft.ecloud.hibernate.PatEntity;
-import org.hibernate.annotations.Type;
+import com.sunesoft.ecloud.hibernate.IEntity;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.UUID;
 
 /**
  * @Auther: niww
@@ -15,9 +12,14 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "pat_applicant", schema = "springcloud", catalog = "")
-public class PatApplicant extends PatEntity {
+public class PatApplicant extends IEntity {
 
-
+    /**
+     * 所属专利
+     */
+    @ManyToOne
+    @JoinColumn(name = "patentId")
+    private PatentInfo patentInfo;
 
     /**
      * 姓名
@@ -120,6 +122,13 @@ public class PatApplicant extends PatEntity {
     @Column(name = "userCode")
     private String userCode;
 
+    public PatentInfo getPatentInfo() {
+        return patentInfo;
+    }
+
+    public void setPatentInfo(PatentInfo patentInfo) {
+        this.patentInfo = patentInfo;
+    }
 
     public String getName() {
         return name;

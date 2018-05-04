@@ -1,10 +1,8 @@
 package com.sunesoft.ecloud.caze.domain;
 
 import com.sunesoft.ecloud.hibernate.IEntity;
-import com.sunesoft.ecloud.hibernate.PatEntity;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 /**
  * @Auther: niww
@@ -13,7 +11,14 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "pat_customer_damand", schema = "springcloud", catalog = "")
-public class PatCustomerDemand extends PatEntity {
+public class PatCustomerDemand extends IEntity {
+
+    /**
+     * 所属专利
+     */
+    @ManyToOne
+    @JoinColumn(name = "patentId")
+    private PatentInfo patentInfo;
 
     /**
      *同时提实审
@@ -38,6 +43,14 @@ public class PatCustomerDemand extends PatEntity {
      */
     @Column(name="isReqPriority")
     private boolean isReqPriority;
+
+    public PatentInfo getPatentInfo() {
+        return patentInfo;
+    }
+
+    public void setPatentInfo(PatentInfo patentInfo) {
+        this.patentInfo = patentInfo;
+    }
 
     public boolean isRealTrial() {
         return isRealTrial;

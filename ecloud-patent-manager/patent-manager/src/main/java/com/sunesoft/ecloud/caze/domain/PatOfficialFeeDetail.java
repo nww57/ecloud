@@ -1,12 +1,9 @@
 package com.sunesoft.ecloud.caze.domain;
 
 import com.sunesoft.ecloud.hibernate.IEntity;
-import com.sunesoft.ecloud.hibernate.PatEntity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 
 /**
@@ -16,9 +13,14 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name = "pat_officalfeedetail", schema = "springcloud", catalog = "")
-public class PatOfficialFeeDetail extends PatEntity {
+public class PatOfficialFeeDetail extends IEntity {
 
-
+    /**
+     * 所属专利
+     */
+    @ManyToOne
+    @JoinColumn(name = "patentId")
+    private PatentInfo patentInfo;
 
     /**
      *状态
@@ -67,6 +69,14 @@ public class PatOfficialFeeDetail extends PatEntity {
      */
     @Column(name = "attachment")
     private String attachment;
+
+    public PatentInfo getPatentInfo() {
+        return patentInfo;
+    }
+
+    public void setPatentInfo(PatentInfo patentInfo) {
+        this.patentInfo = patentInfo;
+    }
 
     public String getStatus() {
         return status;
