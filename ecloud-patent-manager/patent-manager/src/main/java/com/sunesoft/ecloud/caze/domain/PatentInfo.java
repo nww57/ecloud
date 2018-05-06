@@ -345,5 +345,4 @@ public class PatentInfo extends BizEntity{
     public void setApplicationSameDayCaseNo(String applicationSameDayCaseNo) {
         this.applicationSameDayCaseNo = applicationSameDayCaseNo;
     }
-
 }

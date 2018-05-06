@@ -1,9 +1,9 @@
 package com.sunesoft.ecloud.caze.service;
 
-import com.sunesoft.ecloud.caseclient.dto.CreateContractPatentDto;
-import com.sunesoft.ecloud.caseclient.dto.UpdatePatentDto;
+import com.sunesoft.ecloud.caseclient.dto.*;
 import com.sunesoft.ecloud.common.result.TResult;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -47,4 +47,37 @@ public interface PatentService {
      * @return 返回操作结果
      */
     TResult deletePatent(UUID... ids);
+
+
+    /**
+     * 添加/修改 专利申请人信息
+     * @param patentId 专利id
+     * @param applicantList 申请人信息
+     * @return 返回操作结果
+     */
+    TResult addOrUpdatePatentApplicants(UUID patentId, List<PatApplicantDto> applicantList);
+
+    /**
+     * 添加/修改 专利发明人信息
+     * @param patentId 专利id
+     * @param inventorList 发明人信息
+     * @return 返回操作结果
+     */
+    TResult addOrUpdatePatentInventors(UUID patentId, List<PatInventorDto> inventorList);
+
+    /**
+     * 添加/修改 专利代理人信息
+     * @param patentId 专利id
+     * @param agentList 代理人信息
+     * @return 返回操作结果
+     */
+    TResult addOrUpdatePatentAgents(UUID patentId, List<PatAgentDto> agentList);
+
+
+    /**
+     * 分配撰写工程师
+     * @param dto 参数
+     * @return 返回操作结果
+     */
+    TResult allotEngineer(AllotEngineerDto dto);
 }

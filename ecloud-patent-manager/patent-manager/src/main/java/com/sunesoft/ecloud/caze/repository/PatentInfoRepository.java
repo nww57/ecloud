@@ -2,6 +2,8 @@ package com.sunesoft.ecloud.caze.repository;
 
 import com.sunesoft.ecloud.caze.domain.PatentInfo;
 import com.sunesoft.ecloud.hibernate.repository.BaseRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 
@@ -15,4 +17,8 @@ public interface PatentInfoRepository extends BaseRepository<PatentInfo,UUID> {
 
     @Procedure(procedureName = "generate_caseNo")
     String generateCaseNo(@Param("agId") String agId);
+
+    @Modifying
+    @Query(value = "update PatentInfo set is_active =0 where id in :ids")
+    void deleteBatch(@Param("ids") UUID... ids);
 }
