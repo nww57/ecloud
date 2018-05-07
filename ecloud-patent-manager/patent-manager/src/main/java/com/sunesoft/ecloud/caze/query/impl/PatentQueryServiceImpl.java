@@ -2,6 +2,7 @@ package com.sunesoft.ecloud.caze.query.impl;
 
 import com.sunesoft.ecloud.caseclient.criterias.PatentQueryCriteria;
 import com.sunesoft.ecloud.caseclient.dto.*;
+import com.sunesoft.ecloud.caseclient.enums.PatentNode;
 import com.sunesoft.ecloud.caze.domain.*;
 import com.sunesoft.ecloud.caze.query.PatentQueryService;
 import com.sunesoft.ecloud.common.result.ListResult;
@@ -13,10 +14,9 @@ import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @Author: niww
@@ -24,6 +24,20 @@ import java.util.UUID;
  */
 @Service
 public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryService {
+
+    @Override
+    public TResult<Map<PatentNode, Integer>> getPatentNodeCount(UUID agId) {
+        String sql  = "select patentNode,count(*) count  from pat_contract_patent_info p where p.agId = '"+agId+"' GROUP BY p.patentNode";
+        List<PatentNodeCountDto> nodeCount =  queryList(sql,null,PatentNodeCountDto.class);
+        List<PatentNode> nodeList = Stream.of(PatentNode.values()).sorted(Comparator.comparing(PatentNode::getNode)).collect(Collectors.toList());
+        EnumMap<PatentNode, Integer> re = new EnumMap(PatentNode.class);
+        nodeList.forEach(n->{re.put(n,0);});
+        nodeCount.forEach(node->{
+            re.put(node.getPatentNode(),node.getCount());
+        });
+        return new TResult<>(re);
+    }
+
     @Override
     public PagedResult<PatentListDto> queryPatentPaged(PatentQueryCriteria criteria) {
         if(null == criteria.getAgId()){

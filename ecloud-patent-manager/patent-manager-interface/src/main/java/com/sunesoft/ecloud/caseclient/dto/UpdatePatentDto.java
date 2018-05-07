@@ -52,6 +52,21 @@ public class UpdatePatentDto {
     private boolean isReqPriority;
 
     /**
+     * 申请人信息
+     */
+    private List<PatApplicantDto> applicantList;
+
+    /**
+     * 发明人信息
+     */
+    private List<PatInventorDto> inventorList;
+
+    /**
+     * 代理人信息
+     */
+    private List<PatAgentDto> agentList;
+
+    /**
      * 优先权项内容
      */
     private List<PatPriorityClaimsDto> priorityClaimsList;
@@ -126,5 +141,29 @@ public class UpdatePatentDto {
 
     public void setPriorityClaimsList(List<PatPriorityClaimsDto> priorityClaimsList) {
         this.priorityClaimsList = priorityClaimsList;
+    }
+
+    public List<PatApplicantDto> getApplicantList() {
+        return applicantList;
+    }
+
+    public void setApplicantList(List<PatApplicantDto> applicantList) {
+        this.applicantList = applicantList;
+    }
+
+    public List<PatInventorDto> getInventorList() {
+        return inventorList;
+    }
+
+    public void setInventorList(List<PatInventorDto> inventorList) {
+        this.inventorList = inventorList;
+    }
+
+    public List<PatAgentDto> getAgentList() {
+        return agentList;
+    }
+
+    public void setAgentList(List<PatAgentDto> agentList) {
+        this.agentList = agentList;
     }
 }

@@ -122,6 +122,10 @@ public class PatApplicant extends IEntity {
     @Column(name = "userCode")
     private String userCode;
 
+    public PatApplicant(PatentInfo patentInfo) {
+        this.patentInfo = patentInfo;
+    }
+
     public PatentInfo getPatentInfo() {
         return patentInfo;
     }

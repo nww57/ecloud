@@ -4,6 +4,7 @@ import com.sunesoft.ecloud.caze.domain.PatPriorityClaims;
 import com.sunesoft.ecloud.hibernate.repository.BaseRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.UUID;
 
@@ -15,5 +16,6 @@ public interface PatPriorityClaimsRepository extends BaseRepository<PatPriorityC
 
     @Modifying
     @Query(value = "delete from PatPriorityClaims where patentInfo.id = :patentId")
-    void deleteByPatent(UUID patentId);
+    void deleteByPatent(@Param("patentId") UUID patentId);
+
 }

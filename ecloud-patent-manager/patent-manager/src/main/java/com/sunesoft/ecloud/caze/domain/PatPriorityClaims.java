@@ -46,6 +46,10 @@ public class PatPriorityClaims extends IEntity {
     @Column(name = "priorApplicationNo")
     private String priorApplicationNo;
 
+    public PatPriorityClaims(PatentInfo patentInfo) {
+        this.patentInfo = patentInfo;
+    }
+
     public PatentInfo getPatentInfo() {
         return patentInfo;
     }

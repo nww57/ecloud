@@ -8,19 +8,33 @@ package com.sunesoft.ecloud.caseclient.enums;
 public enum  PatentNode {
 
     /**
-     *完善分组
+     *完善信息
      */
-    NEW,
+    TOBEIMPROVED(0),
     /**
      *分配工程师
      */
-    ALLOTENGINEER,
+    ALLOTENGINEER(1),
     /**
      *撰稿
      */
-    WRITING,
+    WRITING(2),
     /**
      *打包递交
      */
-    PACKAGING
+    PACKAGING(3);
+
+    private int node;
+
+    PatentNode(int node) {
+        this.node = node;
+    }
+
+    public int getNode() {
+        return node;
+    }
+
+    public void setNode(int node) {
+        this.node = node;
+    }
 }

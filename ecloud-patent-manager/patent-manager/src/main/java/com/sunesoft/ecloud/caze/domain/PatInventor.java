@@ -56,6 +56,10 @@ public class PatInventor extends IEntity {
     @Column(name = "cellphone")
     private String cellphone;
 
+    public PatInventor(PatentInfo patentInfo) {
+        this.patentInfo = patentInfo;
+    }
+
     public PatentInfo getPatentInfo() {
         return patentInfo;
     }

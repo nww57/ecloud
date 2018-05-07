@@ -2,9 +2,9 @@ package com.sunesoft.ecloud.caze.repository;
 
 import com.sunesoft.ecloud.caze.domain.PatAgent;
 import com.sunesoft.ecloud.hibernate.repository.BaseRepository;
-import feign.Param;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.UUID;
 
@@ -15,6 +15,6 @@ import java.util.UUID;
 public interface PatAgentRepository extends BaseRepository<PatAgent,UUID>{
 
     @Modifying
-    @Query(value = "delete from PatAgent where patentInfo.id = :patenId")
+    @Query(value = "delete from PatAgent where patentInfo.id = :patentId")
     void deleteByPatent(@Param("patentId") UUID patentId);
 }

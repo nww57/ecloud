@@ -4,6 +4,7 @@ import com.sunesoft.ecloud.adminclient.AgencyType;
 import com.sunesoft.ecloud.caseclient.dto.CreateContractPatentDto;
 import com.sunesoft.ecloud.caseclient.enums.PatentType;
 import com.sunesoft.ecloud.caze.service.PatentService;
+import com.sunesoft.ecloud.common.result.TResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +32,12 @@ public class PatentServiceTest {
     public void addPatent() throws Exception {
         CreateContractPatentDto dto = new CreateContractPatentDto();
         dto.setAgId(AGID);
-        dto.setCaseNo("AJ201805040003");
-        dto.setContractId(UUID.fromString("d58827df-6f5a-421a-a935-3c2102a48e87"));
-        dto.setPatentType(PatentType.UTILITYMODEL_PATENT);
-        dto.setPatentName("测试专利");
+        dto.setCaseNo(patentService.generateCaseNo(AGID).getResult().toString());
+        dto.setContractId(UUID.fromString("1afa9c70-18ca-411f-86ad-692e8b4983ee"));
+        dto.setPatentType(PatentType.INVENTION_PATENT);
+        dto.setPatentName("测试专利-这是一个发明");
         dto.setCreatorId(UUID.fromString("fc98e1ca-92f0-4f2e-b68c-f0129978c1bf"));
-        patentService.addPatent(dto);
+        TResult result = patentService.addPatent(dto);
         System.out.println(23);
     }
 

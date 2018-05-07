@@ -4,12 +4,10 @@ import com.sunesoft.ecloud.caseclient.enums.PatentNode;
 import com.sunesoft.ecloud.caseclient.enums.PatentType;
 import com.sunesoft.ecloud.caseclient.enums.TechnologyEnum;
 import com.sunesoft.ecloud.hibernate.BizEntity;
-import com.sunesoft.ecloud.hibernate.IEntity;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -65,6 +63,7 @@ public class PatentInfo extends BizEntity{
      *专利节点
      */
     @Column(name = "patentNode")
+    @Enumerated(EnumType.STRING)
     private PatentNode patentNode;
 
     /**
@@ -160,6 +159,34 @@ public class PatentInfo extends BizEntity{
     private String applicationSameDayCaseNo;
 
 
+//    /**
+//     * 专利申请人
+//     */
+//    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+//    @JoinColumn(name = "patentId")
+//    private List<PatApplicant> applicantList = new ArrayList<>();
+//
+//    /**
+//     * 专利发明人
+//     */
+//    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+//    @JoinColumn(name = "patentId")
+//    private List<PatInventor> inventorList = new ArrayList<>();
+//
+//    /**
+//     * 专利代理人
+//     */
+//    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+//    @JoinColumn(name = "patentId")
+//    private List<PatAgent> agentList = new ArrayList<>();
+//
+//    /**
+//     * 优先权项
+//     */
+//    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+//    @JoinColumn(name = "patentId")
+//    private List<PatPriorityClaims> claimsList = new ArrayList<>();
+
     /**
      * 立案人
      */
@@ -202,7 +229,7 @@ public class PatentInfo extends BizEntity{
     private UUID payerId;
 
     public PatentInfo() {
-        this.patentNode = PatentNode.NEW;
+        this.patentNode = PatentNode.TOBEIMPROVED;
     }
 
     public PatentInfo(PatentNode patentNode) {
@@ -434,4 +461,6 @@ public class PatentInfo extends BizEntity{
     public void setPayerId(UUID payerId) {
         this.payerId = payerId;
     }
+
+
 }

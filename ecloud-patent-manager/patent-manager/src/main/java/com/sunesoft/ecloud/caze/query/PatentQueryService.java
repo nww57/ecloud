@@ -2,10 +2,12 @@ package com.sunesoft.ecloud.caze.query;
 
 import com.sunesoft.ecloud.caseclient.criterias.PatentQueryCriteria;
 import com.sunesoft.ecloud.caseclient.dto.*;
+import com.sunesoft.ecloud.caseclient.enums.PatentNode;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -14,6 +16,14 @@ import java.util.UUID;
  * 专利信息查询
  */
 public interface PatentQueryService {
+
+    /**
+     * 获取各专利节点所拥有专利的个数
+     * @param agId 企业id
+     * @return 返回查询结果
+     */
+    TResult<Map<PatentNode,Integer>> getPatentNodeCount(UUID agId);
+
 
     /**
      * 专利列表查询

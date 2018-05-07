@@ -37,6 +37,10 @@ public class PatAgent extends IEntity{
     @Column(name = "cellphone")
     private String cellphone;
 
+    public PatAgent(PatentInfo patentInfo) {
+        this.patentInfo = patentInfo;
+    }
+
     public String getName() {
         return name;
     }
@@ -68,4 +72,6 @@ public class PatAgent extends IEntity{
     public void setPatentInfo(PatentInfo patentInfo) {
         this.patentInfo = patentInfo;
     }
+
+
 }

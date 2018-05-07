@@ -17,7 +17,7 @@ public class PatCustomerDemand extends IEntity {
      * 所属专利
      */
     @OneToOne
-    @JoinColumn(name = "patentId")
+    @JoinColumn(name = "patentId",unique = true)
     private PatentInfo patentInfo;
 
     /**
@@ -83,4 +83,6 @@ public class PatCustomerDemand extends IEntity {
     public void setIsReqPriority(boolean reqPriority) {
         isReqPriority = reqPriority;
     }
+
+
 }
