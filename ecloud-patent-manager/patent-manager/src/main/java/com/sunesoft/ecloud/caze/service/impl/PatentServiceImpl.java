@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -68,6 +69,9 @@ public class PatentServiceImpl implements PatentService {
         }
         if (StringUtils.isEmpty(dto.getCaseNo())) {
             return new TResult("案件号不能为空");
+        }
+        if(!Objects.equals(dto.getCaseNo(),generateCaseNo(dto.getAgId()).getResult())){
+            return new TResult("案件号已经更改，请重新创建");
         }
         if (null == dto.getPatentType()) {
             return new TResult("案件类型不能为空");
@@ -204,7 +208,16 @@ public class PatentServiceImpl implements PatentService {
 
     @Override
     public TResult allotEngineer(AllotEngineerDto dto) {
-        return null;
+        if(null == dto.getPatentId()){
+            throw new IllegalArgumentException("专利id不能为null");
+        }
+        if(null == dto.getEngineerId()){
+            return new TResult("未分配工程师");
+        }
+        PatentInfo patentInfo = patentInfoRepository.findOne(dto.getPatentId());
+        patentInfo.setEngineerId(dto.getEngineerId());
+        patentInfo.setWriteExpiryDate(dto.getWriteExpiryDate());
+        return ResultFactory.success();
     }
 
     @Override

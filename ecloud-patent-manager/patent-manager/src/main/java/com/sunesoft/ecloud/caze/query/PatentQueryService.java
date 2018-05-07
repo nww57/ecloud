@@ -1,10 +1,8 @@
 package com.sunesoft.ecloud.caze.query;
 
 import com.sunesoft.ecloud.caseclient.criterias.PatentQueryCriteria;
-import com.sunesoft.ecloud.caseclient.dto.PatOfficialFeeDetailDto;
-import com.sunesoft.ecloud.caseclient.dto.PatentDetailDto;
-import com.sunesoft.ecloud.caseclient.dto.PatentElementDto;
-import com.sunesoft.ecloud.caseclient.dto.PatentListDto;
+import com.sunesoft.ecloud.caseclient.dto.*;
+import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 
@@ -46,7 +44,33 @@ public interface PatentQueryService {
      * @param id id
      * @return 返回查询结果
      */
-    TResult<PatOfficialFeeDetailDto> getPatentOfficialFeeInfo(UUID id);
+    ListResult<PatOfficialFeeDetailDto> getPatentOfficialFeeInfo(UUID id);
 
+    /**
+     * 获取专利申请人列表
+     * @param patentId 专利id
+     * @return 返回查询结果
+     */
+    ListResult<PatApplicantDto> getPatentApplicants(UUID patentId);
 
+    /**
+     * 获取专利发明人信息列表
+     * @param patentId 专利id
+     * @return 返回查询结果
+     */
+    ListResult<PatInventorDto> getPatentInventors(UUID patentId);
+
+    /**
+     * 获取专利代理人信息列表
+     * @param patentId 专利id
+     * @return 返回查询结果
+     */
+    ListResult<PatAgentDto> getPatentAgents(UUID patentId);
+
+    /**
+     * 获取专利优先权项信息列表
+     * @param patentId 专利id
+     * @return 返回查询结果
+     */
+    ListResult<PatPriorityClaimsDto> getPatentPriorityClaims(UUID patentId);
 }

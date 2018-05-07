@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.caseclient.dto;
 
+import com.sunesoft.ecloud.caseclient.enums.PatentNode;
 import com.sunesoft.ecloud.caseclient.enums.PatentType;
 
 import java.time.LocalDate;
@@ -44,7 +45,7 @@ public class PatentListDto {
     /**
      *案件状态
      */
-    private String caseStatus;
+    private PatentNode patentNode;
 
     /**
      *合同号
@@ -56,10 +57,6 @@ public class PatentListDto {
      */
     private String customerName;
 
-    /**
-     *案源人
-     */
-    private String salesmanName;
 
     /**
      *申请人
@@ -90,6 +87,11 @@ public class PatentListDto {
      *授权日
      */
     private LocalDate authorizationDate;
+
+    /**
+     * 创建日期
+     */
+    private LocalDate createDate;
 
     public UUID getId() {
         return id;
@@ -139,12 +141,12 @@ public class PatentListDto {
         this.patentType = patentType;
     }
 
-    public String getCaseStatus() {
-        return caseStatus;
+    public PatentNode getPatentNode() {
+        return patentNode;
     }
 
-    public void setCaseStatus(String caseStatus) {
-        this.caseStatus = caseStatus;
+    public void setPatentNode(PatentNode patentNode) {
+        this.patentNode = patentNode;
     }
 
     public String getContractNo() {
@@ -161,14 +163,6 @@ public class PatentListDto {
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
-    }
-
-    public String getSalesmanName() {
-        return salesmanName;
-    }
-
-    public void setSalesmanName(String salesmanName) {
-        this.salesmanName = salesmanName;
     }
 
     public String getApplicants() {
@@ -217,5 +211,13 @@ public class PatentListDto {
 
     public void setAuthorizationDate(LocalDate authorizationDate) {
         this.authorizationDate = authorizationDate;
+    }
+
+    public LocalDate getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(LocalDate createDate) {
+        this.createDate = createDate;
     }
 }

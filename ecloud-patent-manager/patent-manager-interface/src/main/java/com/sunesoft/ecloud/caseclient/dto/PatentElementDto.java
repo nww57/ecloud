@@ -1,5 +1,7 @@
 package com.sunesoft.ecloud.caseclient.dto;
 
+import com.sunesoft.ecloud.caseclient.enums.PatentNode;
+
 import java.time.LocalDate;
 
 /**
@@ -30,9 +32,9 @@ public class PatentElementDto {
     private String mainClassificationNumber;
 
     /**
-     *案件状态
+     *案件节点
      */
-    private String caseStatus;
+    private PatentNode patentNode;
 
     /**
      *分案提交日
@@ -95,12 +97,12 @@ public class PatentElementDto {
         this.mainClassificationNumber = mainClassificationNumber;
     }
 
-    public String getCaseStatus() {
-        return caseStatus;
+    public PatentNode getPatentNode() {
+        return patentNode;
     }
 
-    public void setCaseStatus(String caseStatus) {
-        this.caseStatus = caseStatus;
+    public void setPatentNode(PatentNode patentNode) {
+        this.patentNode = patentNode;
     }
 
     public LocalDate getApplicationSubmissionDate() {
