@@ -7,6 +7,7 @@ import com.sunesoft.ecloud.caseclient.dto.ContractDto;
 import com.sunesoft.ecloud.caseclient.dto.ContractPatentInfo;
 import com.sunesoft.ecloud.caze.domain.PatentInfo;
 import com.sunesoft.ecloud.caze.query.ContractQueryService;
+import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
@@ -123,12 +124,19 @@ public class ContractQueryServiceImpl extends GenericQuery implements ContractQu
                 " left JOIN sys_user u3 on u3.id = pci.introducerId" +
                 " where pci.is_active = 1 and pci.id = '"+id+"'");
         ContractDetailDto dto = queryForObject(sb.toString(),null,ContractDetailDto.class);
+        return new TResult<>(dto);
+    }
+
+    @Override
+    public ListResult<ContractPatentInfo> getContractPatent(UUID id) {
+        if(null == id){
+            throw new IllegalArgumentException("无效的参数id");
+        }
         //获取合同专利
         SqlBuilder<ContractPatentInfo> dtoBuilder = HSqlBuilder.hFrom(PatentInfo.class, "p")
                 .where("p.contractId",id)
                 .select(ContractPatentInfo.class);
         List<ContractPatentInfo> patentList = queryList(dtoBuilder);
-        dto.setPatentInfoList(patentList);
-        return new TResult<>(dto);
+        return new ListResult<>(patentList);
     }
 }
