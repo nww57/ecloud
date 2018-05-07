@@ -160,6 +160,47 @@ public class PatentInfo extends BizEntity{
     private String applicationSameDayCaseNo;
 
 
+    /**
+     * 立案人
+     */
+    @Column(name = "creatorId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
+    private UUID creatorId;
+
+    /**
+     *工程师组长
+     */
+    @Column(name = "engineerLeaderId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
+    private UUID engineerLeaderId;
+
+    /**
+     *工程师/撰写人
+     */
+    @Column(name = "engineerId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
+    private UUID engineerId;
+
+    /**
+     *撰写截止日
+     */
+    @Column(name = "writeExpiryDate")
+    private LocalDate writeExpiryDate;
+
+    /**
+     *打包人
+     */
+    @Column(name = "packagerId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
+    private UUID packagerId;
+
+    /**
+     *缴费人
+     */
+    @Column(name = "payerId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
+    private UUID payerId;
+
     public PatentInfo() {
         this.patentNode = PatentNode.NEW;
     }
@@ -344,5 +385,53 @@ public class PatentInfo extends BizEntity{
 
     public void setApplicationSameDayCaseNo(String applicationSameDayCaseNo) {
         this.applicationSameDayCaseNo = applicationSameDayCaseNo;
+    }
+
+    public UUID getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(UUID creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public UUID getEngineerLeaderId() {
+        return engineerLeaderId;
+    }
+
+    public void setEngineerLeaderId(UUID engineerLeaderId) {
+        this.engineerLeaderId = engineerLeaderId;
+    }
+
+    public UUID getEngineerId() {
+        return engineerId;
+    }
+
+    public void setEngineerId(UUID engineerId) {
+        this.engineerId = engineerId;
+    }
+
+    public LocalDate getWriteExpiryDate() {
+        return writeExpiryDate;
+    }
+
+    public void setWriteExpiryDate(LocalDate writeExpiryDate) {
+        this.writeExpiryDate = writeExpiryDate;
+    }
+
+    public UUID getPackagerId() {
+        return packagerId;
+    }
+
+    public void setPackagerId(UUID packagerId) {
+        this.packagerId = packagerId;
+    }
+
+    public UUID getPayerId() {
+        return payerId;
+    }
+
+    public void setPayerId(UUID payerId) {
+        this.payerId = payerId;
     }
 }
