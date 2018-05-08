@@ -35,6 +35,11 @@ public class PatAgentDto {
      */
     private int sort;
 
+    /**
+     * 代理机构代理人id
+     */
+    private UUID agencyAgentId;
+
     public int getSort() {
         return sort;
     }
@@ -81,5 +86,13 @@ public class PatAgentDto {
 
     public void setCellphone(String cellphone) {
         this.cellphone = cellphone;
+    }
+
+    public UUID getAgencyAgentId() {
+        return agencyAgentId;
+    }
+
+    public void setAgencyAgentId(UUID agencyAgentId) {
+        this.agencyAgentId = agencyAgentId;
     }
 }

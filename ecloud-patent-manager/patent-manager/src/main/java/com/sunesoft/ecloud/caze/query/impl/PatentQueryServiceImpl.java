@@ -27,6 +27,9 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
 
     @Override
     public TResult<Map<PatentNode, Integer>> getPatentNodeCount(UUID agId) {
+        if(null == agId){
+            throw new IllegalArgumentException("参数agId不能为null");
+        }
         String sql  = "select patentNode,count(*) count  from pat_contract_patent_info p where p.is_active = 1 and p.agId = '"+agId+"' GROUP BY p.patentNode";
         List<PatentNodeCountDto> nodeCount =  queryList(sql,null,PatentNodeCountDto.class);
         List<PatentNode> nodeList = Stream.of(PatentNode.values()).sorted(Comparator.comparing(PatentNode::getNode)).collect(Collectors.toList());
@@ -36,6 +39,18 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
             re.put(node.getPatentNode(),node.getCount());
         });
         return new TResult<>(re);
+    }
+
+    @Override
+    public ListResult<PatentBasicDto> getPatentBasicInfoByPatentNode(UUID agId, PatentNode patentNode) {
+        if(null == agId){
+            throw new IllegalArgumentException("参数agId不能为null");
+        }
+        SqlBuilder<PatentBasicDto> sqlBuilder = HSqlBuilder.hFrom(PatentInfo.class, "p")
+                .where("p.agId",agId)
+                .where("p.patentNode",patentNode)
+                .select(PatentBasicDto.class);
+        return new ListResult<>(queryList(sqlBuilder));
     }
 
     @Override

@@ -54,17 +54,17 @@ public class UpdatePatentDto {
     /**
      * 申请人信息
      */
-    private List<PatApplicantDto> applicantList;
+    private List<UUID> applicantIdList;
 
     /**
      * 发明人信息
      */
-    private List<PatInventorDto> inventorList;
+    private List<UUID> inventorIdList;
 
     /**
      * 代理人信息
      */
-    private List<PatAgentDto> agentList;
+    private List<UUID> agentIdList;
 
     /**
      * 优先权项内容
@@ -143,27 +143,27 @@ public class UpdatePatentDto {
         this.priorityClaimsList = priorityClaimsList;
     }
 
-    public List<PatApplicantDto> getApplicantList() {
-        return applicantList;
+    public List<UUID> getApplicantIdList() {
+        return applicantIdList;
     }
 
-    public void setApplicantList(List<PatApplicantDto> applicantList) {
-        this.applicantList = applicantList;
+    public void setApplicantIdList(List<UUID> applicantIdList) {
+        this.applicantIdList = applicantIdList;
     }
 
-    public List<PatInventorDto> getInventorList() {
-        return inventorList;
+    public List<UUID> getInventorIdList() {
+        return inventorIdList;
     }
 
-    public void setInventorList(List<PatInventorDto> inventorList) {
-        this.inventorList = inventorList;
+    public void setInventorIdList(List<UUID> inventorIdList) {
+        this.inventorIdList = inventorIdList;
     }
 
-    public List<PatAgentDto> getAgentList() {
-        return agentList;
+    public List<UUID> getAgentIdList() {
+        return agentIdList;
     }
 
-    public void setAgentList(List<PatAgentDto> agentList) {
-        this.agentList = agentList;
+    public void setAgentIdList(List<UUID> agentIdList) {
+        this.agentIdList = agentIdList;
     }
 }

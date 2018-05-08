@@ -131,42 +131,45 @@ public class PatentServiceImpl implements PatentService {
             priorityClaimsRepository.deleteByPatent(patentId);
         }
         //设置申请人
-        if(null != dto.getApplicantList()){
+        if(null != dto.getApplicantIdList()){
             applicantRepository.deleteByPatent(patentId);
-            List<PatApplicantDto> applicantDtoList = dto.getApplicantList();
+            List<UUID> applicantIdList = dto.getApplicantIdList();
             List<PatApplicant> applicants = new ArrayList<>();
             PatApplicant applicant ;
-            for (PatApplicantDto patApplicantDto : applicantDtoList) {
+            for(int i=0;i<applicantIdList.size();i++){
                 applicant = new PatApplicant(info);
-                BeanUtil.copyPropertiesIgnoreNull(patApplicantDto,applicant);
+                applicant.setSort(i+1);
+                applicant.setCustomerApplicantId(applicantIdList.get(i));
                 applicants.add(applicant);
             }
             applicantRepository.save(applicants);
         }
 
         //设置发明人
-        if(null != dto.getInventorList()){
+        if(null != dto.getInventorIdList()){
             inventorRepository.deleteByPatent(patentId);
-            List<PatInventorDto> inventorDtoList = dto.getInventorList();
+            List<UUID> inventorIdList = dto.getInventorIdList();
             List<PatInventor> inventors = new ArrayList<>();
             PatInventor inventor;
-            for (PatInventorDto patInventorDto : inventorDtoList) {
+            for(int i=0;i<inventorIdList.size();i++) {
                 inventor = new PatInventor(info);
-                BeanUtil.copyPropertiesIgnoreNull(patInventorDto,inventor);
+                inventor.setSort(i+1);
+                inventor.setCustomerInventorId(inventorIdList.get(i));
                 inventors.add(inventor);
             }
             inventorRepository.save(inventors);
         }
 
         //设置代理人
-        if(null != dto.getAgentList()){
+        if(null != dto.getAgentIdList()){
            agentRepository.deleteByPatent(patentId);
-            List<PatAgentDto> agentDtoList = dto.getAgentList();
+            List<UUID> agentIdList = dto.getAgentIdList();
             List<PatAgent> agents = new ArrayList<>();
             PatAgent agent;
-            for (PatAgentDto patAgentDto : agentDtoList) {
+            for (int i= 0;i<agentIdList.size();i++) {
                 agent = new PatAgent(info);
-                BeanUtil.copyPropertiesIgnoreNull(patAgentDto,agent);
+                agent.setSort(i+1);
+                agent.setAgencyAgentId(agentIdList.get(i));
                 agents.add(agent);
             }
             agentRepository.save(agents);
