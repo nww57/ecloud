@@ -96,13 +96,13 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
     }
 
     @Override
-    public ListResult<BasicDto> findCustomerApplicantList(UUID customerId) {
+    public ListResult<CustomerApplicantDto> findCustomerApplicantList(UUID customerId) {
         if(null == customerId){
             throw new IllegalArgumentException("参数customerId不能为null");
         }
-        SqlBuilder<BasicDto> dtoBuilder = HSqlBuilder.hFrom(CustomerApplicant.class, "a")
+        SqlBuilder<CustomerApplicantDto> dtoBuilder = HSqlBuilder.hFrom(CustomerApplicant.class, "a")
                 .where("a.customerId", customerId)
-                .select(BasicDto.class);
+                .select(CustomerApplicantDto.class);
         return new ListResult<>(queryList(dtoBuilder));
     }
 
@@ -127,13 +127,13 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
     }
 
     @Override
-    public ListResult<BasicDto> findCustomerInventorList(UUID customerId) {
+    public ListResult<CustomerInventorDto> findCustomerInventorList(UUID customerId) {
         if(null == customerId){
             throw new IllegalArgumentException("参数customerId不能为null");
         }
-        SqlBuilder<BasicDto> dtoBuilder = HSqlBuilder.hFrom(CustomerInventor.class, "i")
+        SqlBuilder<CustomerInventorDto> dtoBuilder = HSqlBuilder.hFrom(CustomerInventor.class, "i")
                 .where("i.customerId", customerId)
-                .select(BasicDto.class);
+                .select(CustomerInventorDto.class);
         return new ListResult<>(queryList(dtoBuilder));
     }
 
