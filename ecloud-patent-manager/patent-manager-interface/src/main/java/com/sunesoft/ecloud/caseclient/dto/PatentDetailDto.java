@@ -26,6 +26,11 @@ public class PatentDetailDto {
     private String caseNo;
 
     /**
+     * 客户id
+     */
+    private UUID customerId;
+
+    /**
      *客户名称
      */
     private String customerName;
@@ -40,6 +45,9 @@ public class PatentDetailDto {
      */
     private String patentName;
 
+    /**
+     * 工程师组长id
+     */
     private UUID engineerLeaderId;
 
     /**
@@ -96,6 +104,22 @@ public class PatentDetailDto {
      * 优先权项里诶包
      */
     private List<PatPriorityClaimsDto> priorityClaimsList;
+
+    public UUID getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(UUID customerId) {
+        this.customerId = customerId;
+    }
+
+    public UUID getEngineerLeaderId() {
+        return engineerLeaderId;
+    }
+
+    public void setEngineerLeaderId(UUID engineerLeaderId) {
+        this.engineerLeaderId = engineerLeaderId;
+    }
 
     public UUID getId() {
         return id;

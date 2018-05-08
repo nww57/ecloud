@@ -45,6 +45,8 @@ public class PatentServiceImpl implements PatentService {
     PatInventorRepository inventorRepository;
     @Autowired
     PatAgentRepository agentRepository;
+    @Autowired
+    PatentQueryConfigRepository configRepository;
 
     @Override
     public TResult generateCaseNo(UUID agId) {
@@ -53,6 +55,23 @@ public class PatentServiceImpl implements PatentService {
         }
         Object contract = patentInfoRepository.generateCaseNo(agId.toString());
         return new TResult<>(contract);
+    }
+
+    @Override
+    public TResult configPatentQueryCondition(PatentQueryConfigDto dto) {
+        UUID userId = dto.getUserId();
+        if(null == userId){
+            throw new IllegalArgumentException("用户id不能为null");
+        }
+        PatentQueryConfig config = configRepository.findByUserId(userId);
+        if(null == config){
+            config = new PatentQueryConfig();
+            config.setUserId(userId);
+        }
+        config.setExpiredDay(dto.getExpiredDay());
+        config.setIsRedTop(dto.getIsRedTop());
+        configRepository.saveAndFlush(config);
+        return ResultFactory.success();
     }
 
     @Override
@@ -83,6 +102,7 @@ public class PatentServiceImpl implements PatentService {
         PatentInfo info = new PatentInfo();
         BeanUtil.copyPropertiesIgnoreNull(dto, info);
         info.setContractInfo(contractInfo);
+        info.setCustomerId(contractInfo.getCustomerId());
         patentInfoRepository.saveAndFlush(info);
         //记录节点
         PatFlow flow = new PatFlow();

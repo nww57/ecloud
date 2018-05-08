@@ -66,7 +66,7 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
                 " p.applicationNo, " +
                 " p.caseNo, " +
                 " p.patentName, " +
-                " null recentDueDate, " +
+                " p.nodeExpiryDate, " +
                 " p.patentType, " +
                 " p.patentNode, " +
                 " p.isApplicationSameDay, " +
@@ -80,7 +80,8 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
                 " p.create_datetime , " +
                 " pci.contractName, " +
                 " pci.contractNo, " +
-                " sc.name customerName " +
+                " sc.name customerName, " +
+                " if(CURDATE() > p.nodeExpiryDate,1,0) isDelayed " +
                 " from pat_contract_patent_info p " +
                 " left JOIN pat_contract_info pci on pci.id = p.contractId " +
                 " LEFT JOIN sys_ag_customer sc on sc.id = p.customerId where p.is_active = 1 and p.agId = '"+criteria.getAgId()+"' ");
@@ -97,12 +98,14 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
             sb.append(" and p.patentName like :patentName");
             param.put("patentName",criteria.getPatentName());
         }
-        //TODO 最近期限日期
-        if(StringUtils.isNotEmpty(criteria.getRecentDueTimeStart())){
-
+        //最近期限日期
+        if(StringUtils.isNotEmpty(criteria.getNodeExpiryDateStart())){
+            sb.append(" and p.nodeExpiryDate >= :nodeExpiryDateStart");
+            param.put("nodeExpiryDateStart",criteria.getNodeExpiryDateStart());
         }
-        if(StringUtils.isNotEmpty(criteria.getRecentDueTimeEnd())){
-
+        if(StringUtils.isNotEmpty(criteria.getNodeExpiryDateEnd())){
+            sb.append(" and p.nodeExpiryDate <= :nodeExpiryDateEnd");
+            param.put("nodeExpiryDateEnd",criteria.getNodeExpiryDateEnd());
         }
         if(null != criteria.getPatentType()){
             sb.append(" and p.patentType = :patentType");
@@ -148,9 +151,13 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
             sb.append(" and p.authorizationDate <= :authorizationDateEnd");
             param.put("authorizationDateEnd",criteria.getAgents());
         }
-        //TODO 是否 延时
+        //是否 延时
         if(null != criteria.getIsDelayed()){
-
+            if(criteria.getIsDelayed()){
+                sb.append(" and if(CURDATE() > p.nodeExpiryDate,1,0) = 1");
+            }else{
+                sb.append(" and if(CURDATE() > p.nodeExpiryDate,1,0) = 0");
+            }
         }
         sb.append(" order by p.create_datetime desc");
         return queryPaged(criteria.getPageIndex(),criteria.getPageSize(),sb.toString(),param,PatentListDto.class);
@@ -176,6 +183,7 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
                 " d.isFeeReduce, " +
                 " d.isRealTrial, " +
                 " d.isReqPriority, " +
+                " p.customerId, " +
                 " c.name customerName " +
                 " from pat_contract_patent_info p " +
                 " LEFT JOIN sys_user u on u.id = p.engineerLeaderId " +

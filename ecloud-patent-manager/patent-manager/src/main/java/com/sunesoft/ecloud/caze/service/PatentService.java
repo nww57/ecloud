@@ -23,6 +23,13 @@ public interface PatentService {
     TResult generateCaseNo(UUID agId);
 
     /**
+     * 配置专利查询条件
+     * @param dto 配置参数
+     * @return 返回操作结果
+     */
+    TResult configPatentQueryCondition(PatentQueryConfigDto dto);
+
+    /**
      * 创建合同案件（专利）信息
      * @param dto 参数
      * @return 返回操作结果
