@@ -60,18 +60,23 @@ public class AgencyCustomerServiceImplTest {
 
     @Test
     public void addOrUpdateCustomerApplicants() throws Exception{
-        for(int i= 0;i<14;i++) {
+
             CustomerApplicantDto dto = new CustomerApplicantDto();
             dto.setCustomerId(UUID.fromString("569e07c9-0ebf-4002-88da-87c2777d82f2"));
-            dto.setName("申请人"+i);
-            dto.setType(ApplicantType.INDUSTRIAL_COMPANY);
-            dto.setCode("320425363652142536");
             dto.setRecord(true);
-            dto.setRecordValidDate(LocalDateTime.now());
-//            dto.setArea("江苏常州");
+            dto.setType(ApplicantType.INDUSTRIAL_COMPANY);
+            dto.setIdCode("320425363652142536");
+            dto.setCountryName("中国");
+            dto.setCountryCode("CN");
+            dto.setProvinceName("江苏");
+            dto.setProvinceCode("3200");
+            dto.setCityName("常州");
+            dto.setCityCode("3204");
+            dto.setAreaDetail("asdf");
+            dto.setLiveAddress("asdfasdfasdfasdf");
+            dto.setUserCode("a123234");
             TResult result = customerService.addOrUpdateCustomerApplicants(dto);
-        }
-        System.out.println(23);
+
     }
 
     @Test
@@ -87,7 +92,7 @@ public class AgencyCustomerServiceImplTest {
             dto.setCustomerId(UUID.fromString("569e07c9-0ebf-4002-88da-87c2777d82f2"));
             dto.setName("发明人"+i);
 //            dto.setCountry("中国");
-            dto.setCode("320425363652142536");
+//            dto.setCode("320425363652142536");
             dto.setOpen(true);
             TResult result = customerService.addOrUpdateCustomerInventor(dto);
         }

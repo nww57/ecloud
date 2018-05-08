@@ -4,25 +4,21 @@ import com.sunesoft.ecloud.caze.domain.PatentInfo;
 import com.sunesoft.ecloud.hibernate.repository.BaseRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 /**
  * @Auther: niww
- * @Date: 2018/4/13/013
+ * @Date: 2018/5/4/004
  */
-public interface PatentInfoRepository extends BaseRepository<PatentInfo,UUID>{
+public interface PatentInfoRepository extends BaseRepository<PatentInfo,UUID> {
+
+    @Procedure(procedureName = "generate_caseNo")
+    String generateCaseNo(@Param("agId") String agId);
 
     @Modifying
-    @Query(value = "update PatentInfo set customerId = :customerId,feeReduceRate = :feeReduceRate where caseInfo.id = :caseId")
-    void updatePatentInfo(@Param("caseId") UUID caseId, @Param("customerId") UUID customerId, @Param("feeReduceRate") BigDecimal feeReduceRate);
-
-    @Modifying
-    @Query(value = "update PatentInfo set feeReduceRate = :feeReduceRate where caseInfo.id = :caseId")
-    void setFeeReduceRate(UUID caseId, BigDecimal feeReduceRate);
-
-    @Query(value = "update PatentInfo set is_active = 0 where caseInfo.id in :ids")
+    @Query(value = "update PatentInfo set is_active =0 where id in :ids")
     void deleteBatch(@Param("ids") UUID... ids);
 }

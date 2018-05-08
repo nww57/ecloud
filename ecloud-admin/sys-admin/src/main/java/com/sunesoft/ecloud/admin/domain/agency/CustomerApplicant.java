@@ -44,10 +44,10 @@ public class CustomerApplicant extends IEntity{
 
 
     /**
-     *身份证/机构代码
+     *身份证号码/统一会信用代码
      */
-    @Column(name = "code")
-    private String code;
+    @Column(name = "idCode")
+    private String idCode;
 
 
     /**
@@ -56,11 +56,6 @@ public class CustomerApplicant extends IEntity{
     @Column(name = "record")
     private Boolean record;
 
-    /**
-     *备案有效期
-     */
-    @Column(name = "recordValidDate")
-    private LocalDateTime recordValidDate;
 
     /**
      * 省code
@@ -104,6 +99,11 @@ public class CustomerApplicant extends IEntity{
     @Column(name = "areaDetail")
     private String areaDetail;
 
+    /**
+     * 邮编
+     */
+    @Column(name = "zipCode")
+    private String zipCode;
 
     /**
      * 所属客户
@@ -156,12 +156,12 @@ public class CustomerApplicant extends IEntity{
         this.type = type;
     }
 
-    public String getCode() {
-        return code;
+    public String getIdCode() {
+        return idCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setIdCode(String idCode) {
+        this.idCode = idCode;
     }
 
     public Boolean getRecord() {
@@ -170,14 +170,6 @@ public class CustomerApplicant extends IEntity{
 
     public void setRecord(Boolean record) {
         this.record = record;
-    }
-
-    public LocalDateTime getRecordValidDate() {
-        return recordValidDate;
-    }
-
-    public void setRecordValidDate(LocalDateTime recordValidDate) {
-        this.recordValidDate = recordValidDate;
     }
 
     public UUID getCustomerId() {
@@ -258,5 +250,13 @@ public class CustomerApplicant extends IEntity{
 
     public void setUserCode(String userCode) {
         this.userCode = userCode;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 }

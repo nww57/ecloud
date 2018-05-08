@@ -30,10 +30,10 @@ public class AgencyAgent extends BizEntity{
     private String licenseCode;
 
     /**
-     *手机号
+     *联系方式
      */
-    @Column(name = "mobile")
-    private String mobile;
+    @Column(name = "cellphone")
+    private String cellphone;
 
     public String getName() {
         return name;
@@ -51,13 +51,11 @@ public class AgencyAgent extends BizEntity{
         this.licenseCode = licenseCode;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getCellphone() {
+        return cellphone;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setCellphone(String cellphone) {
+        this.cellphone = cellphone;
     }
-
-
 }

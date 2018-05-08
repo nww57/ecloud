@@ -71,7 +71,7 @@ public class AgencyCustomerServiceImpl implements AgencyCustomerService {
 
         BeanUtil.copyPropertiesIgnoreNull(agencyCustomerDto, customer);
         customerRepository.saveAndFlush(customer);
-        return new TResult<>(agencyCustomerDto);
+        return new TResult<>(customer.getId());
     }
 
 

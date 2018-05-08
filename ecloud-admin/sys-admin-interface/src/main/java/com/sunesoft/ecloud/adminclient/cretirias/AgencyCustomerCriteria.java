@@ -19,6 +19,41 @@ public class AgencyCustomerCriteria extends TCretiria{
      */
     private String keywords;
 
+    /**
+     * 客户名称
+     */
+    private String customerName;
+
+    /**
+     * 负责人
+     */
+    private String leader;
+
+    /**
+     * 负责人手机
+     */
+    private String leaderMobile;
+
+    /**
+     * 负责人邮箱
+     */
+    private String leaderEmail;
+
+    /**
+     * 业务顾问姓名
+     */
+    private String consultantName;
+
+    /**
+     * 签约起始时间
+     */
+    private String signDateStart;
+
+    /**
+     * 签约截止时间
+     */
+    private String signDateEnd;
+
     public UUID getAgId() {
         return agId;
     }
@@ -33,5 +68,61 @@ public class AgencyCustomerCriteria extends TCretiria{
 
     public void setKeywords(String keywords) {
         this.keywords = keywords;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getLeader() {
+        return leader;
+    }
+
+    public void setLeader(String leader) {
+        this.leader = leader;
+    }
+
+    public String getLeaderMobile() {
+        return leaderMobile;
+    }
+
+    public void setLeaderMobile(String leaderMobile) {
+        this.leaderMobile = leaderMobile;
+    }
+
+    public String getLeaderEmail() {
+        return leaderEmail;
+    }
+
+    public void setLeaderEmail(String leaderEmail) {
+        this.leaderEmail = leaderEmail;
+    }
+
+    public String getConsultantName() {
+        return consultantName;
+    }
+
+    public void setConsultantName(String consultantName) {
+        this.consultantName = consultantName;
+    }
+
+    public String getSignDateStart() {
+        return signDateStart;
+    }
+
+    public void setSignDateStart(String signDateStart) {
+        this.signDateStart = signDateStart;
+    }
+
+    public String getSignDateEnd() {
+        return signDateEnd;
+    }
+
+    public void setSignDateEnd(String signDateEnd) {
+        this.signDateEnd = signDateEnd;
     }
 }

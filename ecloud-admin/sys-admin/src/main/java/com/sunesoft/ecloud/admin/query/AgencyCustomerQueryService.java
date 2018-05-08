@@ -52,7 +52,7 @@ public interface AgencyCustomerQueryService {
      * @param customerId 客户id
      * @return 返回查询结果
      */
-    ListResult<BasicDto> findCustomerApplicantList(UUID customerId);
+    ListResult<CustomerApplicantDto> findCustomerApplicantList(UUID customerId);
 
     /**
      * 根据id 查找客户申请人信息
@@ -75,7 +75,7 @@ public interface AgencyCustomerQueryService {
      * @param customerId 客户id
      * @return 返回查询结果
      */
-    ListResult<BasicDto> findCustomerInventorList(UUID customerId);
+    ListResult<CustomerInventorDto> findCustomerInventorList(UUID customerId);
 
     /**
      * 根据id 查找客户发明人信息

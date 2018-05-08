@@ -36,22 +36,15 @@ public class CustomerApplicantDto {
     private ApplicantType type;
 
     /**
-     *身份证/机构代码
+     *身份证号码/统一会信用代码
      */
-    private String code;
+    private String idCode;
 
     /**
      *是否通过国知局费减备案
      */
     private Boolean record;
 
-
-    /**
-     *备案有效期
-     */
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern  = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime recordValidDate;
 
     /**
      * 省code
@@ -87,6 +80,12 @@ public class CustomerApplicantDto {
      * 详细地址
      */
     private String areaDetail;
+
+    /**
+     * 邮编
+     */
+    private String zipCode;
+
     /**
      * 所属客户
      */
@@ -150,12 +149,12 @@ public class CustomerApplicantDto {
         this.type = type;
     }
 
-    public String getCode() {
-        return code;
+    public String getIdCode() {
+        return idCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setIdCode(String idCode) {
+        this.idCode = idCode;
     }
 
     public Boolean getRecord() {
@@ -164,14 +163,6 @@ public class CustomerApplicantDto {
 
     public void setRecord(Boolean record) {
         this.record = record;
-    }
-
-    public LocalDateTime getRecordValidDate() {
-        return recordValidDate;
-    }
-
-    public void setRecordValidDate(LocalDateTime recordValidDate) {
-        this.recordValidDate = recordValidDate;
     }
 
     public UUID getCustomerId() {
@@ -244,5 +235,13 @@ public class CustomerApplicantDto {
 
     public void setUserCode(String userCode) {
         this.userCode = userCode;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 }

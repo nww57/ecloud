@@ -13,6 +13,7 @@ import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.OrderType;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
+import com.sunesoft.ecloud.common.utils.StringUtil;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
 import org.apache.commons.lang.StringUtils;
@@ -42,6 +43,27 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
                 .where("c.agId", agId);
         if (StringUtils.isNotEmpty(keywords)) {
             dtoBuilder.and(" (c.name like '%" + keywords + "%' or c.leader like '%" + keywords + "%' or c.leaderMobile like '%" + keywords + "%' )");
+        }
+        if(StringUtils.isNotEmpty(criteria.getCustomerName())){
+            dtoBuilder.and(" c.name like '%"+criteria.getCustomerName()+"%' ");
+        }
+        if(StringUtils.isNotEmpty(criteria.getLeader())){
+            dtoBuilder.and(" c.leader like '%"+criteria.getLeader()+"%' ");
+        }
+        if(StringUtils.isNotEmpty(criteria.getLeaderMobile())){
+            dtoBuilder.and(" c.leaderMobile like '%"+criteria.getLeaderMobile()+"%' ");
+        }
+        if(StringUtils.isNotEmpty(criteria.getLeaderEmail())){
+            dtoBuilder.and(" c.leaderEmail like '%"+criteria.getLeaderEmail()+"%' ");
+        }
+        if(StringUtils.isNotEmpty(criteria.getConsultantName())){
+            dtoBuilder.and(" u.realName like '%"+criteria.getCustomerName()+"%' ");
+        }
+        if(StringUtils.isNotEmpty(criteria.getSignDateStart())){
+            dtoBuilder.and(" c.signDate >= '"+criteria.getSignDateStart()+"' ");
+        }
+        if(StringUtils.isNotEmpty(criteria.getSignDateEnd())){
+            dtoBuilder.and(" c.signDate <= '"+criteria.getSignDateEnd()+"' ");
         }
         dtoBuilder.pagging(criteria.getPageIndex(), criteria.getPageSize())
                 .orderBy("c.create_datetime",OrderType.DESC)
@@ -74,13 +96,13 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
     }
 
     @Override
-    public ListResult<BasicDto> findCustomerApplicantList(UUID customerId) {
+    public ListResult<CustomerApplicantDto> findCustomerApplicantList(UUID customerId) {
         if(null == customerId){
             throw new IllegalArgumentException("参数customerId不能为null");
         }
-        SqlBuilder<BasicDto> dtoBuilder = HSqlBuilder.hFrom(CustomerApplicant.class, "a")
+        SqlBuilder<CustomerApplicantDto> dtoBuilder = HSqlBuilder.hFrom(CustomerApplicant.class, "a")
                 .where("a.customerId", customerId)
-                .select(BasicDto.class);
+                .select(CustomerApplicantDto.class);
         return new ListResult<>(queryList(dtoBuilder));
     }
 
@@ -105,13 +127,13 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
     }
 
     @Override
-    public ListResult<BasicDto> findCustomerInventorList(UUID customerId) {
+    public ListResult<CustomerInventorDto> findCustomerInventorList(UUID customerId) {
         if(null == customerId){
             throw new IllegalArgumentException("参数customerId不能为null");
         }
-        SqlBuilder<BasicDto> dtoBuilder = HSqlBuilder.hFrom(CustomerInventor.class, "i")
+        SqlBuilder<CustomerInventorDto> dtoBuilder = HSqlBuilder.hFrom(CustomerInventor.class, "i")
                 .where("i.customerId", customerId)
-                .select(BasicDto.class);
+                .select(CustomerInventorDto.class);
         return new ListResult<>(queryList(dtoBuilder));
     }
 
@@ -153,7 +175,7 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
         }
         SqlBuilder<CustomerContactDto> dtoBuilder = HSqlBuilder.hFrom(CustomerContact.class, "c")
                 .where("id", id)
-                .select(CustomerInventorDto.class);
+                .select(CustomerContactDto.class);
         return new TResult<>(queryForObject(dtoBuilder));
     }
 
@@ -166,6 +188,7 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
                 .leftJoin(User.class,"u")
                 .on("u.id = ac.consultantId")
                 .where("agId", agId)
+                .orderBy("ac.create_datetime",OrderType.DESC)
                 .select(AgencyCustomerBasicDto.class)
                 .setFieldValue("leaderName","ac.leader")
                 .setFieldValue("consultantName","u.realName");
