@@ -1,7 +1,9 @@
 package com.sunesoft.ecloud.caze.service;
 
 import com.sunesoft.ecloud.caseclient.dto.*;
+import com.sunesoft.ecloud.caseclient.enums.UpDown;
 import com.sunesoft.ecloud.common.result.TResult;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.UUID;
@@ -57,6 +59,13 @@ public interface PatentService {
      */
     TResult addOrUpdatePatentApplicants(UUID patentId, List<PatApplicantDto> applicantList);
 
+    /**
+     * 上移/下移
+     * @param patentApplicantId 专利申请人id
+     * @param upDown 上，下
+     * @return 返回操作结果
+     */
+    TResult sortPatentApplicant(UUID patentId,UUID patentApplicantId, UpDown upDown);
 
     /**
      * 删除专利申请人
@@ -73,6 +82,15 @@ public interface PatentService {
      */
     TResult addOrUpdatePatentInventors(UUID patentId, List<PatInventorDto> inventorList);
 
+
+    /**
+     * 上移/下移
+     * @param patentInventorId 专利发明人id
+     * @param upDown 上，下
+     * @return 返回操作结果
+     */
+    TResult sortPatentInventor(UUID patentInventorId, UpDown upDown);
+
     /**
      * 删除专利发明人
      * @param patentInventorId 专利发明人id
@@ -87,6 +105,14 @@ public interface PatentService {
      * @return 返回操作结果
      */
     TResult addOrUpdatePatentAgents(UUID patentId, List<PatAgentDto> agentList);
+
+    /**
+     * 上移/下移
+     * @param patentAgentId 专利发明人id
+     * @param upDown 上，下
+     * @return 返回操作结果
+     */
+    TResult sortPatentAgent(UUID patentAgentId, UpDown upDown);
 
     /**
      * 删除专利代理人
@@ -109,4 +135,6 @@ public interface PatentService {
      * @return 返回操作结果
      */
     TResult allotEngineer(AllotEngineerDto dto);
+
+
 }

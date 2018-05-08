@@ -2,6 +2,7 @@ package com.sunesoft.ecloud.caze.service.impl;
 
 import com.sunesoft.ecloud.caseclient.dto.*;
 import com.sunesoft.ecloud.caseclient.enums.PatentNode;
+import com.sunesoft.ecloud.caseclient.enums.UpDown;
 import com.sunesoft.ecloud.caze.domain.*;
 import com.sunesoft.ecloud.caze.repository.*;
 import com.sunesoft.ecloud.caze.service.PatentService;
@@ -215,6 +216,15 @@ public class PatentServiceImpl implements PatentService {
     }
 
     @Override
+    public TResult sortPatentApplicant(UUID patentId,UUID patentApplicantId, UpDown upDown) {
+        if(null == patentApplicantId){
+            throw new IllegalArgumentException("参数patentApplicantId不能为null");
+        }
+        List<PatApplicant> applicantList = applicantRepository.findByPatentInfo_Id(patentId);
+        return null;
+    }
+
+    @Override
     public TResult deletePatentApplicant(UUID patentApplicantId) {
         if(null == patentApplicantId){
             throw new IllegalArgumentException("参数patentApplicantId不能为null");
@@ -249,6 +259,11 @@ public class PatentServiceImpl implements PatentService {
     }
 
     @Override
+    public TResult sortPatentInventor(UUID patentInventorId, UpDown upDown) {
+        return null;
+    }
+
+    @Override
     public TResult deletePatentInventor(UUID patentInventorId) {
         if(null == patentInventorId){
             throw new IllegalArgumentException("参数patentInventorId不能为null");
@@ -280,6 +295,11 @@ public class PatentServiceImpl implements PatentService {
         }
         agentRepository.save(list);
         return ResultFactory.success();
+    }
+
+    @Override
+    public TResult sortPatentAgent(UUID patentAgentId, UpDown upDown) {
+        return null;
     }
 
     @Override
@@ -335,4 +355,6 @@ public class PatentServiceImpl implements PatentService {
         patentInfoRepository.deleteBatch(ids);
         return ResultFactory.success();
     }
+
+
 }
