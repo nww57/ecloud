@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.caze.domain;
 
+import com.sunesoft.ecloud.adminclient.TechnologyEnum;
 import com.sunesoft.ecloud.caseclient.enums.PatentNode;
 import com.sunesoft.ecloud.caseclient.enums.PatentType;
 import com.sunesoft.ecloud.hibernate.BizEntity;
@@ -64,6 +65,12 @@ public class PatentInfo extends BizEntity{
     @Column(name = "patentNode")
     @Enumerated(EnumType.STRING)
     private PatentNode patentNode;
+
+    /**
+     * 节点截止日
+     */
+    @Column(name = "nodeExpiryDate")
+    private LocalDate nodeExpiryDate;
 
     /**
      *专利类型
@@ -207,11 +214,6 @@ public class PatentInfo extends BizEntity{
     @Type(type = "uuid-char")
     private UUID engineerId;
 
-    /**
-     *撰写截止日
-     */
-    @Column(name = "writeExpiryDate")
-    private LocalDate writeExpiryDate;
 
     /**
      *打包人
@@ -437,14 +439,6 @@ public class PatentInfo extends BizEntity{
         this.engineerId = engineerId;
     }
 
-    public LocalDate getWriteExpiryDate() {
-        return writeExpiryDate;
-    }
-
-    public void setWriteExpiryDate(LocalDate writeExpiryDate) {
-        this.writeExpiryDate = writeExpiryDate;
-    }
-
     public UUID getPackagerId() {
         return packagerId;
     }
@@ -461,5 +455,11 @@ public class PatentInfo extends BizEntity{
         this.payerId = payerId;
     }
 
+    public LocalDate getNodeExpiryDate() {
+        return nodeExpiryDate;
+    }
 
+    public void setNodeExpiryDate(LocalDate nodeExpiryDate) {
+        this.nodeExpiryDate = nodeExpiryDate;
+    }
 }

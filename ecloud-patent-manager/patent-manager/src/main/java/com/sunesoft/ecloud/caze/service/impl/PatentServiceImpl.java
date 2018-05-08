@@ -413,8 +413,8 @@ public class PatentServiceImpl implements PatentService {
         }
         PatentInfo patentInfo = patentInfoRepository.findOne(dto.getPatentId());
         patentInfo.setEngineerId(dto.getEngineerId());
-        patentInfo.setWriteExpiryDate(dto.getWriteExpiryDate());
         patentInfo.setPatentNode(PatentNode.WRITING);
+        patentInfo.setNodeExpiryDate(dto.getWriteExpiryDate());
         return ResultFactory.success();
     }
 
