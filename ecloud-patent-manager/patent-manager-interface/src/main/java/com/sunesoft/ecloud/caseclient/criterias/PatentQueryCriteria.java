@@ -16,6 +16,11 @@ public class PatentQueryCriteria extends TCretiria {
     private UUID agId;
 
     /**
+     * 用户id（为了获取查询配置）
+     */
+    private UUID userId;
+
+    /**
      *申请号
      */
     private String applicationNo;
@@ -33,12 +38,12 @@ public class PatentQueryCriteria extends TCretiria {
     /**
      *最近期限日期
      */
-    private String recentDueTimeStart;
+    private String nodeExpiryDateStart;
 
     /**
      *最近期限日期
      */
-    private String recentDueTimeEnd;
+    private String nodeExpiryDateEnd;
 
     /**
      *专利类型
@@ -105,6 +110,14 @@ public class PatentQueryCriteria extends TCretiria {
      */
     private Boolean isDelayed;
 
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
+    }
+
     public UUID getAgId() {
         return agId;
     }
@@ -137,20 +150,20 @@ public class PatentQueryCriteria extends TCretiria {
         this.patentName = patentName;
     }
 
-    public String getRecentDueTimeStart() {
-        return recentDueTimeStart;
+    public String getNodeExpiryDateStart() {
+        return nodeExpiryDateStart;
     }
 
-    public void setRecentDueTimeStart(String recentDueTimeStart) {
-        this.recentDueTimeStart = recentDueTimeStart;
+    public void setNodeExpiryDateStart(String nodeExpiryDateStart) {
+        this.nodeExpiryDateStart = nodeExpiryDateStart;
     }
 
-    public String getRecentDueTimeEnd() {
-        return recentDueTimeEnd;
+    public String getNodeExpiryDateEnd() {
+        return nodeExpiryDateEnd;
     }
 
-    public void setRecentDueTimeEnd(String recentDueTimeEnd) {
-        this.recentDueTimeEnd = recentDueTimeEnd;
+    public void setNodeExpiryDateEnd(String nodeExpiryDateEnd) {
+        this.nodeExpiryDateEnd = nodeExpiryDateEnd;
     }
 
     public PatentType getPatentType() {
