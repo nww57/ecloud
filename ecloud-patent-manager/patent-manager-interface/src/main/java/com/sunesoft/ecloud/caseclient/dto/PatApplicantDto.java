@@ -99,6 +99,21 @@ public class PatApplicantDto {
      */
     private String userCode;
 
+    /**
+     * 用于区分第一、第二代申请人
+     * 1 第一申请人
+     * 2 第二申请人
+     * 3 第三申请人
+     */
+    private int sort;
+
+    public int getSort() {
+        return sort;
+    }
+
+    public void setSort(int sort) {
+        this.sort = sort;
+    }
 
     public UUID getId() {
         return id;

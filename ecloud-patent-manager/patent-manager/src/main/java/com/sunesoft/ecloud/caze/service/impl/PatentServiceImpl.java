@@ -292,6 +292,24 @@ public class PatentServiceImpl implements PatentService {
     }
 
     @Override
+    public TResult addOrUpdatePriorityClaims(PatPriorityClaimsDto dto) {
+        if(null == dto.getPatentId()){
+            throw new IllegalArgumentException("专利id不能为null");
+        }
+        PatentInfo info = patentInfoRepository.findOne(dto.getPatentId());
+        UUID id = dto.getId();
+        PatPriorityClaims claims ;
+        if(null == id){
+            claims = new PatPriorityClaims(info);
+        }else{
+            claims = priorityClaimsRepository.findOne(id);
+        }
+        BeanUtil.copyPropertiesIgnoreNull(dto,claims);
+        priorityClaimsRepository.saveAndFlush(claims);
+        return ResultFactory.success();
+    }
+
+    @Override
     public TResult allotEngineer(AllotEngineerDto dto) {
         if(null == dto.getPatentId()){
             throw new IllegalArgumentException("专利id不能为null");

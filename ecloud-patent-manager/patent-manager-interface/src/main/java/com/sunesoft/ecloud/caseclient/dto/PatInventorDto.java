@@ -44,6 +44,21 @@ public class PatInventorDto {
      */
     private String cellphone;
 
+    /**
+     * 用于区分第一、第二发明人
+     * 1 第一发明人
+     * 2 第二发明人
+     */
+    private int sort;
+
+    public int getSort() {
+        return sort;
+    }
+
+    public void setSort(int sort) {
+        this.sort = sort;
+    }
+
     public UUID getId() {
         return id;
     }

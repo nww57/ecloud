@@ -122,6 +122,12 @@ public class PatApplicant extends IEntity {
     @Column(name = "userCode")
     private String userCode;
 
+    /**
+     * 用于区分第一、第二。。。申请人
+     */
+    @Column(name = "sort")
+    private int sort;
+
     public PatApplicant(PatentInfo patentInfo) {
         this.patentInfo = patentInfo;
     }
@@ -260,5 +266,13 @@ public class PatApplicant extends IEntity {
 
     public void setUserCode(String userCode) {
         this.userCode = userCode;
+    }
+
+    public int getSort() {
+        return sort;
+    }
+
+    public void setSort(int sort) {
+        this.sort = sort;
     }
 }

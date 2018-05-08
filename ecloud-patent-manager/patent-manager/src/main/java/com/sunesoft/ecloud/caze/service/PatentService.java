@@ -95,6 +95,13 @@ public interface PatentService {
      */
     TResult deletePatentAgent(UUID patentAgentId);
 
+    /**
+     * 新增/修改 优先权项信息
+     * @param dto 参数
+     * @return 返回操作结果
+     */
+    TResult addOrUpdatePriorityClaims(PatPriorityClaimsDto dto);
+
 
     /**
      * 分配撰写工程师

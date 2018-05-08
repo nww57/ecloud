@@ -37,6 +37,12 @@ public class PatAgent extends IEntity{
     @Column(name = "cellphone")
     private String cellphone;
 
+    /**
+     * 用于区分第一、第二代理人
+     */
+    @Column(name = "sort")
+    private int sort;
+
     public PatAgent(PatentInfo patentInfo) {
         this.patentInfo = patentInfo;
     }
@@ -73,5 +79,11 @@ public class PatAgent extends IEntity{
         this.patentInfo = patentInfo;
     }
 
+    public int getSort() {
+        return sort;
+    }
 
+    public void setSort(int sort) {
+        this.sort = sort;
+    }
 }

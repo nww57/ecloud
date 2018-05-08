@@ -28,6 +28,21 @@ public class PatAgentDto {
      */
     private String cellphone;
 
+    /**
+     * 用于区分第一、第二代理人
+     * 1 第一代理人
+     * 2 第二代理人
+     */
+    private int sort;
+
+    public int getSort() {
+        return sort;
+    }
+
+    public void setSort(int sort) {
+        this.sort = sort;
+    }
+
     public UUID getId() {
         return id;
     }

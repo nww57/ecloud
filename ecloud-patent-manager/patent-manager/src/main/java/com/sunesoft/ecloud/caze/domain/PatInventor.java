@@ -56,6 +56,12 @@ public class PatInventor extends IEntity {
     @Column(name = "cellphone")
     private String cellphone;
 
+    /**
+     * 用于区分第一、第二发明人
+     */
+    @Column(name = "sort")
+    private int sort;
+
     public PatInventor(PatentInfo patentInfo) {
         this.patentInfo = patentInfo;
     }
@@ -114,5 +120,13 @@ public class PatInventor extends IEntity {
 
     public void setCellphone(String cellphone) {
         this.cellphone = cellphone;
+    }
+
+    public int getSort() {
+        return sort;
+    }
+
+    public void setSort(int sort) {
+        this.sort = sort;
     }
 }
