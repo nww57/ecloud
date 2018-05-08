@@ -1,9 +1,12 @@
 package com.sunesoft.ecloud.caze.query.impl;
 
+import com.sunesoft.ecloud.caseclient.criterias.PatentQueryCriteria;
 import com.sunesoft.ecloud.caseclient.dto.PatentBasicDto;
+import com.sunesoft.ecloud.caseclient.dto.PatentListDto;
 import com.sunesoft.ecloud.caseclient.enums.PatentNode;
 import com.sunesoft.ecloud.caze.query.PatentQueryService;
 import com.sunesoft.ecloud.common.result.ListResult;
+import com.sunesoft.ecloud.common.result.PagedResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +41,11 @@ public class PatentQueryServiceImplTest {
 
     @Test
     public void queryPatentPaged() throws Exception {
+        PatentQueryCriteria criteria = new PatentQueryCriteria();
+        criteria.setPageIndex(0);
+        criteria.setAgId(AGID);
+        PagedResult<PatentListDto> result = queryService.queryPatentPaged(criteria);
+        System.out.println(23);
     }
 
     @Test
