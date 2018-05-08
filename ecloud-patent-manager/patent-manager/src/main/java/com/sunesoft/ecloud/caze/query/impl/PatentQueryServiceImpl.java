@@ -8,6 +8,7 @@ import com.sunesoft.ecloud.caze.query.PatentQueryService;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
+import com.sunesoft.ecloud.common.sqlBuilderTool.OrderType;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
@@ -222,7 +223,8 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
         }
         SqlBuilder<PatApplicantDto> applicantSqlBuilder = HSqlBuilder.hFrom(PatApplicant.class, "a")
                 .where("a.patentId",patentId)
-                .select(PatApplicantDto.class);
+                .select(PatApplicantDto.class)
+                .orderBy("a.sort", OrderType.ASC);
         List<PatApplicantDto> applicants = queryList(applicantSqlBuilder);
         return new ListResult<>(applicants);
     }
@@ -234,7 +236,8 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
         }
         SqlBuilder<PatInventorDto> inventorSqlBuilder = HSqlBuilder.hFrom(PatInventor.class, "a")
                 .where("a.patentId",patentId)
-                .select(PatInventorDto.class);
+                .select(PatInventorDto.class)
+                .orderBy("a.sort", OrderType.ASC);
         List<PatInventorDto> inventors = queryList(inventorSqlBuilder);
         return new ListResult<>(inventors);
     }
@@ -246,7 +249,8 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
         }
         SqlBuilder<PatAgentDto> agentBuilder = HSqlBuilder.hFrom(PatAgent.class, "a")
                 .where("a.patentId",patentId)
-                .select(PatAgentDto.class);
+                .select(PatAgentDto.class)
+                .orderBy("a.sort", OrderType.ASC);
         List<PatAgentDto> agents = queryList(agentBuilder);
         return new ListResult<>(agents);
     }
