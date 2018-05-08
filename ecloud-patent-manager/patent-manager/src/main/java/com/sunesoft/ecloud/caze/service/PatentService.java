@@ -57,6 +57,14 @@ public interface PatentService {
      */
     TResult addOrUpdatePatentApplicants(UUID patentId, List<PatApplicantDto> applicantList);
 
+
+    /**
+     * 删除专利申请人
+     * @param patentApplicantId 专利申请人信息id
+     * @return 返回操作结果
+     */
+    TResult deletePatentApplicant(UUID patentApplicantId);
+
     /**
      * 添加/修改 专利发明人信息
      * @param patentId 专利id
@@ -66,12 +74,26 @@ public interface PatentService {
     TResult addOrUpdatePatentInventors(UUID patentId, List<PatInventorDto> inventorList);
 
     /**
+     * 删除专利发明人
+     * @param patentInventorId 专利发明人id
+     * @return 返回操作结果
+     */
+    TResult deletePatentInventor(UUID patentInventorId);
+
+    /**
      * 添加/修改 专利代理人信息
      * @param patentId 专利id
      * @param agentList 代理人信息
      * @return 返回操作结果
      */
     TResult addOrUpdatePatentAgents(UUID patentId, List<PatAgentDto> agentList);
+
+    /**
+     * 删除专利代理人
+     * @param patentAgentId 专利代理人id
+     * @return 返回操作结果
+     */
+    TResult deletePatentAgent(UUID patentAgentId);
 
 
     /**

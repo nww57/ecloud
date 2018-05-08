@@ -215,6 +215,15 @@ public class PatentServiceImpl implements PatentService {
     }
 
     @Override
+    public TResult deletePatentApplicant(UUID patentApplicantId) {
+        if(null == patentApplicantId){
+            throw new IllegalArgumentException("参数patentApplicantId不能为null");
+        }
+        applicantRepository.delete(patentApplicantId);
+        return ResultFactory.success();
+    }
+
+    @Override
     public TResult addOrUpdatePatentInventors(UUID patentId, List<PatInventorDto> inventorList) {
         if(null == patentId ){
             throw new IllegalArgumentException("参数错误，patentId不能为null");
@@ -236,6 +245,15 @@ public class PatentServiceImpl implements PatentService {
             inventors.add(inventor);
         }
         inventorRepository.save(inventors);
+        return ResultFactory.success();
+    }
+
+    @Override
+    public TResult deletePatentInventor(UUID patentInventorId) {
+        if(null == patentInventorId){
+            throw new IllegalArgumentException("参数patentInventorId不能为null");
+        }
+        inventorRepository.delete(patentInventorId);
         return ResultFactory.success();
     }
 
@@ -265,6 +283,15 @@ public class PatentServiceImpl implements PatentService {
     }
 
     @Override
+    public TResult deletePatentAgent(UUID patentAgentId) {
+        if(null == patentAgentId){
+            throw new IllegalArgumentException("参数patentAgentId不能为null");
+        }
+        agentRepository.delete(patentAgentId);
+        return ResultFactory.success();
+    }
+
+    @Override
     public TResult allotEngineer(AllotEngineerDto dto) {
         if(null == dto.getPatentId()){
             throw new IllegalArgumentException("专利id不能为null");
@@ -275,6 +302,7 @@ public class PatentServiceImpl implements PatentService {
         PatentInfo patentInfo = patentInfoRepository.findOne(dto.getPatentId());
         patentInfo.setEngineerId(dto.getEngineerId());
         patentInfo.setWriteExpiryDate(dto.getWriteExpiryDate());
+        patentInfo.setPatentNode(PatentNode.WRITING);
         return ResultFactory.success();
     }
 

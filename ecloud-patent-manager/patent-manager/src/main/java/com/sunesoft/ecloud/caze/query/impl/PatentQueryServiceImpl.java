@@ -27,7 +27,7 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
 
     @Override
     public TResult<Map<PatentNode, Integer>> getPatentNodeCount(UUID agId) {
-        String sql  = "select patentNode,count(*) count  from pat_contract_patent_info p where p.agId = '"+agId+"' GROUP BY p.patentNode";
+        String sql  = "select patentNode,count(*) count  from pat_contract_patent_info p where p.is_active = 1 and p.agId = '"+agId+"' GROUP BY p.patentNode";
         List<PatentNodeCountDto> nodeCount =  queryList(sql,null,PatentNodeCountDto.class);
         List<PatentNode> nodeList = Stream.of(PatentNode.values()).sorted(Comparator.comparing(PatentNode::getNode)).collect(Collectors.toList());
         EnumMap<PatentNode, Integer> re = new EnumMap(PatentNode.class);
@@ -162,7 +162,7 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
                 " LEFT JOIN sys_user u on u.id = p.engineerLeaderId " +
                 " LEFT JOIN sys_ag_customer c on c.id = p.customerId " +
                 " LEFT JOIN pat_customer_damand d on d.patentId = p.id ");
-        sb.append(" where p.id id= '"+id+"'");
+        sb.append(" where p.is_active and p.id = '"+id+"'");
         PatentDetailDto detailDto = queryForObject(sb.toString(),null,PatentDetailDto.class);
         //获取申请人信息
         detailDto.setApplicantList(getPatentApplicants(id).getResult());
