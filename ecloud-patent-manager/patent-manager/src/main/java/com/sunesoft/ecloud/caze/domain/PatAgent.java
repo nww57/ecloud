@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.caze.domain;
 
+import com.sunesoft.ecloud.adminclient.TechnologyEnum;
 import com.sunesoft.ecloud.hibernate.IEntity;
 import org.hibernate.annotations.Type;
 
@@ -51,6 +52,13 @@ public class PatAgent extends IEntity{
      */
     @Column(name = "sort")
     private int sort;
+
+    /**
+     * 技术领域
+     */
+    @Column(name = "techDomain")
+    @Enumerated(EnumType.STRING)
+    private TechnologyEnum techDomain;
 
     public PatAgent() {
     }
@@ -105,5 +113,13 @@ public class PatAgent extends IEntity{
 
     public void setAgencyAgentId(UUID agencyAgentId) {
         this.agencyAgentId = agencyAgentId;
+    }
+
+    public TechnologyEnum getTechDomain() {
+        return techDomain;
+    }
+
+    public void setTechDomain(TechnologyEnum techDomain) {
+        this.techDomain = techDomain;
     }
 }

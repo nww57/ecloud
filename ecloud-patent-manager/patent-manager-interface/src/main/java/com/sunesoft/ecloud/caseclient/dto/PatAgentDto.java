@@ -1,5 +1,7 @@
 package com.sunesoft.ecloud.caseclient.dto;
 
+import com.sunesoft.ecloud.adminclient.TechnologyEnum;
+
 import java.util.UUID;
 
 /**
@@ -27,6 +29,11 @@ public class PatAgentDto {
      *联系方式
      */
     private String cellphone;
+
+    /**
+     * 技术领域
+     */
+    private TechnologyEnum techDomain;
 
     /**
      * 用于区分第一、第二代理人
@@ -94,5 +101,13 @@ public class PatAgentDto {
 
     public void setAgencyAgentId(UUID agencyAgentId) {
         this.agencyAgentId = agencyAgentId;
+    }
+
+    public TechnologyEnum getTechDomain() {
+        return techDomain;
+    }
+
+    public void setTechDomain(TechnologyEnum techDomain) {
+        this.techDomain = techDomain;
     }
 }
