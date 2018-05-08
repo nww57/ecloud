@@ -1,11 +1,11 @@
-package com.sunesoft.ecloud.caseclient.enums;
+package com.sunesoft.ecloud.adminclient;
 
 /**
  * 技术领域枚举类
  * @Auther: niww
  * @Date: 2018/4/28/028
  */
-public enum  TechnologyEnum {
+public enum TechnologyEnum {
     /**
      * 电子领域。
      */

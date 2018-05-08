@@ -1,6 +1,6 @@
 package com.sunesoft.ecloud.caseclient.dto;
 
-import com.sunesoft.ecloud.caseclient.enums.TechnologyEnum;
+import com.sunesoft.ecloud.adminclient.TechnologyEnum;
 
 import java.util.List;
 import java.util.UUID;

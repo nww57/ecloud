@@ -2,7 +2,6 @@ package com.sunesoft.ecloud.caze.domain;
 
 import com.sunesoft.ecloud.caseclient.enums.PatentNode;
 import com.sunesoft.ecloud.caseclient.enums.PatentType;
-import com.sunesoft.ecloud.caseclient.enums.TechnologyEnum;
 import com.sunesoft.ecloud.hibernate.BizEntity;
 import org.hibernate.annotations.Type;
 

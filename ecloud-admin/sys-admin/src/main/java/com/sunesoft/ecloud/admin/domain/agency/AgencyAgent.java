@@ -1,13 +1,9 @@
 package com.sunesoft.ecloud.admin.domain.agency;
 
+import com.sunesoft.ecloud.adminclient.TechnologyEnum;
 import com.sunesoft.ecloud.hibernate.BizEntity;
-import com.sunesoft.ecloud.hibernate.IEntity;
-import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.util.UUID;
+import javax.persistence.*;
 
 /**
  * Created by jzj on 2018/4/11.
@@ -35,6 +31,13 @@ public class AgencyAgent extends BizEntity{
     @Column(name = "cellphone")
     private String cellphone;
 
+    /**
+     * 技术领域
+     */
+    @Column(name = "techDomain")
+    @Enumerated(EnumType.STRING)
+    private TechnologyEnum techDomain;
+
     public String getName() {
         return name;
     }
@@ -57,5 +60,13 @@ public class AgencyAgent extends BizEntity{
 
     public void setCellphone(String cellphone) {
         this.cellphone = cellphone;
+    }
+
+    public TechnologyEnum getTechDomain() {
+        return techDomain;
+    }
+
+    public void setTechDomain(TechnologyEnum techDomain) {
+        this.techDomain = techDomain;
     }
 }
