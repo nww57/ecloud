@@ -59,6 +59,16 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
         if(null == criteria.getAgId()){
             throw new IllegalArgumentException("企业id不能为null");
         }
+        UUID userId = criteria.getUserId();
+        int expiredDay = 0;
+        boolean isRedTop = false;
+        String sql = "select config.expiredDay ,config.isRedTop from pat_patent_query_config config where config.userId = '"+userId+"'";
+        PatentQueryConfigDto config = queryForObject(sql,null,PatentQueryConfigDto.class);
+        if(null != config){
+            expiredDay = config.getExpiredDay();
+            isRedTop = config.getIsRedTop();
+        }
+        //获取查询配置
         StringBuilder sb =  new StringBuilder("");
         sb.append("select  " +
                 " p.id, " +
@@ -77,11 +87,12 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
                 " p.applicants, " +
                 " p.agencyAgents agents, " +
                 " p.inventors, " +
-                " p.create_datetime , " +
+                " p.create_datetime createDate, " +
                 " pci.contractName, " +
                 " pci.contractNo, " +
                 " sc.name customerName, " +
-                " if(CURDATE() > p.nodeExpiryDate,1,0) isDelayed " +
+                " if(CURDATE() > p.nodeExpiryDate,1,0) isDelayed, " +
+                " if(DATE_ADD(CURDATE(),INTERVAL "+expiredDay+" DAY) > p.nodeExpiryDate,1,0) isRemind " +
                 " from pat_contract_patent_info p " +
                 " left JOIN pat_contract_info pci on pci.id = p.contractId " +
                 " LEFT JOIN sys_ag_customer sc on sc.id = p.customerId where p.is_active = 1 and p.agId = '"+criteria.getAgId()+"' ");
@@ -160,7 +171,11 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
                 sb.append(" and if(CURDATE() > p.nodeExpiryDate,1,0) = 0");
             }
         }
-        sb.append(" order by p.create_datetime desc");
+        if(isRedTop){
+            sb.append(" order by isRemind desc, createDate desc");
+        }else{
+            sb.append(" order by p.create_datetime desc");
+        }
         return queryPaged(criteria.getPageIndex(),criteria.getPageSize(),sb.toString(),param,PatentListDto.class);
     }
 
