@@ -11,14 +11,14 @@ import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Predicate;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Auther: niww
@@ -216,12 +216,33 @@ public class PatentServiceImpl implements PatentService {
     }
 
     @Override
-    public TResult sortPatentApplicant(UUID patentId,UUID patentApplicantId, UpDown upDown) {
+    public TResult sortPatentApplicant(UUID patentApplicantId, UpDown upDown) {
         if(null == patentApplicantId){
             throw new IllegalArgumentException("参数patentApplicantId不能为null");
         }
-        List<PatApplicant> applicantList = applicantRepository.findByPatentInfo_Id(patentId);
-        return null;
+        PatApplicant applicant = applicantRepository.findOne(patentApplicantId);
+        if(Objects.equals(upDown,UpDown.UP)){
+            PatApplicant upApplicant = applicantRepository.getUp(applicant.getPatentInfo().getId().toString(),applicant.getSort());
+            if(null == upApplicant){
+                return new TResult("第一个无法再上移");
+            }
+            int sort = applicant.getSort();
+            applicant.setSort(upApplicant.getSort());
+            upApplicant.setSort(sort);
+            applicantRepository.save(applicant);
+            applicantRepository.save(upApplicant);
+        }else{
+            PatApplicant downApplicant = applicantRepository.getDown(applicant.getPatentInfo().getId().toString(),applicant.getSort());
+            if(null == downApplicant){
+                return new TResult("最后一个无法下移");
+            }
+            int sort = applicant.getSort();
+            applicant.setSort(downApplicant.getSort());
+            downApplicant.setSort(sort);
+            applicantRepository.save(applicant);
+            applicantRepository.save(downApplicant);
+        }
+        return ResultFactory.success();
     }
 
     @Override
@@ -260,7 +281,32 @@ public class PatentServiceImpl implements PatentService {
 
     @Override
     public TResult sortPatentInventor(UUID patentInventorId, UpDown upDown) {
-        return null;
+        if(null == patentInventorId){
+            throw new IllegalArgumentException("参数patentInventorId不能为null");
+        }
+        PatInventor inventor = inventorRepository.findOne(patentInventorId);
+        if(Objects.equals(upDown,UpDown.UP)){
+            PatInventor upInventor = inventorRepository.getUp(inventor.getPatentInfo().getId().toString(),inventor.getSort());
+            if(null == upInventor){
+                return new TResult("第一个无法再上移");
+            }
+            int sort = inventor.getSort();
+            inventor.setSort(upInventor.getSort());
+            upInventor.setSort(sort);
+            inventorRepository.save(inventor);
+            inventorRepository.save(upInventor);
+        }else{
+            PatInventor downInventor = inventorRepository.getDown(inventor.getPatentInfo().getId().toString(),inventor.getSort());
+            if(null == downInventor){
+                return new TResult("最后一个无法下移");
+            }
+            int sort = inventor.getSort();
+            inventor.setSort(downInventor.getSort());
+            downInventor.setSort(sort);
+            inventorRepository.save(inventor);
+            inventorRepository.save(downInventor);
+        }
+        return ResultFactory.success();
     }
 
     @Override
@@ -299,7 +345,32 @@ public class PatentServiceImpl implements PatentService {
 
     @Override
     public TResult sortPatentAgent(UUID patentAgentId, UpDown upDown) {
-        return null;
+        if(null == patentAgentId){
+            throw new IllegalArgumentException("参数patentAgentId不能为null");
+        }
+        PatAgent agent = agentRepository.findOne(patentAgentId);
+        if(Objects.equals(upDown,UpDown.UP)){
+            PatAgent upAgent = agentRepository.getUp(agent.getPatentInfo().getId().toString(),agent.getSort());
+            if(null == upAgent){
+                return new TResult("第一个无法再上移");
+            }
+            int sort = agent.getSort();
+            agent.setSort(upAgent.getSort());
+            upAgent.setSort(sort);
+            agentRepository.save(agent);
+            agentRepository.save(upAgent);
+        }else{
+            PatAgent downAgent = agentRepository.getDown(agent.getPatentInfo().getId().toString(),agent.getSort());
+            if(null == downAgent){
+                return new TResult("最后一个无法下移");
+            }
+            int sort = agent.getSort();
+            agent.setSort(downAgent.getSort());
+            downAgent.setSort(sort);
+            agentRepository.save(agent);
+            agentRepository.save(downAgent);
+        }
+        return ResultFactory.success();
     }
 
     @Override

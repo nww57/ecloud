@@ -128,6 +128,9 @@ public class PatApplicant extends IEntity {
     @Column(name = "sort")
     private int sort;
 
+    public PatApplicant() {
+    }
+
     public PatApplicant(PatentInfo patentInfo) {
         this.patentInfo = patentInfo;
     }

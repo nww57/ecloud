@@ -65,7 +65,7 @@ public interface PatentService {
      * @param upDown 上，下
      * @return 返回操作结果
      */
-    TResult sortPatentApplicant(UUID patentId,UUID patentApplicantId, UpDown upDown);
+    TResult sortPatentApplicant(UUID patentApplicantId, UpDown upDown);
 
     /**
      * 删除专利申请人

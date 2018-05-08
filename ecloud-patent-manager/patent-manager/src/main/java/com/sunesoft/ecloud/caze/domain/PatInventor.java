@@ -62,6 +62,9 @@ public class PatInventor extends IEntity {
     @Column(name = "sort")
     private int sort;
 
+    public PatInventor() {
+    }
+
     public PatInventor(PatentInfo patentInfo) {
         this.patentInfo = patentInfo;
     }

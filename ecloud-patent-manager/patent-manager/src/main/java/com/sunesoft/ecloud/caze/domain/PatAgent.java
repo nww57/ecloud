@@ -43,6 +43,9 @@ public class PatAgent extends IEntity{
     @Column(name = "sort")
     private int sort;
 
+    public PatAgent() {
+    }
+
     public PatAgent(PatentInfo patentInfo) {
         this.patentInfo = patentInfo;
     }
