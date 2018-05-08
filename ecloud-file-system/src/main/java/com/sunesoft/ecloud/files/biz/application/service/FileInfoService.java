@@ -18,12 +18,12 @@ public interface FileInfoService {
     //上传并添加索引
     TResult upload(FileInfoDto fileInfoDto);
 
-    /**
-     * 目录结构 :机构--> PathType --> baseRoot --> bizType --> docType
-     * @param fileInfoDto 文件信息
-     * @return 返回操作结果
-     */
-    TResult uploadByCaseNo(FileInfoDto fileInfoDto);
+//    /**
+//     * 目录结构 :机构--> PathType --> baseRoot --> bizType --> docType
+//     * @param fileInfoDto 文件信息
+//     * @return 返回操作结果
+//     */
+//    TResult uploadByCaseNo(FileInfoDto fileInfoDto);
 
     //删除索引
     TResult delete(UUID agId,UUID fileInfoId);
