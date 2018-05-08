@@ -88,15 +88,15 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
         Map<String,Object> param = new HashMap<>();
         if(StringUtils.isNotEmpty(criteria.getApplicationNo())){
             sb.append(" and p.applicationNo like :applicationNo");
-            param.put("applicationNo",criteria.getApplicationNo());
+            param.put("applicationNo","%"+criteria.getApplicationNo()+"%");
         }
         if(StringUtils.isNotEmpty(criteria.getCaseNo())){
             sb.append(" and p.caseNo like :caseNo");
-            param.put("caseNo",criteria.getCaseNo());
+            param.put("caseNo","%"+criteria.getCaseNo()+"%");
         }
         if(StringUtils.isNotEmpty(criteria.getPatentName())){
             sb.append(" and p.patentName like :patentName");
-            param.put("patentName",criteria.getPatentName());
+            param.put("patentName","%"+criteria.getPatentName()+"%");
         }
         //最近期限日期
         if(StringUtils.isNotEmpty(criteria.getNodeExpiryDateStart())){
@@ -117,23 +117,24 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
         }
         if(StringUtils.isNotEmpty(criteria.getContractNo())){
             sb.append(" and pci.contractNo like :contractNo");
-            param.put("contractNo",criteria.getContractNo());
+            param.put("contractNo","%"+criteria.getContractNo()+"%");
+
         }
         if(StringUtils.isNotEmpty(criteria.getCustomerName())){
             sb.append(" and sc.name like :customerName");
-            param.put("customerName",criteria.getCustomerName());
+            param.put("customerName","%"+criteria.getCustomerName()+"%");
         }
         if(StringUtils.isNotEmpty(criteria.getApplicants())){
             sb.append(" and p.applicants like :applicants");
-            param.put("applicants",criteria.getApplicants());
+            param.put("applicants","%"+criteria.getApplicants()+"%");
         }
         if(StringUtils.isNotEmpty(criteria.getInventors())){
             sb.append(" and p.inventors like :inventors");
-            param.put("inventors",criteria.getInventors());
+            param.put("inventors","%"+criteria.getInventors()+"%");
         }
         if(StringUtils.isNotEmpty(criteria.getAgents())){
             sb.append(" and p.agencyAgents like :agents");
-            param.put("agents",criteria.getAgents());
+            param.put("agents","%"+criteria.getAgents()+"%");
         }
         if(StringUtils.isNotEmpty(criteria.getApplicationDateStart())){
             sb.append(" and p.applicationDate >= :applicationDateStart");
