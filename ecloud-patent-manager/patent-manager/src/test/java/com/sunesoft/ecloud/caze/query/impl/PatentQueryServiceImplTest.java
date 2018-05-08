@@ -1,6 +1,9 @@
 package com.sunesoft.ecloud.caze.query.impl;
 
+import com.sunesoft.ecloud.caseclient.dto.PatentBasicDto;
+import com.sunesoft.ecloud.caseclient.enums.PatentNode;
 import com.sunesoft.ecloud.caze.query.PatentQueryService;
+import com.sunesoft.ecloud.common.result.ListResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,12 @@ public class PatentQueryServiceImplTest {
     @Test
     public void getPatentNodeCount() throws Exception {
         queryService.getPatentNodeCount(AGID);
+    }
+
+    @Test
+    public void getPatentBasicInfoByPatentNode() throws Exception {
+        ListResult<PatentBasicDto> list = queryService.getPatentBasicInfoByPatentNode(UUID.fromString("01d134d6-3eef-4b60-9979-c6392554da25"), PatentNode.TOBEIMPROVED);
+        System.out.println(34);
     }
 
     @Test
