@@ -106,11 +106,11 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
         }
         if(null != criteria.getPatentType()){
             sb.append(" and p.patentType = :patentType");
-            param.put("patentType",criteria.getPatentType());
+            param.put("patentType",criteria.getPatentType().toString());
         }
         if(null != criteria.getPatentNode()){
             sb.append(" and p.patentNode = :patentNode");
-            param.put("patentNode",criteria.getPatentNode());
+            param.put("patentNode",criteria.getPatentNode().toString());
         }
         if(StringUtils.isNotEmpty(criteria.getContractNo())){
             sb.append(" and pci.contractNo like :contractNo");

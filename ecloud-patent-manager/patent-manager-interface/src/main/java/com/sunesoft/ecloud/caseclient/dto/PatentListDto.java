@@ -35,7 +35,7 @@ public class PatentListDto {
     /**
      * 最近期限日期
      */
-    private LocalDate recentDueTime;
+    private LocalDate nodeExpiryDate;
 
     /**
      *专利类型
@@ -125,12 +125,12 @@ public class PatentListDto {
         this.patentName = patentName;
     }
 
-    public LocalDate getRecentDueTime() {
-        return recentDueTime;
+    public LocalDate getNodeExpiryDate() {
+        return nodeExpiryDate;
     }
 
-    public void setRecentDueTime(LocalDate recentDueTime) {
-        this.recentDueTime = recentDueTime;
+    public void setNodeExpiryDate(LocalDate nodeExpiryDate) {
+        this.nodeExpiryDate = nodeExpiryDate;
     }
 
     public PatentType getPatentType() {
