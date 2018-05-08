@@ -40,6 +40,8 @@ public class PatentDetailDto {
      */
     private String patentName;
 
+    private UUID engineerLeaderId;
+
     /**
      * 工程师组长
      */

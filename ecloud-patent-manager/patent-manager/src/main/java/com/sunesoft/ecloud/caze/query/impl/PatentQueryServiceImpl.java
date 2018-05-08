@@ -61,6 +61,7 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
         }
         StringBuilder sb =  new StringBuilder("");
         sb.append("select  " +
+                " p.id, " +
                 " p.agId, " +
                 " p.applicationNo, " +
                 " p.caseNo, " +
@@ -168,7 +169,9 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
                 " p.caseNo, " +
                 " p.techDomain, " +
                 " p.engineerLeaderId, " +
-                " u.realName, " +
+                " u.realName engineerLeaderName, " +
+                " p.engineerId, " +
+                " u2.realName engineerName, " +
                 " d.isAdvancePublicity, " +
                 " d.isFeeReduce, " +
                 " d.isRealTrial, " +
@@ -176,9 +179,10 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
                 " c.name customerName " +
                 " from pat_contract_patent_info p " +
                 " LEFT JOIN sys_user u on u.id = p.engineerLeaderId " +
+                " LEFT JOIN sys_user u2 on u2.id = p.engineerId " +
                 " LEFT JOIN sys_ag_customer c on c.id = p.customerId " +
                 " LEFT JOIN pat_customer_damand d on d.patentId = p.id ");
-        sb.append(" where p.is_active and p.id = '"+id+"'");
+        sb.append(" where p.is_active =1 and p.id = '"+id+"'");
         PatentDetailDto detailDto = queryForObject(sb.toString(),null,PatentDetailDto.class);
         //获取申请人信息
         detailDto.setApplicantList(getPatentApplicants(id).getResult());
