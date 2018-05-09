@@ -10,6 +10,7 @@ import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.sqlBuilderTool.OrderType;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
+import com.sunesoft.ecloud.common.utils.BeanUtil;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
 import org.apache.commons.lang.StringUtils;
@@ -180,7 +181,7 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
     }
 
     @Override
-    public TResult<PatentDetailDto> getPatentInfoById(UUID id) {
+    public TResult<PatentDetailBasicDto> getPatentDetailBasicInfo(UUID id) {
         if(null == id){
             throw new IllegalArgumentException("参数id不能为null");
         }
@@ -207,7 +208,18 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
                 " LEFT JOIN sys_ag_customer c on c.id = p.customerId " +
                 " LEFT JOIN pat_customer_damand d on d.patentId = p.id ");
         sb.append(" where p.is_active =1 and p.id = '"+id+"'");
-        PatentDetailDto detailDto = queryForObject(sb.toString(),null,PatentDetailDto.class);
+        PatentDetailBasicDto detailDto = queryForObject(sb.toString(),null,PatentDetailBasicDto.class);
+        return new TResult<>(detailDto);
+    }
+
+    @Override
+    public TResult<PatentDetailDto> getPatentInfoById(UUID id) {
+        if(null == id){
+            throw new IllegalArgumentException("参数id不能为null");
+        }
+        TResult<PatentDetailBasicDto> basicDto = getPatentDetailBasicInfo(id);
+        PatentDetailDto detailDto = new PatentDetailDto();
+        BeanUtil.copyPropertiesIgnoreNull(basicDto.getResult(),detailDto);
         //获取申请人信息
         detailDto.setApplicantList(getPatentApplicants(id).getResult());
         //获取发明人信息

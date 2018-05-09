@@ -144,4 +144,18 @@ public interface PatentService {
     TResult allotEngineer(AllotEngineerDto dto);
 
 
+    /**
+     * 添加专利著录项信息
+     * @param dto
+     * @return
+     */
+    TResult addPatentElement(PatentElementDto dto);
+
+
+    /**
+     * 添加专利官费信息
+     * @param dto
+     * @return
+     */
+    TResult addPatentOfficialFee(AddPatentOfficialFeeDto dto);
 }

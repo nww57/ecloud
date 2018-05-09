@@ -41,6 +41,12 @@ public interface PatentQueryService {
      */
     PagedResult<PatentListDto> queryPatentPaged(PatentQueryCriteria criteria);
 
+    /**
+     * 获取专利详情的基础信息
+     * @param id 专利id
+     * @return 返回查询结果
+     */
+    TResult<PatentDetailBasicDto> getPatentDetailBasicInfo(UUID id);
 
     /**
      * 获取专利详情

@@ -11,14 +11,14 @@ import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.Predicate;
 import java.time.LocalDate;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * @Auther: niww
@@ -436,6 +436,16 @@ public class PatentServiceImpl implements PatentService {
         patentInfo.setPatentNode(PatentNode.WRITING);
         patentInfo.setNodeExpiryDate(dto.getWriteExpiryDate());
         return ResultFactory.success();
+    }
+
+    @Override
+    public TResult addPatentElement(PatentElementDto dto) {
+        return null;
+    }
+
+    @Override
+    public TResult addPatentOfficialFee(AddPatentOfficialFeeDto dto) {
+        return null;
     }
 
     @Override
