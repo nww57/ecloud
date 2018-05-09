@@ -1,10 +1,7 @@
 package com.sunesoft.ecloud.caseclient.dto;
 
-import com.sunesoft.ecloud.adminclient.TechnologyEnum;
-import com.sunesoft.ecloud.caseclient.enums.PatentType;
-
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @Author: niww
@@ -16,24 +13,24 @@ public class PatentDetailDto extends PatentDetailBasicDto{
     /**
      * 申请人列表
      */
-    private List<PatApplicantDto> applicantList;
+    private List<PatApplicantDto> applicantList = new ArrayList<>();
 
     /**
      * 发明人列表
      */
-    private List<PatInventorDto> inventorList;
+    private List<PatInventorDto> inventorList = new ArrayList<>();
 
 
     /**
      * 代理人列表
      */
-    private List<PatAgentDto> agentList;
+    private List<PatAgentDto> agentList = new ArrayList<>();
 
 
     /**
      * 优先权项里诶包
      */
-    private List<PatPriorityClaimsDto> priorityClaimsList;
+    private List<PatPriorityClaimsDto> priorityClaimsList = new ArrayList<>();
 
     public List<PatApplicantDto> getApplicantList() {
         return applicantList;
