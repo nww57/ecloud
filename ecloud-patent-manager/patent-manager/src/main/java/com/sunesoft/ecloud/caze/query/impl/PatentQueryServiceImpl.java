@@ -44,6 +44,16 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
         return new TResult<>(re);
     }
 
+    @Override
+    public TResult<PatentQueryConfigDto> getUserPatentQueryConfig(UUID userId) {
+        if(null == userId){
+            throw new IllegalArgumentException("参数userId不能为null");
+        }
+        String sql = "select config.userId, config.expiredDay ,config.isRedTop from pat_patent_query_config config where config.userId = '"+userId+"'";
+        PatentQueryConfigDto config = queryForObject(sql,null,PatentQueryConfigDto.class);
+        return new TResult<>(config);
+    }
+
 
     @Override
     public ListResult<PatentBasicDto> getPatentBasicInfoByPatentNode(PatentNodeQueryCriteria criteria) {
@@ -65,11 +75,13 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
         UUID userId = criteria.getUserId();
         int expiredDay = 0;
         boolean isRedTop = false;
-        String sql = "select config.expiredDay ,config.isRedTop from pat_patent_query_config config where config.userId = '"+userId+"'";
-        PatentQueryConfigDto config = queryForObject(sql,null,PatentQueryConfigDto.class);
-        if(null != config){
-            expiredDay = config.getExpiredDay();
-            isRedTop = config.getIsRedTop();
+        TResult<PatentQueryConfigDto> configDto = getUserPatentQueryConfig(userId);
+        if(configDto.getIs_success()){
+            PatentQueryConfigDto config = configDto.getResult();
+            if(null != config){
+                expiredDay = config.getExpiredDay();
+                isRedTop = config.getIsRedTop();
+            }
         }
         //获取查询配置
         StringBuilder sb =  new StringBuilder("");

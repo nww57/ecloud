@@ -25,6 +25,13 @@ public interface PatentQueryService {
      */
     TResult<Map<PatentNode,Integer>> getPatentNodeCount(UUID agId);
 
+    /**
+     * 获取用户设置的查询条件
+     * @param userId 用户id
+     * @return 返回查询结果
+     */
+    TResult<PatentQueryConfigDto> getUserPatentQueryConfig(UUID userId);
+
 
     /**
      * 获取某一节点下的专利基础信息
