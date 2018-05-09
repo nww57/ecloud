@@ -9,6 +9,7 @@ import com.sunesoft.ecloud.caze.service.PatentService;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
+import com.sunesoft.ecloud.common.utils.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -133,7 +134,15 @@ public class PatentServiceImpl implements PatentService {
         if (null != dto.getEngineerLeaderId()) {
             info.setEngineerLeaderId(dto.getEngineerLeaderId());
         }
-
+        if (StringUtils.isNotEmpty(dto.getPatentProductPurpose())) {
+            info.setPatentProductPurpose(dto.getPatentProductPurpose());
+        }
+        if (StringUtils.isNotEmpty(dto.getDesignMainPoints())) {
+            info.setDesignMainPoints(dto.getDesignMainPoints());
+        }
+        if (StringUtils.isNotEmpty(dto.getDesignMainPointsPicture())) {
+            info.setDesignMainPointsPicture(dto.getDesignMainPointsPicture());
+        }
         //如果勾选了优先权项，保存优先权项
         if (dto.getIsReqPriority()) {
             //设置优先权项
