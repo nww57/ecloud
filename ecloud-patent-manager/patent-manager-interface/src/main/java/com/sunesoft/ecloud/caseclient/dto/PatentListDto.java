@@ -93,6 +93,11 @@ public class PatentListDto {
      */
     private LocalDate createDate;
 
+    /**
+     * 是否要红色提醒
+     */
+    private boolean isRemind;
+
     public UUID getId() {
         return id;
     }
@@ -219,5 +224,13 @@ public class PatentListDto {
 
     public void setCreateDate(LocalDate createDate) {
         this.createDate = createDate;
+    }
+
+    public boolean getIsRemind() {
+        return isRemind;
+    }
+
+    public void setIsRemind(boolean remind) {
+        isRemind = remind;
     }
 }
