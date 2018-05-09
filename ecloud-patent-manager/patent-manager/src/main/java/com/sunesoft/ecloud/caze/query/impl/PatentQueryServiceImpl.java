@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.caze.query.impl;
 
+import com.sunesoft.ecloud.caseclient.criterias.PatentNodeQueryCriteria;
 import com.sunesoft.ecloud.caseclient.criterias.PatentQueryCriteria;
 import com.sunesoft.ecloud.caseclient.dto.*;
 import com.sunesoft.ecloud.caseclient.enums.PatentNode;
@@ -43,14 +44,15 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
         return new TResult<>(re);
     }
 
+
     @Override
-    public ListResult<PatentBasicDto> getPatentBasicInfoByPatentNode(UUID agId, PatentNode patentNode) {
-        if(null == agId){
+    public ListResult<PatentBasicDto> getPatentBasicInfoByPatentNode(PatentNodeQueryCriteria criteria) {
+        if(null == criteria.getAgId()){
             throw new IllegalArgumentException("参数agId不能为null");
         }
         SqlBuilder<PatentBasicDto> sqlBuilder = HSqlBuilder.hFrom(PatentInfo.class, "p")
-                .where("p.agId",agId)
-                .where("p.patentNode",patentNode)
+                .where("p.agId",criteria.getAgId())
+                .where("p.patentNode",criteria.getPatentNode())
                 .select(PatentBasicDto.class);
         return new ListResult<>(queryList(sqlBuilder));
     }
