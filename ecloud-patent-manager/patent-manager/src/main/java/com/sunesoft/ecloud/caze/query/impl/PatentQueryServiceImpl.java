@@ -215,10 +215,15 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
                 " d.isRealTrial, " +
                 " d.isReqPriority, " +
                 " p.customerId, " +
-                " c.name customerName " +
+                " c.name customerName, " +
+                " u3.realName introducerName, " +
+                " p.patentProductPurpose, " +
+                " p.designMainPoints, " +
+                " p.designMainPointsPicture " +
                 " from pat_contract_patent_info p " +
                 " LEFT JOIN sys_user u on u.id = p.engineerLeaderId " +
                 " LEFT JOIN sys_user u2 on u2.id = p.engineerId " +
+                " LEFT JOIN sys_user u3 on u3.id = p.introducerId " +
                 " LEFT JOIN sys_ag_customer c on c.id = p.customerId " +
                 " LEFT JOIN pat_customer_damand d on d.patentId = p.id ");
         sb.append(" where p.is_active =1 and p.id = '"+id+"'");

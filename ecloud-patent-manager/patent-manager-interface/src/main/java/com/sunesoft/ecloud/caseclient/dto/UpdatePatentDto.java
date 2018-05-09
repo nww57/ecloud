@@ -52,6 +52,21 @@ public class UpdatePatentDto {
     private boolean isReqPriority;
 
     /**
+     * 专利产品用途
+     */
+    private String patentProductPurpose;
+
+    /**
+     * 设计要点
+     */
+    private String designMainPoints;
+
+    /**
+     *设计要点图片
+     */
+    private String designMainPointsPicture;
+
+    /**
      * 申请人信息
      */
     private List<UUID> applicantIdList;
@@ -165,5 +180,29 @@ public class UpdatePatentDto {
 
     public void setAgentIdList(List<UUID> agentIdList) {
         this.agentIdList = agentIdList;
+    }
+
+    public String getPatentProductPurpose() {
+        return patentProductPurpose;
+    }
+
+    public void setPatentProductPurpose(String patentProductPurpose) {
+        this.patentProductPurpose = patentProductPurpose;
+    }
+
+    public String getDesignMainPoints() {
+        return designMainPoints;
+    }
+
+    public void setDesignMainPoints(String designMainPoints) {
+        this.designMainPoints = designMainPoints;
+    }
+
+    public String getDesignMainPointsPicture() {
+        return designMainPointsPicture;
+    }
+
+    public void setDesignMainPointsPicture(String designMainPointsPicture) {
+        this.designMainPointsPicture = designMainPointsPicture;
     }
 }

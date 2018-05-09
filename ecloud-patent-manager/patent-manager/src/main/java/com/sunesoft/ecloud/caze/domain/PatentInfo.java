@@ -67,6 +67,24 @@ public class PatentInfo extends BizEntity{
     private String caseNo;
 
     /**
+     * 专利产品用途
+     */
+    @Column(name = "patentProductPurpose")
+    private String patentProductPurpose;
+
+    /**
+     * 设计要点
+     */
+    @Column(name = "designMainPoints")
+    private String designMainPoints;
+
+    /**
+     *设计要点图片
+     */
+    @Column(name = "designMainPointsPicture")
+    private String designMainPointsPicture;
+
+    /**
      *专利节点
      */
     @Column(name = "patentNode")
@@ -476,5 +494,29 @@ public class PatentInfo extends BizEntity{
 
     public void setIntroducerId(UUID introducerId) {
         this.introducerId = introducerId;
+    }
+
+    public String getPatentProductPurpose() {
+        return patentProductPurpose;
+    }
+
+    public void setPatentProductPurpose(String patentProductPurpose) {
+        this.patentProductPurpose = patentProductPurpose;
+    }
+
+    public String getDesignMainPoints() {
+        return designMainPoints;
+    }
+
+    public void setDesignMainPoints(String designMainPoints) {
+        this.designMainPoints = designMainPoints;
+    }
+
+    public String getDesignMainPointsPicture() {
+        return designMainPointsPicture;
+    }
+
+    public void setDesignMainPointsPicture(String designMainPointsPicture) {
+        this.designMainPointsPicture = designMainPointsPicture;
     }
 }

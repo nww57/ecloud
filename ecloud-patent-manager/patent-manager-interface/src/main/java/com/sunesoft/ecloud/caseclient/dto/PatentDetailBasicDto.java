@@ -34,9 +34,9 @@ public class PatentDetailBasicDto {
     private String customerName;
 
     /**
-     *安源人名称
+     *案源人姓名
      */
-    private String salesmanName;
+    private String introducerName;
 
     /**
      *专利名称/案件名称
@@ -81,6 +81,21 @@ public class PatentDetailBasicDto {
      */
     private boolean isReqPriority;
 
+    /**
+     * 专利产品用途
+     */
+    private String patentProductPurpose;
+
+    /**
+     * 设计要点
+     */
+    private String designMainPoints;
+
+    /**
+     *设计要点图片
+     */
+    private String designMainPointsPicture;
+
     public UUID getId() {
         return id;
     }
@@ -121,12 +136,12 @@ public class PatentDetailBasicDto {
         this.customerName = customerName;
     }
 
-    public String getSalesmanName() {
-        return salesmanName;
+    public String getIntroducerName() {
+        return introducerName;
     }
 
-    public void setSalesmanName(String salesmanName) {
-        this.salesmanName = salesmanName;
+    public void setIntroducerName(String introducerName) {
+        this.introducerName = introducerName;
     }
 
     public String getPatentName() {
@@ -191,5 +206,29 @@ public class PatentDetailBasicDto {
 
     public void setIsReqPriority(boolean reqPriority) {
         isReqPriority = reqPriority;
+    }
+
+    public String getPatentProductPurpose() {
+        return patentProductPurpose;
+    }
+
+    public void setPatentProductPurpose(String patentProductPurpose) {
+        this.patentProductPurpose = patentProductPurpose;
+    }
+
+    public String getDesignMainPoints() {
+        return designMainPoints;
+    }
+
+    public void setDesignMainPoints(String designMainPoints) {
+        this.designMainPoints = designMainPoints;
+    }
+
+    public String getDesignMainPointsPicture() {
+        return designMainPointsPicture;
+    }
+
+    public void setDesignMainPointsPicture(String designMainPointsPicture) {
+        this.designMainPointsPicture = designMainPointsPicture;
     }
 }
