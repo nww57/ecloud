@@ -103,6 +103,7 @@ public class PatentServiceImpl implements PatentService {
         BeanUtil.copyPropertiesIgnoreNull(dto, info);
         info.setContractInfo(contractInfo);
         info.setCustomerId(contractInfo.getCustomerId());
+        info.setIntroducerId(contractInfo.getIntroducerId());
         patentInfoRepository.saveAndFlush(info);
         //记录节点
         PatFlow flow = new PatFlow();

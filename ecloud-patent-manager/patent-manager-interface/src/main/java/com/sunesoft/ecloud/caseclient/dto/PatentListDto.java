@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.caseclient.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sunesoft.ecloud.caseclient.enums.PatentNode;
 import com.sunesoft.ecloud.caseclient.enums.PatentType;
 
@@ -35,6 +36,7 @@ public class PatentListDto {
     /**
      * 最近期限日期
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
     private LocalDate nodeExpiryDate;
 
     /**
@@ -81,16 +83,19 @@ public class PatentListDto {
     /**
      *申请日
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
     private LocalDate applicationDate;
 
     /**
      *授权日
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
     private LocalDate authorizationDate;
 
     /**
      * 创建日期
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
     private LocalDate createDate;
 
     /**
