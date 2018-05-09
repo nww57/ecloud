@@ -1,8 +1,8 @@
 package com.sunesoft.ecloud.caze.domain;
 
+import com.sunesoft.ecloud.adminclient.TechnologyEnum;
 import com.sunesoft.ecloud.caseclient.enums.PatentNode;
 import com.sunesoft.ecloud.caseclient.enums.PatentType;
-import com.sunesoft.ecloud.caseclient.enums.TechnologyEnum;
 import com.sunesoft.ecloud.hibernate.BizEntity;
 import org.hibernate.annotations.Type;
 
@@ -36,6 +36,13 @@ public class PatentInfo extends BizEntity{
     private UUID customerId;
 
     /**
+     *案源人
+     */
+    @Column(name = "introducerId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
+    private UUID introducerId;
+
+    /**
      *申请号
      */
     @Column(name = "applicationNo")
@@ -60,11 +67,35 @@ public class PatentInfo extends BizEntity{
     private String caseNo;
 
     /**
+     * 专利产品用途
+     */
+    @Column(name = "patentProductPurpose")
+    private String patentProductPurpose;
+
+    /**
+     * 设计要点
+     */
+    @Column(name = "designMainPoints")
+    private String designMainPoints;
+
+    /**
+     *设计要点图片
+     */
+    @Column(name = "designMainPointsPicture")
+    private String designMainPointsPicture;
+
+    /**
      *专利节点
      */
     @Column(name = "patentNode")
     @Enumerated(EnumType.STRING)
     private PatentNode patentNode;
+
+    /**
+     * 节点截止日
+     */
+    @Column(name = "nodeExpiryDate")
+    private LocalDate nodeExpiryDate;
 
     /**
      *专利类型
@@ -208,11 +239,6 @@ public class PatentInfo extends BizEntity{
     @Type(type = "uuid-char")
     private UUID engineerId;
 
-    /**
-     *撰写截止日
-     */
-    @Column(name = "writeExpiryDate")
-    private LocalDate writeExpiryDate;
 
     /**
      *打包人
@@ -438,14 +464,6 @@ public class PatentInfo extends BizEntity{
         this.engineerId = engineerId;
     }
 
-    public LocalDate getWriteExpiryDate() {
-        return writeExpiryDate;
-    }
-
-    public void setWriteExpiryDate(LocalDate writeExpiryDate) {
-        this.writeExpiryDate = writeExpiryDate;
-    }
-
     public UUID getPackagerId() {
         return packagerId;
     }
@@ -462,5 +480,43 @@ public class PatentInfo extends BizEntity{
         this.payerId = payerId;
     }
 
+    public LocalDate getNodeExpiryDate() {
+        return nodeExpiryDate;
+    }
 
+    public void setNodeExpiryDate(LocalDate nodeExpiryDate) {
+        this.nodeExpiryDate = nodeExpiryDate;
+    }
+
+    public UUID getIntroducerId() {
+        return introducerId;
+    }
+
+    public void setIntroducerId(UUID introducerId) {
+        this.introducerId = introducerId;
+    }
+
+    public String getPatentProductPurpose() {
+        return patentProductPurpose;
+    }
+
+    public void setPatentProductPurpose(String patentProductPurpose) {
+        this.patentProductPurpose = patentProductPurpose;
+    }
+
+    public String getDesignMainPoints() {
+        return designMainPoints;
+    }
+
+    public void setDesignMainPoints(String designMainPoints) {
+        this.designMainPoints = designMainPoints;
+    }
+
+    public String getDesignMainPointsPicture() {
+        return designMainPointsPicture;
+    }
+
+    public void setDesignMainPointsPicture(String designMainPointsPicture) {
+        this.designMainPointsPicture = designMainPointsPicture;
+    }
 }

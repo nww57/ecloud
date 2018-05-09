@@ -1,35 +1,65 @@
 package com.sunesoft.ecloud.caseclient.dto;
 
 import com.sunesoft.ecloud.adminclient.TechnologyEnum;
+import com.sunesoft.ecloud.caseclient.enums.PatentType;
 
-import java.util.List;
 import java.util.UUID;
 
 /**
- * @Author: niww
- * @Date: 2018/5/4
+ * @Auther: niww
+ * @Date: 2018/5/9/009
  */
-public class UpdatePatentDto {
+public class PatentDetailBasicDto {
+
+    private UUID id;
 
     /**
-     * 专利id
+     *专利类型
      */
-    private UUID patentId;
+    private PatentType patentType;
 
     /**
-     * 专利名称
+     *案件号/内部编号
+     */
+    private String caseNo;
+
+    /**
+     * 客户id
+     */
+    private UUID customerId;
+
+    /**
+     *客户名称
+     */
+    private String customerName;
+
+    /**
+     *案源人姓名
+     */
+    private String introducerName;
+
+    /**
+     *专利名称/案件名称
      */
     private String patentName;
 
     /**
-     * 工程师组长
+     * 工程师组长id
      */
     private UUID engineerLeaderId;
+
+    /**
+     * 工程师组长
+     */
+    private String engineerLeaderName;
+
 
     /**
      *技术领域
      */
     private TechnologyEnum techDomain;
+
+    //客户要求
 
     /**
      *同时提实审
@@ -66,32 +96,52 @@ public class UpdatePatentDto {
      */
     private String designMainPointsPicture;
 
-    /**
-     * 申请人信息
-     */
-    private List<UUID> applicantIdList;
-
-    /**
-     * 发明人信息
-     */
-    private List<UUID> inventorIdList;
-
-    /**
-     * 代理人信息
-     */
-    private List<UUID> agentIdList;
-
-    /**
-     * 优先权项内容
-     */
-    private List<PatPriorityClaimsDto> priorityClaimsList;
-
-    public UUID getPatentId() {
-        return patentId;
+    public UUID getId() {
+        return id;
     }
 
-    public void setPatentId(UUID patentId) {
-        this.patentId = patentId;
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public PatentType getPatentType() {
+        return patentType;
+    }
+
+    public void setPatentType(PatentType patentType) {
+        this.patentType = patentType;
+    }
+
+    public String getCaseNo() {
+        return caseNo;
+    }
+
+    public void setCaseNo(String caseNo) {
+        this.caseNo = caseNo;
+    }
+
+    public UUID getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(UUID customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getIntroducerName() {
+        return introducerName;
+    }
+
+    public void setIntroducerName(String introducerName) {
+        this.introducerName = introducerName;
     }
 
     public String getPatentName() {
@@ -108,6 +158,14 @@ public class UpdatePatentDto {
 
     public void setEngineerLeaderId(UUID engineerLeaderId) {
         this.engineerLeaderId = engineerLeaderId;
+    }
+
+    public String getEngineerLeaderName() {
+        return engineerLeaderName;
+    }
+
+    public void setEngineerLeaderName(String engineerLeaderName) {
+        this.engineerLeaderName = engineerLeaderName;
     }
 
     public TechnologyEnum getTechDomain() {
@@ -148,38 +206,6 @@ public class UpdatePatentDto {
 
     public void setIsReqPriority(boolean reqPriority) {
         isReqPriority = reqPriority;
-    }
-
-    public List<PatPriorityClaimsDto> getPriorityClaimsList() {
-        return priorityClaimsList;
-    }
-
-    public void setPriorityClaimsList(List<PatPriorityClaimsDto> priorityClaimsList) {
-        this.priorityClaimsList = priorityClaimsList;
-    }
-
-    public List<UUID> getApplicantIdList() {
-        return applicantIdList;
-    }
-
-    public void setApplicantIdList(List<UUID> applicantIdList) {
-        this.applicantIdList = applicantIdList;
-    }
-
-    public List<UUID> getInventorIdList() {
-        return inventorIdList;
-    }
-
-    public void setInventorIdList(List<UUID> inventorIdList) {
-        this.inventorIdList = inventorIdList;
-    }
-
-    public List<UUID> getAgentIdList() {
-        return agentIdList;
-    }
-
-    public void setAgentIdList(List<UUID> agentIdList) {
-        this.agentIdList = agentIdList;
     }
 
     public String getPatentProductPurpose() {

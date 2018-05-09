@@ -17,4 +17,11 @@ public interface PatAgentRepository extends BaseRepository<PatAgent,UUID>{
     @Modifying
     @Query(value = "delete from PatAgent where patentInfo.id = :patentId")
     void deleteByPatent(@Param("patentId") UUID patentId);
+
+    @Query(value = "select * from pat_agent a where a.patentId = :patentId and a.sort< :sort order by a.sort desc limit 0,1",nativeQuery = true)
+    PatAgent getUp(@Param("patentId") String patentId, @Param("sort") int sort);
+
+
+    @Query(value = "select * from pat_agent a where a.patentId = :patentId and a.sort> :sort order by a.sort asc limit 0,1",nativeQuery = true)
+    PatAgent getDown(@Param("patentId") String patentId,@Param("sort") int sort);
 }

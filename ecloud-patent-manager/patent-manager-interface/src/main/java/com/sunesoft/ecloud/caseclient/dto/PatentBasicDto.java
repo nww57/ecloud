@@ -18,9 +18,9 @@ public class PatentBasicDto {
     private String name;
 
     /**
-     * 专利号
+     * 案件号
      */
-    private String patentNo;
+    private String caseNo;
 
     /**
      * 专利类型
@@ -43,12 +43,12 @@ public class PatentBasicDto {
         this.name = name;
     }
 
-    public String getPatentNo() {
-        return patentNo;
+    public String getCaseNo() {
+        return caseNo;
     }
 
-    public void setPatentNo(String patentNo) {
-        this.patentNo = patentNo;
+    public void setCaseNo(String caseNo) {
+        this.caseNo = caseNo;
     }
 
     public PatentType getPatentType() {

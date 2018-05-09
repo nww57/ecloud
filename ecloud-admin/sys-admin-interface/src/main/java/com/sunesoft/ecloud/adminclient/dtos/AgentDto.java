@@ -1,5 +1,7 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
+import com.sunesoft.ecloud.adminclient.TechnologyEnum;
+
 import java.util.UUID;
 
 /**
@@ -29,6 +31,11 @@ public class AgentDto {
      *所属企业
      */
     private UUID agId;
+
+    /**
+     * 技术领域
+     */
+    private TechnologyEnum techDomain;
 
     public String getName() {
         return name;
@@ -68,5 +75,13 @@ public class AgentDto {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public TechnologyEnum getTechDomain() {
+        return techDomain;
+    }
+
+    public void setTechDomain(TechnologyEnum techDomain) {
+        this.techDomain = techDomain;
     }
 }

@@ -107,6 +107,11 @@ public class PatApplicantDto {
      */
     private int sort;
 
+    /**
+     * 客户申请人id
+     */
+    private UUID customerApplicantId;
+
     public int getSort() {
         return sort;
     }
@@ -257,5 +262,13 @@ public class PatApplicantDto {
 
     public void setUserCode(String userCode) {
         this.userCode = userCode;
+    }
+
+    public UUID getCustomerApplicantId() {
+        return customerApplicantId;
+    }
+
+    public void setCustomerApplicantId(UUID customerApplicantId) {
+        this.customerApplicantId = customerApplicantId;
     }
 }

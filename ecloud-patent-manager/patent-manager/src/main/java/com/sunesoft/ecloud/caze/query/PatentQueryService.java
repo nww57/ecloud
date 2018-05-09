@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.caze.query;
 
+import com.sunesoft.ecloud.caseclient.criterias.PatentNodeQueryCriteria;
 import com.sunesoft.ecloud.caseclient.criterias.PatentQueryCriteria;
 import com.sunesoft.ecloud.caseclient.dto.*;
 import com.sunesoft.ecloud.caseclient.enums.PatentNode;
@@ -24,6 +25,21 @@ public interface PatentQueryService {
      */
     TResult<Map<PatentNode,Integer>> getPatentNodeCount(UUID agId);
 
+    /**
+     * 获取用户设置的查询条件
+     * @param userId 用户id
+     * @return 返回查询结果
+     */
+    TResult<PatentQueryConfigDto> getUserPatentQueryConfig(UUID userId);
+
+
+    /**
+     * 获取某一节点下的专利基础信息
+     * @param criteria 查询参数
+     * @return 返回查询结果
+     */
+    ListResult<PatentBasicDto> getPatentBasicInfoByPatentNode(PatentNodeQueryCriteria criteria);
+
 
     /**
      * 专利列表查询
@@ -32,6 +48,12 @@ public interface PatentQueryService {
      */
     PagedResult<PatentListDto> queryPatentPaged(PatentQueryCriteria criteria);
 
+    /**
+     * 获取专利详情的基础信息
+     * @param id 专利id
+     * @return 返回查询结果
+     */
+    TResult<PatentDetailBasicDto> getPatentDetailBasicInfo(UUID id);
 
     /**
      * 获取专利详情

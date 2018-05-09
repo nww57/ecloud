@@ -1,5 +1,7 @@
 package com.sunesoft.ecloud.caseclient.dto;
 
+import com.sunesoft.ecloud.adminclient.TechnologyEnum;
+
 import java.util.UUID;
 
 /**
@@ -29,11 +31,21 @@ public class PatAgentDto {
     private String cellphone;
 
     /**
+     * 技术领域
+     */
+    private TechnologyEnum techDomain;
+
+    /**
      * 用于区分第一、第二代理人
      * 1 第一代理人
      * 2 第二代理人
      */
     private int sort;
+
+    /**
+     * 代理机构代理人id
+     */
+    private UUID agencyAgentId;
 
     public int getSort() {
         return sort;
@@ -81,5 +93,21 @@ public class PatAgentDto {
 
     public void setCellphone(String cellphone) {
         this.cellphone = cellphone;
+    }
+
+    public UUID getAgencyAgentId() {
+        return agencyAgentId;
+    }
+
+    public void setAgencyAgentId(UUID agencyAgentId) {
+        this.agencyAgentId = agencyAgentId;
+    }
+
+    public TechnologyEnum getTechDomain() {
+        return techDomain;
+    }
+
+    public void setTechDomain(TechnologyEnum techDomain) {
+        this.techDomain = techDomain;
     }
 }

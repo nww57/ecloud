@@ -2,12 +2,14 @@ package com.sunesoft.ecloud.caze.service.impl;
 
 import com.sunesoft.ecloud.caseclient.dto.*;
 import com.sunesoft.ecloud.caseclient.enums.PatentNode;
+import com.sunesoft.ecloud.caseclient.enums.UpDown;
 import com.sunesoft.ecloud.caze.domain.*;
 import com.sunesoft.ecloud.caze.repository.*;
 import com.sunesoft.ecloud.caze.service.PatentService;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
+import com.sunesoft.ecloud.common.utils.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +46,8 @@ public class PatentServiceImpl implements PatentService {
     PatInventorRepository inventorRepository;
     @Autowired
     PatAgentRepository agentRepository;
+    @Autowired
+    PatentQueryConfigRepository configRepository;
 
     @Override
     public TResult generateCaseNo(UUID agId) {
@@ -52,6 +56,23 @@ public class PatentServiceImpl implements PatentService {
         }
         Object contract = patentInfoRepository.generateCaseNo(agId.toString());
         return new TResult<>(contract);
+    }
+
+    @Override
+    public TResult configPatentQueryCondition(PatentQueryConfigDto dto) {
+        UUID userId = dto.getUserId();
+        if (null == userId) {
+            throw new IllegalArgumentException("用户id不能为null");
+        }
+        PatentQueryConfig config = configRepository.findByUserId(userId);
+        if (null == config) {
+            config = new PatentQueryConfig();
+            config.setUserId(userId);
+        }
+        config.setExpiredDay(dto.getExpiredDay());
+        config.setIsRedTop(dto.getIsRedTop());
+        configRepository.saveAndFlush(config);
+        return ResultFactory.success();
     }
 
     @Override
@@ -70,7 +91,7 @@ public class PatentServiceImpl implements PatentService {
         if (StringUtils.isEmpty(dto.getCaseNo())) {
             return new TResult("案件号不能为空");
         }
-        if(!Objects.equals(dto.getCaseNo(),generateCaseNo(dto.getAgId()).getResult())){
+        if (!Objects.equals(dto.getCaseNo(), generateCaseNo(dto.getAgId()).getResult())) {
             return new TResult("案件号已经更改，请重新创建");
         }
         if (null == dto.getPatentType()) {
@@ -82,6 +103,8 @@ public class PatentServiceImpl implements PatentService {
         PatentInfo info = new PatentInfo();
         BeanUtil.copyPropertiesIgnoreNull(dto, info);
         info.setContractInfo(contractInfo);
+        info.setCustomerId(contractInfo.getCustomerId());
+        info.setIntroducerId(contractInfo.getIntroducerId());
         patentInfoRepository.saveAndFlush(info);
         //记录节点
         PatFlow flow = new PatFlow();
@@ -108,7 +131,18 @@ public class PatentServiceImpl implements PatentService {
         if (null != dto.getTechDomain()) {
             info.setTechDomain(dto.getTechDomain());
         }
-
+        if (null != dto.getEngineerLeaderId()) {
+            info.setEngineerLeaderId(dto.getEngineerLeaderId());
+        }
+        if (StringUtils.isNotEmpty(dto.getPatentProductPurpose())) {
+            info.setPatentProductPurpose(dto.getPatentProductPurpose());
+        }
+        if (StringUtils.isNotEmpty(dto.getDesignMainPoints())) {
+            info.setDesignMainPoints(dto.getDesignMainPoints());
+        }
+        if (StringUtils.isNotEmpty(dto.getDesignMainPointsPicture())) {
+            info.setDesignMainPointsPicture(dto.getDesignMainPointsPicture());
+        }
         //如果勾选了优先权项，保存优先权项
         if (dto.getIsReqPriority()) {
             //设置优先权项
@@ -121,51 +155,54 @@ public class PatentServiceImpl implements PatentService {
             List<PatPriorityClaims> claimsList = new ArrayList<>();
             claimsDtoList.forEach(claimsDto -> {
                 PatPriorityClaims c = new PatPriorityClaims(info);
-                BeanUtil.copyPropertiesIgnoreNull(claimsDto,c );
+                BeanUtil.copyPropertiesIgnoreNull(claimsDto, c);
                 claimsList.add(c);
             });
             priorityClaimsRepository.save(claimsList);
-        }else{
+        } else {
             //删除所有优先权项
             priorityClaimsRepository.deleteByPatent(patentId);
         }
         //设置申请人
-        if(null != dto.getApplicantList()){
+        if (null != dto.getApplicantIdList()) {
             applicantRepository.deleteByPatent(patentId);
-            List<PatApplicantDto> applicantDtoList = dto.getApplicantList();
+            List<UUID> applicantIdList = dto.getApplicantIdList();
             List<PatApplicant> applicants = new ArrayList<>();
-            PatApplicant applicant ;
-            for (PatApplicantDto patApplicantDto : applicantDtoList) {
+            PatApplicant applicant;
+            for (int i = 0; i < applicantIdList.size(); i++) {
                 applicant = new PatApplicant(info);
-                BeanUtil.copyPropertiesIgnoreNull(patApplicantDto,applicant);
+                applicant.setSort(i + 1);
+                applicant.setCustomerApplicantId(applicantIdList.get(i));
                 applicants.add(applicant);
             }
             applicantRepository.save(applicants);
         }
 
         //设置发明人
-        if(null != dto.getInventorList()){
+        if (null != dto.getInventorIdList()) {
             inventorRepository.deleteByPatent(patentId);
-            List<PatInventorDto> inventorDtoList = dto.getInventorList();
+            List<UUID> inventorIdList = dto.getInventorIdList();
             List<PatInventor> inventors = new ArrayList<>();
             PatInventor inventor;
-            for (PatInventorDto patInventorDto : inventorDtoList) {
+            for (int i = 0; i < inventorIdList.size(); i++) {
                 inventor = new PatInventor(info);
-                BeanUtil.copyPropertiesIgnoreNull(patInventorDto,inventor);
+                inventor.setSort(i + 1);
+                inventor.setCustomerInventorId(inventorIdList.get(i));
                 inventors.add(inventor);
             }
             inventorRepository.save(inventors);
         }
 
         //设置代理人
-        if(null != dto.getAgentList()){
-           agentRepository.deleteByPatent(patentId);
-            List<PatAgentDto> agentDtoList = dto.getAgentList();
+        if (null != dto.getAgentIdList()) {
+            agentRepository.deleteByPatent(patentId);
+            List<UUID> agentIdList = dto.getAgentIdList();
             List<PatAgent> agents = new ArrayList<>();
             PatAgent agent;
-            for (PatAgentDto patAgentDto : agentDtoList) {
+            for (int i = 0; i < agentIdList.size(); i++) {
                 agent = new PatAgent(info);
-                BeanUtil.copyPropertiesIgnoreNull(patAgentDto,agent);
+                agent.setSort(i + 1);
+                agent.setAgencyAgentId(agentIdList.get(i));
                 agents.add(agent);
             }
             agentRepository.save(agents);
@@ -173,7 +210,7 @@ public class PatentServiceImpl implements PatentService {
 
         //保存客户要求
         PatCustomerDemand demand = customerDemandRepository.findByPatent(patentId);
-        if(null == demand){
+        if (null == demand) {
             demand = new PatCustomerDemand();
             demand.setPatentInfo(info);
         }
@@ -191,14 +228,14 @@ public class PatentServiceImpl implements PatentService {
 
     @Override
     public TResult addOrUpdatePatentApplicants(UUID patentId, List<PatApplicantDto> applicantList) {
-        if(null == patentId ){
+        if (null == patentId) {
             throw new IllegalArgumentException("参数错误，patentId不能为null");
         }
-        PatentInfo info =  patentInfoRepository.findOne(patentId);
-        if(null == info){
-            throw new IllegalArgumentException("没有找到专利信息patenId="+patentId);
+        PatentInfo info = patentInfoRepository.findOne(patentId);
+        if (null == info) {
+            throw new IllegalArgumentException("没有找到专利信息patenId=" + patentId);
         }
-        if(null == applicantList || applicantList.size() == 0){
+        if (null == applicantList || applicantList.size() == 0) {
             throw new IllegalArgumentException("参数错误，申请人信息不能为null");
         }
         //先删除
@@ -207,7 +244,7 @@ public class PatentServiceImpl implements PatentService {
         PatApplicant applicant;
         for (PatApplicantDto patApplicantDto : applicantList) {
             applicant = new PatApplicant(info);
-            BeanUtil.copyPropertiesIgnoreNull(patApplicantDto,applicant);
+            BeanUtil.copyPropertiesIgnoreNull(patApplicantDto, applicant);
             applicants.add(applicant);
         }
         applicantRepository.save(applicants);
@@ -215,8 +252,38 @@ public class PatentServiceImpl implements PatentService {
     }
 
     @Override
+    public TResult sortPatentApplicant(UUID patentApplicantId, UpDown upDown) {
+        if (null == patentApplicantId) {
+            throw new IllegalArgumentException("参数patentApplicantId不能为null");
+        }
+        PatApplicant applicant = applicantRepository.findOne(patentApplicantId);
+        if (Objects.equals(upDown, UpDown.UP)) {
+            PatApplicant upApplicant = applicantRepository.getUp(applicant.getPatentInfo().getId().toString(), applicant.getSort());
+            if (null == upApplicant) {
+                return new TResult("第一个无法再上移");
+            }
+            int sort = applicant.getSort();
+            applicant.setSort(upApplicant.getSort());
+            upApplicant.setSort(sort);
+            applicantRepository.save(applicant);
+            applicantRepository.save(upApplicant);
+        } else {
+            PatApplicant downApplicant = applicantRepository.getDown(applicant.getPatentInfo().getId().toString(), applicant.getSort());
+            if (null == downApplicant) {
+                return new TResult("最后一个无法下移");
+            }
+            int sort = applicant.getSort();
+            applicant.setSort(downApplicant.getSort());
+            downApplicant.setSort(sort);
+            applicantRepository.save(applicant);
+            applicantRepository.save(downApplicant);
+        }
+        return ResultFactory.success();
+    }
+
+    @Override
     public TResult deletePatentApplicant(UUID patentApplicantId) {
-        if(null == patentApplicantId){
+        if (null == patentApplicantId) {
             throw new IllegalArgumentException("参数patentApplicantId不能为null");
         }
         applicantRepository.delete(patentApplicantId);
@@ -225,14 +292,14 @@ public class PatentServiceImpl implements PatentService {
 
     @Override
     public TResult addOrUpdatePatentInventors(UUID patentId, List<PatInventorDto> inventorList) {
-        if(null == patentId ){
+        if (null == patentId) {
             throw new IllegalArgumentException("参数错误，patentId不能为null");
         }
-        PatentInfo info =  patentInfoRepository.findOne(patentId);
-        if(null == info){
-            throw new IllegalArgumentException("没有找到专利信息patenId="+patentId);
+        PatentInfo info = patentInfoRepository.findOne(patentId);
+        if (null == info) {
+            throw new IllegalArgumentException("没有找到专利信息patenId=" + patentId);
         }
-        if(null == inventorList || inventorList.size() == 0){
+        if (null == inventorList || inventorList.size() == 0) {
             throw new IllegalArgumentException("参数错误，发明人信息不能为null");
         }
         //先删除
@@ -241,7 +308,7 @@ public class PatentServiceImpl implements PatentService {
         PatInventor inventor;
         for (PatInventorDto patInventorDto : inventorList) {
             inventor = new PatInventor(info);
-            BeanUtil.copyPropertiesIgnoreNull(patInventorDto,inventor);
+            BeanUtil.copyPropertiesIgnoreNull(patInventorDto, inventor);
             inventors.add(inventor);
         }
         inventorRepository.save(inventors);
@@ -249,8 +316,38 @@ public class PatentServiceImpl implements PatentService {
     }
 
     @Override
+    public TResult sortPatentInventor(UUID patentInventorId, UpDown upDown) {
+        if (null == patentInventorId) {
+            throw new IllegalArgumentException("参数patentInventorId不能为null");
+        }
+        PatInventor inventor = inventorRepository.findOne(patentInventorId);
+        if (Objects.equals(upDown, UpDown.UP)) {
+            PatInventor upInventor = inventorRepository.getUp(inventor.getPatentInfo().getId().toString(), inventor.getSort());
+            if (null == upInventor) {
+                return new TResult("第一个无法再上移");
+            }
+            int sort = inventor.getSort();
+            inventor.setSort(upInventor.getSort());
+            upInventor.setSort(sort);
+            inventorRepository.save(inventor);
+            inventorRepository.save(upInventor);
+        } else {
+            PatInventor downInventor = inventorRepository.getDown(inventor.getPatentInfo().getId().toString(), inventor.getSort());
+            if (null == downInventor) {
+                return new TResult("最后一个无法下移");
+            }
+            int sort = inventor.getSort();
+            inventor.setSort(downInventor.getSort());
+            downInventor.setSort(sort);
+            inventorRepository.save(inventor);
+            inventorRepository.save(downInventor);
+        }
+        return ResultFactory.success();
+    }
+
+    @Override
     public TResult deletePatentInventor(UUID patentInventorId) {
-        if(null == patentInventorId){
+        if (null == patentInventorId) {
             throw new IllegalArgumentException("参数patentInventorId不能为null");
         }
         inventorRepository.delete(patentInventorId);
@@ -259,14 +356,14 @@ public class PatentServiceImpl implements PatentService {
 
     @Override
     public TResult addOrUpdatePatentAgents(UUID patentId, List<PatAgentDto> agentList) {
-        if(null == patentId ){
+        if (null == patentId) {
             throw new IllegalArgumentException("参数错误，patentId不能为null");
         }
-        PatentInfo info =  patentInfoRepository.findOne(patentId);
-        if(null == info){
-            throw new IllegalArgumentException("没有找到专利信息patenId="+patentId);
+        PatentInfo info = patentInfoRepository.findOne(patentId);
+        if (null == info) {
+            throw new IllegalArgumentException("没有找到专利信息patenId=" + patentId);
         }
-        if(null == agentList || agentList.size() == 0){
+        if (null == agentList || agentList.size() == 0) {
             throw new IllegalArgumentException("参数错误，代理人信息不能为null");
         }
         //先删除
@@ -275,7 +372,7 @@ public class PatentServiceImpl implements PatentService {
         PatAgent patAgent;
         for (PatAgentDto patAgentDto : agentList) {
             patAgent = new PatAgent(info);
-            BeanUtil.copyPropertiesIgnoreNull(patAgentDto,patAgent);
+            BeanUtil.copyPropertiesIgnoreNull(patAgentDto, patAgent);
             list.add(patAgent);
         }
         agentRepository.save(list);
@@ -283,8 +380,38 @@ public class PatentServiceImpl implements PatentService {
     }
 
     @Override
+    public TResult sortPatentAgent(UUID patentAgentId, UpDown upDown) {
+        if (null == patentAgentId) {
+            throw new IllegalArgumentException("参数patentAgentId不能为null");
+        }
+        PatAgent agent = agentRepository.findOne(patentAgentId);
+        if (Objects.equals(upDown, UpDown.UP)) {
+            PatAgent upAgent = agentRepository.getUp(agent.getPatentInfo().getId().toString(), agent.getSort());
+            if (null == upAgent) {
+                return new TResult("第一个无法再上移");
+            }
+            int sort = agent.getSort();
+            agent.setSort(upAgent.getSort());
+            upAgent.setSort(sort);
+            agentRepository.save(agent);
+            agentRepository.save(upAgent);
+        } else {
+            PatAgent downAgent = agentRepository.getDown(agent.getPatentInfo().getId().toString(), agent.getSort());
+            if (null == downAgent) {
+                return new TResult("最后一个无法下移");
+            }
+            int sort = agent.getSort();
+            agent.setSort(downAgent.getSort());
+            downAgent.setSort(sort);
+            agentRepository.save(agent);
+            agentRepository.save(downAgent);
+        }
+        return ResultFactory.success();
+    }
+
+    @Override
     public TResult deletePatentAgent(UUID patentAgentId) {
-        if(null == patentAgentId){
+        if (null == patentAgentId) {
             throw new IllegalArgumentException("参数patentAgentId不能为null");
         }
         agentRepository.delete(patentAgentId);
@@ -293,35 +420,45 @@ public class PatentServiceImpl implements PatentService {
 
     @Override
     public TResult addOrUpdatePriorityClaims(PatPriorityClaimsDto dto) {
-        if(null == dto.getPatentId()){
+        if (null == dto.getPatentId()) {
             throw new IllegalArgumentException("专利id不能为null");
         }
         PatentInfo info = patentInfoRepository.findOne(dto.getPatentId());
         UUID id = dto.getId();
-        PatPriorityClaims claims ;
-        if(null == id){
+        PatPriorityClaims claims;
+        if (null == id) {
             claims = new PatPriorityClaims(info);
-        }else{
+        } else {
             claims = priorityClaimsRepository.findOne(id);
         }
-        BeanUtil.copyPropertiesIgnoreNull(dto,claims);
+        BeanUtil.copyPropertiesIgnoreNull(dto, claims);
         priorityClaimsRepository.saveAndFlush(claims);
         return ResultFactory.success();
     }
 
     @Override
     public TResult allotEngineer(AllotEngineerDto dto) {
-        if(null == dto.getPatentId()){
+        if (null == dto.getPatentId()) {
             throw new IllegalArgumentException("专利id不能为null");
         }
-        if(null == dto.getEngineerId()){
+        if (null == dto.getEngineerId()) {
             return new TResult("未分配工程师");
         }
         PatentInfo patentInfo = patentInfoRepository.findOne(dto.getPatentId());
         patentInfo.setEngineerId(dto.getEngineerId());
-        patentInfo.setWriteExpiryDate(dto.getWriteExpiryDate());
         patentInfo.setPatentNode(PatentNode.WRITING);
+        patentInfo.setNodeExpiryDate(dto.getWriteExpiryDate());
         return ResultFactory.success();
+    }
+
+    @Override
+    public TResult addPatentElement(PatentElementDto dto) {
+        return null;
+    }
+
+    @Override
+    public TResult addPatentOfficialFee(AddPatentOfficialFeeDto dto) {
+        return null;
     }
 
     @Override
@@ -335,4 +472,6 @@ public class PatentServiceImpl implements PatentService {
         patentInfoRepository.deleteBatch(ids);
         return ResultFactory.success();
     }
+
+
 }

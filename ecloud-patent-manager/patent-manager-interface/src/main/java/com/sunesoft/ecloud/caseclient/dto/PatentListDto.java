@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.caseclient.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sunesoft.ecloud.caseclient.enums.PatentNode;
 import com.sunesoft.ecloud.caseclient.enums.PatentType;
 
@@ -35,7 +36,8 @@ public class PatentListDto {
     /**
      * 最近期限日期
      */
-    private LocalDate recentDueTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
+    private LocalDate nodeExpiryDate;
 
     /**
      *专利类型
@@ -81,17 +83,25 @@ public class PatentListDto {
     /**
      *申请日
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
     private LocalDate applicationDate;
 
     /**
      *授权日
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
     private LocalDate authorizationDate;
 
     /**
      * 创建日期
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
     private LocalDate createDate;
+
+    /**
+     * 是否要红色提醒
+     */
+    private boolean isRemind;
 
     public UUID getId() {
         return id;
@@ -125,12 +135,12 @@ public class PatentListDto {
         this.patentName = patentName;
     }
 
-    public LocalDate getRecentDueTime() {
-        return recentDueTime;
+    public LocalDate getNodeExpiryDate() {
+        return nodeExpiryDate;
     }
 
-    public void setRecentDueTime(LocalDate recentDueTime) {
-        this.recentDueTime = recentDueTime;
+    public void setNodeExpiryDate(LocalDate nodeExpiryDate) {
+        this.nodeExpiryDate = nodeExpiryDate;
     }
 
     public PatentType getPatentType() {
@@ -219,5 +229,13 @@ public class PatentListDto {
 
     public void setCreateDate(LocalDate createDate) {
         this.createDate = createDate;
+    }
+
+    public boolean getIsRemind() {
+        return isRemind;
+    }
+
+    public void setIsRemind(boolean remind) {
+        isRemind = remind;
     }
 }

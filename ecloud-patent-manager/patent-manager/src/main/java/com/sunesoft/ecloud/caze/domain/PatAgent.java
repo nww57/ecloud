@@ -1,8 +1,11 @@
 package com.sunesoft.ecloud.caze.domain;
 
+import com.sunesoft.ecloud.adminclient.TechnologyEnum;
 import com.sunesoft.ecloud.hibernate.IEntity;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 /**
  * @Auther: niww
@@ -18,6 +21,13 @@ public class PatAgent extends IEntity{
     @ManyToOne
     @JoinColumn(name = "patentId")
     private PatentInfo patentInfo;
+
+    /**
+     * 代理机构代理人id
+     */
+    @Column(name = "agencyAgentId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
+    private UUID agencyAgentId;
 
     /**
      * 姓名
@@ -42,6 +52,16 @@ public class PatAgent extends IEntity{
      */
     @Column(name = "sort")
     private int sort;
+
+    /**
+     * 技术领域
+     */
+    @Column(name = "techDomain")
+    @Enumerated(EnumType.STRING)
+    private TechnologyEnum techDomain;
+
+    public PatAgent() {
+    }
 
     public PatAgent(PatentInfo patentInfo) {
         this.patentInfo = patentInfo;
@@ -85,5 +105,21 @@ public class PatAgent extends IEntity{
 
     public void setSort(int sort) {
         this.sort = sort;
+    }
+
+    public UUID getAgencyAgentId() {
+        return agencyAgentId;
+    }
+
+    public void setAgencyAgentId(UUID agencyAgentId) {
+        this.agencyAgentId = agencyAgentId;
+    }
+
+    public TechnologyEnum getTechDomain() {
+        return techDomain;
+    }
+
+    public void setTechDomain(TechnologyEnum techDomain) {
+        this.techDomain = techDomain;
     }
 }

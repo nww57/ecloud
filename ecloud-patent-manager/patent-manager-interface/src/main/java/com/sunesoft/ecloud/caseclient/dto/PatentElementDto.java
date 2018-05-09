@@ -12,6 +12,11 @@ import java.time.LocalDate;
 public class PatentElementDto {
 
     /**
+     * 案件号
+     */
+    private String caseNo;
+
+    /**
      * 申请号/专利号
      */
     private String applicationNo;
@@ -60,6 +65,14 @@ public class PatentElementDto {
      *代理人
      */
     private String agencyAgents;
+
+    public String getCaseNo() {
+        return caseNo;
+    }
+
+    public void setCaseNo(String caseNo) {
+        this.caseNo = caseNo;
+    }
 
     public String getApplicationNo() {
         return applicationNo;

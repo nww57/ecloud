@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.caze.query.impl;
 
+import com.sunesoft.ecloud.caseclient.criterias.PatentNodeQueryCriteria;
 import com.sunesoft.ecloud.caseclient.criterias.PatentQueryCriteria;
 import com.sunesoft.ecloud.caseclient.dto.*;
 import com.sunesoft.ecloud.caseclient.enums.PatentNode;
@@ -8,7 +9,9 @@ import com.sunesoft.ecloud.caze.query.PatentQueryService;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
+import com.sunesoft.ecloud.common.sqlBuilderTool.OrderType;
 import com.sunesoft.ecloud.common.sqlBuilderTool.SqlBuilder;
+import com.sunesoft.ecloud.common.utils.BeanUtil;
 import com.sunesoft.ecloud.hibernate.sqlBuilder.HSqlBuilder;
 import com.sunesoft.ecloud.hibernate.sqlExcute.GenericQuery;
 import org.apache.commons.lang.StringUtils;
@@ -27,6 +30,9 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
 
     @Override
     public TResult<Map<PatentNode, Integer>> getPatentNodeCount(UUID agId) {
+        if(null == agId){
+            throw new IllegalArgumentException("参数agId不能为null");
+        }
         String sql  = "select patentNode,count(*) count  from pat_contract_patent_info p where p.is_active = 1 and p.agId = '"+agId+"' GROUP BY p.patentNode";
         List<PatentNodeCountDto> nodeCount =  queryList(sql,null,PatentNodeCountDto.class);
         List<PatentNode> nodeList = Stream.of(PatentNode.values()).sorted(Comparator.comparing(PatentNode::getNode)).collect(Collectors.toList());
@@ -39,17 +45,53 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
     }
 
     @Override
+    public TResult<PatentQueryConfigDto> getUserPatentQueryConfig(UUID userId) {
+        if(null == userId){
+            throw new IllegalArgumentException("参数userId不能为null");
+        }
+        String sql = "select config.userId, config.expiredDay ,config.isRedTop from pat_patent_query_config config where config.userId = '"+userId+"'";
+        PatentQueryConfigDto config = queryForObject(sql,null,PatentQueryConfigDto.class);
+        return new TResult<>(config);
+    }
+
+
+    @Override
+    public ListResult<PatentBasicDto> getPatentBasicInfoByPatentNode(PatentNodeQueryCriteria criteria) {
+        if(null == criteria.getAgId()){
+            throw new IllegalArgumentException("参数agId不能为null");
+        }
+        SqlBuilder<PatentBasicDto> sqlBuilder = HSqlBuilder.hFrom(PatentInfo.class, "p")
+                .where("p.agId",criteria.getAgId())
+                .where("p.patentNode",criteria.getPatentNode())
+                .select(PatentBasicDto.class);
+        return new ListResult<>(queryList(sqlBuilder));
+    }
+
+    @Override
     public PagedResult<PatentListDto> queryPatentPaged(PatentQueryCriteria criteria) {
         if(null == criteria.getAgId()){
             throw new IllegalArgumentException("企业id不能为null");
         }
+        UUID userId = criteria.getUserId();
+        int expiredDay = 0;
+        boolean isRedTop = false;
+        TResult<PatentQueryConfigDto> configDto = getUserPatentQueryConfig(userId);
+        if(configDto.getIs_success()){
+            PatentQueryConfigDto config = configDto.getResult();
+            if(null != config){
+                expiredDay = config.getExpiredDay();
+                isRedTop = config.getIsRedTop();
+            }
+        }
+        //获取查询配置
         StringBuilder sb =  new StringBuilder("");
         sb.append("select  " +
+                " p.id, " +
                 " p.agId, " +
                 " p.applicationNo, " +
                 " p.caseNo, " +
                 " p.patentName, " +
-                " null recentDueDate, " +
+                " p.nodeExpiryDate, " +
                 " p.patentType, " +
                 " p.patentNode, " +
                 " p.isApplicationSameDay, " +
@@ -60,60 +102,65 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
                 " p.applicants, " +
                 " p.agencyAgents agents, " +
                 " p.inventors, " +
-                " p.create_datetime , " +
+                " p.create_datetime createDate, " +
                 " pci.contractName, " +
                 " pci.contractNo, " +
-                " sc.name customerName " +
+                " sc.name customerName, " +
+                " if(CURDATE() > p.nodeExpiryDate,1,0) isDelayed, " +
+                " if(DATE_ADD(CURDATE(),INTERVAL "+expiredDay+" DAY) > p.nodeExpiryDate,1,0) isRemind " +
                 " from pat_contract_patent_info p " +
                 " left JOIN pat_contract_info pci on pci.id = p.contractId " +
                 " LEFT JOIN sys_ag_customer sc on sc.id = p.customerId where p.is_active = 1 and p.agId = '"+criteria.getAgId()+"' ");
         Map<String,Object> param = new HashMap<>();
         if(StringUtils.isNotEmpty(criteria.getApplicationNo())){
             sb.append(" and p.applicationNo like :applicationNo");
-            param.put("applicationNo",criteria.getApplicationNo());
+            param.put("applicationNo","%"+criteria.getApplicationNo()+"%");
         }
         if(StringUtils.isNotEmpty(criteria.getCaseNo())){
             sb.append(" and p.caseNo like :caseNo");
-            param.put("caseNo",criteria.getCaseNo());
+            param.put("caseNo","%"+criteria.getCaseNo()+"%");
         }
         if(StringUtils.isNotEmpty(criteria.getPatentName())){
             sb.append(" and p.patentName like :patentName");
-            param.put("patentName",criteria.getPatentName());
+            param.put("patentName","%"+criteria.getPatentName()+"%");
         }
-        //TODO 最近期限日期
-        if(StringUtils.isNotEmpty(criteria.getRecentDueTimeStart())){
-
+        //最近期限日期
+        if(StringUtils.isNotEmpty(criteria.getNodeExpiryDateStart())){
+            sb.append(" and p.nodeExpiryDate >= :nodeExpiryDateStart");
+            param.put("nodeExpiryDateStart",criteria.getNodeExpiryDateStart());
         }
-        if(StringUtils.isNotEmpty(criteria.getRecentDueTimeEnd())){
-
+        if(StringUtils.isNotEmpty(criteria.getNodeExpiryDateEnd())){
+            sb.append(" and p.nodeExpiryDate <= :nodeExpiryDateEnd");
+            param.put("nodeExpiryDateEnd",criteria.getNodeExpiryDateEnd());
         }
         if(null != criteria.getPatentType()){
             sb.append(" and p.patentType = :patentType");
-            param.put("patentType",criteria.getPatentType());
+            param.put("patentType",criteria.getPatentType().toString());
         }
         if(null != criteria.getPatentNode()){
             sb.append(" and p.patentNode = :patentNode");
-            param.put("patentNode",criteria.getPatentNode());
+            param.put("patentNode",criteria.getPatentNode().toString());
         }
         if(StringUtils.isNotEmpty(criteria.getContractNo())){
             sb.append(" and pci.contractNo like :contractNo");
-            param.put("contractNo",criteria.getContractNo());
+            param.put("contractNo","%"+criteria.getContractNo()+"%");
+
         }
         if(StringUtils.isNotEmpty(criteria.getCustomerName())){
             sb.append(" and sc.name like :customerName");
-            param.put("customerName",criteria.getCustomerName());
+            param.put("customerName","%"+criteria.getCustomerName()+"%");
         }
         if(StringUtils.isNotEmpty(criteria.getApplicants())){
             sb.append(" and p.applicants like :applicants");
-            param.put("applicants",criteria.getApplicants());
+            param.put("applicants","%"+criteria.getApplicants()+"%");
         }
         if(StringUtils.isNotEmpty(criteria.getInventors())){
             sb.append(" and p.inventors like :inventors");
-            param.put("inventors",criteria.getInventors());
+            param.put("inventors","%"+criteria.getInventors()+"%");
         }
         if(StringUtils.isNotEmpty(criteria.getAgents())){
             sb.append(" and p.agencyAgents like :agents");
-            param.put("agents",criteria.getAgents());
+            param.put("agents","%"+criteria.getAgents()+"%");
         }
         if(StringUtils.isNotEmpty(criteria.getApplicationDateStart())){
             sb.append(" and p.applicationDate >= :applicationDateStart");
@@ -131,16 +178,24 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
             sb.append(" and p.authorizationDate <= :authorizationDateEnd");
             param.put("authorizationDateEnd",criteria.getAgents());
         }
-        //TODO 是否 延时
+        //是否 延时
         if(null != criteria.getIsDelayed()){
-
+            if(criteria.getIsDelayed()){
+                sb.append(" and if(CURDATE() > p.nodeExpiryDate,1,0) = 1");
+            }else{
+                sb.append(" and if(CURDATE() > p.nodeExpiryDate,1,0) = 0");
+            }
         }
-        sb.append(" order by p.create_datetime desc");
+        if(isRedTop){
+            sb.append(" order by isRemind desc, createDate desc");
+        }else{
+            sb.append(" order by p.create_datetime desc");
+        }
         return queryPaged(criteria.getPageIndex(),criteria.getPageSize(),sb.toString(),param,PatentListDto.class);
     }
 
     @Override
-    public TResult<PatentDetailDto> getPatentInfoById(UUID id) {
+    public TResult<PatentDetailBasicDto> getPatentDetailBasicInfo(UUID id) {
         if(null == id){
             throw new IllegalArgumentException("参数id不能为null");
         }
@@ -152,18 +207,38 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
                 " p.caseNo, " +
                 " p.techDomain, " +
                 " p.engineerLeaderId, " +
-                " u.realName, " +
+                " u.realName engineerLeaderName, " +
+                " p.engineerId, " +
+                " u2.realName engineerName, " +
                 " d.isAdvancePublicity, " +
                 " d.isFeeReduce, " +
                 " d.isRealTrial, " +
                 " d.isReqPriority, " +
-                " c.name customerName " +
+                " p.customerId, " +
+                " c.name customerName, " +
+                " u3.realName introducerName, " +
+                " p.patentProductPurpose, " +
+                " p.designMainPoints, " +
+                " p.designMainPointsPicture " +
                 " from pat_contract_patent_info p " +
                 " LEFT JOIN sys_user u on u.id = p.engineerLeaderId " +
+                " LEFT JOIN sys_user u2 on u2.id = p.engineerId " +
+                " LEFT JOIN sys_user u3 on u3.id = p.introducerId " +
                 " LEFT JOIN sys_ag_customer c on c.id = p.customerId " +
                 " LEFT JOIN pat_customer_damand d on d.patentId = p.id ");
-        sb.append(" where p.is_active and p.id = '"+id+"'");
-        PatentDetailDto detailDto = queryForObject(sb.toString(),null,PatentDetailDto.class);
+        sb.append(" where p.is_active =1 and p.id = '"+id+"'");
+        PatentDetailBasicDto detailDto = queryForObject(sb.toString(),null,PatentDetailBasicDto.class);
+        return new TResult<>(detailDto);
+    }
+
+    @Override
+    public TResult<PatentDetailDto> getPatentInfoById(UUID id) {
+        if(null == id){
+            throw new IllegalArgumentException("参数id不能为null");
+        }
+        TResult<PatentDetailBasicDto> basicDto = getPatentDetailBasicInfo(id);
+        PatentDetailDto detailDto = new PatentDetailDto();
+        BeanUtil.copyPropertiesIgnoreNull(basicDto.getResult(),detailDto);
         //获取申请人信息
         detailDto.setApplicantList(getPatentApplicants(id).getResult());
         //获取发明人信息
@@ -207,7 +282,8 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
         }
         SqlBuilder<PatApplicantDto> applicantSqlBuilder = HSqlBuilder.hFrom(PatApplicant.class, "a")
                 .where("a.patentId",patentId)
-                .select(PatApplicantDto.class);
+                .select(PatApplicantDto.class)
+                .orderBy("a.sort", OrderType.ASC);
         List<PatApplicantDto> applicants = queryList(applicantSqlBuilder);
         return new ListResult<>(applicants);
     }
@@ -219,7 +295,8 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
         }
         SqlBuilder<PatInventorDto> inventorSqlBuilder = HSqlBuilder.hFrom(PatInventor.class, "a")
                 .where("a.patentId",patentId)
-                .select(PatInventorDto.class);
+                .select(PatInventorDto.class)
+                .orderBy("a.sort", OrderType.ASC);
         List<PatInventorDto> inventors = queryList(inventorSqlBuilder);
         return new ListResult<>(inventors);
     }
@@ -231,7 +308,8 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
         }
         SqlBuilder<PatAgentDto> agentBuilder = HSqlBuilder.hFrom(PatAgent.class, "a")
                 .where("a.patentId",patentId)
-                .select(PatAgentDto.class);
+                .select(PatAgentDto.class)
+                .orderBy("a.sort", OrderType.ASC);
         List<PatAgentDto> agents = queryList(agentBuilder);
         return new ListResult<>(agents);
     }

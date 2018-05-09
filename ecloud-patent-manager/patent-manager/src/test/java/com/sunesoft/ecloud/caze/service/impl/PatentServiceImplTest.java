@@ -1,10 +1,9 @@
 package com.sunesoft.ecloud.caze.service.impl;
 
-import com.sunesoft.ecloud.adminclient.AgencyType;
+import com.sunesoft.ecloud.adminclient.TechnologyEnum;
 import com.sunesoft.ecloud.caseclient.dto.*;
 import com.sunesoft.ecloud.caseclient.enums.PatentType;
-import com.sunesoft.ecloud.caseclient.enums.TechnologyEnum;
-import com.sunesoft.ecloud.caze.domain.PatInventor;
+import com.sunesoft.ecloud.caseclient.enums.UpDown;
 import com.sunesoft.ecloud.caze.service.PatentService;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.junit.Test;
@@ -12,13 +11,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import static org.junit.Assert.*;
 
 /**
  * @Auther: niww
@@ -75,7 +71,7 @@ public class PatentServiceImplTest {
         PatApplicantDto applicantDto2 = new PatApplicantDto();
         applicantDto2.setName("申请人2-测试一下");
         applicantDtoList.add(applicantDto2);
-        dto.setApplicantList(applicantDtoList);
+
 
         List<PatInventorDto> inventorDtoList = new ArrayList<>();
         PatInventorDto inventorDto = new PatInventorDto();
@@ -84,7 +80,7 @@ public class PatentServiceImplTest {
         PatInventorDto inventorDto2 = new PatInventorDto();
         inventorDto2.setName("发明人2-测试一下");
         inventorDtoList.add(inventorDto2);
-        dto.setInventorList(inventorDtoList);
+
 
         List<PatAgentDto> agentDtoList = new ArrayList<>();
         PatAgentDto agentDto = new PatAgentDto();
@@ -93,7 +89,6 @@ public class PatentServiceImplTest {
         PatAgentDto agentDto2 = new PatAgentDto();
         agentDto2.setName("代理人2-测试一下");
         agentDtoList.add(agentDto2);
-        dto.setAgentList(agentDtoList);
 
         patentService.updatePatent(dto);
         System.out.println(23);
@@ -105,6 +100,12 @@ public class PatentServiceImplTest {
 
     @Test
     public void deletePatent1() throws Exception {
+    }
+
+    @Test
+    public void sortPatentApplicant() throws Exception{
+        TResult result = patentService.sortPatentApplicant(UUID.fromString("48b67f70-c297-43d9-87d7-674919484eac"), UpDown.DOWN);
+        System.out.println(23);
     }
 
 }

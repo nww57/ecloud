@@ -51,6 +51,12 @@ public class PatInventorDto {
      */
     private int sort;
 
+    /**
+     * 客户发明人id
+     */
+    private UUID customerInventorId;
+
+
     public int getSort() {
         return sort;
     }
@@ -121,5 +127,13 @@ public class PatInventorDto {
 
     public void setCellphone(String cellphone) {
         this.cellphone = cellphone;
+    }
+
+    public UUID getCustomerInventorId() {
+        return customerInventorId;
+    }
+
+    public void setCustomerInventorId(UUID customerInventorId) {
+        this.customerInventorId = customerInventorId;
     }
 }

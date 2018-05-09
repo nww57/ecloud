@@ -1,8 +1,10 @@
 package com.sunesoft.ecloud.caze.domain;
 
 import com.sunesoft.ecloud.hibernate.IEntity;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 /**
  * @Auther: niww
@@ -18,6 +20,13 @@ public class PatInventor extends IEntity {
     @ManyToOne
     @JoinColumn(name = "patentId")
     private PatentInfo patentInfo;
+
+    /**
+     * 客户发明人id
+     */
+    @Column(name = "customerInventorId",columnDefinition = "char(36)")
+    @Type(type = "uuid-char")
+    private UUID customerInventorId;
 
     /**
      * 姓名
@@ -61,6 +70,9 @@ public class PatInventor extends IEntity {
      */
     @Column(name = "sort")
     private int sort;
+
+    public PatInventor() {
+    }
 
     public PatInventor(PatentInfo patentInfo) {
         this.patentInfo = patentInfo;
@@ -128,5 +140,13 @@ public class PatInventor extends IEntity {
 
     public void setSort(int sort) {
         this.sort = sort;
+    }
+
+    public UUID getCustomerInventorId() {
+        return customerInventorId;
+    }
+
+    public void setCustomerInventorId(UUID customerInventorId) {
+        this.customerInventorId = customerInventorId;
     }
 }
