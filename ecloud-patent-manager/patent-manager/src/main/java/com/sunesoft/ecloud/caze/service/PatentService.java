@@ -158,4 +158,13 @@ public interface PatentService {
      * @return
      */
     TResult addPatentOfficialFee(AddPatentOfficialFeeDto dto);
+
+
+    /**
+     * 案件添加申请号
+     * @param caseNo 案件号
+     * @param applicationNo 申请号
+     * @return 返回操作结果
+     */
+    TResult bindPatent(String caseNo,String applicationNo);
 }

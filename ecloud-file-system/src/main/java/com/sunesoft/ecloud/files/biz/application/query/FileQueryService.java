@@ -1,6 +1,7 @@
 package com.sunesoft.ecloud.files.biz.application.query;
 
 
+import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.files.biz.application.criterias.FileCriteria;
 import com.sunesoft.ecloud.files.biz.application.dtos.DownloadFileDto;
 import com.sunesoft.ecloud.files.biz.application.dtos.FileInfoDto;
@@ -75,4 +76,11 @@ public interface FileQueryService {
     FilePathDto getFilePathById(UUID id);
 
     DownloadFileDto getFileById(UUID agId,UUID id);
+
+    /**
+     * 查询企业下所有文件的文件名
+     * @param agId 企业id
+     * @return 返回查询结果
+     */
+    ListResult<String> getAgencyAllFile(UUID agId);
 }
