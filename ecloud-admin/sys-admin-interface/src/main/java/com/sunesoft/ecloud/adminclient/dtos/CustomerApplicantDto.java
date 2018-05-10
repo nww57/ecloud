@@ -1,6 +1,5 @@
 package com.sunesoft.ecloud.adminclient.dtos;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sunesoft.ecloud.adminclient.ApplicantType;
 import org.springframework.format.annotation.DateTimeFormat;
 

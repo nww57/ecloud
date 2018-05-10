@@ -1,5 +1,6 @@
 server:
-  context-path: /case
+  servlet:
+    context-path: /case
   port: 5020
 
 management:

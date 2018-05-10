@@ -28,6 +28,11 @@ public class FileCriteria extends TCretiria{
      */
     private String docType;
 
+
+    private String fileName;
+
+
+    private Boolean is_latestVersion;
     public UUID getAgId() {
         return agId;
     }
@@ -59,6 +64,23 @@ public class FileCriteria extends TCretiria{
     public void setDocType(String docType) {
         this.docType = docType;
     }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public Boolean getIs_latestVersion() {
+        return is_latestVersion;
+    }
+
+    public void setIs_latestVersion(Boolean is_latestVersion) {
+        this.is_latestVersion = is_latestVersion;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
     public Map<String, Object> getParams() {
 
         Map<String, Object> params = new HashMap<>();
@@ -74,6 +96,13 @@ public class FileCriteria extends TCretiria{
         }
         if(!StringUtil.isEmpty(docType)){
             params.put("docType",docType);
+        }
+        if(!StringUtil.isEmpty(fileName)){
+            params.put("fileName",fileName);
+        }
+
+        if(is_latestVersion!=null){
+            params.put("is_latestVersion",is_latestVersion?1:0);
         }
         return params;
     }

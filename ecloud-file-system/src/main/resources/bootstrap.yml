@@ -14,4 +14,7 @@ eureka:
         management.context-path: /file
 
 file:
-  basePath: E:/ecloudFile/
+  basePath: D:/ecloudFile/
+path:
+  ignore:
+    startWith: /globle,/public,/dyn_downloadFile

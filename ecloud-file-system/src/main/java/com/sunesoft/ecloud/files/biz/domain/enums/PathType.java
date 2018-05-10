@@ -13,6 +13,8 @@ public enum PathType {
 
     WebImg,
 
+    Globle,
+
     Temp,
 
     Oth

@@ -59,7 +59,7 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
         if(null == id){
             role = new AgencyRole();
         }else{
-            role = roleRepository.findOne(id);
+            role = roleRepository.findById(id).get();
         }
         BeanUtil.copyPropertiesIgnoreNull(agencyRoleDto,role);
         role.setAgId(agId);
@@ -80,14 +80,14 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
             if(null!=uuidList&& uuidList.size()>0){
                 uuidList.forEach(uuid -> {
                     if(null != uuid){
-                        roleMenuRepository.delete(UUID.fromString(uuid));
+                        roleMenuRepository.deleteById(UUID.fromString(uuid));
                     }
                 });
             }
             //根据  菜单id 查询
             List<AgencyAuthorizedMenu> agencyMenuList = agencyMenuRepository.getAgencyAuthMenu(menuListString);
             if(null !=agencyMenuList && agencyMenuList.size()>0){
-                List<MenuFunction> functionList = menuFuncRepository.findAll(funcList);
+                List<MenuFunction> functionList = menuFuncRepository.findAllById(funcList);
                 List<AgencyRoleAuthorizedMenu> roleMenuList = new ArrayList<>();
                 AgencyRoleAuthorizedMenu roleMenu;
                 List<AgencyMenuAuthorizedFunction> menuFuncList;
@@ -109,7 +109,7 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
                         roleMenuList.add(roleMenu);
                     }
                 }
-                roleMenuRepository.save(roleMenuList);
+                roleMenuRepository.saveAll(roleMenuList);
             }
         }
 
@@ -123,7 +123,7 @@ public class AgencyRoleServiceImpl implements AgencyRoleService {
         //删除角色跟用户的关联关系
         roleRepository.deleteRoleUserRel(id.toString());
         //在删除角色信息
-        roleRepository.delete(id);
+        roleRepository.deleteById(id);
         return (TResult) ResultFactory.success();
     }
 

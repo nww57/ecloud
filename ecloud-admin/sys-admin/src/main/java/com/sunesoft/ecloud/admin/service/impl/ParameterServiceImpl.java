@@ -34,11 +34,11 @@ public class ParameterServiceImpl implements ParameterService {
     @Override
     public TResult<ParameterDto> addOrUpdate(ParameterDto dto, UUID uuid) {
         if (uuid != null) {
-            ParameterType parameterType = parameterTypeRepository.findOne(uuid);
+            ParameterType parameterType = parameterTypeRepository.findById(uuid).get();
             if (parameterType != null) {
                 Parameter parameter;
                 if (dto.getId() != null) {//修改
-                    parameter = parameterRepository.findOne(dto.getId());
+                    parameter = parameterRepository.findById(dto.getId()).get();
                 } else {//新增
                     parameter = new Parameter();
                     parameterType.getParameterList().add(parameter);
@@ -58,7 +58,7 @@ public class ParameterServiceImpl implements ParameterService {
     public TResult<ParameterDto> delete(List<UUID> ids) {
         if (ids.size() != 0) {
             for (UUID id : ids) {
-                parameterRepository.delete(id);
+                parameterRepository.deleteById(id);
             }
             return new TResult<>(true, "删除成功！");
         }

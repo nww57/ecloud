@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.beans.Transient;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -31,7 +32,7 @@ public class MenuServiceImpl implements MenuService {
     public TResult addOrUpdateMenu(MenuDto menuDto) {
         Menu menu;
         if (menuDto.getId() != null) {//修改
-            menu = menuRepository.findOne(menuDto.getId());
+            menu = menuRepository.findById(menuDto.getId()).get();
             BeanUtil.copyPropertiesIgnoreNull(menuDto, menu);
         } else {//新增
             menu = new Menu();
@@ -39,7 +40,7 @@ public class MenuServiceImpl implements MenuService {
         }
         Menu save = menuRepository.save(menu);
         if (menuDto.getPid() != null) {
-            Menu one = menuRepository.findOne(menuDto.getPid());//父级菜单
+            Menu one = menuRepository.findById(menuDto.getPid()).get();//父级菜单
             if (one != null && menuDto.getId()==null) {//有父节点，并且是新增菜单
                 //增加一个子节点个数
                 one.setChildCount(one.getChildCount() + 1);
@@ -50,14 +51,14 @@ public class MenuServiceImpl implements MenuService {
         } else {
             menu.setMenuIndex(save.getId() + "");
         }
-//        menu.setParentMenu(menuRepository.findOne(menuDto.getParentSimpleMenu().getId()));
+//      menu.setParentMenu(menuRepository.findById(menuDto.getParentSimpleMenu().getId()));
         Menu result = menuRepository.save(menu);
         return (TResult) ResultFactory.success(result.getId());
     }
 
     @Override
     public TResult delete(UUID uuid) {
-        Menu menu = menuRepository.findOne(uuid);
+        Menu menu = menuRepository.findById(uuid).get();
         if (menu != null) {
             Menu parentMenu = menu.getParentMenu();
             if (parentMenu != null) {

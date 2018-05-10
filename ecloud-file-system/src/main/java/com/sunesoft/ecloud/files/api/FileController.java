@@ -25,12 +25,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 @RestController
@@ -49,18 +46,20 @@ public class FileController {
     FileQueryService fileQueryService;
 
 
+    private static Map<UUID, String> fileDynmicId = new HashMap<>();
+
     @PostMapping(value = "/simple_file_relate")
 
     public TResult simpleFileRelate(List<FileRelateDto> fileRelateDtos) throws IOException {
-        UUID agId =  UUID.fromString(UserContext.getAgencyId());
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
 
         for (FileRelateDto relateDto : fileRelateDtos) {
-            if(relateDto.getPathId()==null) {
+            if (relateDto.getPathId() == null) {
                 FilePath pathByType = filePathService.getPathByType(agId,
                         relateDto.getBaseRoot(),
                         relateDto.getDocType(),
                         relateDto.getRequirePathType());
-                if(pathByType!=null) {
+                if (pathByType != null) {
                     fileRelateDtos.stream().filter(x ->
                             x.getBaseRoot().equals(relateDto.getBaseRoot()) &&
                                     x.getDocType().equals(relateDto.getDocType()))
@@ -68,13 +67,13 @@ public class FileController {
                 }
             }
         }
-        return fileInfoService.fileRelate(agId,fileRelateDtos);
+        return fileInfoService.fileRelate(agId, fileRelateDtos);
     }
 
 
     @PostMapping(value = "/simple_file_upload")
     public TResult simpleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
-        UUID agId =  UUID.fromString(UserContext.getAgencyId());
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
         TResult result;
         String originalFilename = null;
         if (file == null) {
@@ -107,7 +106,7 @@ public class FileController {
 
     @PostMapping(value = "/file_upload")
     public TResult uploadFile(@RequestParam("files") List<MultipartFile> files, FileUploadDto fileUploadDto) throws IOException {
-        UUID agId =   UUID.fromString(UserContext.getAgencyId());
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
         TResult result;
         //设置响应给前台内容的PrintWriter对象
         //上传文件的原名(即上传前的文件名字)
@@ -144,9 +143,8 @@ public class FileController {
                         fileUploadDto.getDocType(),
                         fileUploadDto.getRequirePathType());
                 fileInfoDto.setFile_path_id(pathByType.getId());
-                TResult upload = fileInfoService.uploadByCaseNo(fileInfoDto);
-//                TResult upload = fileInfoService.upload(fileInfoDto);
-                upId.add((UUID)upload.getResult());
+                TResult upload = fileInfoService.upload(fileInfoDto);
+                upId.add((UUID) upload.getResult());
 
                 //这里不必处理IO流关闭的问题,因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉
                 //此处也可以使用Spring提供的MultipartFile.transferTo(File dest)方法实现文件的上传
@@ -162,9 +160,8 @@ public class FileController {
     }
 
 
-
     @GetMapping("/get_file_list/{baseRoot}/{docType}")
-    public ListResult getFileList(@PathVariable("baseRoot")String baseRoot,@PathVariable("docType")String docType) throws IOException {
+    public ListResult getFileList(@PathVariable("baseRoot") String baseRoot, @PathVariable("docType") String docType) throws IOException {
 
         UUID agId = UUID.fromString(UserContext.getAgencyId());
         FileCriteria fileCriteria = new FileCriteria();
@@ -173,11 +170,52 @@ public class FileController {
         fileCriteria.setDocType(docType);
 
         List<FileInfoDto> fileInfoDtos = fileQueryService.GetFileInfo(fileCriteria);
-        return  new ListResult(fileInfoDtos);
+        return new ListResult(fileInfoDtos);
     }
 
 
-//
+    @GetMapping(value = "/pre_download/{id}")
+    public TResult preDownload(@PathVariable("id") UUID id, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        UUID dynamicId = UUID.randomUUID();
+        fileDynmicId.put(dynamicId, id.toString() + "," + UserContext.getAgencyId());
+        return ResultFactory.success("/downloadFile/" + dynamicId);
+
+
+    }
+
+    @GetMapping(value = "/dyn_downloadFile/{id}")
+    public String dynDownloadFile(@PathVariable("id") UUID id, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String fileId = fileDynmicId.get(id);
+        if (fileId == null) {
+            return "文件不存在，或路径已失效（下载路径只能使用一次）！";//xzl
+        }
+        String[] ids = fileId.split(",");
+        fileDynmicId.remove(id);
+
+        DownloadFileDto dto = fileQueryService.getFileById(UUID.fromString(ids[1]), UUID.fromString(ids[0]));
+        if (dto == null)
+            return "文件不存在，或路径已失效（下载路径只能使用一次）！";//xzl
+        InputStream in = dto.getInputStream();
+        //创建输出流
+        OutputStream out = response.getOutputStream();
+        response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(dto.getFileName(), "UTF-8"));
+         //创建缓冲区
+        byte buffer[] = new byte[1024];
+        int len = 0;
+        //循环将输入流中的内容读取到缓冲区当中
+        while ((len = in.read(buffer)) > 0) {
+            //输出缓冲区的内容到浏览器，实现文件下载
+            out.write(buffer, 0, len);
+        }
+        //关闭文件输入流
+        in.close();
+        //关闭输出流
+        out.close();
+        return null;
+    }
+
+    //
 //    /**
 //     * 修改文件下载无后缀，且文件名乱码
 //     * edit by pxj
@@ -189,11 +227,14 @@ public class FileController {
 //     */
 //
     @GetMapping(value = "/downloadFile/{id}")
-    public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("id") UUID id, HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+    public ResponseEntity downloadFile(@PathVariable("id") UUID id, HttpServletRequest request, HttpServletResponse response) throws IOException {
         UUID agId = UUID.fromString(UserContext.getAgencyId());
+        return getFile(agId, id);
+    }
 
-        DownloadFileDto dto =fileQueryService.getFileById(agId,id);
+
+    private ResponseEntity getFile(UUID agId, UUID id) throws UnsupportedEncodingException {
+        DownloadFileDto dto = fileQueryService.getFileById(agId, id);
         if (dto == null)
             return null;//xzl
         //设置response返回头部信息
@@ -203,12 +244,12 @@ public class FileController {
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");
-        FileInputStream input=null;
-        long len=0L;
+        FileInputStream input = null;
+        long len = 0L;
 
         try {
             input = dto.getInputStream();
-            len=dto.getFileLength();
+            len = dto.getFileLength();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -220,11 +261,8 @@ public class FileController {
                 .contentType(MediaType.parseMediaType("application/octet-stream"))
                 .body(new InputStreamResource(input));
 
+
     }
-
-
-
-
 
     @RequestMapping(value = "/deleteFile")
     @ResponseBody
@@ -232,8 +270,53 @@ public class FileController {
         String id = request.getParameter("id");
         UUID agId = UUID.fromString(UserContext.getAgencyId());
 
-        TResult result = fileInfoService.delete(agId,UUID.fromString(id));
+        TResult result = fileInfoService.delete(agId, UUID.fromString(id));
         return result;
     }
+
+    @GetMapping(value = "/public/{id}")
+    public ResponseEntity getWebImag(@PathVariable("id") UUID id) throws IOException {
+        DownloadFileDto dto = fileQueryService.getPublicFile(id);
+        if (dto == null)
+            return null;//xzl
+        //设置response返回头部信息
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment;filename=\"" + URLEncoder.encode(dto.getFileName(), "UTF-8") + "\"");
+
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+        FileInputStream input = null;
+        long len = 0L;
+
+        try {
+            input = dto.getInputStream();
+            len = dto.getFileLength();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //设置返回实体的头部、长度及类型
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentLength(len)
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(new InputStreamResource(input));
+
+
+
+    }
+
+    @GetMapping(value = "/globle/{baseRoot}/{docType}")
+    public ListResult getWebImag(@PathVariable("baseRoot") String baseRoot, @PathVariable("docType") String docType) throws IOException {
+
+        FileCriteria criteria = new FileCriteria();
+        criteria.setBaseRoot(baseRoot);
+        criteria.setDocType(docType);
+        List<FileInfoDto> fileInfoDtos = fileQueryService.GetFileInfo(criteria);
+        return new ListResult(fileInfoDtos);
+
+    }
+
 
 }

@@ -26,7 +26,7 @@ public class FilePathServiceImpl implements FilePathService {
 
     @Override
     public FilePath getById(UUID uuid) {
-        return filePathRepository.findOne(uuid);
+        return filePathRepository.findById(uuid).get();
     }
 
     @Override
@@ -113,7 +113,7 @@ public class FilePathServiceImpl implements FilePathService {
 
         FilePath path =new FilePath();
         if(pathDto.getId()!=null){
-            path = filePathRepository.findOne(pathDto.getId());
+            path = filePathRepository.findById(pathDto.getId()).get();
         }
 
         if(pathDto.getParentId()!=null) {
@@ -129,7 +129,7 @@ public class FilePathServiceImpl implements FilePathService {
 
     @Override
     public TResult deletePath(UUID agId,UUID id) {
-        filePathRepository.delete(id);
+        filePathRepository.deleteById(id);
         return ResultFactory.success();
     }
 }

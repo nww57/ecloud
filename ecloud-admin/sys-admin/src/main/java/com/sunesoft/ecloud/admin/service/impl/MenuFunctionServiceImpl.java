@@ -34,13 +34,13 @@ public class MenuFunctionServiceImpl implements MenuFunctionService {
     @Override
     public TResult addOrUpdateFunction(MenuFunctionDto menuFunctionDto ,UUID uuid) {
         if(uuid!=null){
-            Menu menu = menuRepository.findOne(uuid);
+            Menu menu = menuRepository.findById(uuid).get();
             if(menu==null){
                 return (TResult) ResultFactory.error("操作失败，菜单无效！");
             }
             MenuFunction menuFunction;
             if(menuFunctionDto.getId()!=null){//修改
-                menuFunction=menuFunctionRepository.findOne(menuFunctionDto.getId());
+                menuFunction=menuFunctionRepository.findById(menuFunctionDto.getId()).get();
                 BeanUtil.copyPropertiesIgnoreNull(menuFunctionDto,menuFunction);
             }else{//新增
                 menuFunction=new MenuFunction();
@@ -58,7 +58,7 @@ public class MenuFunctionServiceImpl implements MenuFunctionService {
     @Override
     public TResult delete(List<UUID> ids) {
         for (UUID id : ids) {
-            menuFunctionRepository.delete(id);
+            menuFunctionRepository.deleteById(id);
         }
         return (TResult) ResultFactory.success();
     }

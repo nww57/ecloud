@@ -149,6 +149,61 @@ public class FileQueryServiceImpl extends GenericQuery implements FileQueryServi
                 .and("id", id)
                 .select(FileInfoForDownLoadDto.class);
         FileInfoForDownLoadDto file = this.queryForObject(sqlBuilder);
+        if(file==null)
+            return null;
+        DownloadFileDto downdto = new DownloadFileDto();
+        try {
+            File f = new File(file.getRealPath()+"/"+file.getFileName());
+            FileInputStream in = new FileInputStream(f);
+            downdto.setFileName(file.getFileName());
+            downdto.setExtensions(file.getExtensions());
+            downdto.setInputStream(in);
+            downdto.setFileLength(f.length());
+            downdto.setFileSize(file.getFileSize());
+            downdto.setMd5(file.getMd5());
+            downdto.setVersionNo(file.getVersionNo());
+            return downdto;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    @Override
+    public DownloadFileDto getPublicFile(UUID id) {
+        SqlBuilder<FileInfoForDownLoadDto> sqlBuilder = HSqlBuilder.hFrom(FileInfos.class,"p")
+                .and("id",id)
+                .select(FileInfoForDownLoadDto.class);
+        FileInfoForDownLoadDto file = this.queryForObject(sqlBuilder);
+        if(file==null)
+            return null;
+        DownloadFileDto downdto = new DownloadFileDto();
+        try {
+            File f = new File(file.getRealPath()+"/"+file.getFileName());
+            FileInputStream in = new FileInputStream(f);
+            downdto.setFileName(file.getFileName());
+            downdto.setExtensions(file.getExtensions());
+            downdto.setInputStream(in);
+            downdto.setFileLength(f.length());
+            downdto.setFileSize(file.getFileSize());
+            downdto.setMd5(file.getMd5());
+            downdto.setVersionNo(file.getVersionNo());
+            return downdto;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    @Override
+    public DownloadFileDto getImageFileByName(FileCriteria criteria) {
+
+        criteria.setIs_latestVersion(true);
+        SqlBuilder<FileInfoForDownLoadDto> sqlBuilder = HSqlBuilder.hFrom(FileInfos.class,"p")
+                .where(criteria.getParams())
+                .select(FileInfoForDownLoadDto.class);
+
+        FileInfoForDownLoadDto file = this.queryForObject(sqlBuilder);
+        if(file==null)
+            return null;
         DownloadFileDto downdto = new DownloadFileDto();
         try {
             File f = new File(file.getRealPath() + "/" + file.getFileName());

@@ -24,6 +24,11 @@ public class UserAuthRestInterceptor extends HandlerInterceptorAdapter {
     @Value("${jwt.header}")
     private String tokenHeader;
 
+
+
+    @Value("${path.ignore.startWith}")
+    private String startWith;
+
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
     @Override
@@ -41,6 +46,14 @@ public class UserAuthRestInterceptor extends HandlerInterceptorAdapter {
             return super.preHandle(request, response, handler);
 
         }
+        String contextPath = request.getContextPath();
+        String requstUri = request.getRequestURI();
+        if(contextPath!=null&&contextPath.equals("/")){
+            requstUri=request.getRequestURI().substring(request.getContextPath().length());
+        }
+        if(isStartWith(requstUri)){
+            return super.preHandle(request, response, handler);
+        }
             String token = request.getHeader(tokenHeader);
         if (StringUtil.isEmpty(token)) {
          throw new TokenNotFoundException("TokenNotFound");
@@ -56,6 +69,21 @@ public class UserAuthRestInterceptor extends HandlerInterceptorAdapter {
         UserContext.setUserID(infoFromToken.getId());
         UserContext.setAgencyId(infoFromToken.getAgencyid());
         return super.preHandle(request, response, handler);
+    }
+    /**
+     * URI是否以什么打头
+     *
+     * @param requestUri
+     * @return
+     */
+    private boolean isStartWith(String requestUri) {
+        boolean flag = false;
+        for (String s : startWith.split(",")) {
+            if (requestUri.startsWith(s)) {
+                return true;
+            }
+        }
+        return flag;
     }
 
     @Override

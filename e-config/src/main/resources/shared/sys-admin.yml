@@ -1,5 +1,6 @@
 server:
-  context-path: /admin
+  servlet:
+    context-path: /admin
   port: 5010
 
 management:

@@ -1,5 +1,6 @@
 server:
-  context-path: /ua
+  servlet:
+    context-path: /ua
   port: 5000
 
 management:

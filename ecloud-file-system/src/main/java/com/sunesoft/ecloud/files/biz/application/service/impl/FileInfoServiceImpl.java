@@ -45,7 +45,7 @@ public class FileInfoServiceImpl implements FileInfoService {
         FileInfos fileInfos = new FileInfos();
 
         if (fileInfoDto.getCovered()) {
-            fileInfos = fileInfosRepository.findOne(fileInfoDto.getId());
+            fileInfos = fileInfosRepository.findById(fileInfoDto.getId()).get();
         }
         BeanUtil.copyPropertiesIgnoreNull(fileInfoDto, fileInfos);
         if (fileInfoDto.getFile_path_id() != null) {
@@ -53,61 +53,21 @@ public class FileInfoServiceImpl implements FileInfoService {
             path.setId(fileInfoDto.getFile_path_id());
             fileInfos.setFilePath(path);
         }
-        String filePath = basePath + fileInfos.getAgId().toString() + "/";
+        String filePath = basePath ;
+        if(fileInfoDto.getRequirePathType()!=PathType.Globle){
+            filePath+= fileInfos.getAgId().toString() + "/";
+        }
         if(fileInfoDto.getRequirePathType()==null) {
             fileInfoDto.setRequirePathType(PathType.Oth);
         }
         filePath +=  fileInfoDto.getRequirePathType().toString()+"/";
-        if (!StringUtil.isEmpty(fileInfos.getBizType()) && !fileInfos.getBizType().equals("temp")) {
-            filePath += fileInfos.getBizType() + "/";
-        }
+
         filePath+=fileInfos.getBaseRoot()+"/";
-        fileInfos.setRealPath(filePath);
-        fileInfosRepository.save(fileInfos);
-
-        File filepath = new File(filePath);
-        if (filepath.exists()) {
-            try {
-                filepath.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        File file = new File(filePath, fileInfos.getFileName());
-        try {
-            FileUtils.copyInputStreamToFile(fileInfoDto.getInputStream(), file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return ResultFactory.success(fileInfos.getId());
-    }
-
-    @Override
-    public TResult uploadByCaseNo(FileInfoDto fileInfoDto) {
-        FileInfos fileInfos = new FileInfos();
-
-        if (fileInfoDto.getCovered()) {
-            fileInfos = fileInfosRepository.findOne(fileInfoDto.getId());
-        }
-        BeanUtil.copyPropertiesIgnoreNull(fileInfoDto, fileInfos);
-        if (fileInfoDto.getFile_path_id() != null) {
-            FilePath path = new FilePath();
-            path.setId(fileInfoDto.getFile_path_id());
-            fileInfos.setFilePath(path);
-        }
-        String filePath = basePath + fileInfos.getAgId().toString() + "/";
-        if(fileInfoDto.getRequirePathType()==null) {
-            fileInfoDto.setRequirePathType(PathType.Oth);
-        }
-        filePath +=  fileInfoDto.getRequirePathType().toString()+"/";
-        filePath += fileInfos.getBaseRoot()+"/";
         if (!StringUtil.isEmpty(fileInfos.getBizType()) && !fileInfos.getBizType().equals("temp")) {
             filePath += fileInfos.getBizType() + "/";
         }
-        if(StringUtils.isNotEmpty(fileInfos.getDocType()) && !"temp".equals(fileInfos.getDocType())){
-            filePath += fileInfos.getDocType() + "/";
-        }
         fileInfos.setRealPath(filePath);
+        fileInfos.setIs_latestVersion(true);
         fileInfosRepository.save(fileInfos);
 
         File filepath = new File(filePath);
@@ -126,6 +86,51 @@ public class FileInfoServiceImpl implements FileInfoService {
         }
         return ResultFactory.success(fileInfos.getId());
     }
+//
+//    @Override
+//    public TResult uploadByCaseNo(FileInfoDto fileInfoDto) {
+//        FileInfos fileInfos = new FileInfos();
+//
+//        if (fileInfoDto.getCovered()) {
+//            fileInfos = fileInfosRepository.findById(fileInfoDto.getId());
+//        }
+//        BeanUtil.copyPropertiesIgnoreNull(fileInfoDto, fileInfos);
+//        if (fileInfoDto.getFile_path_id() != null) {
+//            FilePath path = new FilePath();
+//            path.setId(fileInfoDto.getFile_path_id());
+//            fileInfos.setFilePath(path);
+//        }
+//        String filePath = basePath + fileInfos.getAgId().toString() + "/";
+//        if(fileInfoDto.getRequirePathType()==null) {
+//            fileInfoDto.setRequirePathType(PathType.Oth);
+//        }
+//        filePath +=  fileInfoDto.getRequirePathType().toString()+"/";
+//        filePath += fileInfos.getBaseRoot()+"/";
+//        if (!StringUtil.isEmpty(fileInfos.getBizType()) && !fileInfos.getBizType().equals("temp")) {
+//            filePath += fileInfos.getBizType() + "/";
+//        }
+//        if(StringUtils.isNotEmpty(fileInfos.getDocType()) && !"temp".equals(fileInfos.getDocType())){
+//            filePath += fileInfos.getDocType() + "/";
+//        }
+//        fileInfos.setRealPath(filePath);
+//        fileInfosRepository.save(fileInfos);
+//
+//        File filepath = new File(filePath);
+//        if (filepath.exists()) {
+//            try {
+//                filepath.createNewFile();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        File file = new File(filePath, fileInfos.getFileName());
+//        try {
+//            FileUtils.copyInputStreamToFile(fileInfoDto.getInputStream(), file);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return ResultFactory.success(fileInfos.getId());
+//    }
 
 
     @Transactional
@@ -134,7 +139,7 @@ public class FileInfoServiceImpl implements FileInfoService {
 
         List<File> waitDelete = new ArrayList<>();
         for (FileRelateDto relateDto : fileRelateDto) {
-            FileInfos fileInfos = fileInfosRepository.findOne(relateDto.getId());
+            FileInfos fileInfos = fileInfosRepository.findById(relateDto.getId()).get();
             //暂存路径
             String tempPath = fileInfos.getRealPath();
             BeanUtil.copyPropertiesIgnoreNull(relateDto,fileInfos);
@@ -164,20 +169,14 @@ public class FileInfoServiceImpl implements FileInfoService {
 
     @Override
     public TResult delete(UUID agId,UUID fileInfoId) {
-        FileInfos fileInfos = fileInfosRepository.findOne(fileInfoId);
+        FileInfos fileInfos = fileInfosRepository.findById(fileInfoId).get();
         if(agId.equals(fileInfos.getAgId())) {
-            fileInfosRepository.delete(fileInfoId);
-            File source = new File(fileInfos.getRealPath() + fileInfos.getFileName());
+            fileInfosRepository.deleteById(fileInfoId);
 
-            try {
-                source.delete();
-            } catch (Exception ex) {
-            } //DoNothing here
             return ResultFactory.success();
         }else{
             return ResultFactory.error("no Authority delete");
         }
-
     }
 
 }

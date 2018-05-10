@@ -42,7 +42,7 @@ public class AgencyAgentServiceImpl implements AgencyAgentService {
         if(null == id){
             agent = new AgencyAgent();
         }else{
-            agent = agentRepository.findOne(id);
+            agent = agentRepository.findById(id).get();
         }
         BeanUtil.copyPropertiesIgnoreNull(agentDto,agent);
         agentRepository.saveAndFlush(agent);

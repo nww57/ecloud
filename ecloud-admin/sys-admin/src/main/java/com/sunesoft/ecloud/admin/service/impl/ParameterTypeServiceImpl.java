@@ -30,14 +30,14 @@ public class ParameterTypeServiceImpl implements ParameterTypeService {
     public TResult addOrUpdate(ParameterTypeDto dto) {
         ParameterType parameterType;
         if (dto.getId() != null) {//修改
-            parameterType = parameterTypeRepository.findOne(dto.getId());
+            parameterType = parameterTypeRepository.findById(dto.getId()).get();
         } else {//新增
             parameterType = new ParameterType();
         }
         BeanUtil.copyPropertiesIgnoreNull(dto, parameterType);
         ParameterType result =parameterTypeRepository.save(parameterType);
         if (dto.getPid() != null && dto.getId()==null) {//有父节点，并且是新增菜单
-            ParameterType one = parameterTypeRepository.findOne(dto.getPid());//父级菜单
+            ParameterType one = parameterTypeRepository.findById(dto.getPid()).get();//父级菜单
             if (one != null) {
                 one.getChildren().add(parameterType);
                 parameterType.setParentParamType(one);
@@ -50,7 +50,7 @@ public class ParameterTypeServiceImpl implements ParameterTypeService {
     @Override
     public TResult delete(UUID uuid) {
         if (uuid != null) {
-            parameterTypeRepository.delete(uuid);
+            parameterTypeRepository.deleteById(uuid);
             return new TResult<>(true, "删除成功！");
         }
         return new TResult<>(false, "删除失败！");

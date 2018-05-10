@@ -114,7 +114,7 @@ public class AgencyCustomerServiceImplTest {
 
     @Test
     public void test(){
-        AgencyCustomer customer = customerRepository.findOne(UUID.fromString("ebde1070-5faa-4f74-a22e-963a819bdef7"));
+        AgencyCustomer customer = customerRepository.findById(UUID.fromString("ebde1070-5faa-4f74-a22e-963a819bdef7")).get();
         System.out.println(23);
     }
 }
