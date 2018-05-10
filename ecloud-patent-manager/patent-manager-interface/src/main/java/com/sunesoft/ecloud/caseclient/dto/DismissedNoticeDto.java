@@ -1,6 +1,7 @@
 package com.sunesoft.ecloud.caseclient.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sunesoft.ecloud.common.sqlBuilderTool.annotations.AliasName;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -21,37 +22,31 @@ public class DismissedNoticeDto {
     /**
      * 案件号
      */
-    @AliasName("ANJUANH")
     private String caseNo;
 
     /**
      * 申请号
      */
-    @AliasName("SHENQINGH")
     private String applicationNo;
 
     /**
      * 专利名称
      */
-    @AliasName("FAMINGMC")
     private String patentName;
 
     /**
      * 通知书名称
      */
-    @AliasName("TONGZHISMC")
     private String noticeName;
 
     /**
      * 通知书编码/发文序列号
      */
-    @AliasName("TONGZHISBM")
     private String noticeCode;
 
     /**
      * 申请日
      */
-    @AliasName("SHENQINGR")
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyyMMdd")
     private LocalDate applicationDate;
@@ -59,7 +54,6 @@ public class DismissedNoticeDto {
     /**
      * 发文日
      */
-    @AliasName("FAWENR")
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyyMMdd")
     private LocalDate sendFileDate;
