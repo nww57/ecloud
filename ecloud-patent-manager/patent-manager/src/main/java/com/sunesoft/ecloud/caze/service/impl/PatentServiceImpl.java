@@ -462,6 +462,20 @@ public class PatentServiceImpl implements PatentService {
     }
 
     @Override
+    public TResult bindPatent(String caseNo, String applicationNo) {
+        if(StringUtils.isEmpty(caseNo) || StringUtils.isEmpty(applicationNo)){
+            throw new IllegalArgumentException("参数caseNo或者applicationNo不能为null");
+        }
+        PatentInfo info = patentInfoRepository.findByCaseNo(caseNo);
+        if(null ==info){
+            throw new IllegalArgumentException("无效的案件号");
+        }
+        info.setApplicationNo(applicationNo);
+        patentInfoRepository.save(info);
+        return ResultFactory.success();
+    }
+
+    @Override
     public TResult deletePatent(UUID id) {
         patentInfoRepository.deleteBatch(id);
         return ResultFactory.success();
