@@ -18,7 +18,6 @@ import javax.servlet.MultipartConfigElement;
  * @author: Zhouzh
  * @Date: 2018/3/21
  */
-@Configuration
 @SpringBootApplication
 @EnableEurekaClient
 @EnableFeignClients
@@ -32,7 +31,7 @@ public class sysFileApplicationBootstrap {
     public MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
         factory.setMaxFileSize("50MB");
-        factory.setMaxRequestSize("500MB");
+        factory.setMaxRequestSize("100MB");
         return factory.createMultipartConfig();
     }
 }
