@@ -66,6 +66,9 @@ public class FileInfoServiceImpl implements FileInfoService {
         if (!StringUtil.isEmpty(fileInfos.getBizType()) && !fileInfos.getBizType().equals("temp")) {
             filePath += fileInfos.getBizType() + "/";
         }
+        if(StringUtils.isNotEmpty(fileInfos.getDocType()) && !"temp".equals(fileInfos.getDocType())){
+            filePath += fileInfos.getDocType() + "/";
+        }
         fileInfos.setRealPath(filePath);
         fileInfos.setIs_latestVersion(true);
         fileInfosRepository.save(fileInfos);
