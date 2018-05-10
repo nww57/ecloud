@@ -172,9 +172,11 @@ public class FileQueryServiceImpl extends GenericQuery implements FileQueryServi
         if (null == agId) {
             throw new IllegalArgumentException("参数agId不能为null");
         }
-        SqlBuilder sqlBuilder = HSqlBuilder.hFrom(FileInfos.class, "f")
+        SqlBuilder<String> sqlBuilder = HSqlBuilder.hFrom(FileInfos.class, "f")
                 .where("f.agId",agId)
                 .selectField("f.fileName","fileName");
-        return new ListResult<>(queryList(sqlBuilder));
+        List<String> fileNameList = queryList(sqlBuilder);
+        fileNameList = fileNameList.stream().map(s->s.substring(0,s.lastIndexOf("."))).collect(Collectors.toList());
+        return new ListResult<>(fileNameList);
     }
 }
