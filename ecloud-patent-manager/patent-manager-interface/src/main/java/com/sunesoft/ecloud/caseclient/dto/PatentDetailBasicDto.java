@@ -70,7 +70,7 @@ public class PatentDetailBasicDto {
      * 撰写截止日
      */
     @JsonFormat(pattern = "yyyy-MM-dd",shape = JsonFormat.Shape.STRING)
-    private LocalDate writeNodeExpiryDate;
+    private LocalDate nodeExpiryDate;
 
 
     /**
@@ -267,11 +267,11 @@ public class PatentDetailBasicDto {
         this.engineerName = engineerName;
     }
 
-    public LocalDate getWriteNodeExpiryDate() {
-        return writeNodeExpiryDate;
+    public LocalDate getNodeExpiryDate() {
+        return nodeExpiryDate;
     }
 
-    public void setWriteNodeExpiryDate(LocalDate writeNodeExpiryDate) {
-        this.writeNodeExpiryDate = writeNodeExpiryDate;
+    public void setNodeExpiryDate(LocalDate nodeExpiryDate) {
+        this.nodeExpiryDate = nodeExpiryDate;
     }
 }
