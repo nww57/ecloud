@@ -76,7 +76,9 @@ public interface FileQueryService {
     FilePathDto getFilePathById(UUID id);
 
     DownloadFileDto getFileById(UUID agId,UUID id);
+    DownloadFileDto getPublicFile(UUID id);
 
+    DownloadFileDto getImageFileByName(FileCriteria criteria);
     /**
      * 查询企业下所有文件的文件名
      * @param agId 企业id
