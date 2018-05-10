@@ -31,7 +31,7 @@ public class DismissedNoticeDto {
     /**
      * 专利名称
      */
-
+    @AliasName("FAMINGMC")
     private String patentName;
 
     /**
@@ -49,9 +49,9 @@ public class DismissedNoticeDto {
     /**
      * 申请日
      */
-    @AliasName("SHENQINGR   ")
+    @AliasName("SHENQINGR")
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyyMMdd")
     private LocalDate applicationDate;
 
     /**
@@ -59,7 +59,7 @@ public class DismissedNoticeDto {
      */
     @AliasName("FAWENR")
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyyMMdd")
     private LocalDate sendFileDate;
 
     public UUID getId() {
