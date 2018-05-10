@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -227,11 +228,12 @@ public class FileQueryServiceImpl extends GenericQuery implements FileQueryServi
         if (null == agId) {
             throw new IllegalArgumentException("参数agId不能为null");
         }
-        SqlBuilder<String> sqlBuilder = HSqlBuilder.hFrom(FileInfos.class, "f")
-                .where("f.agId",agId)
-                .selectField("f.fileName","fileName");
-        List<String> fileNameList = queryList(sqlBuilder);
-        fileNameList = fileNameList.stream().map(s->s.substring(0,s.lastIndexOf("."))).collect(Collectors.toList());
-        return new ListResult<>(fileNameList);
+        String sql  = "select f.fileName from file_info f where f.agId = '"+agId+"'";
+        List<FileInfoDto> fileNameList = queryList(sql,null,FileInfoDto.class);
+        if(null == fileNameList || fileNameList.size()==0){
+            return new ListResult(Collections.emptyList());
+        }
+        List<String> nameList = fileNameList.stream().map(FileInfoDto::getFileName).map(s -> s.substring(0,s.lastIndexOf("."))).collect(Collectors.toList());
+        return new ListResult<>(nameList);
     }
 }

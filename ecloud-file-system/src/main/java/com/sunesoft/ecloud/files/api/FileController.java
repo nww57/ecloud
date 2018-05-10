@@ -318,5 +318,11 @@ public class FileController {
 
     }
 
+    @GetMapping(value = "/file/syncrecord")
+    public ListResult syncRecord () {
+        UUID agId = UUID.fromString(UserContext.getAgencyId());
+        return fileQueryService.getAgencyAllFile(agId);
+    }
+
 
 }
