@@ -1,5 +1,6 @@
 server:
-  context-path: /file
+  servlet:
+    context-path: /file
   port: 5020
 
 management:

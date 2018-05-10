@@ -45,7 +45,7 @@ public class FileInfoServiceImpl implements FileInfoService {
         FileInfos fileInfos = new FileInfos();
 
         if (fileInfoDto.getCovered()) {
-            fileInfos = fileInfosRepository.findOne(fileInfoDto.getId());
+            fileInfos = fileInfosRepository.findById(fileInfoDto.getId()).get();
         }
         BeanUtil.copyPropertiesIgnoreNull(fileInfoDto, fileInfos);
         if (fileInfoDto.getFile_path_id() != null) {
@@ -92,7 +92,7 @@ public class FileInfoServiceImpl implements FileInfoService {
 //        FileInfos fileInfos = new FileInfos();
 //
 //        if (fileInfoDto.getCovered()) {
-//            fileInfos = fileInfosRepository.findOne(fileInfoDto.getId());
+//            fileInfos = fileInfosRepository.findById(fileInfoDto.getId());
 //        }
 //        BeanUtil.copyPropertiesIgnoreNull(fileInfoDto, fileInfos);
 //        if (fileInfoDto.getFile_path_id() != null) {
@@ -139,7 +139,7 @@ public class FileInfoServiceImpl implements FileInfoService {
 
         List<File> waitDelete = new ArrayList<>();
         for (FileRelateDto relateDto : fileRelateDto) {
-            FileInfos fileInfos = fileInfosRepository.findOne(relateDto.getId());
+            FileInfos fileInfos = fileInfosRepository.findById(relateDto.getId()).get();
             //暂存路径
             String tempPath = fileInfos.getRealPath();
             BeanUtil.copyPropertiesIgnoreNull(relateDto,fileInfos);
@@ -169,9 +169,9 @@ public class FileInfoServiceImpl implements FileInfoService {
 
     @Override
     public TResult delete(UUID agId,UUID fileInfoId) {
-        FileInfos fileInfos = fileInfosRepository.findOne(fileInfoId);
+        FileInfos fileInfos = fileInfosRepository.findById(fileInfoId).get();
         if(agId.equals(fileInfos.getAgId())) {
-            fileInfosRepository.delete(fileInfoId);
+            fileInfosRepository.deleteById(fileInfoId);
 
             return ResultFactory.success();
         }else{

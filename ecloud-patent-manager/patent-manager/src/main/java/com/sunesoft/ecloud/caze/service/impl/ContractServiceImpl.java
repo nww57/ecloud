@@ -47,7 +47,7 @@ public class ContractServiceImpl implements ContractService {
         if(null == id){
             info = new ContractInfo();
         }else{
-            info = contractInfoRepository.findOne(id);
+            info = contractInfoRepository.findById(id).get();
         }
         BeanUtil.copyPropertiesIgnoreNull(dto,info);
         contractInfoRepository.saveAndFlush(info);

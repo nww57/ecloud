@@ -12,7 +12,6 @@ import java.util.List;
 @Table(name="file_path")
 public class FilePath extends BizEntity {
 
-
     private String baseRoot;// 存储案件编号
 
     private String pathCode;

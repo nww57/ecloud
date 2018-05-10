@@ -75,7 +75,7 @@ public class AgencyServiceImpl extends HibernateQuery implements AgencyService {
         if (null == id) {//新增
             agency = new Agency();
         } else {//修改
-            agency = agencyRepository.findOne(id);
+            agency = agencyRepository.findById(id).get();
         }
         BeanUtil.copyPropertiesIgnoreNull(agencyDto, agency);
         // 配置菜单
@@ -105,16 +105,16 @@ public class AgencyServiceImpl extends HibernateQuery implements AgencyService {
                 List<String> roleMenuList = roleMenuRepository.getIdByAgencyMenu(deleteId);
                 if (null != roleMenuList && roleMenuList.size() > 0) {
                     for (String s : roleMenuList) {
-                        roleMenuRepository.delete(UUID.fromString(s));
+                        roleMenuRepository.deleteById(UUID.fromString(s));
                     }
                 }
                 for (String s : deleteId) {
-                    agMenuRepository.delete(UUID.fromString(s));
+                    agMenuRepository.deleteById(UUID.fromString(s));
                 }
             }
             if (addMenuIds.size() > 0) {
                 //新增的
-                List<Menu> menus = menuRepository.findAll(addMenuIds);
+                List<Menu> menus = menuRepository.findAllById(addMenuIds);
                 List<AgencyAuthorizedMenu> authMenuList = new ArrayList<>();
                 AgencyAuthorizedMenu authMenu;
                 for (Menu menu : menus) {
@@ -123,7 +123,7 @@ public class AgencyServiceImpl extends HibernateQuery implements AgencyService {
                     authMenu.setMenu(menu);
                     authMenuList.add(authMenu);
                 }
-                authMenuRepository.save(authMenuList);
+                authMenuRepository.saveAll(authMenuList);
             }
         }
 
@@ -146,7 +146,7 @@ public class AgencyServiceImpl extends HibernateQuery implements AgencyService {
     @Override
     public TResult updateAgencyBasicInfo(AgencyBasicDto agencyBasicDto) {
         UUID id = agencyBasicDto.getId();
-        Agency agency = agencyRepository.findOne(id);
+        Agency agency = agencyRepository.findById(id).get();
         BeanUtil.copyProperties(agencyBasicDto, agency, new String[]{"serverStatus"});
         agencyRepository.saveAndFlush(agency);
         return new TResult<>(agencyBasicDto);

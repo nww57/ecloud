@@ -64,7 +64,7 @@ public class AgencyRoleServiceImplTest {
 
     @Test
     public void deleteRepository(){
-        repository.delete(UUID.fromString("29bdac6e-97b9-446e-89c5-4a76f84e2a31"));
+        repository.deleteById(UUID.fromString("29bdac6e-97b9-446e-89c5-4a76f84e2a31"));
         System.out.println(23);
     }
 }

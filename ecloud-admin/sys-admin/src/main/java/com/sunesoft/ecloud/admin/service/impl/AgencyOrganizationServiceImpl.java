@@ -57,7 +57,7 @@ public class AgencyOrganizationServiceImpl implements AgencyOrganizationService 
         if(null == id){//新增
             org = new AgencyOrganization();
         }else{//修改
-            org = orgRepository.findOne(id);
+            org = orgRepository.findById(id).get();
         }
         //基础信息
         org.setName(agencyOrganizationDto.getName());
@@ -94,7 +94,7 @@ public class AgencyOrganizationServiceImpl implements AgencyOrganizationService 
         userRepository.updateOrganizationNull(id);
         //与下级的关系断开
         orgRepository.updateParentAgencyNull(id);
-        orgRepository.delete(id);
+        orgRepository.deleteById(id);
         return (TResult) ResultFactory.success();
     }
 

@@ -94,11 +94,11 @@ public class UserServiceImpl implements UserService {
                 user.setPassword(encoder.encode("888888"));
             }
         } else {
-            user = userRepository.findOne(id);
+            user = userRepository.findById(id).get();
         }
         //设置组织机构
         if (null != structureId) {
-            AgencyOrganization org = orgRepository.findOne(structureId);
+            AgencyOrganization org = orgRepository.findById(structureId).get();
             if (null == org) {
                 return new TResult("组织机构不存在");
             }
@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService {
         }
         //设置角色
         if (null != roleList && roleList.size() > 0) {
-            List<AgencyRole> roleListEntity = roleRepository.findAll(roleList);
+            List<AgencyRole> roleListEntity = roleRepository.findAllById(roleList);
             user.getRoleList().clear();
             user.setRoleList(roleListEntity);
         }
@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public TResult updateUserBasicInfo(UserBasicDto userBasicDto) {
         UUID id = userBasicDto.getId();
-        User user = userRepository.findOne(id);
+        User user = userRepository.findById(id).get();
         BeanUtil.copyPropertiesIgnoreNull(userBasicDto, user);
         userRepository.saveAndFlush(user);
         return (TResult) ResultFactory.success();
@@ -136,9 +136,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public TResult deleteUser(UUID id) {
         //删除用户跟角色的关联关系
-        User user = userRepository.findOne(id);
+        User user = userRepository.findById(id).get();
         user.getRoleList().clear();
-        userRepository.delete(id);
+        userRepository.deleteById(id);
         return (TResult) ResultFactory.success();
     }
 
@@ -176,7 +176,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public TResult setPassword(UUID id, String newPassword,Boolean need) {
-        boolean exist = userRepository.exists(id);
+        boolean exist = userRepository.existsById(id);
         if (!exist) {
             return new TResult<>("用户id不存在");
         }
@@ -199,7 +199,7 @@ public class UserServiceImpl implements UserService {
         }
         if(!Objects.equals(user.getUserType(),UserType.SUPER_ADMIN)){
             UUID agId = user.getAgId();
-            Agency agency = agencyRepository.findOne(agId);
+            Agency agency = agencyRepository.findById(agId).get();
             if(!agency.getIs_active()){
                 return new TResult<>(new LoginResultDto(null, LoginResultStatus.ERROR_USERNAME));
             }

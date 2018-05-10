@@ -63,10 +63,10 @@ public class AgencyCustomerServiceImpl implements AgencyCustomerService {
             }else{
                customer.setCustomerAgencyId(customerAgency.getId());
             }
-            Agency agency = agencyRepository.findOne(agId);
+            Agency agency = agencyRepository.findById(agId).get();
             customer.setAgency(agency);
         } else {
-            customer = customerRepository.findOne(id);
+            customer = customerRepository.findById(id).get();
         }
 
         BeanUtil.copyPropertiesIgnoreNull(agencyCustomerDto, customer);
@@ -77,7 +77,7 @@ public class AgencyCustomerServiceImpl implements AgencyCustomerService {
 
     @Override
     public TResult delete(UUID id) {
-        customerRepository.delete(id);
+        customerRepository.deleteById(id);
         return (TResult) ResultFactory.success();
     }
 
@@ -98,7 +98,7 @@ public class AgencyCustomerServiceImpl implements AgencyCustomerService {
         if(null ==  id){
             applicant = new CustomerApplicant();
         }else{
-            applicant = applicantRepository.findOne(id);
+            applicant = applicantRepository.findById(id).get();
         }
         BeanUtil.copyPropertiesIgnoreNull(applicantsDto,applicant);
         applicantRepository.save(applicant);
@@ -126,7 +126,7 @@ public class AgencyCustomerServiceImpl implements AgencyCustomerService {
         if(null ==  id){
             inventor = new CustomerInventor();
         }else{
-            inventor = inventorRepository.findOne(id);
+            inventor = inventorRepository.findById(id).get();
         }
         BeanUtil.copyPropertiesIgnoreNull(inventorDto,inventor);
         inventorRepository.save(inventor);
@@ -153,7 +153,7 @@ public class AgencyCustomerServiceImpl implements AgencyCustomerService {
         if(null ==  id){
             contact = new CustomerContact();
         }else{
-            contact = contactRepository.findOne(id);
+            contact = contactRepository.findById(id).get();
         }
         BeanUtil.copyPropertiesIgnoreNull(contactsDto,contact);
         contactRepository.save(contact);

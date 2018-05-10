@@ -3,15 +3,13 @@ spring:
     name: e-gateway
   cloud:
     config:
-      uri: http://192.168.1.115:8888
+      uri: http://localhost:8888
       fail-fast: true
       password: admin
       username: user
 server:
     port: 9777 #启动端口
-management:
-  security:
-    enabled: false
+
 
 eureka:
   instance:
