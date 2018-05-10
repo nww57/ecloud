@@ -53,6 +53,16 @@ public class PatentDetailBasicDto {
      */
     private String engineerLeaderName;
 
+    /**
+     * 工程师id
+     */
+    private UUID engineerId;
+
+    /**
+     * 工程师姓名
+     */
+    private String engineerName;
+
 
     /**
      *技术领域
@@ -230,5 +240,21 @@ public class PatentDetailBasicDto {
 
     public void setDesignMainPointsPicture(String designMainPointsPicture) {
         this.designMainPointsPicture = designMainPointsPicture;
+    }
+
+    public UUID getEngineerId() {
+        return engineerId;
+    }
+
+    public void setEngineerId(UUID engineerId) {
+        this.engineerId = engineerId;
+    }
+
+    public String getEngineerName() {
+        return engineerName;
+    }
+
+    public void setEngineerName(String engineerName) {
+        this.engineerName = engineerName;
     }
 }
