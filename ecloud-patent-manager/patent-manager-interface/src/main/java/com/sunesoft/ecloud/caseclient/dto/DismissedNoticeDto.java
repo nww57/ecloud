@@ -10,11 +10,13 @@ import java.util.UUID;
 /**
  * @Auther: niww
  * @Date: 2018/5/3/003
- * 未受理通知书
+ * 未处理受理通知书
  */
 public class DismissedNoticeDto {
 
     private UUID id;
+
+    private UUID agId;
 
     /**
      * 案件号
@@ -61,6 +63,16 @@ public class DismissedNoticeDto {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyyMMdd")
     private LocalDate sendFileDate;
+
+    /**
+     * 文件名
+     */
+    private String fileName;
+
+    /**
+     * 其他内容
+     */
+    private String content;
 
     public UUID getId() {
         return id;
@@ -124,5 +136,29 @@ public class DismissedNoticeDto {
 
     public void setSendFileDate(LocalDate sendFileDate) {
         this.sendFileDate = sendFileDate;
+    }
+
+    public UUID getAgId() {
+        return agId;
+    }
+
+    public void setAgId(UUID agId) {
+        this.agId = agId;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

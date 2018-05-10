@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.caze.domain;
 
+import com.sunesoft.ecloud.hibernate.BizEntity;
 import com.sunesoft.ecloud.hibernate.IEntity;
 
 import javax.persistence.Column;
@@ -14,7 +15,7 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name = "dismissed_notice")
-public class DismissedNotice extends IEntity {
+public class DismissedNotice extends BizEntity {
 
 
     /**
@@ -58,6 +59,12 @@ public class DismissedNotice extends IEntity {
      */
     @Column(name = "sendFileDate")
     private LocalDate sendFileDate;
+
+    @Column(name = "content",columnDefinition = "TEXT")
+    private String content;
+
+    @Column(name = "fileName")
+    private String fileName;
 
     public String getCaseNo() {
         return caseNo;
