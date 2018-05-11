@@ -1,8 +1,11 @@
 package com.sunesoft.ecloud.caseclient.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sunesoft.ecloud.adminclient.TechnologyEnum;
 import com.sunesoft.ecloud.caseclient.enums.PatentType;
+import com.sunesoft.ecloud.common.sqlBuilderTool.annotations.AliasName;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 /**
@@ -52,6 +55,22 @@ public class PatentDetailBasicDto {
      * 工程师组长
      */
     private String engineerLeaderName;
+
+    /**
+     * 工程师id
+     */
+    private UUID engineerId;
+
+    /**
+     * 工程师姓名
+     */
+    private String engineerName;
+
+    /**
+     * 撰写截止日
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd",shape = JsonFormat.Shape.STRING)
+    private LocalDate nodeExpiryDate;
 
 
     /**
@@ -230,5 +249,29 @@ public class PatentDetailBasicDto {
 
     public void setDesignMainPointsPicture(String designMainPointsPicture) {
         this.designMainPointsPicture = designMainPointsPicture;
+    }
+
+    public UUID getEngineerId() {
+        return engineerId;
+    }
+
+    public void setEngineerId(UUID engineerId) {
+        this.engineerId = engineerId;
+    }
+
+    public String getEngineerName() {
+        return engineerName;
+    }
+
+    public void setEngineerName(String engineerName) {
+        this.engineerName = engineerName;
+    }
+
+    public LocalDate getNodeExpiryDate() {
+        return nodeExpiryDate;
+    }
+
+    public void setNodeExpiryDate(LocalDate nodeExpiryDate) {
+        this.nodeExpiryDate = nodeExpiryDate;
     }
 }

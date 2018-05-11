@@ -1,6 +1,7 @@
 package com.sunesoft.ecloud.caseclient.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sunesoft.ecloud.common.sqlBuilderTool.annotations.AliasName;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -10,57 +11,62 @@ import java.util.UUID;
 /**
  * @Auther: niww
  * @Date: 2018/5/3/003
- * 未受理通知书
+ * 未处理受理通知书
  */
 public class DismissedNoticeDto {
 
     private UUID id;
 
+    private UUID agId;
+
     /**
      * 案件号
      */
-    @AliasName("ANJUANH")
     private String caseNo;
 
     /**
      * 申请号
      */
-    @AliasName("SHENQINGH")
     private String applicationNo;
 
     /**
      * 专利名称
      */
-
     private String patentName;
 
     /**
      * 通知书名称
      */
-    @AliasName("TONGZHISMC")
     private String noticeName;
 
     /**
      * 通知书编码/发文序列号
      */
-    @AliasName("TONGZHISBM")
     private String noticeCode;
 
     /**
      * 申请日
      */
-    @AliasName("SHENQINGR   ")
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyyMMdd")
     private LocalDate applicationDate;
 
     /**
      * 发文日
      */
-    @AliasName("FAWENR")
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyyMMdd")
     private LocalDate sendFileDate;
+
+    /**
+     * 文件名
+     */
+    private String fileName;
+
+    /**
+     * 其他内容
+     */
+    private String content;
 
     public UUID getId() {
         return id;
@@ -124,5 +130,29 @@ public class DismissedNoticeDto {
 
     public void setSendFileDate(LocalDate sendFileDate) {
         this.sendFileDate = sendFileDate;
+    }
+
+    public UUID getAgId() {
+        return agId;
+    }
+
+    public void setAgId(UUID agId) {
+        this.agId = agId;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

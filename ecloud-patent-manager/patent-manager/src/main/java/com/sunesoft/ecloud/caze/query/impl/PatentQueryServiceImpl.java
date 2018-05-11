@@ -210,6 +210,7 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
                 " u.realName engineerLeaderName, " +
                 " p.engineerId, " +
                 " u2.realName engineerName, " +
+                " p.nodeExpiryDate, " +
                 " d.isAdvancePublicity, " +
                 " d.isFeeReduce, " +
                 " d.isRealTrial, " +

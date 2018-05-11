@@ -22,6 +22,9 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public TResult addDismissedNotice(DismissedNoticeDto dto) {
+        if(null == dto.getAgId()){
+            throw new IllegalArgumentException("参数agId不能为null");
+        }
         DismissedNotice dismissedNotice = new DismissedNotice();
         BeanUtil.copyPropertiesIgnoreNull(dto,dismissedNotice);
         dismissedNoticeRepository.saveAndFlush(dismissedNotice);
