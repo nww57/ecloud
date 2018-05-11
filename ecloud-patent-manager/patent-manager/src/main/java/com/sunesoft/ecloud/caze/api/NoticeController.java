@@ -6,6 +6,7 @@ import com.sunesoft.ecloud.caze.domain.DismissedNotice;
 import com.sunesoft.ecloud.caze.service.NoticeService;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,12 +18,17 @@ import java.util.UUID;
  * @Date: 2018/5/10/010
  */
 @RestController
-@RequestMapping(name = "notice")
+@RequestMapping("notice")
 public class NoticeController {
 
 
     @Autowired
     NoticeService noticeService;
+
+    @GetMapping("/test")
+    public  void test(){
+        System.out.println(23);
+    }
 
     @PostMapping("add")
     public TResult addDismissedNotice(DismissedNoticeDto noticeDto){

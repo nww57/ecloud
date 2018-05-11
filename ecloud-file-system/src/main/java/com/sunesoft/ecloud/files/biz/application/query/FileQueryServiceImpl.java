@@ -233,7 +233,7 @@ public class FileQueryServiceImpl extends GenericQuery implements FileQueryServi
         if(null == fileNameList || fileNameList.size()==0){
             return new ListResult(Collections.emptyList());
         }
-        List<String> nameList = fileNameList.stream().map(FileInfoDto::getFileName).collect(Collectors.toList());
+        List<String> nameList = fileNameList.stream().filter(s->null != s.getFileName()).map(FileInfoDto::getFileName).collect(Collectors.toList());
         return new ListResult<>(nameList);
     }
 }
