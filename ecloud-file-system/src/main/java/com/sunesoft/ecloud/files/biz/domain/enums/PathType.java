@@ -17,6 +17,6 @@ public enum PathType {
 
     Temp,
 
-    Oth
-
+    Oth,
+    Contract
 }
