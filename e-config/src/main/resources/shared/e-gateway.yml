@@ -39,10 +39,15 @@ zuul:
         url: http://localhost:5020
         stripPrefix: false
         sensitiveHeaders:
+    caes-service:
+        path: /case/**
+        url: http://localhost:5030
+        stripPrefix: false
+        sensitiveHeaders:
 
 gate:
   ignore:
-    startWith: /ua,/admin/auth/menus,/file
+    startWith: /ua,/admin/auth/menus,/file,/case
 
 server:
   port: 4000

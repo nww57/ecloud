@@ -1,7 +1,7 @@
 server:
   servlet:
     context-path: /case
-  port: 5020
+  port: 5030
 
 management:
   security:
