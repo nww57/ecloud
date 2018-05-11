@@ -35,12 +35,6 @@ public class PatentInfo extends BizEntity{
     @Type(type = "uuid-char")
     private UUID customerId;
 
-    /**
-     *案源人
-     */
-    @Column(name = "introducerId",columnDefinition = "char(36)")
-    @Type(type = "uuid-char")
-    private UUID introducerId;
 
     /**
      *申请号
@@ -486,14 +480,6 @@ public class PatentInfo extends BizEntity{
 
     public void setNodeExpiryDate(LocalDate nodeExpiryDate) {
         this.nodeExpiryDate = nodeExpiryDate;
-    }
-
-    public UUID getIntroducerId() {
-        return introducerId;
-    }
-
-    public void setIntroducerId(UUID introducerId) {
-        this.introducerId = introducerId;
     }
 
     public String getPatentProductPurpose() {
