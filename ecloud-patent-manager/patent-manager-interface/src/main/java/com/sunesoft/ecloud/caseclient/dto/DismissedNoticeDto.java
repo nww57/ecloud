@@ -2,6 +2,10 @@ package com.sunesoft.ecloud.caseclient.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.sunesoft.ecloud.common.sqlBuilderTool.annotations.AliasName;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -47,15 +51,15 @@ public class DismissedNoticeDto {
     /**
      * 申请日
      */
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
-    @DateTimeFormat(pattern = "yyyyMMdd")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(pattern = "yyyyMMdd")
     private LocalDate applicationDate;
 
     /**
      * 发文日
      */
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
-    @DateTimeFormat(pattern = "yyyyMMdd")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(pattern = "yyyyMMdd")
     private LocalDate sendFileDate;
 
     /**
