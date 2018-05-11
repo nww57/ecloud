@@ -1,11 +1,13 @@
 package com.sunesoft.ecloud.files.biz.application.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sunesoft.ecloud.common.sqlBuilderTool.annotations.AliasName;
 import com.sunesoft.ecloud.common.sqlBuilderTool.annotations.FieldWithoutCheck;
 import com.sunesoft.ecloud.common.sqlBuilderTool.annotations.SqlIgnore;
 import com.sunesoft.ecloud.files.biz.domain.enums.PathType;
 
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
@@ -75,12 +77,15 @@ public class FileInfoDto {
 
 
     private Integer downLoadCount;
-
-
     /**
      * 版本号(20180416-01)
      */
     private String versionNo;
+
+    private String create_by;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
+    private LocalDateTime create_datetime = LocalDateTime.now();
 
     public UUID getId() {
         return id;
@@ -209,5 +214,21 @@ public class FileInfoDto {
 
     public void setVersionNo(String versionNo) {
         this.versionNo = versionNo;
+    }
+
+    public String getCreate_by() {
+        return create_by;
+    }
+
+    public void setCreate_by(String create_by) {
+        this.create_by = create_by;
+    }
+
+    public LocalDateTime getCreate_datetime() {
+        return create_datetime;
+    }
+
+    public void setCreate_datetime(LocalDateTime create_datetime) {
+        this.create_datetime = create_datetime;
     }
 }

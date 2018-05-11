@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -84,6 +85,7 @@ public class FileController {
             String fileName = file.getOriginalFilename();
             String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
             FileInfoDto fileInfoDto = new FileInfoDto();
+            fileInfoDto.setCreate_by(UserContext.getUsername());
             fileInfoDto.setAgId(agId);
             fileInfoDto.setDocType("temp");
             fileInfoDto.setBizType("temp");
@@ -130,7 +132,8 @@ public class FileController {
                     fileInfoDto.setId(fileUploadDto.getId());
                 }
                 fileInfoDto.setAgId(agId);
-                fileInfoDto.setDocType(fileUploadDto.getDocType());
+                fileInfoDto.setCreate_by(UserContext.getUsername());
+                 fileInfoDto.setDocType(fileUploadDto.getDocType());
                 fileInfoDto.setBizType(fileUploadDto.getBizType());
                 fileInfoDto.setFileSize(myfile.getSize());
                 fileInfoDto.setFileName(fileName);
