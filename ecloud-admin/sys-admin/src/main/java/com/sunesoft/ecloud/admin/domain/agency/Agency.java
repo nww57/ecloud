@@ -27,6 +27,13 @@ public class Agency extends IEntity{
      */
     @Column(name = "code")
     private String code;
+
+    /**
+     * 代理机构代码（国知局给的）
+     */
+    @Column(name = "code")
+    private String agencyCode;
+
     /**
      *企业名称
      */
@@ -142,6 +149,14 @@ public class Agency extends IEntity{
         this.serverStatus = ServerStatusType.ENABLE;
     }
 
+    public String getAgencyCode() {
+        return agencyCode;
+    }
+
+    public void setAgencyCode(String agencyCode) {
+        this.agencyCode = agencyCode;
+    }
+
     public String getCode() {
         return code;
     }
@@ -157,7 +172,6 @@ public class Agency extends IEntity{
     public void setName(String name) {
         this.name = name;
     }
-
 
     public String getCountry() {
         return country;

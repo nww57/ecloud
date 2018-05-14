@@ -47,6 +47,7 @@ public interface AgencyCustomerQueryService {
      */
     PagedResult<CustomerApplicantDto> findCustomerApplicantPaged(UUID customerId, CustomerApplicantCriteria criteria);
 
+
     /**
      * 查找客户申请人列表
      * @param customerId 客户id
@@ -60,6 +61,13 @@ public interface AgencyCustomerQueryService {
      * @return 返回查询结果
      */
     TResult<CustomerApplicantDto> findCustomerApplicantById(UUID id);
+
+    /**
+     * 根据申请人Id查询申请人信息
+     * @param applicantId 申请人Id集合
+     * @return 返回查询结果
+     */
+    ListResult<CustomerApplicantDto> findCustomerApplicantByIdList(List<UUID> applicantId);
 
 
     /**
@@ -83,6 +91,14 @@ public interface AgencyCustomerQueryService {
      * @return 返回查询结果
      */
     TResult<CustomerInventorDto> findCustomerInventorById(UUID id);
+
+
+    /**
+     * 查找客户发明人信息列表
+     * @param idList 发明人id集合
+     * @return 返回查询结果
+     */
+    ListResult<CustomerInventorDto> findCustomerInventorByIdList(List<UUID> idList);
 
     /**
      * 查找客户联系人信息

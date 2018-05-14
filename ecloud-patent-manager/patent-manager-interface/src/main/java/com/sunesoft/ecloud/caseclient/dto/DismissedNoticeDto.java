@@ -44,7 +44,7 @@ public class DismissedNoticeDto {
     private String noticeName;
 
     /**
-     * 通知书编码/发文序列号
+     * 通知书编码
      */
     private String noticeCode;
 

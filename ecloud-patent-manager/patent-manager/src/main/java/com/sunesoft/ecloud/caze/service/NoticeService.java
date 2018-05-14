@@ -11,9 +11,11 @@ import com.sunesoft.ecloud.common.result.TResult;
 public interface NoticeService {
 
     /**
-     * 收录未受理的通知书
+     * 收录通知书
      * @param dto 参数
      * @return 返回操作结果
      */
-    TResult addDismissedNotice(DismissedNoticeDto dto);
+    TResult addNotice(DismissedNoticeDto dto);
+
+    TResult testContentToBean();
 }

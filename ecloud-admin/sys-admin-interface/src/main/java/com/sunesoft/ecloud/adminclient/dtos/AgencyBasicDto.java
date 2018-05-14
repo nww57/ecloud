@@ -19,6 +19,13 @@ public class AgencyBasicDto {
      *企业机构代码
      */
     private String code;
+
+    /**
+     * 代理机构代码（国知局给的）
+     */
+    private String agencyCode;
+
+
     /**
      *企业名称
      */
@@ -50,6 +57,14 @@ public class AgencyBasicDto {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime serverEndDate;
+
+    public String getAgencyCode() {
+        return agencyCode;
+    }
+
+    public void setAgencyCode(String agencyCode) {
+        this.agencyCode = agencyCode;
+    }
 
     public UUID getId() {
         return id;

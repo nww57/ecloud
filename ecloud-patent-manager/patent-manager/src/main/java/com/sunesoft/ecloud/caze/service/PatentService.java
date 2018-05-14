@@ -3,8 +3,8 @@ package com.sunesoft.ecloud.caze.service;
 import com.sunesoft.ecloud.caseclient.dto.*;
 import com.sunesoft.ecloud.caseclient.enums.UpDown;
 import com.sunesoft.ecloud.common.result.TResult;
-import org.springframework.data.domain.Sort;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -145,6 +145,20 @@ public interface PatentService {
 
 
     /**
+     * 撰写完成
+     * @param patentId
+     * @return
+     */
+    TResult writingFinished(UUID patentId);
+
+    /**
+     * 打包
+     * @param patentId
+     * @return
+     */
+    TResult packaging(UUID patentId);
+
+    /**
      * 添加专利著录项信息
      * @param dto
      * @return
@@ -153,18 +167,20 @@ public interface PatentService {
 
 
     /**
-     * 添加专利官费信息
+     * 添加专利费用信息
      * @param dto
      * @return
      */
-    TResult addPatentOfficialFee(AddPatentOfficialFeeDto dto);
+    TResult addPatentFeeInfo(AddPatentFeeDto dto);
 
 
     /**
      * 案件添加申请号
+     * @param agId 企业id
      * @param caseNo 案件号
      * @param applicationNo 申请号
+     * @param applicationDate 申请日
      * @return 返回操作结果
      */
-    TResult bindPatent(String caseNo,String applicationNo);
+    TResult bindPatent(UUID agId,String caseNo, String applicationNo, LocalDate applicationDate);
 }

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -25,4 +26,6 @@ public interface PatInventorRepository extends BaseRepository<PatInventor,UUID>{
 
     @Query(value = "select * from pat_inventor a where a.patentId = :patentId and a.sort> :sort order by a.sort asc limit 0,1",nativeQuery = true)
     PatInventor getDown(@Param("patentId") String patentId,@Param("sort") int sort);
+
+    List<PatInventor> findByPatentInfo_Id();
 }

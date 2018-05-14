@@ -20,6 +20,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -118,6 +119,17 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
     }
 
     @Override
+    public ListResult<CustomerApplicantDto> findCustomerApplicantByIdList(List<UUID> applicantIdList) {
+        if(null == applicantIdList || applicantIdList.size() ==0){
+            throw new IllegalArgumentException("参数applicantIdList没有值");
+        }
+        SqlBuilder<CustomerApplicantDto> dtoBuilder = HSqlBuilder.hFrom(CustomerApplicant.class, "a")
+                .where("id", applicantIdList)
+                .select(CustomerApplicantDto.class);
+        return new ListResult<>(queryList(dtoBuilder));
+    }
+
+    @Override
     public PagedResult<CustomerInventorDto> findCustomerInventorPaged(UUID customerId, CustomerInventorCriteria criteria) {
         SqlBuilder<CustomerInventorDto> dtoBuilder = HSqlBuilder.hFrom(CustomerInventor.class, "i")
                 .where("i.customerId", customerId)
@@ -146,6 +158,17 @@ public class AgencyCustomerQueryServiceImpl extends GenericQuery implements Agen
                 .where("id", id)
                 .select(CustomerInventorDto.class);
         return new TResult<>(queryForObject(dtoBuilder));
+    }
+
+    @Override
+    public ListResult<CustomerInventorDto> findCustomerInventorByIdList(List<UUID> idList) {
+        if(null == idList || idList.size()==0){
+            throw new IllegalArgumentException("参数idList没有没有值");
+        }
+        SqlBuilder<CustomerInventorDto> dtoBuilder = HSqlBuilder.hFrom(CustomerInventor.class, "a")
+                .where("id", idList)
+                .select(CustomerInventorDto.class);
+        return new ListResult<>(queryList(dtoBuilder));
     }
 
     @Override

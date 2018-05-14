@@ -14,8 +14,8 @@ import java.time.LocalDate;
  * 未受理通知书
  */
 @Entity
-@Table(name = "dismissed_notice")
-public class DismissedNotice extends BizEntity {
+@Table(name = "pat_notice_info")
+public class Notice extends BizEntity {
 
 
     /**

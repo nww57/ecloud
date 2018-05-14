@@ -22,5 +22,10 @@ public interface PatentInfoRepository extends BaseRepository<PatentInfo,UUID> {
     @Query(value = "update PatentInfo set is_active =0 where id in :ids")
     void deleteBatch(@Param("ids") UUID... ids);
 
-    PatentInfo findByCaseNo(String caseNo);
+    PatentInfo findByAgIdAndCaseNo(UUID agId,String caseNo);
+
+    PatentInfo findByApplicationNo(String applicationNo);
+
+    @Query(value = "select sa.name from sys_agency sa where sa.id = :agId",nativeQuery = true)
+    String getAgencyName(@Param("agId") String agId);
 }

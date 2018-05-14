@@ -1,25 +1,27 @@
 package com.sunesoft.ecloud.caze.service.impl;
 
+import com.sunesoft.ecloud.adminclient.clientService.CustomerServiceClient;
+import com.sunesoft.ecloud.adminclient.dtos.CustomerApplicantDto;
+import com.sunesoft.ecloud.adminclient.dtos.CustomerInventorDto;
 import com.sunesoft.ecloud.caseclient.dto.*;
 import com.sunesoft.ecloud.caseclient.enums.PatentNode;
 import com.sunesoft.ecloud.caseclient.enums.UpDown;
 import com.sunesoft.ecloud.caze.domain.*;
 import com.sunesoft.ecloud.caze.repository.*;
 import com.sunesoft.ecloud.caze.service.PatentService;
+import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
-import com.sunesoft.ecloud.common.utils.StringUtil;
+import com.sunesoft.ecloud.common.utils.JsonHelper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Auther: niww
@@ -48,6 +50,10 @@ public class PatentServiceImpl implements PatentService {
     PatAgentRepository agentRepository;
     @Autowired
     PatentQueryConfigRepository configRepository;
+    @Autowired
+    PatOfficialFeeDetailRepository officialFeeDetailRepository;
+    @Autowired
+    CustomerServiceClient customerServiceClient;
 
     @Override
     public TResult generateCaseNo(UUID agId) {
@@ -451,25 +457,72 @@ public class PatentServiceImpl implements PatentService {
     }
 
     @Override
+    public TResult writingFinished(UUID patentId) {
+        return null;
+    }
+
+    @Override
+    public TResult packaging(UUID patentId) {
+        //TODO 打包
+        //确定著录项信息:申请人，发明人，代理机构，代理人
+        Optional<PatentInfo> optional = patentInfoRepository.findById(patentId);
+        PatentInfo info = null;
+        if(optional.isPresent()){
+           info = optional.get();
+        }
+        if(null == info){
+            throw new IllegalArgumentException("无效的patentId:"+patentId);
+        }
+        //代理机构
+        String agencyName = patentInfoRepository.getAgencyName(info.getAgId().toString());
+        //代理人
+        List<PatAgent> patAgent = agentRepository.findByPatentInfo_Id(patentId);
+        //申请人
+        List<PatApplicant> patApplicantList = applicantRepository.findByPatentInfo_Id();
+        List<UUID> applicantIdList =  patApplicantList.stream().map(PatApplicant::getCustomerApplicantId).collect(Collectors.toList());
+        ListResult<CustomerApplicantDto> applicantDtoListResult = customerServiceClient.findCustomerApplicantByIdList(applicantIdList);
+        //发明人
+        List<PatInventor> patInventorList = inventorRepository.findByPatentInfo_Id();
+        List<UUID> inventorIdList = patInventorList.stream().map(PatInventor::getCustomerInventorId).collect(Collectors.toList());
+        ListResult<CustomerInventorDto> inventorDtoListResult = customerServiceClient.findCustomerInventorByIdList(inventorIdList);
+        return ResultFactory.success();
+    }
+
+    @Override
     public TResult addPatentElement(PatentElementDto dto) {
         return null;
     }
 
     @Override
-    public TResult addPatentOfficialFee(AddPatentOfficialFeeDto dto) {
-        return null;
+    public TResult addPatentFeeInfo(AddPatentFeeDto dto) {
+        String applicationNo = dto.getApplicationNo();
+        if(StringUtils.isEmpty(applicationNo)){
+            throw new IllegalArgumentException("申请号applicationNo不能为null");
+        }
+        PatentInfo info = patentInfoRepository.findByApplicationNo(applicationNo);
+        if(null == info){
+            throw new IllegalArgumentException("没有找到申请号为:"+applicationNo+"的专利信息");
+        }
+        PatFeeInfo feeInfo = new PatFeeInfo(info);
+        feeInfo.setFeeType(dto.getFeeType());
+        feeInfo.setTotalPrice(dto.getTotalPrice());
+        feeInfo.setPaymentPeriod(dto.getPaymentPeriod());
+        feeInfo.setFeeDetail(JsonHelper.toJson(dto.getFeeDetailList()));
+        officialFeeDetailRepository.save(feeInfo);
+        return ResultFactory.success();
     }
 
     @Override
-    public TResult bindPatent(String caseNo, String applicationNo) {
+    public TResult bindPatent(UUID agId,String caseNo, String applicationNo,LocalDate applicationDate) {
         if(StringUtils.isEmpty(caseNo) || StringUtils.isEmpty(applicationNo)){
             throw new IllegalArgumentException("参数caseNo或者applicationNo不能为null");
         }
-        PatentInfo info = patentInfoRepository.findByCaseNo(caseNo);
-        if(null ==info){
+        PatentInfo info = patentInfoRepository.findByAgIdAndCaseNo(agId,caseNo);
+        if(null == info){
             throw new IllegalArgumentException("无效的案件号");
         }
         info.setApplicationNo(applicationNo);
+        info.setApplicationDate(applicationDate);
         patentInfoRepository.save(info);
         return ResultFactory.success();
     }

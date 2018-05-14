@@ -271,7 +271,7 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
         if(null == id){
             throw new IllegalArgumentException("参数id不能为null");
         }
-        SqlBuilder<PatOfficialFeeDetailDto> sqlBuilder = HSqlBuilder.hFrom(PatOfficialFeeDetail.class, "p")
+        SqlBuilder<PatOfficialFeeDetailDto> sqlBuilder = HSqlBuilder.hFrom(PatFeeInfo.class, "p")
                 .where("p.patentId",id)
                 .select(PatOfficialFeeDetailDto.class);
         return new ListResult<>(queryList(sqlBuilder));

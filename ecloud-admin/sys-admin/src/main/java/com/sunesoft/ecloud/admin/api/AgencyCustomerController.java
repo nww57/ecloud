@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -243,6 +244,16 @@ public class AgencyCustomerController {
     public ListResult<AgencyCustomerBasicDto> getAgencyCustomer(){
         UUID agId = UUID.fromString(UserContext.getAgencyId());
         return agencyCustomerQueryService.getAgencyCustomerBasicInfo(agId);
+    }
+
+    @GetMapping("applicantIdList")
+    public ListResult<CustomerApplicantDto> getCustomerApplicantByIdList(List<UUID> idList){
+        return agencyCustomerQueryService.findCustomerApplicantByIdList(idList);
+    }
+
+    @GetMapping("inventorIdList")
+    public ListResult<CustomerInventorDto> getCustomerInventorByIdList(List<UUID> idList){
+        return agencyCustomerQueryService.findCustomerInventorByIdList(idList);
     }
 
 }

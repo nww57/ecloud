@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.caze.domain;
 
+import com.sunesoft.ecloud.caseclient.enums.PatentFeeType;
 import com.sunesoft.ecloud.hibernate.IEntity;
 
 import javax.persistence.*;
@@ -12,8 +13,8 @@ import java.time.LocalDate;
  * 官费详情
  */
 @Entity
-@Table(name = "pat_officalfeedetail", schema = "springcloud", catalog = "")
-public class PatOfficialFeeDetail extends IEntity {
+@Table(name = "pat_fee_info", schema = "springcloud", catalog = "")
+public class PatFeeInfo extends IEntity {
 
     /**
      * 所属专利
@@ -26,19 +27,20 @@ public class PatOfficialFeeDetail extends IEntity {
      *状态
      */
     @Column(name = "status")
-    private String status;
+    private boolean status;
 
     /**
      *费用类型
      */
     @Column(name = "feeType")
-    private String feeType;
+    @Enumerated(EnumType.STRING)
+    private PatentFeeType feeType;
 
     /**
      *金额
      */
-    @Column(name = "price")
-    private BigDecimal price;
+    @Column(name = "totalPrice")
+    private BigDecimal totalPrice;
 
     /**
      *缴费期限
@@ -70,7 +72,15 @@ public class PatOfficialFeeDetail extends IEntity {
     @Column(name = "attachment")
     private String attachment;
 
+    @Column(name = "feeDetail",columnDefinition = "TEXT")
+    private String feeDetail;
+
+    public PatFeeInfo(PatentInfo patentInfo) {
+        this.patentInfo = patentInfo;
+    }
+
     public PatentInfo getPatentInfo() {
+        this.status = false;
         return patentInfo;
     }
 
@@ -78,28 +88,28 @@ public class PatOfficialFeeDetail extends IEntity {
         this.patentInfo = patentInfo;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
-    public String getFeeType() {
+    public PatentFeeType getFeeType() {
         return feeType;
     }
 
-    public void setFeeType(String feeType) {
+    public void setFeeType(PatentFeeType feeType) {
         this.feeType = feeType;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public LocalDate getPaymentPeriod() {
@@ -140,5 +150,13 @@ public class PatOfficialFeeDetail extends IEntity {
 
     public void setAttachment(String attachment) {
         this.attachment = attachment;
+    }
+
+    public String getFeeDetail() {
+        return feeDetail;
+    }
+
+    public void setFeeDetail(String feeDetail) {
+        this.feeDetail = feeDetail;
     }
 }

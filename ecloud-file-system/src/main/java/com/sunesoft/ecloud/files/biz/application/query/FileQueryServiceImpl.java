@@ -228,7 +228,7 @@ public class FileQueryServiceImpl extends GenericQuery implements FileQueryServi
         if (null == agId) {
             throw new IllegalArgumentException("参数agId不能为null");
         }
-        String sql  = "select n.fileName from dismissed_notice n where n.agId = '"+agId+"'";
+        String sql  = "select n.fileName from pat_notice_info n where n.agId = '"+agId+"'";
         List<FileInfoDto> fileNameList = queryList(sql,null,FileInfoDto.class);
         if(null == fileNameList || fileNameList.size()==0){
             return new ListResult(Collections.emptyList());
