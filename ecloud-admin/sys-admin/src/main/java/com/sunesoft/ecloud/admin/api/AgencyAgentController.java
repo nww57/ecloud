@@ -2,14 +2,17 @@ package com.sunesoft.ecloud.admin.api;
 
 import com.sunesoft.ecloud.admin.query.AgencyAgentQueryService;
 import com.sunesoft.ecloud.admin.service.AgencyAgentService;
+import com.sunesoft.ecloud.adminclient.annotation.IgnoreUserToken;
 import com.sunesoft.ecloud.adminclient.cretirias.AgentCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgentDto;
 import com.sunesoft.ecloud.auth.UserContext;
+import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.PagedResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -69,6 +72,12 @@ public class AgencyAgentController {
         agentDto.setAgId(agId);
         agentDto.setId(id);
         return agencyAgentService.addOrUpdateAgencyAgent(agentDto);
+    }
+
+    @IgnoreUserToken
+    @PostMapping("idList")
+    public ListResult<AgentDto> getAgentByIdList(@RequestParam List<UUID> idList){
+        return agencyAgentQueryService.findAgentByIdList(idList);
     }
 
 

@@ -9,5 +9,9 @@ public enum  PatentFeeType {
     /**
      * 申请费
      */
-    APPLICATION
+    APPLICATION,
+    /**
+     * 办理登记手续费
+     */
+    CHECKIN
 }

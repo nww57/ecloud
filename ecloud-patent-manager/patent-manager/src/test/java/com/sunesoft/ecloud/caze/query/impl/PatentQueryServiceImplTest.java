@@ -3,6 +3,7 @@ package com.sunesoft.ecloud.caze.query.impl;
 import com.sunesoft.ecloud.caseclient.criterias.PatentNodeQueryCriteria;
 import com.sunesoft.ecloud.caseclient.criterias.PatentQueryCriteria;
 import com.sunesoft.ecloud.caseclient.dto.PatentBasicDto;
+import com.sunesoft.ecloud.caseclient.dto.PatentDetailBasicDto;
 import com.sunesoft.ecloud.caseclient.dto.PatentDetailDto;
 import com.sunesoft.ecloud.caseclient.dto.PatentListDto;
 import com.sunesoft.ecloud.caseclient.enums.PatentNode;
@@ -68,6 +69,12 @@ public class PatentQueryServiceImplTest {
 
     @Test
     public void getPatentOfficialFeeInfo() throws Exception {
+    }
+
+    @Test
+    public void getPatentDetailBasicInfo() throws Exception{
+        TResult<PatentDetailBasicDto> result = queryService.getPatentDetailBasicInfo(UUID.fromString("f1bbaab8-f75a-4508-8bc2-053cd69231db"));
+        System.out.println(232);
     }
 
     @Test

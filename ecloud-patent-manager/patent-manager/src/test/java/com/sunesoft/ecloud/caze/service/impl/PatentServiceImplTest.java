@@ -108,4 +108,10 @@ public class PatentServiceImplTest {
         System.out.println(23);
     }
 
+    @Test
+    public void pagckaging() throws Exception{
+        TResult result = patentService.packaging(UUID.fromString("f1bbaab8-f75a-4508-8bc2-053cd69231db"));
+        System.out.println(23);
+    }
+
 }

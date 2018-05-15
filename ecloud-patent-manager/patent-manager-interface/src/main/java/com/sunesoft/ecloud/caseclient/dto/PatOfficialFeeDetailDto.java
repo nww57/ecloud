@@ -2,12 +2,14 @@ package com.sunesoft.ecloud.caseclient.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 /**
  * @Auther: niww
  * @Date: 2018/5/4/004
  */
 public class PatOfficialFeeDetailDto {
+    private UUID id;
     /**
      *状态
      */
@@ -42,6 +44,14 @@ public class PatOfficialFeeDetailDto {
      *收据抬头
      */
     private String receiptTitle;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     public String getStatus() {
         return status;

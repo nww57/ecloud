@@ -33,7 +33,12 @@ public class NoticeServiceImplTest {
         dto.setSendFileDate(LocalDate.now());
         dto.setApplicationDate(LocalDate.now());
         dto.setApplicationNo("adsf");
-        noticeService.addDismissedNotice(dto);
+        noticeService.addNotice(dto);
+    }
+
+    @Test
+    public void test(){
+        noticeService.testContentToBean();
     }
 
 }

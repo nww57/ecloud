@@ -183,4 +183,12 @@ public interface PatentService {
      * @return 返回操作结果
      */
     TResult bindPatent(UUID agId,String caseNo, String applicationNo, LocalDate applicationDate);
+
+
+    /**
+     * 处理专利费用信息
+     * @param dto 参数
+     * @return 返回操作结果
+     */
+    TResult handlePatentFee(HandlePatentFeeDto dto);
 }

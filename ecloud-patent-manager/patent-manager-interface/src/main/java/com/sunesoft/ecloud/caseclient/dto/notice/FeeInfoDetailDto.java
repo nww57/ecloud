@@ -19,7 +19,7 @@ public class FeeInfoDetailDto {
     /**
      * 费用金额
      */
-    private BigDecimal fee_amount;
+    private BigDecimal fee_amount = BigDecimal.ZERO;
 
     public String getFee_name() {
         return fee_name;

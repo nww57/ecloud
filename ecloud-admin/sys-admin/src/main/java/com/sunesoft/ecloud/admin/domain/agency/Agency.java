@@ -31,7 +31,7 @@ public class Agency extends IEntity{
     /**
      * 代理机构代码（国知局给的）
      */
-    @Column(name = "code")
+    @Column(name = "agencyCode")
     private String agencyCode;
 
     /**

@@ -3,6 +3,7 @@ package com.sunesoft.ecloud.caseclient.dto;
 import com.sunesoft.ecloud.caseclient.enums.PatentNode;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 /**
  * @Auther: niww
@@ -10,6 +11,8 @@ import java.time.LocalDate;
  * 专利著录项
  */
 public class PatentElementDto {
+
+    private UUID patentId;
 
     /**
      * 案件号
@@ -65,6 +68,14 @@ public class PatentElementDto {
      *代理人
      */
     private String agencyAgents;
+
+    public UUID getPatentId() {
+        return patentId;
+    }
+
+    public void setPatentId(UUID patentId) {
+        this.patentId = patentId;
+    }
 
     public String getCaseNo() {
         return caseNo;

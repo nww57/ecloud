@@ -1,6 +1,7 @@
 package com.sunesoft.ecloud.caze.service.impl;
 
 import com.sunesoft.ecloud.adminclient.clientService.CustomerServiceClient;
+import com.sunesoft.ecloud.adminclient.dtos.AgentDto;
 import com.sunesoft.ecloud.adminclient.dtos.CustomerApplicantDto;
 import com.sunesoft.ecloud.adminclient.dtos.CustomerInventorDto;
 import com.sunesoft.ecloud.caseclient.dto.*;
@@ -18,6 +19,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.comparator.Comparators;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -52,6 +54,8 @@ public class PatentServiceImpl implements PatentService {
     PatentQueryConfigRepository configRepository;
     @Autowired
     PatOfficialFeeDetailRepository officialFeeDetailRepository;
+    @Autowired
+    PatFeeInfoRepository patFeeInfoRepository;
     @Autowired
     CustomerServiceClient customerServiceClient;
 
@@ -473,24 +477,82 @@ public class PatentServiceImpl implements PatentService {
         if(null == info){
             throw new IllegalArgumentException("无效的patentId:"+patentId);
         }
+        PatentElementDto elementDto = new PatentElementDto();
+        elementDto.setPatentId(patentId);
         //代理机构
         String agencyName = patentInfoRepository.getAgencyName(info.getAgId().toString());
+        elementDto.setAgency(agencyName);
         //代理人
-        List<PatAgent> patAgent = agentRepository.findByPatentInfo_Id(patentId);
+        List<PatAgent> patAgentList = agentRepository.findByPatentInfo_Id(patentId);
+        List<UUID> agentIdList = patAgentList.stream().map(PatAgent::getAgencyAgentId).collect(Collectors.toList());
+        ListResult<AgentDto> agentDtoListResult = customerServiceClient.findAgentByIdList(agentIdList);
+        List<AgentDto> agentDtoList = agentDtoListResult.getResult();
+        patAgentList =  patAgentList.stream().sorted(Comparator.comparingInt(PatAgent::getSort)).collect(Collectors.toList());
+        patAgentList.forEach(a->{
+            AgentDto dto =  agentDtoList.stream().filter(d->Objects.equals(d.getId(),a.getAgencyAgentId())).findFirst().get();
+            BeanUtil.copyProperties(dto,a,new String[]{"id"});
+        });
+        String agents = patAgentList.stream().map(PatAgent::getName).reduce((acc,item)->{
+            acc += ";"+item;
+            return acc;
+        }).get();
+        elementDto.setAgencyAgents(agents);
         //申请人
-        List<PatApplicant> patApplicantList = applicantRepository.findByPatentInfo_Id();
+        List<PatApplicant> patApplicantList = applicantRepository.findByPatentInfo_Id(patentId);
         List<UUID> applicantIdList =  patApplicantList.stream().map(PatApplicant::getCustomerApplicantId).collect(Collectors.toList());
         ListResult<CustomerApplicantDto> applicantDtoListResult = customerServiceClient.findCustomerApplicantByIdList(applicantIdList);
+        List<CustomerApplicantDto> applicantDtoList = applicantDtoListResult.getResult();
+        patApplicantList = patApplicantList.stream().sorted(Comparator.comparingInt(PatApplicant::getSort)).collect(Collectors.toList());
+        patApplicantList.forEach(applicant->{
+            CustomerApplicantDto dto = applicantDtoList.stream().filter(f->Objects.equals(f.getId(),applicant.getCustomerApplicantId())).findFirst().get();
+            BeanUtil.copyProperties(dto,applicant,new String[]{"id"});
+        });
+        String applicants = patApplicantList.stream().map(PatApplicant::getName).reduce((acc,item)->{
+            acc += ";"+item;
+            return acc;
+        }).get();
+        elementDto.setApplicants(applicants);
         //发明人
-        List<PatInventor> patInventorList = inventorRepository.findByPatentInfo_Id();
+        List<PatInventor> patInventorList = inventorRepository.findByPatentInfo_Id(patentId);
         List<UUID> inventorIdList = patInventorList.stream().map(PatInventor::getCustomerInventorId).collect(Collectors.toList());
         ListResult<CustomerInventorDto> inventorDtoListResult = customerServiceClient.findCustomerInventorByIdList(inventorIdList);
+        List<CustomerInventorDto> inventorDtoList = inventorDtoListResult.getResult();
+        patInventorList =  patInventorList.stream().sorted(Comparator.comparingInt(PatInventor::getSort)).collect(Collectors.toList());
+        patInventorList.forEach(inventor->{
+            CustomerInventorDto dto = inventorDtoList.stream().filter(i->Objects.equals(i.getId(),inventor.getCustomerInventorId())).findFirst().get();
+            BeanUtil.copyProperties(dto,inventor,new String[]{"id"});
+        });
+        String inventors = patInventorList.stream().map(PatInventor::getName).reduce((acc,item)->{
+            acc += ";"+item;
+            return acc;
+        }).get();
+        elementDto.setInventors(inventors);
+        agentRepository.saveAll(patAgentList);
+        applicantRepository.saveAll(patApplicantList);
+        inventorRepository.saveAll(patInventorList);
+        addPatentElement(elementDto);
         return ResultFactory.success();
     }
 
     @Override
     public TResult addPatentElement(PatentElementDto dto) {
-        return null;
+        UUID patentId = dto.getPatentId();
+        String applicationNo = dto.getApplicationNo();
+        if(null == patentId && StringUtils.isEmpty(applicationNo)){
+            throw new IllegalArgumentException("参数patentId与applicationNo没有设定，无法找到专利信息");
+        }
+        PatentInfo info;
+        if(null != patentId){
+            info = patentInfoRepository.findById(patentId).get();
+        }else{
+            info = patentInfoRepository.findByApplicationNo(applicationNo);
+        }
+        if(null == info){
+            throw new IllegalArgumentException("没有找到申请号为:"+applicationNo+"的专利信息");
+        }
+        BeanUtil.copyPropertiesIgnoreNull(dto,info);
+        patentInfoRepository.save(info);
+        return ResultFactory.success();
     }
 
     @Override
@@ -524,6 +586,22 @@ public class PatentServiceImpl implements PatentService {
         info.setApplicationNo(applicationNo);
         info.setApplicationDate(applicationDate);
         patentInfoRepository.save(info);
+        return ResultFactory.success();
+    }
+
+    @Override
+    public TResult handlePatentFee(HandlePatentFeeDto dto) {
+        UUID feeId = dto.getFeeId();
+        if(null == feeId){
+            throw new IllegalArgumentException("参数feeId不能为null");
+        }
+        PatFeeInfo info = patFeeInfoRepository.findById(feeId).get();
+        info.setStatus(true);
+        info.setReceiptTitle(dto.getReceiptTitle());
+        info.setAttachment(dto.getAttachment());
+        info.setPaymentDate(dto.getPaymentDate());
+        info.setVerifyPaymentDate(LocalDate.now());
+        patFeeInfoRepository.save(info);
         return ResultFactory.success();
     }
 

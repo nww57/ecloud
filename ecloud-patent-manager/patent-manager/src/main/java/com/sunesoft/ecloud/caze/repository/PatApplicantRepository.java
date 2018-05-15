@@ -26,5 +26,5 @@ public interface PatApplicantRepository extends BaseRepository<PatApplicant,UUID
     @Query(value = "select * from pat_applicant a where a.patentId = :patentId and a.sort> :sort order by a.sort asc limit 0,1",nativeQuery = true)
     PatApplicant getDown(@Param("patentId") String patentId,@Param("sort") int sort);
 
-    List<PatApplicant> findByPatentInfo_Id();
+    List<PatApplicant> findByPatentInfo_Id(UUID patentId);
 }

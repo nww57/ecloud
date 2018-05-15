@@ -72,6 +72,9 @@ public class PatFeeInfo extends IEntity {
     @Column(name = "attachment")
     private String attachment;
 
+    /**
+     * 费用明细
+     */
     @Column(name = "feeDetail",columnDefinition = "TEXT")
     private String feeDetail;
 

@@ -2,6 +2,7 @@ package com.sunesoft.ecloud.admin.api;
 
 import com.sunesoft.ecloud.admin.query.AgencyCustomerQueryService;
 import com.sunesoft.ecloud.admin.service.AgencyCustomerService;
+import com.sunesoft.ecloud.adminclient.annotation.IgnoreUserToken;
 import com.sunesoft.ecloud.adminclient.cretirias.AgencyCustomerCriteria;
 import com.sunesoft.ecloud.adminclient.cretirias.CustomerApplicantCriteria;
 import com.sunesoft.ecloud.adminclient.cretirias.CustomerContactCriteria;
@@ -246,13 +247,15 @@ public class AgencyCustomerController {
         return agencyCustomerQueryService.getAgencyCustomerBasicInfo(agId);
     }
 
-    @GetMapping("applicantIdList")
-    public ListResult<CustomerApplicantDto> getCustomerApplicantByIdList(List<UUID> idList){
+    @IgnoreUserToken
+    @PostMapping("applicantIdList")
+    public ListResult<CustomerApplicantDto> getCustomerApplicantByIdList(@RequestParam List<UUID> idList){
         return agencyCustomerQueryService.findCustomerApplicantByIdList(idList);
     }
 
-    @GetMapping("inventorIdList")
-    public ListResult<CustomerInventorDto> getCustomerInventorByIdList(List<UUID> idList){
+    @IgnoreUserToken
+    @PostMapping("inventorIdList")
+    public ListResult<CustomerInventorDto> getCustomerInventorByIdList(@RequestParam List<UUID> idList){
         return agencyCustomerQueryService.findCustomerInventorByIdList(idList);
     }
 

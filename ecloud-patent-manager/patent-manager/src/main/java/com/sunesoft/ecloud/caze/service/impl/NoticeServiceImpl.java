@@ -3,6 +3,7 @@ package com.sunesoft.ecloud.caze.service.impl;
 import com.google.gson.reflect.TypeToken;
 import com.sunesoft.ecloud.caseclient.dto.AddPatentFeeDto;
 import com.sunesoft.ecloud.caseclient.dto.DismissedNoticeDto;
+import com.sunesoft.ecloud.caseclient.dto.notice.CheckInNoticeDto;
 import com.sunesoft.ecloud.caseclient.dto.notice.FeeInfoAllDto;
 import com.sunesoft.ecloud.caseclient.dto.notice.FeeInfoDetailDto;
 import com.sunesoft.ecloud.caseclient.dto.notice.FeeReduceApprovalNoticeDto;
@@ -19,10 +20,14 @@ import com.thoughtworks.xstream.XStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * @Auther: niww
@@ -56,7 +61,7 @@ public class NoticeServiceImpl implements NoticeService {
                 // 1.将申请号/专利号,申请日 与案件 关联，
                 patentService.bindPatent(agId,dto.getCaseNo(),dto.getApplicationNo(),dto.getApplicationDate());
                 break;
-            case "200020":
+            case "200020": {
                 //费用减缓审批通知书：保存费用明细及缴费截止日
                 XStream xstream = new XStream();
                 xstream.ignoreUnknownElements();
@@ -74,6 +79,7 @@ public class NoticeServiceImpl implements NoticeService {
                 feeDto.setFeeDetailList(feeInfoList);
                 patentService.addPatentFeeInfo(feeDto);
                 break;
+            }
             case "200701":
                 //缴费通知书
                 break;
@@ -89,9 +95,28 @@ public class NoticeServiceImpl implements NoticeService {
             case "210403":
                 //第N次审查意见通知书
                 break;
-            case "200602":
+            case "200602":{
                 //办理登记手续通知书
+                XStream xstream = new XStream();
+                xstream.ignoreUnknownElements();
+                xstream.processAnnotations(CheckInNoticeDto.class);
+                CheckInNoticeDto checkInNotice = (CheckInNoticeDto) xstream.fromXML(content);
+                String applicationNo = checkInNotice.getApplication_number();
+                FeeInfoAllDto feeInfoAllDto = checkInNotice.getFee_info_all();
+                List<FeeInfoDetailDto> feeInfoList = feeInfoAllDto.getFee_info();
+                setCheckInFeeTotal(feeInfoAllDto,feeInfoList,(info,amount)->{
+                    info.setFee_total(info.getFee_total().add(amount));
+                });
+                LocalDate paymentPeriodDate = LocalDate.parse(checkInNotice.getPay_deadline_date(),DateTimeFormatter.ofPattern("yyyyMMdd"));
+                AddPatentFeeDto feeDto = new AddPatentFeeDto();
+                feeDto.setApplicationNo(applicationNo);
+                feeDto.setFeeType(PatentFeeType.CHECKIN);
+                feeDto.setTotalPrice(feeInfoAllDto.getFee_total());
+                feeDto.setPaymentPeriod(paymentPeriodDate);
+                feeDto.setFeeDetailList(feeInfoList);
+                patentService.addPatentFeeInfo(feeDto);
                 break;
+            }
             case "210302":
                 //补正通知书
                 break;
@@ -100,6 +125,7 @@ public class NoticeServiceImpl implements NoticeService {
         }
         return ResultFactory.success();
     }
+
 
     @Override
     public TResult testContentToBean() {
@@ -112,6 +138,16 @@ public class NoticeServiceImpl implements NoticeService {
         xstream.ignoreUnknownElements();
         xstream.processAnnotations(FeeReduceApprovalNoticeDto.class);
         FeeReduceApprovalNoticeDto user2 = (FeeReduceApprovalNoticeDto) xstream.fromXML(content);
+
         return null;
     }
+
+    private void setCheckInFeeTotal(FeeInfoAllDto info,List<FeeInfoDetailDto> detailList, BiConsumer<FeeInfoAllDto,BigDecimal> setTotal) {
+        detailList.forEach(detail->{
+            setTotal.accept(info,detail.getFee_amount());
+        });
+    }
+
+
+
 }
