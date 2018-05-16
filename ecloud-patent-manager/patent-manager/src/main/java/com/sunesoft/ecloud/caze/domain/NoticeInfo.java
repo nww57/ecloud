@@ -15,7 +15,7 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name = "pat_notice_info")
-public class Notice extends BizEntity {
+public class NoticeInfo extends BizEntity {
 
 
     /**
@@ -23,6 +23,12 @@ public class Notice extends BizEntity {
      */
     @Column(name = "caseNo")
     private String caseNo;
+
+    /**
+     * 通知书处理状态
+     */
+    @Column(name = "handelStatus")
+    private boolean handleStatus;
 
     /**
      * 申请号
@@ -43,10 +49,11 @@ public class Notice extends BizEntity {
     private String noticeName;
 
     /**
-     * 通知书编码/发文序列号
+     * 通知书编码
      */
     @Column(name = "noticeCode")
     private String noticeCode;
+
 
     /**
      * 申请日
@@ -60,11 +67,24 @@ public class Notice extends BizEntity {
     @Column(name = "sendFileDate")
     private LocalDate sendFileDate;
 
-    @Column(name = "content",columnDefinition = "TEXT")
+    /**
+     * 发文序列号
+     */
+    @Column(name = "fileSerializeNo")
+    private String fileSerializeNo;
+
+    /**
+     * 通知书内容
+     */
+    @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 
     @Column(name = "fileName")
     private String fileName;
+
+    public NoticeInfo() {
+        this.handleStatus = false;
+    }
 
     public String getCaseNo() {
         return caseNo;
@@ -136,5 +156,21 @@ public class Notice extends BizEntity {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public boolean isHandleStatus() {
+        return handleStatus;
+    }
+
+    public void setHandleStatus(boolean handleStatus) {
+        this.handleStatus = handleStatus;
+    }
+
+    public String getFileSerializeNo() {
+        return fileSerializeNo;
+    }
+
+    public void setFileSerializeNo(String fileSerializeNo) {
+        this.fileSerializeNo = fileSerializeNo;
     }
 }

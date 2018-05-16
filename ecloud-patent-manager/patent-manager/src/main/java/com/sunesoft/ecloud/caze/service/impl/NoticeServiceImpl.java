@@ -8,7 +8,7 @@ import com.sunesoft.ecloud.caseclient.dto.notice.FeeInfoAllDto;
 import com.sunesoft.ecloud.caseclient.dto.notice.FeeInfoDetailDto;
 import com.sunesoft.ecloud.caseclient.dto.notice.FeeReduceApprovalNoticeDto;
 import com.sunesoft.ecloud.caseclient.enums.PatentFeeType;
-import com.sunesoft.ecloud.caze.domain.Notice;
+import com.sunesoft.ecloud.caze.domain.NoticeInfo;
 import com.sunesoft.ecloud.caze.repository.DismissedNoticeRepository;
 import com.sunesoft.ecloud.caze.service.NoticeService;
 import com.sunesoft.ecloud.caze.service.PatentService;
@@ -24,10 +24,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 /**
  * @Auther: niww
@@ -47,12 +45,12 @@ public class NoticeServiceImpl implements NoticeService {
         if(null == dto.getAgId()){
             throw new IllegalArgumentException("参数agId不能为null");
         }
-        Notice notice = new Notice();
-        BeanUtil.copyPropertiesIgnoreNull(dto, notice);
-        noticeRepository.saveAndFlush(notice);
+        NoticeInfo noticeInfo = new NoticeInfo();
+        BeanUtil.copyPropertiesIgnoreNull(dto, noticeInfo);
+        noticeRepository.saveAndFlush(noticeInfo);
 
         String noticeCode = dto.getNoticeCode();
-        String content = notice.getContent();
+        String content = noticeInfo.getContent();
         List<String> contentList  = (List<String>)JsonHelper.toObject(content, new TypeToken<List<String>>(){}.getType());
         content = contentList.get(0);
         switch (noticeCode){
@@ -126,11 +124,21 @@ public class NoticeServiceImpl implements NoticeService {
         return ResultFactory.success();
     }
 
+    @Override
+    public TResult handleNotice(UUID noticeId) {
+        if(null == noticeId){
+            throw new IllegalArgumentException("参数noticeId不能为null");
+        }
+        NoticeInfo noticeInfo = noticeRepository.findById(noticeId).get();
+        noticeInfo.setHandleStatus(true);
+        return ResultFactory.success();
+    }
+
 
     @Override
     public TResult testContentToBean() {
-        Notice notice = noticeRepository.findById(UUID.fromString("b498d76d-10e9-4f30-bbf8-5a095709ee05")).get();
-        String content = notice.getContent();
+        NoticeInfo noticeInfo = noticeRepository.findById(UUID.fromString("b498d76d-10e9-4f30-bbf8-5a095709ee05")).get();
+        String content = noticeInfo.getContent();
         List<String> contentList  = (List<String>)JsonHelper.toObject(content, new TypeToken<List<String>>(){}.getType());
         content = contentList.get(0);
         //创建xStream对象
