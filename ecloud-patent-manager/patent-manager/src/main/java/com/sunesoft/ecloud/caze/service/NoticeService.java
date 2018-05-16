@@ -24,7 +24,7 @@ public interface NoticeService {
      * @param noticeId
      * @return
      */
-    TResult handleNotice(UUID noticeId);
+    TResult handleNotice(UUID... noticeId);
 
 
 

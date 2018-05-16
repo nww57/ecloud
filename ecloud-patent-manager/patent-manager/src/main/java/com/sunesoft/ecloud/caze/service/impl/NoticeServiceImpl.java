@@ -125,12 +125,11 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public TResult handleNotice(UUID noticeId) {
+    public TResult handleNotice(UUID... noticeId) {
         if(null == noticeId){
             throw new IllegalArgumentException("参数noticeId不能为null");
         }
-        NoticeInfo noticeInfo = noticeRepository.findById(noticeId).get();
-        noticeInfo.setHandleStatus(true);
+        noticeRepository.updateHandleStatus(true,noticeId);
         return ResultFactory.success();
     }
 
