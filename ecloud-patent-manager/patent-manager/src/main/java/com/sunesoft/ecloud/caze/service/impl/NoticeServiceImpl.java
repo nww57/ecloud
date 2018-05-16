@@ -20,6 +20,7 @@ import com.thoughtworks.xstream.XStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -32,6 +33,7 @@ import java.util.function.BiConsumer;
  * @Date: 2018/5/3/003
  */
 @Service
+@Transactional
 public class NoticeServiceImpl implements NoticeService {
 
     @Autowired
