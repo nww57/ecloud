@@ -1,13 +1,13 @@
-package com.sunesoft.ecloud.caseclient.dto.xml.examine;
+package com.sunesoft.ecloud.caseclient.dto.xml;
 
-import com.sunesoft.ecloud.caseclient.dto.xml.XMLDate;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * @auther: niww
  * @date: 2018/5/16/016
+ * 签章信息
  */
-public class SubstantiveReviewRequestSignatureInfo {
+public class SignatureInfo {
 
     @XStreamAlias("签章")
     private String signature;
@@ -15,7 +15,7 @@ public class SubstantiveReviewRequestSignatureInfo {
     @XStreamAlias("签章日期")
     private XMLDate xmlDate;
 
-    public SubstantiveReviewRequestSignatureInfo(String signature, XMLDate xmlDate) {
+    public SignatureInfo(String signature, XMLDate xmlDate) {
         this.signature = signature;
         this.xmlDate = xmlDate;
     }

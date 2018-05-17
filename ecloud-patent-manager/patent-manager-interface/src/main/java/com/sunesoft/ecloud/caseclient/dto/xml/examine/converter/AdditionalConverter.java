@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.caseclient.dto.xml.examine.converter;
 
+import com.sunesoft.ecloud.caseclient.dto.xml.examine.SubstantiveReviewRequestContentInfo;
 import com.sunesoft.ecloud.caseclient.dto.xml.examine.SubstantiveReviewRequestRemarksInfo;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.converters.Converter;
@@ -48,6 +49,6 @@ public class AdditionalConverter implements Converter {
 
     @Override
     public boolean canConvert(Class aClass) {
-        return aClass.equals(SubstantiveReviewRequestRemarksInfo.class);
+        return aClass.equals(SubstantiveReviewRequestRemarksInfo.class) || aClass.equals(SubstantiveReviewRequestContentInfo.class) ;
     }
 }

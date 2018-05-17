@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.caseclient.dto.xml.examine;
 
+import com.sunesoft.ecloud.caseclient.dto.xml.SignatureInfo;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public class SubstantiveReviewRequestDto {
      * 申请人代表人或专利代理机构签章
      */
     @XStreamAlias("申请人代表人或专利代理机构签章")
-    private SubstantiveReviewRequestSignatureInfo signatureInfo;
+    private SignatureInfo signatureInfo;
 
     /**
      * 国家知识产权局处理意见
@@ -80,11 +81,11 @@ public class SubstantiveReviewRequestDto {
         this.remarksInfo = remarksInfo;
     }
 
-    public SubstantiveReviewRequestSignatureInfo getSignatureInfo() {
+    public SignatureInfo getSignatureInfo() {
         return signatureInfo;
     }
 
-    public void setSignatureInfo(SubstantiveReviewRequestSignatureInfo signatureInfo) {
+    public void setSignatureInfo(SignatureInfo signatureInfo) {
         this.signatureInfo = signatureInfo;
     }
 
