@@ -17,7 +17,7 @@ public class InventorOther {
 
     @XStreamAlias("请求不公开")
     @XStreamConverter(value = AdditionalConverter.class)
-    private int open;
+    private boolean open;
 
     @XStreamAsAttribute
     @XStreamAlias("顺序")
@@ -27,7 +27,7 @@ public class InventorOther {
     private String nameEn;
 
 
-    public InventorOther(int sort,String name, int open) {
+    public InventorOther(int sort,String name, boolean open) {
         this.name = name;
         this.open = open;
         this.nameEn = "";

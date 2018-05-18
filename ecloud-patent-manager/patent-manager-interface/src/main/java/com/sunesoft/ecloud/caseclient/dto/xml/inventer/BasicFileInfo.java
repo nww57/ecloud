@@ -7,7 +7,7 @@ import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
  * @auther: niww
  * @date: 2018/5/17/017
  */
-public class FileInfo {
+public class BasicFileInfo {
 
     @XStreamAlias("顺序")
     @XStreamAsAttribute
@@ -22,7 +22,7 @@ public class FileInfo {
     @XStreamAlias("页数")
     private int count;
 
-    public FileInfo(int sort, String fileName, String tableCode, int count) {
+    public BasicFileInfo(int sort, String fileName, String tableCode, int count) {
         this.sort = sort;
         this.fileName = fileName;
         this.tableCode = tableCode;

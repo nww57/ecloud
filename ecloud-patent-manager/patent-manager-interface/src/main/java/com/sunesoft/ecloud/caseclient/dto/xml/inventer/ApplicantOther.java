@@ -16,7 +16,7 @@ public class ApplicantOther {
     private String userCode;
 
     @XStreamAlias("申请人类型")
-    private int applicantType;
+    private String applicantType;
 
     @XStreamAlias("个人身份证号或组织机构代码")
     private String idCode;
@@ -57,6 +57,7 @@ public class ApplicantOther {
         this.userCode = "";
         this.idCode = "";
         this.countryCode = "";
+        this.applicantType = "";
         this.liveAddressCode = "";
         this.cityCode = "";
         this.areaDetail = "";
@@ -76,6 +77,7 @@ public class ApplicantOther {
         this.cityCode = "";
         this.areaDetail = "";
         this.zipCode = "";
+        this.applicantType = "";
         this.phone = "";
         this.nameEn = "";
         this.addressEn = "";
@@ -97,11 +99,11 @@ public class ApplicantOther {
         this.userCode = userCode;
     }
 
-    public int getApplicantType() {
+    public String getApplicantType() {
         return applicantType;
     }
 
-    public void setApplicantType(int applicantType) {
+    public void setApplicantType(String applicantType) {
         this.applicantType = applicantType;
     }
 

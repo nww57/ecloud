@@ -21,12 +21,12 @@ public class Agency {
 
     @XStreamAlias("声明已经与申请人签订了专利代理委托书且本表中的信息与委托书中相应信息一致")
     @XStreamConverter(value = AdditionalConverter.class)
-    private int statementInfoIdentical;
+    private boolean statementInfoIdentical;
 
     @XStreamImplicit
     private List<AgencyAgent> agentList;
 
-    public Agency(String name, String agencyCode, int statementInfoIdentical, List<AgencyAgent> agentList) {
+    public Agency(String name, String agencyCode, boolean statementInfoIdentical, List<AgencyAgent> agentList) {
         this.name = name;
         this.agencyCode = agencyCode;
         this.statementInfoIdentical = statementInfoIdentical;
@@ -49,11 +49,11 @@ public class Agency {
         this.agencyCode = agencyCode;
     }
 
-    public int getStatementInfoIdentical() {
+    public boolean getStatementInfoIdentical() {
         return statementInfoIdentical;
     }
 
-    public void setStatementInfoIdentical(int statementInfoIdentical) {
+    public void setStatementInfoIdentical(boolean statementInfoIdentical) {
         this.statementInfoIdentical = statementInfoIdentical;
     }
 

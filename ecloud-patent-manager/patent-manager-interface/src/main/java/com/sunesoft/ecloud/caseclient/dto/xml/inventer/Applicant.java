@@ -27,6 +27,6 @@ public class Applicant {
         List<ApplicantOther> otherList = new ArrayList<>();
         otherList.add(new ApplicantOther(1));
         otherList.add(new ApplicantOther(2));
-        return null;
+        return otherList;
     }
 }

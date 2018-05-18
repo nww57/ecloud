@@ -12,18 +12,18 @@ import com.thoughtworks.xstream.annotations.XStreamConverter;
 public class NoveltyStatement {
 
     @XStreamAlias("已在中国政府主办或承认的国际展览会上首次展出")
-    private int internationalExhibition;
+    private boolean internationalExhibition;
 
-    @XStreamAlias("已在中国政府主办或承认的国际展览会上首次展出")
-    private int academicConference;
+    @XStreamAlias("已在规定的学术会议或技术会议上首次发表")
+    private boolean academicConference;
 
     @XStreamAlias("他人未经申请人同意而泄露其内容")
-    private int leakage;
+    private boolean leakage;
 
     public NoveltyStatement() {
     }
 
-    public NoveltyStatement(int internationalExhibition, int academicConference, int leakage) {
+    public NoveltyStatement(boolean internationalExhibition, boolean academicConference, boolean leakage) {
         this.internationalExhibition = internationalExhibition;
         this.academicConference = academicConference;
         this.leakage = leakage;

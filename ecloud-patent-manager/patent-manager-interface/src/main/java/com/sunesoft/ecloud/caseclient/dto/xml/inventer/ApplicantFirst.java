@@ -54,7 +54,7 @@ public class ApplicantFirst {
 
     @XStreamAlias("费减备案")
     @XStreamConverter(value = AdditionalConverter.class)
-    private int feeRecord;
+    private boolean feeRecord;
 
     public ApplicantFirst() {
         this.name = "";
@@ -183,11 +183,11 @@ public class ApplicantFirst {
         this.addressEn = addressEn;
     }
 
-    public int getFeeRecord() {
+    public boolean getFeeRecord() {
         return feeRecord;
     }
 
-    public void setFeeRecord(int feeRecord) {
+    public void setFeeRecord(boolean feeRecord) {
         this.feeRecord = feeRecord;
     }
 }

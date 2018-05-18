@@ -15,7 +15,7 @@ public class InventorFirst {
 
     @XStreamAlias("请求不公开")
     @XStreamConverter(value = AdditionalConverter.class)
-    private int open;
+    private boolean open;
 
     @XStreamAlias("国籍")
     private String countryCode;
@@ -26,7 +26,7 @@ public class InventorFirst {
     @XStreamAlias("英文姓名")
     private String nameEn;
 
-    public InventorFirst(String name, String countryCode, int open, String idCode) {
+    public InventorFirst(String name, String countryCode, boolean open, String idCode) {
         this.name = name;
         this.countryCode = countryCode;
         this.open = open;

@@ -4,7 +4,6 @@ import com.sunesoft.ecloud.caseclient.dto.xml.ApprovalOpinion;
 import com.sunesoft.ecloud.caseclient.dto.xml.SignatureInfo;
 import com.sunesoft.ecloud.caseclient.dto.xml.XMLDate;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,22 +79,22 @@ public class InventorPatentRequestDto {
     private NoveltyStatement noveltyStatement;
 
     @XStreamAlias("提前公开")
-    private int publishAdvance;
+    private PublishAdvance publishAdvance;
 
     @XStreamAlias("遗传资源")
-    private int geneticResources;
+    private GeneticResources geneticResources;
 
     @XStreamAlias("同日申请")
-    private int applySameDay;
+    private ApplySameDay applySameDay;
 
     @XStreamAlias("摘要附图")
-    private int abstractPicture;
+    private AbstractPicture abstractPicture;
 
     @XStreamAlias("申请文件清单")
     private ApplyFileInfo applyFileInfo;
 
-    @XStreamImplicit(keyFieldName = "附加文件清单",itemFieldName = "附加文件")
-    private List<FileInfo> attachFileInfoList;
+    @XStreamAlias("附加文件清单")
+    private List<AttachFile> attachBasicFileInfoList;
 
     @XStreamAlias("申请人或代理机构签章")
     private SignatureInfo signatureInfo;
@@ -117,7 +116,11 @@ public class InventorPatentRequestDto {
         this.priorItemList = initializationPriorItem();
         this.noveltyStatement = new NoveltyStatement();
         this.applyFileInfo = initializationApplyFileInfo();
-        this.attachFileInfoList = initializationAttachFileInfo();
+        this.attachBasicFileInfoList = initializationAttachFileInfo();
+        this.publishAdvance = new PublishAdvance(true);
+        this.applySameDay = new ApplySameDay(false);
+        this.geneticResources = new GeneticResources(false);
+        this.abstractPicture = new AbstractPicture(1);
     }
 
 
@@ -128,7 +131,7 @@ public class InventorPatentRequestDto {
      */
     private List<BiomaterialSample> initializationBiomaterialSample(){
         List<BiomaterialSample> sampleList = new ArrayList<>();
-        sampleList.add(new BiomaterialSample(1,"","",new XMLDate(),"","",new BiomaterialSample(). new Survival(false)));
+        sampleList.add(new BiomaterialSample(1,"","",new XMLDate(),"","",new Survival()));
         return sampleList;
     }
 
@@ -157,11 +160,11 @@ public class InventorPatentRequestDto {
      * 初始化附加文件信息
      * @return
      */
-    private List<FileInfo> initializationAttachFileInfo() {
-        List<FileInfo> fileInfoList = new ArrayList<>();
-        fileInfoList.add(new FileInfo(1,"实质审查请求书","110401",1));
-        fileInfoList.add(new FileInfo(2,"专利代理委托书","100007",2));
-        return fileInfoList;
+    private List<AttachFile> initializationAttachFileInfo() {
+        List<AttachFile> basicFileInfoList = new ArrayList<>();
+        basicFileInfoList.add(new AttachFile(1,"实质审查请求书","110401",1));
+        basicFileInfoList.add(new AttachFile(2,"专利代理委托书","100007",2));
+        return basicFileInfoList;
     }
 
     public String getPatentName() {
@@ -252,35 +255,35 @@ public class InventorPatentRequestDto {
         this.noveltyStatement = noveltyStatement;
     }
 
-    public int getPublishAdvance() {
+    public PublishAdvance getPublishAdvance() {
         return publishAdvance;
     }
 
-    public void setPublishAdvance(int publishAdvance) {
+    public void setPublishAdvance(PublishAdvance publishAdvance) {
         this.publishAdvance = publishAdvance;
     }
 
-    public int getGeneticResources() {
+    public GeneticResources getGeneticResources() {
         return geneticResources;
     }
 
-    public void setGeneticResources(int geneticResources) {
+    public void setGeneticResources(GeneticResources geneticResources) {
         this.geneticResources = geneticResources;
     }
 
-    public int getApplySameDay() {
+    public ApplySameDay getApplySameDay() {
         return applySameDay;
     }
 
-    public void setApplySameDay(int applySameDay) {
+    public void setApplySameDay(ApplySameDay applySameDay) {
         this.applySameDay = applySameDay;
     }
 
-    public int getAbstractPicture() {
+    public AbstractPicture getAbstractPicture() {
         return abstractPicture;
     }
 
-    public void setAbstractPicture(int abstractPicture) {
+    public void setAbstractPicture(AbstractPicture abstractPicture) {
         this.abstractPicture = abstractPicture;
     }
 
@@ -292,12 +295,12 @@ public class InventorPatentRequestDto {
         this.applyFileInfo = applyFileInfo;
     }
 
-    public List<FileInfo> getAttachFileInfoList() {
-        return attachFileInfoList;
+    public List<AttachFile> getAttachBasicFileInfoList() {
+        return attachBasicFileInfoList;
     }
 
-    public void setAttachFileInfoList(List<FileInfo> attachFileInfoList) {
-        this.attachFileInfoList = attachFileInfoList;
+    public void setAttachBasicFileInfoList(List<AttachFile> attachBasicFileInfoList) {
+        this.attachBasicFileInfoList = attachBasicFileInfoList;
     }
 
     public SignatureInfo getSignatureInfo() {

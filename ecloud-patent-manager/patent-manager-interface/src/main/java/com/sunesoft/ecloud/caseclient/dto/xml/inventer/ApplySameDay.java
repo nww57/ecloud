@@ -6,15 +6,15 @@ import com.thoughtworks.xstream.annotations.XStreamConverter;
 
 /**
  * @auther: niww
- * @date: 2018/5/17/017
+ * @date: 2018/5/18/018
  */
-public class SequenceTable {
+public class ApplySameDay {
 
-    @XStreamAlias("本申请涉及核苷酸或氨基酸序列表")
+    @XStreamAlias("声明本发明在同日申请实用新型专利")
     @XStreamConverter(value = AdditionalConverter.class)
-    private boolean involve;
+    private boolean applySameDay;
 
-    public SequenceTable(boolean involve) {
-        this.involve = involve;
+    public ApplySameDay(boolean applySameDay) {
+        this.applySameDay = applySameDay;
     }
 }

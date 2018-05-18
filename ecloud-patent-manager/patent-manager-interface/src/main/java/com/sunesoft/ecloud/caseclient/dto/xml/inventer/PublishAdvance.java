@@ -6,15 +6,16 @@ import com.thoughtworks.xstream.annotations.XStreamConverter;
 
 /**
  * @auther: niww
- * @date: 2018/5/17/017
+ * @date: 2018/5/18/018
  */
-public class SequenceTable {
+public class PublishAdvance {
 
-    @XStreamAlias("本申请涉及核苷酸或氨基酸序列表")
+    @XStreamAlias("请求早日公布该专利申请")
     @XStreamConverter(value = AdditionalConverter.class)
-    private boolean involve;
+    private boolean publishAdvance;
 
-    public SequenceTable(boolean involve) {
-        this.involve = involve;
+
+    public PublishAdvance(boolean publishAdvance) {
+        this.publishAdvance = publishAdvance;
     }
 }

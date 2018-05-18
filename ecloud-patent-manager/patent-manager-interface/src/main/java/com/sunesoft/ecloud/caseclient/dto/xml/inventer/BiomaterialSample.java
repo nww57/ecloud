@@ -1,10 +1,8 @@
 package com.sunesoft.ecloud.caseclient.dto.xml.inventer;
 
 import com.sunesoft.ecloud.caseclient.dto.xml.XMLDate;
-import com.sunesoft.ecloud.caseclient.dto.xml.examine.converter.AdditionalConverter;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamConverter;
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
 /**
  * @auther: niww
@@ -14,6 +12,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 public class BiomaterialSample {
 
     @XStreamAlias("顺序")
+    @XStreamAsAttribute
     private int sort ;
 
     @XStreamAlias("保藏单位")
@@ -103,30 +102,5 @@ public class BiomaterialSample {
         this.survival = survival;
     }
 
-    public class Survival {
 
-        @XStreamOmitField
-        private boolean survival;
-
-        @XStreamAlias("存活")
-        @XStreamConverter(value = AdditionalConverter.class)
-        private int survive;
-
-        @XStreamAlias("未存活")
-        @XStreamConverter(value = AdditionalConverter.class)
-        private int unsurvive;
-
-        public Survival() {
-        }
-
-        public Survival(boolean survival) {
-            if(survival){
-                this.survive = 1;
-                this.unsurvive = 0;
-            }else{
-                this.survive = 0;
-                this.unsurvive = 1;
-            }
-        }
-    }
 }
