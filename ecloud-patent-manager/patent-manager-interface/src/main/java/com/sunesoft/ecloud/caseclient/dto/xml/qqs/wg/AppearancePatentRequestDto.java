@@ -12,7 +12,7 @@ import java.util.List;
  * @auther: niww
  * @date: 2018/5/18/018
  */
-@XStreamAlias("外观专利请求书")
+@XStreamAlias("外观设计专利请求书")
 public class AppearancePatentRequestDto {
 
     //基础信息 start
