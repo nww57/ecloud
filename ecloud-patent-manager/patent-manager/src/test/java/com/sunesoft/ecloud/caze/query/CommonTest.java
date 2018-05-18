@@ -4,21 +4,24 @@ package com.sunesoft.ecloud.caze.query;
 import com.sunesoft.ecloud.caseclient.dto.xml.ApprovalOpinion;
 import com.sunesoft.ecloud.caseclient.dto.xml.SignatureInfo;
 import com.sunesoft.ecloud.caseclient.dto.xml.XMLDate;
-import com.sunesoft.ecloud.caseclient.dto.xml.examine.*;
-import com.sunesoft.ecloud.caseclient.dto.xml.inventer.*;
+import com.sunesoft.ecloud.caseclient.dto.xml.qqs.fm.InventorPatentRequestDto;
+import com.sunesoft.ecloud.caseclient.dto.xml.qqs.wg.AppearancePatentRequestDto;
+import com.sunesoft.ecloud.caseclient.dto.xml.szscqqs.*;
 import com.sunesoft.ecloud.caseclient.dto.xml.list.*;
-import com.sunesoft.ecloud.caseclient.dto.xml.proxy.*;
+import com.sunesoft.ecloud.caseclient.dto.xml.dlwts.*;
+import com.sunesoft.ecloud.caseclient.dto.xml.qqs.*;
+import com.sunesoft.ecloud.caseclient.dto.xml.wgsjtp.AppearanceDesignPictureDto;
+import com.sunesoft.ecloud.caseclient.dto.xml.wgsjtp.AppearancePicture;
 import com.thoughtworks.xstream.XStream;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.*;
 
 /**
  * @Auther: niww
@@ -61,7 +64,7 @@ public class CommonTest {
         dto.setPictureList(pictureList);
         dto.setInformationConsistencyStatement(new InformationConsistencyStatement());
 
-        PrintWriter writer = new PrintWriter("E:/100008.xml");
+        PrintWriter writer = new PrintWriter("E:/test100007.xml");
         writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
         XStream xs = new XStream();
         //xs.alias("cat", Cat.class); //等同于 @XStreamAlias("cat")
@@ -77,14 +80,14 @@ public class CommonTest {
     public void test3() throws FileNotFoundException {
         SubstantiveReviewRequestDto dto = new SubstantiveReviewRequestDto();
         dto.setPatentInfo(new SubstantiveReviewRequestPatentInfo("二种通过文化云平台进行用户管理的方法及装置aab","上海创图网络科技股份有限公司aab"));
-        dto.setContentInfo(new SubstantiveReviewRequestContentInfo(1));
+        dto.setContentInfo(new SubstantiveReviewRequestContentInfo(true));
         List<AttachmentInfo> infos = new ArrayList<>();
         infos.add(new AttachmentInfo("",1));
         dto.setAttachmentInfo(infos);
         dto.setRemarksInfo(new SubstantiveReviewRequestRemarksInfo());
         dto.setSignatureInfo(new SignatureInfo("上海点威知识产权代理有限公司",new XMLDate("2018","5","16")));
         dto.setOpinionInfo(new SubstantiveReviewRequestOpinionInfo("",new XMLDate()));
-        PrintWriter writer = new PrintWriter("E:/110401.xml");
+        PrintWriter writer = new PrintWriter("E:/test110401.xml");
         writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
         XStream xs = new XStream();
         xs.processAnnotations(SubstantiveReviewRequestDto.class);
@@ -103,9 +106,9 @@ public class CommonTest {
         dto.setCaseNo("AJ201805170001");
         dto.setPatentName("一种通过文化云平台进行用户管理的方法及装置");
         List<InventorOther> inventorOthers = new ArrayList<>();
-        inventorOthers.add(new InventorOther(1,"包嘉会",0));
-        inventorOthers.add(new InventorOther(2,"李欣",0));
-        Inventor inventor  = new Inventor(new InventorFirst("长红","CN",0,"34253119850816171X"),inventorOthers);
+        inventorOthers.add(new InventorOther(1,"包嘉会",false));
+        inventorOthers.add(new InventorOther(2,"李欣",false));
+        Inventor inventor  = new Inventor(new InventorFirst("长红","CN",false,"34253119850816171X"),inventorOthers);
         dto.setInventor(inventor);
 
 
@@ -115,13 +118,13 @@ public class CommonTest {
         applicantFirst.setUserCode("");
         applicantFirst.setIdCode("913101087653151511");
         applicantFirst.setEmail("");
-        applicantFirst.setCityCode("CN");
+        applicantFirst.setCountryCode("CN");
         applicantFirst.setLiveAddressCode("CN");
         applicantFirst.setProvinceCode("310000");
         applicantFirst.setCityCode("310000");
         applicantFirst.setAreaDetail("广中西路777弄12号二楼A－27室");
         applicantFirst.setZipCode("200072");
-        applicantFirst.setFeeRecord(0);
+        applicantFirst.setFeeRecord(false);
         Applicant applicant = new Applicant(applicantFirst,Applicant.generateOriginalApplicantOther());
         dto.setApplicant(applicant);
 
@@ -129,16 +132,16 @@ public class CommonTest {
         List<AgencyAgent> agentList = new ArrayList<>();
         agentList.add(new AgencyAgent(1,"胡志强","3132615981.5","3132615981.5"));
         agentList.add(new AgencyAgent(2,"","",""));
-        dto.setAgency(new Agency("上海点威知识产权代理有限公司","31326",1,agentList));
+        dto.setAgency(new Agency("上海点威知识产权代理有限公司","31326",true,agentList));
 
         dto.setDivisionApplication(new DivisionApplication());
-        dto.setSequenceTable(new SequenceTable(1));
+        dto.setSequenceTable(new SequenceTable(true));
         dto.setNoveltyStatement(new NoveltyStatement());
 
         dto.setSignatureInfo(new SignatureInfo("上海点威知识产权代理有限公司",new XMLDate("2018","12","15")));
 
         dto.setApprovalOpinion(new ApprovalOpinion("",new XMLDate()));
-        PrintWriter writer = new PrintWriter("E:/110101.xml");
+        PrintWriter writer = new PrintWriter("E:/test110101.xml");
         writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
         XStream xs = new XStream();
         xs.processAnnotations(InventorPatentRequestDto.class);
@@ -177,6 +180,110 @@ public class CommonTest {
         writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
         XStream xs = new XStream();
         xs.processAnnotations(ColligateInfoDto.class);
+        xs.toXML(dto,writer);
+        System.out.println(123);
+    }
+
+
+    @Test
+    public void testGetImageWidthAndHeight(){
+        Map<String, Object> imageInfoMap = new HashMap<>();
+        InputStream is = null;
+        try {
+            File file = new File("C:\\Users\\Administrator\\Desktop\\51c97b3d-e4ea-492e-90f0-be22b7ebe1c3\\130001\\1709201417451.jpg");
+            is = new FileInputStream(file);
+            BufferedImage image = ImageIO.read(is);
+            imageInfoMap.put("size", file.length());
+            imageInfoMap.put("width", image.getWidth());
+            imageInfoMap.put("height", image.getHeight());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (is != null) {
+                try {
+                    is.close(); // 关闭流
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        System.out.println(23);
+    }
+
+
+    /**
+     * 测试生成外观设计图片或照片xml文件
+     */
+    @Test
+    public void test6() throws Exception{
+        List<AppearancePicture> list = new ArrayList<>();
+        list.add(new AppearancePicture(1,"139.9646","178.5938","主视图","jpg","1709201417451.jpg"));
+        list.add(new AppearancePicture(2,"139.9646","178.5938","主视图","jpg","1709201417451.jpg"));
+        list.add(new AppearancePicture(3,"139.9646","178.5938","主视图","jpg","1709201417451.jpg"));
+        list.add(new AppearancePicture(4,"139.9646","178.5938","主视图","jpg","1709201417451.jpg"));
+        list.add(new AppearancePicture(5,"139.9646","178.5938","主视图","jpg","1709201417451.jpg"));
+        list.add(new AppearancePicture(6,"139.9646","178.5938","主视图","jpg","1709201417451.jpg"));
+        list.add(new AppearancePicture(7,"139.9646","178.5938","主视图","jpg","1709201417451.jpg"));
+        AppearanceDesignPictureDto dto = new AppearanceDesignPictureDto(list);
+        PrintWriter writer = new PrintWriter("E:/test130001.xml");
+        writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+        XStream xs = new XStream();
+        xs.processAnnotations(AppearanceDesignPictureDto.class);
+        xs.toXML(dto,writer);
+        System.out.println(123);
+    }
+
+
+    /**
+     * 测试外观专利请求书xml
+     * @throws Exception
+     */
+    @Test
+    public void test7() throws Exception{
+        AppearancePatentRequestDto dto =  new AppearancePatentRequestDto();
+        dto.setCaseNo("AJ201805170001");
+        dto.setPatentName("一种通过文化云平台进行用户管理的方法及装置");
+        List<InventorOther> inventorOthers = new ArrayList<>();
+        inventorOthers.add(new InventorOther(1,"祁辰黎",false));
+        inventorOthers.add(new InventorOther(2,"倩",false));
+        Designer inventor  = new Designer(new InventorFirst("宋海瑛","CN",false,"34253119850816171X"),inventorOthers);
+        dto.setDesigner(inventor);
+
+
+        ApplicantFirst applicantFirst = new ApplicantFirst();
+        applicantFirst.setName("上海创图网络科技股份有限公司");
+        applicantFirst.setApplicantType(3);
+        applicantFirst.setUserCode("");
+        applicantFirst.setIdCode("913101087653151511");
+        applicantFirst.setEmail("");
+        applicantFirst.setCountryCode("CN");
+        applicantFirst.setLiveAddressCode("CN");
+        applicantFirst.setProvinceCode("310000");
+        applicantFirst.setCityCode("310000");
+        applicantFirst.setAreaDetail("广中西路777弄12号二楼A－27室");
+        applicantFirst.setZipCode("200072");
+        applicantFirst.setFeeRecord(false);
+        Applicant applicant = new Applicant(applicantFirst,Applicant.generateOriginalApplicantOther());
+        dto.setApplicant(applicant);
+
+        dto.setContactor(new Contactor());
+        List<AgencyAgent> agentList = new ArrayList<>();
+        agentList.add(new AgencyAgent(1,"胡志强","3132615981.5","18212587452"));
+        agentList.add(new AgencyAgent(2,"","",""));
+        dto.setAgency(new Agency("上海点威知识产权代理有限公司","31326",true,agentList));
+        dto.setDivisionApplication(new DivisionApplication());
+        dto.setNoveltyStatement(new NoveltyStatement());
+        dto.setSimilarDesign(new SimilarDesign(false,null));
+        dto.setCompleteProduct(new CompleteProduct(false,null));
+        dto.setSignatureInfo(new SignatureInfo("上海点威知识产权代理有限公司",new XMLDate("2018","12","15")));
+        dto.setApprovalOpinion(new ApprovalOpinion("",new XMLDate()));
+        PrintWriter writer = new PrintWriter("E:/test130101.xml");
+        writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
+        XStream xs = new XStream();
+        xs.processAnnotations(AppearancePatentRequestDto.class);
+        xs.omitField(Agency.class,"statementInfoIdentical");
         xs.toXML(dto,writer);
         System.out.println(123);
     }
