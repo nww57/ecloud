@@ -284,6 +284,7 @@ public class CommonTest {
         XStream xs = new XStream();
         xs.processAnnotations(AppearancePatentRequestDto.class);
         xs.omitField(Agency.class,"statementInfoIdentical");
+        xs.aliasField("幅数",ApplyFileInfo.class,"count");
         xs.toXML(dto,writer);
         System.out.println(123);
     }
