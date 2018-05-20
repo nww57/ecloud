@@ -590,7 +590,7 @@ public class PatentServiceImpl implements PatentService {
             //代理机构
             List<AgencyAgent> agencyAgentList = generateAgent(patAgentList);
 
-            inventorDto.setAgency(new Agency(agencyName, agencyCode, true, ));
+            inventorDto.setAgency(new Agency(agencyName, agencyCode, true, agencyAgentList));
         } else {
             AppearancePatentRequestDto appearanceDto = new AppearancePatentRequestDto();
 
