@@ -1,26 +1,35 @@
 package com.sunesoft.ecloud.caze.service.impl;
 
-import com.sunesoft.ecloud.adminclient.clientService.CustomerServiceClient;
-import com.sunesoft.ecloud.adminclient.dtos.AgentDto;
-import com.sunesoft.ecloud.adminclient.dtos.CustomerApplicantDto;
-import com.sunesoft.ecloud.adminclient.dtos.CustomerInventorDto;
+import com.sunesoft.ecloud.adminclient.dtos.AgencyBasicDto;
 import com.sunesoft.ecloud.caseclient.dto.*;
+import com.sunesoft.ecloud.caseclient.dto.xml.SignatureInfo;
+import com.sunesoft.ecloud.caseclient.dto.xml.XMLDate;
+import com.sunesoft.ecloud.caseclient.dto.xml.dlwts.Entrustor;
+import com.sunesoft.ecloud.caseclient.dto.xml.dlwts.PatentProxyXMLDto;
+import com.sunesoft.ecloud.caseclient.dto.xml.dlwts.Picture;
+import com.sunesoft.ecloud.caseclient.dto.xml.dlwts.ProxyAgent;
+import com.sunesoft.ecloud.caseclient.dto.xml.qqs.*;
+import com.sunesoft.ecloud.caseclient.dto.xml.qqs.fm.InventorPatentRequestDto;
+import com.sunesoft.ecloud.caseclient.dto.xml.qqs.wg.AppearancePatentRequestDto;
+import com.sunesoft.ecloud.caseclient.dto.xml.szscqqs.*;
 import com.sunesoft.ecloud.caseclient.enums.PatentNode;
+import com.sunesoft.ecloud.caseclient.enums.PatentType;
 import com.sunesoft.ecloud.caseclient.enums.UpDown;
 import com.sunesoft.ecloud.caze.domain.*;
 import com.sunesoft.ecloud.caze.repository.*;
 import com.sunesoft.ecloud.caze.service.PatentService;
-import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import com.sunesoft.ecloud.common.utils.JsonHelper;
+import com.thoughtworks.xstream.XStream;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.comparator.Comparators;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -56,8 +65,7 @@ public class PatentServiceImpl implements PatentService {
     PatOfficialFeeDetailRepository officialFeeDetailRepository;
     @Autowired
     PatFeeInfoRepository patFeeInfoRepository;
-    @Autowired
-    CustomerServiceClient customerServiceClient;
+
 
     @Override
     public TResult generateCaseNo(UUID agId) {
@@ -466,67 +474,143 @@ public class PatentServiceImpl implements PatentService {
     }
 
     @Override
-    public TResult packaging(UUID patentId) {
+    public TResult packaging(UUID patentId) throws Exception {
+
+        LocalDate localDate = LocalDate.now();
+        XMLDate xmlDate = new XMLDate(String.valueOf(localDate.getYear()), String.valueOf(localDate.getMonth()), String.valueOf(localDate.getDayOfMonth()));
         //TODO 打包
+        //TODO 检查必要文件是否已经完成上传
         //确定著录项信息:申请人，发明人，代理机构，代理人
         Optional<PatentInfo> optional = patentInfoRepository.findById(patentId);
         PatentInfo info = null;
-        if(optional.isPresent()){
-           info = optional.get();
+        if (optional.isPresent()) {
+            info = optional.get();
         }
-        if(null == info){
-            throw new IllegalArgumentException("无效的patentId:"+patentId);
+        if (null == info) {
+            throw new IllegalArgumentException("无效的patentId:" + patentId);
         }
+        String patentName = info.getPatentName();
+        PatentType patentType = info.getPatentType();
+        String caseNo = info.getCaseNo();
+
         PatentElementDto elementDto = new PatentElementDto();
         elementDto.setPatentId(patentId);
         //代理机构
-        String agencyName = patentInfoRepository.getAgencyName(info.getAgId().toString());
+        AgencyBasicDto agency = patentInfoRepository.getAgencyName(info.getAgId().toString());
+        String agencyName = agency.getName();
+        String agencyCode = agency.getAgencyCode();
         elementDto.setAgency(agencyName);
         //代理人
         List<PatAgent> patAgentList = agentRepository.findByPatentInfo_Id(patentId);
-        List<UUID> agentIdList = patAgentList.stream().map(PatAgent::getAgencyAgentId).collect(Collectors.toList());
-        ListResult<AgentDto> agentDtoListResult = customerServiceClient.findAgentByIdList(agentIdList);
-        List<AgentDto> agentDtoList = agentDtoListResult.getResult();
-        patAgentList =  patAgentList.stream().sorted(Comparator.comparingInt(PatAgent::getSort)).collect(Collectors.toList());
-        patAgentList.forEach(a->{
-            AgentDto dto =  agentDtoList.stream().filter(d->Objects.equals(d.getId(),a.getAgencyAgentId())).findFirst().get();
-            BeanUtil.copyProperties(dto,a,new String[]{"id"});
+        List<String> agentIdList = patAgentList.stream().map(a -> a.getAgencyAgentId().toString()).collect(Collectors.toList());
+        List<PatAgentDto> dtoList = agentRepository.findAgentInfoByIdList(agentIdList);
+        patAgentList = patAgentList.stream().sorted(Comparator.comparingInt(PatAgent::getSort)).collect(Collectors.toList());
+        patAgentList.forEach(a -> {
+            PatAgentDto dto = dtoList.stream().filter(d -> Objects.equals(d.getAgencyAgentId(), a.getAgencyAgentId())).findFirst().get();
+            BeanUtil.copyPropertiesIgnoreNull(dto, a);
         });
-        String agents = patAgentList.stream().map(PatAgent::getName).reduce((acc,item)->{
-            acc += ";"+item;
+        String agents = patAgentList.stream().map(PatAgent::getName).reduce((acc, item) -> {
+            acc += ";" + item;
             return acc;
         }).get();
         elementDto.setAgencyAgents(agents);
         //申请人
         List<PatApplicant> patApplicantList = applicantRepository.findByPatentInfo_Id(patentId);
-        List<UUID> applicantIdList =  patApplicantList.stream().map(PatApplicant::getCustomerApplicantId).collect(Collectors.toList());
-        ListResult<CustomerApplicantDto> applicantDtoListResult = customerServiceClient.findCustomerApplicantByIdList(applicantIdList);
-        List<CustomerApplicantDto> applicantDtoList = applicantDtoListResult.getResult();
+        List<String> applicantIdList = patApplicantList.stream().map(p -> p.getCustomerApplicantId().toString()).collect(Collectors.toList());
+        List<PatApplicantDto> applicantDtoList = applicantRepository.findPatApplicantByIdList(applicantIdList);
         patApplicantList = patApplicantList.stream().sorted(Comparator.comparingInt(PatApplicant::getSort)).collect(Collectors.toList());
-        patApplicantList.forEach(applicant->{
-            CustomerApplicantDto dto = applicantDtoList.stream().filter(f->Objects.equals(f.getId(),applicant.getCustomerApplicantId())).findFirst().get();
-            BeanUtil.copyProperties(dto,applicant,new String[]{"id"});
+        patApplicantList.forEach(applicant -> {
+            PatApplicantDto dto = applicantDtoList.stream().filter(f -> Objects.equals(f.getCustomerApplicantId(), applicant.getCustomerApplicantId())).findFirst().get();
+            BeanUtil.copyPropertiesIgnoreNull(dto, applicant);
         });
-        String applicants = patApplicantList.stream().map(PatApplicant::getName).reduce((acc,item)->{
-            acc += ";"+item;
+        String applicants = patApplicantList.stream().map(PatApplicant::getName).reduce((acc, item) -> {
+            acc += ";" + item;
             return acc;
         }).get();
         elementDto.setApplicants(applicants);
         //发明人
         List<PatInventor> patInventorList = inventorRepository.findByPatentInfo_Id(patentId);
-        List<UUID> inventorIdList = patInventorList.stream().map(PatInventor::getCustomerInventorId).collect(Collectors.toList());
-        ListResult<CustomerInventorDto> inventorDtoListResult = customerServiceClient.findCustomerInventorByIdList(inventorIdList);
-        List<CustomerInventorDto> inventorDtoList = inventorDtoListResult.getResult();
-        patInventorList =  patInventorList.stream().sorted(Comparator.comparingInt(PatInventor::getSort)).collect(Collectors.toList());
-        patInventorList.forEach(inventor->{
-            CustomerInventorDto dto = inventorDtoList.stream().filter(i->Objects.equals(i.getId(),inventor.getCustomerInventorId())).findFirst().get();
-            BeanUtil.copyProperties(dto,inventor,new String[]{"id"});
+        List<String> inventorIdList = patInventorList.stream().map(s -> s.getCustomerInventorId().toString()).collect(Collectors.toList());
+        List<PatInventorDto> inventorDtoList = inventorRepository.findPatInventorsByIdList(inventorIdList);
+        patInventorList = patInventorList.stream().sorted(Comparator.comparingInt(PatInventor::getSort)).collect(Collectors.toList());
+        patInventorList.forEach(inventor -> {
+            PatInventorDto dto = inventorDtoList.stream().filter(i -> Objects.equals(i.getCustomerInventorId(), inventor.getCustomerInventorId())).findFirst().get();
+            BeanUtil.copyPropertiesIgnoreNull(dto, inventor);
         });
-        String inventors = patInventorList.stream().map(PatInventor::getName).reduce((acc,item)->{
-            acc += ";"+item;
+        String inventors = patInventorList.stream().map(PatInventor::getName).reduce((acc, item) -> {
+            acc += ";" + item;
             return acc;
         }).get();
         elementDto.setInventors(inventors);
+
+        //获取客户要求
+        PatCustomerDemand customerDemand = customerDemandRepository.findByPatent(patentId);
+        boolean isRealTrial = customerDemand.getIsRealTrial();
+        List<PatPriorityClaims> claimsList = null;
+        if (customerDemand.getIsReqPriority()) {
+            claimsList = priorityClaimsRepository.findByPatent(patentId);
+        }
+        //1.生成代理委托书xml
+        //TODO 查看是否有委托书文件
+
+        PatentProxyXMLDto dto = new PatentProxyXMLDto();
+
+        List<ProxyAgent> agentList = transformProxyAgent(patAgentList);
+        List<Entrustor> entrustorList = new ArrayList<>();
+        entrustorList.add(new Entrustor(1, "委托人签章"));//todo 委托人签章
+
+        List<Picture> pictureList = new ArrayList<>();
+        pictureList.add(new Picture(1, "委托书", "委托书文件.jpg"));//TODO 委托书文件
+        dto.setAgencyName(agency.getName());
+        dto.setAgencyCode(agency.getAgencyCode());
+        dto.setPatentName(info.getPatentName());
+        dto.setAgentList(agentList);
+        dto.setEntrustorSignatureList(entrustorList);
+        dto.setAgentSignature(agency.getName());
+        dto.setXMLDate(xmlDate);
+        dto.setPictureList(pictureList);
+        PrintWriter writer = null;
+        writer = new PrintWriter("E:/test100007.xml");
+        writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
+        XStream xs = new XStream();
+        xs.processAnnotations(PatentProxyXMLDto.class);
+        xs.toXML(dto, writer);
+
+        //2.生成专利请求书
+        if (patentType.equals(PatentType.INVENTION_PATENT) || patentType.equals(PatentType.UTILITYMODEL_PATENT)) {
+            InventorPatentRequestDto inventorDto = new InventorPatentRequestDto();
+            inventorDto.setPatentName(patentName);
+            inventorDto.setCaseNo(caseNo);
+            //发明人
+            inventorDto.setInventor(generateInventor(patInventorList));
+            //申请人
+            inventorDto.setApplicant(generateApplicant(patApplicantList));
+            //联系人
+            inventorDto.setContactor(new Contactor());
+            //代理机构
+            List<AgencyAgent> agencyAgentList = generateAgent(patAgentList);
+
+            inventorDto.setAgency(new Agency(agencyName, agencyCode, true, ));
+        } else {
+            AppearancePatentRequestDto appearanceDto = new AppearancePatentRequestDto();
+
+        }
+
+        //3.如果提实审，生成实质审查请求书
+        if (isRealTrial) {
+            SubstantiveReviewRequestDto reviewRequestDto = new SubstantiveReviewRequestDto();
+            reviewRequestDto.setPatentInfo(new SubstantiveReviewRequestPatentInfo(patentName, "TODO上海创图网络科技股份有限公司"));
+            reviewRequestDto.setContentInfo(new SubstantiveReviewRequestContentInfo(true));
+            reviewRequestDto.setRemarksInfo(new SubstantiveReviewRequestRemarksInfo());
+            reviewRequestDto.setSignatureInfo(new SignatureInfo(agencyName, xmlDate));
+            reviewRequestDto.setOpinionInfo(new SubstantiveReviewRequestOpinionInfo());
+            writer = new PrintWriter("E:/test110401.xml");
+            writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
+            xs = new XStream();
+            xs.processAnnotations(SubstantiveReviewRequestDto.class);
+            xs.toXML(dto, writer);
+        }
+
         agentRepository.saveAll(patAgentList);
         applicantRepository.saveAll(patApplicantList);
         inventorRepository.saveAll(patInventorList);
@@ -534,23 +618,24 @@ public class PatentServiceImpl implements PatentService {
         return ResultFactory.success();
     }
 
+
     @Override
     public TResult addPatentElement(PatentElementDto dto) {
         UUID patentId = dto.getPatentId();
         String applicationNo = dto.getApplicationNo();
-        if(null == patentId && StringUtils.isEmpty(applicationNo)){
+        if (null == patentId && StringUtils.isEmpty(applicationNo)) {
             throw new IllegalArgumentException("参数patentId与applicationNo没有设定，无法找到专利信息");
         }
         PatentInfo info;
-        if(null != patentId){
+        if (null != patentId) {
             info = patentInfoRepository.findById(patentId).get();
-        }else{
+        } else {
             info = patentInfoRepository.findByApplicationNo(applicationNo);
         }
-        if(null == info){
-            throw new IllegalArgumentException("没有找到申请号为:"+applicationNo+"的专利信息");
+        if (null == info) {
+            throw new IllegalArgumentException("没有找到申请号为:" + applicationNo + "的专利信息");
         }
-        BeanUtil.copyPropertiesIgnoreNull(dto,info);
+        BeanUtil.copyPropertiesIgnoreNull(dto, info);
         patentInfoRepository.save(info);
         return ResultFactory.success();
     }
@@ -558,12 +643,12 @@ public class PatentServiceImpl implements PatentService {
     @Override
     public TResult addPatentFeeInfo(AddPatentFeeDto dto) {
         String applicationNo = dto.getApplicationNo();
-        if(StringUtils.isEmpty(applicationNo)){
+        if (StringUtils.isEmpty(applicationNo)) {
             throw new IllegalArgumentException("申请号applicationNo不能为null");
         }
         PatentInfo info = patentInfoRepository.findByApplicationNo(applicationNo);
-        if(null == info){
-            throw new IllegalArgumentException("没有找到申请号为:"+applicationNo+"的专利信息");
+        if (null == info) {
+            throw new IllegalArgumentException("没有找到申请号为:" + applicationNo + "的专利信息");
         }
         PatFeeInfo feeInfo = new PatFeeInfo(info);
         feeInfo.setFeeType(dto.getFeeType());
@@ -575,12 +660,12 @@ public class PatentServiceImpl implements PatentService {
     }
 
     @Override
-    public TResult bindPatent(UUID agId,String caseNo, String applicationNo,LocalDate applicationDate) {
-        if(StringUtils.isEmpty(caseNo) || StringUtils.isEmpty(applicationNo)){
+    public TResult bindPatent(UUID agId, String caseNo, String applicationNo, LocalDate applicationDate) {
+        if (StringUtils.isEmpty(caseNo) || StringUtils.isEmpty(applicationNo)) {
             throw new IllegalArgumentException("参数caseNo或者applicationNo不能为null");
         }
-        PatentInfo info = patentInfoRepository.findByAgIdAndCaseNo(agId,caseNo);
-        if(null == info){
+        PatentInfo info = patentInfoRepository.findByAgIdAndCaseNo(agId, caseNo);
+        if (null == info) {
             throw new IllegalArgumentException("无效的案件号");
         }
         info.setApplicationNo(applicationNo);
@@ -592,7 +677,7 @@ public class PatentServiceImpl implements PatentService {
     @Override
     public TResult handlePatentFee(HandlePatentFeeDto dto) {
         UUID feeId = dto.getFeeId();
-        if(null == feeId){
+        if (null == feeId) {
             throw new IllegalArgumentException("参数feeId不能为null");
         }
         PatFeeInfo info = patFeeInfoRepository.findById(feeId).get();
@@ -617,5 +702,95 @@ public class PatentServiceImpl implements PatentService {
         return ResultFactory.success();
     }
 
+    private List<ProxyAgent> transformProxyAgent(List<PatAgent> patAgentList) {
+        if (null == patAgentList || patAgentList.size() == 0) {
+            throw new IllegalArgumentException("参数patAgentList不能为空");
+        }
+        if (patAgentList.size() > 2) {
+            throw new IllegalArgumentException("代理人最多填两个");
+        }
+        List<ProxyAgent> agentList = new ArrayList<>();
+        patAgentList = patAgentList.stream().sorted(Comparator.comparingInt(PatAgent::getSort)).collect(Collectors.toList());
+        patAgentList.forEach(a -> {
+            agentList.add(new ProxyAgent(a.getSort(), a.getName()));
+        });
+        if (agentList.size() == 1) {
+            agentList.add(new ProxyAgent(2, ""));
+        }
+        return agentList;
+    }
+
+    private Inventor generateInventor(List<PatInventor> patInventorList) {
+        List<InventorOther> otherList = new ArrayList<>();
+        if (null == patInventorList || patInventorList.size() == 0) {
+            otherList.add(new InventorOther(1, "", false));
+            otherList.add(new InventorOther(2, "", false));
+            return new Inventor(new InventorFirst(), otherList);
+        }
+        PatInventor first = patInventorList.stream().filter(p -> p.getSort() == 1).findFirst().get();
+        InventorFirst inventorFirst = new InventorFirst(first.getName(), first.getCountryCode(), first.getOpen(), first.getIdCode());
+
+        patInventorList = patInventorList.stream().filter(p -> p.getSort() > 1).sorted(Comparator.comparingInt(PatInventor::getSort)).collect(Collectors.toList());
+        if (patInventorList.size() > 0) {
+            for (int i = 0; i < patInventorList.size(); i++) {
+                PatInventor inventor = patInventorList.get(i);
+                otherList.add(new InventorOther(i + 1, inventor.getName(), inventor.getOpen()));
+            }
+        }
+        if (otherList.size() == 1) {
+            otherList.add(new InventorOther(2, "", false));
+        }
+        if (otherList.size() == 0) {
+            otherList.add(new InventorOther(1, "", false));
+            otherList.add(new InventorOther(2, "", false));
+        }
+        return new Inventor(inventorFirst, otherList);
+    }
+
+
+    private Applicant generateApplicant(List<PatApplicant> patApplicantList) {
+        List<ApplicantOther> otherList = new ArrayList<>();
+        if (null == patApplicantList || patApplicantList.size() == 0) {
+            otherList.add(new ApplicantOther(1));
+            otherList.add(new ApplicantOther(2));
+            return new Applicant(new ApplicantFirst(), otherList);
+        }
+        PatApplicant first = patApplicantList.stream().filter(p -> p.getSort() == 1).findFirst().get();
+        ApplicantFirst applicantFirst = new ApplicantFirst();
+        BeanUtil.copyPropertiesIgnoreNull(first, applicantFirst);
+
+        patApplicantList = patApplicantList.stream().filter(p -> p.getSort() > 1).sorted(Comparator.comparingInt(PatApplicant::getSort)).collect(Collectors.toList());
+        if (patApplicantList.size() > 0) {
+            ApplicantOther other;
+            for (int i = 0; i < patApplicantList.size(); i++) {
+                PatApplicant applicant = patApplicantList.get(i);
+                other = new ApplicantOther();
+                BeanUtil.copyPropertiesIgnoreNull(applicant, other);
+                otherList.add(other);
+            }
+        }
+        if (otherList.size() == 1) {
+            otherList.add(new ApplicantOther(2));
+        }
+        if (otherList.size() == 0) {
+            otherList.add(new ApplicantOther(1));
+            otherList.add(new ApplicantOther(1));
+        }
+        return new Applicant(applicantFirst, otherList);
+    }
+
+
+    private List<AgencyAgent> generateAgent(List<PatAgent> agentList) {
+        List<AgencyAgent> agencyAgentList = new ArrayList<>();
+        PatAgent agent;
+        for (int i = 0; i < agentList.size(); i++) {
+            agent = agentList.get(i);
+            agencyAgentList.add(new AgencyAgent(i+1,agent.getName(),agent.getLicenseCode(),agent.getCellphone()));
+        }
+        if(agencyAgentList.size() ==1){
+            agencyAgentList.add(new AgencyAgent(2,"","",""));
+        }
+        return agencyAgentList;
+    }
 
 }

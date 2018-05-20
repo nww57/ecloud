@@ -1,6 +1,5 @@
 package com.sunesoft.ecloud.admin.interceptor;
 
-import com.sunesoft.ecloud.adminclient.annotation.IgnoreUserToken;
 import com.sunesoft.ecloud.auth.UserContext;
 import com.sunesoft.ecloud.auth.exeption.AgencyNotFoundException;
 import com.sunesoft.ecloud.auth.exeption.TokenNotFoundException;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,15 +28,15 @@ public class UserAuthRestInterceptor extends HandlerInterceptorAdapter {
     private JwtTokenUtil jwtTokenUtil;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
-        // 配置该注解，说明不进行用户拦截
-        IgnoreUserToken annotation = handlerMethod.getBeanType().getAnnotation(IgnoreUserToken.class);
-        if (annotation == null) {
-            annotation = handlerMethod.getMethodAnnotation(IgnoreUserToken.class);
-        }
-        if (annotation != null) {
-            return super.preHandle(request, response, handler);
-        }
+//        HandlerMethod handlerMethod = (HandlerMethod) handler;
+//        // 配置该注解，说明不进行用户拦截
+//        IgnoreUserToken annotation = handlerMethod.getBeanType().getAnnotation(IgnoreUserToken.class);
+//        if (annotation == null) {
+//            annotation = handlerMethod.getMethodAnnotation(IgnoreUserToken.class);
+//        }
+//        if (annotation != null) {
+//            return super.preHandle(request, response, handler);
+//        }
         if ("OPTIONS".equals(request.getMethod())) {//这里通过判断请求的方法，判断此次是否是预检请求，如果是，立即返回一个204状态吗，标示，允许跨域；预检后，正式请求，这个方法参数就是我们设置的post了
             return super.preHandle(request, response, handler);
 

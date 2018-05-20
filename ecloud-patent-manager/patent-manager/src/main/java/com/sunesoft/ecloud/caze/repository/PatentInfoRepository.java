@@ -1,5 +1,7 @@
 package com.sunesoft.ecloud.caze.repository;
 
+import com.sunesoft.ecloud.adminclient.dtos.AgencyBasicDto;
+import com.sunesoft.ecloud.adminclient.dtos.AgentDto;
 import com.sunesoft.ecloud.caze.domain.PatentInfo;
 import com.sunesoft.ecloud.hibernate.repository.BaseRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -26,6 +28,6 @@ public interface PatentInfoRepository extends BaseRepository<PatentInfo,UUID> {
 
     PatentInfo findByApplicationNo(String applicationNo);
 
-    @Query(value = "select sa.name from sys_agency sa where sa.id = :agId",nativeQuery = true)
-    String getAgencyName(@Param("agId") String agId);
+    @Query(value = "select sa.agencyCode,sa.name from sys_agency sa where sa.id = :agId",nativeQuery = true)
+    AgencyBasicDto getAgencyName(@Param("agId") String agId);
 }

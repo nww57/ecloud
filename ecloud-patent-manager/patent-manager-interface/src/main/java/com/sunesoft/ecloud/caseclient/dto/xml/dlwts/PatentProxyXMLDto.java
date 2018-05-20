@@ -1,7 +1,9 @@
 package com.sunesoft.ecloud.caseclient.dto.xml.dlwts;
 
 import com.sunesoft.ecloud.caseclient.dto.xml.XMLDate;
+import com.sunesoft.ecloud.caseclient.dto.xml.converter.AdditionalConverter;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamConverter;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 import java.util.List;
@@ -38,21 +40,21 @@ public class PatentProxyXMLDto {
      *委托代办发明专利申请号
      */
     @XStreamAlias("委托代办发明专利申请号")
-    private String applicationNo = "";
+    private String applicationNo ;
 
 
     /**
      *委托代办新型检索报告发明名称
      */
     @XStreamAlias("委托代办新型检索报告发明名称")
-    private String checkNewReportPatentName = "";
+    private String checkNewReportPatentName ;
 
 
     /**
      *委托代办新型检索报告申请号
      */
     @XStreamAlias("委托代办新型检索报告申请号")
-    private String checkNewReportApplicationNo = "";
+    private String checkNewReportApplicationNo ;
 
 
     /**
@@ -90,7 +92,15 @@ public class PatentProxyXMLDto {
     private List<Picture> pictureList;
 
     @XStreamAlias("代理委托信息与扫描件信息一致声明")
-    private InformationConsistencyStatement informationConsistencyStatement;
+    @XStreamConverter(value = AdditionalConverter.class)
+    private boolean informationConsistencyStatement;
+
+    public PatentProxyXMLDto() {
+        this.applicationNo = "";
+        this.checkNewReportPatentName = "";
+        this.checkNewReportApplicationNo = "";
+        this.informationConsistencyStatement = true;
+    }
 
     public String getAgencyName() {
         return agencyName;
@@ -180,11 +190,4 @@ public class PatentProxyXMLDto {
         this.pictureList = pictureList;
     }
 
-    public InformationConsistencyStatement getInformationConsistencyStatement() {
-        return informationConsistencyStatement;
-    }
-
-    public void setInformationConsistencyStatement(InformationConsistencyStatement informationConsistencyStatement) {
-        this.informationConsistencyStatement = informationConsistencyStatement;
-    }
 }

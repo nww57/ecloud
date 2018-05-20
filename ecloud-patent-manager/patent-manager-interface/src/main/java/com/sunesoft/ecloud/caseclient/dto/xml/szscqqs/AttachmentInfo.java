@@ -17,7 +17,7 @@ public class AttachmentInfo {
     @XStreamAlias("顺序")
     private int sort = 1;
 
-    public AttachmentInfo(String name, int sort) {
+    public AttachmentInfo(int sort,String name) {
         this.name = name;
         this.sort = sort;
     }

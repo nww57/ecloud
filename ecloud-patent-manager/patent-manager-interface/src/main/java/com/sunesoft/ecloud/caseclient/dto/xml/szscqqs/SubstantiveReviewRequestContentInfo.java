@@ -12,7 +12,7 @@ public class SubstantiveReviewRequestContentInfo {
 
     @XStreamAlias("声明本申请人放弃专利主动修改权利")
     @XStreamConverter(value = AdditionalConverter.class)
-    private boolean  giveUp = true;
+    private boolean  giveUp ;
 
     public SubstantiveReviewRequestContentInfo(boolean giveUp) {
         this.giveUp = giveUp;

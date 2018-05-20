@@ -4,6 +4,7 @@ import com.sunesoft.ecloud.caseclient.dto.*;
 import com.sunesoft.ecloud.caseclient.enums.UpDown;
 import com.sunesoft.ecloud.common.result.TResult;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -156,7 +157,7 @@ public interface PatentService {
      * @param patentId
      * @return
      */
-    TResult packaging(UUID patentId);
+    TResult packaging(UUID patentId) throws Exception;
 
     /**
      * 添加专利著录项信息

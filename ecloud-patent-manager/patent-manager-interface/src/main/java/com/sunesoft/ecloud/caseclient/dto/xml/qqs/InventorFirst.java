@@ -26,6 +26,14 @@ public class InventorFirst {
     @XStreamAlias("英文姓名")
     private String nameEn;
 
+    public InventorFirst() {
+        this.name = "";
+        this.countryCode = "";
+        this.open = false;
+        this.idCode = "";
+        this.nameEn = "";
+    }
+
     public InventorFirst(String name, String countryCode, boolean open, String idCode) {
         this.name = name;
         this.countryCode = countryCode;

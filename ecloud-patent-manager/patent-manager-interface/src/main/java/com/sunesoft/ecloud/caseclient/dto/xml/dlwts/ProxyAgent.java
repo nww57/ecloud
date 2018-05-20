@@ -18,7 +18,7 @@ public class ProxyAgent {
     @XStreamAlias("顺序")
     private int sort;
 
-    public ProxyAgent(String name, int sort) {
+    public ProxyAgent(int sort,String name) {
         this.name = name;
         this.sort = sort;
     }

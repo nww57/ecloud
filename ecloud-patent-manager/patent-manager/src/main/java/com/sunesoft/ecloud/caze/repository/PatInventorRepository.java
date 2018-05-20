@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.caze.repository;
 
+import com.sunesoft.ecloud.caseclient.dto.PatInventorDto;
 import com.sunesoft.ecloud.caze.domain.PatInventor;
 import com.sunesoft.ecloud.hibernate.repository.BaseRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -28,4 +29,8 @@ public interface PatInventorRepository extends BaseRepository<PatInventor,UUID>{
     PatInventor getDown(@Param("patentId") String patentId,@Param("sort") int sort);
 
     List<PatInventor> findByPatentInfo_Id(UUID patentId);
+
+    @Query(value = "select ci.id as customerInventorId,ci.name,ci.countryCode,ci.idCode,ci.open,ci.cellphone  from customer_inventor ci where ci.id in :idList",nativeQuery = true)
+    List<PatInventorDto> findPatInventorsByIdList(@Param("idList") List<String> idList);
+
 }

@@ -35,36 +35,4 @@ public class Agency {
         this.statementInfoIdentical = statementInfoIdentical;
         this.agentList = agentList;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAgencyCode() {
-        return agencyCode;
-    }
-
-    public void setAgencyCode(String agencyCode) {
-        this.agencyCode = agencyCode;
-    }
-
-    public boolean getStatementInfoIdentical() {
-        return statementInfoIdentical;
-    }
-
-    public void setStatementInfoIdentical(boolean statementInfoIdentical) {
-        this.statementInfoIdentical = statementInfoIdentical;
-    }
-
-    public List<AgencyAgent> getAgentList() {
-        return agentList;
-    }
-
-    public void setAgentList(List<AgencyAgent> agentList) {
-        this.agentList = agentList;
-    }
 }

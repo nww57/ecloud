@@ -3,6 +3,7 @@ package com.sunesoft.ecloud.caseclient.dto.xml.szscqqs;
 import com.sunesoft.ecloud.caseclient.dto.xml.SignatureInfo;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,6 +49,16 @@ public class SubstantiveReviewRequestDto {
      */
     @XStreamAlias("国家知识产权局处理意见")
     private SubstantiveReviewRequestOpinionInfo opinionInfo;
+
+    public SubstantiveReviewRequestDto() {
+        this.attachmentInfo = initAttachmentInfo();
+    }
+
+    private List<AttachmentInfo> initAttachmentInfo(){
+        List<AttachmentInfo> infoList = new ArrayList<>();
+        infoList.add(new AttachmentInfo(1,""));
+        return infoList;
+    }
 
     public SubstantiveReviewRequestPatentInfo getPatentInfo() {
         return patentInfo;

@@ -25,7 +25,7 @@ public class ApplicantOther {
     private String countryCode;
 
     @XStreamAlias("经营所在地或营业所在地")
-    private String liveAddressCode;
+    private String liveAddress;
 
     @XStreamAlias("省自治区直辖市名称")
     private String provinceCode;
@@ -58,7 +58,7 @@ public class ApplicantOther {
         this.idCode = "";
         this.countryCode = "";
         this.applicantType = "";
-        this.liveAddressCode = "";
+        this.liveAddress = "";
         this.cityCode = "";
         this.areaDetail = "";
         this.zipCode = "";
@@ -73,7 +73,7 @@ public class ApplicantOther {
         this.userCode = "";
         this.idCode = "";
         this.countryCode = "";
-        this.liveAddressCode = "";
+        this.liveAddress = "";
         this.cityCode = "";
         this.areaDetail = "";
         this.zipCode = "";
@@ -123,12 +123,12 @@ public class ApplicantOther {
         this.countryCode = countryCode;
     }
 
-    public String getLiveAddressCode() {
-        return liveAddressCode;
+    public String getLiveAddress() {
+        return liveAddress;
     }
 
-    public void setLiveAddressCode(String liveAddressCode) {
-        this.liveAddressCode = liveAddressCode;
+    public void setLiveAddress(String liveAddress) {
+        this.liveAddress = liveAddress;
     }
 
     public String getProvinceCode() {

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -18,4 +19,6 @@ public interface PatPriorityClaimsRepository extends BaseRepository<PatPriorityC
     @Query(value = "delete from PatPriorityClaims where patentInfo.id = :patentId")
     void deleteByPatent(@Param("patentId") UUID patentId);
 
+    @Query("select p from PatPriorityClaims p where p.patentInfo.id = :patentId")
+    List<PatPriorityClaims> findByPatent(@Param("patentId") UUID patentId);
 }

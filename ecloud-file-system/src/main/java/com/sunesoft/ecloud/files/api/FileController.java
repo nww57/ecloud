@@ -15,6 +15,8 @@ import com.sunesoft.ecloud.files.biz.application.service.FileInfoService;
 import com.sunesoft.ecloud.files.biz.application.service.FilePathService;
 import com.sunesoft.ecloud.files.biz.domain.FilePath;
 import com.sunesoft.ecloud.files.biz.domain.enums.PathType;
+import com.thoughtworks.xstream.XStream;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -325,6 +327,46 @@ public class FileController {
     public ListResult syncRecord () {
         UUID agId = UUID.fromString(UserContext.getAgencyId());
         return fileQueryService.getAgencyAllFile(agId);
+    }
+
+    @PostMapping(value = "/toxml")
+    public void packageXML(String patentId,String type,Object object){
+        if(null == object || StringUtils.isEmpty(type)){
+            throw new IllegalArgumentException("参数不能为null");
+        }
+        try {
+            PrintWriter writer = new PrintWriter(getXMLPath(patentId,type));
+            writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
+            XStream xStream = new XStream();
+            xStream.processAnnotations(object.getClass());
+            xStream.toXML(object,writer);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    private String getXMLPath(String patentId,String type){
+        if(StringUtils.isEmpty(type)){
+            throw new IllegalArgumentException("参数type不能为null");
+        }
+        String path = "";
+        String agId = UserContext.getAgencyId();
+        String pathType = PathType.Case.toString();
+        String baseRoot = patentId;
+        String bizType = "打包文件";
+        String docType = "";
+        String fileName = "";
+        if("list".equals(type)){
+            fileName = type +".xml";
+            path = agId + pathType + baseRoot + bizType + fileName;
+        }else{
+            docType = type;
+            fileName = type+".xml";
+            path = agId + pathType + baseRoot + bizType + docType + fileName;
+        }
+        return path;
     }
 
 

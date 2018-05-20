@@ -29,7 +29,7 @@ public class ApplicantFirst {
     private String countryCode;
 
     @XStreamAlias("经营所在地或营业所在地")
-    private String liveAddressCode;
+    private String liveAddress;
 
     @XStreamAlias("省自治区直辖市名称")
     private String provinceCode;
@@ -54,7 +54,7 @@ public class ApplicantFirst {
 
     @XStreamAlias("费减备案")
     @XStreamConverter(value = AdditionalConverter.class)
-    private boolean feeRecord;
+    private boolean record;
 
     public ApplicantFirst() {
         this.name = "";
@@ -62,7 +62,7 @@ public class ApplicantFirst {
         this.idCode = "";
         this.email = "";
         this.countryCode = "";
-        this.liveAddressCode = "";
+        this.liveAddress = "";
         this.cityCode = "";
         this.areaDetail = "";
         this.zipCode = "";
@@ -119,12 +119,12 @@ public class ApplicantFirst {
         this.countryCode = countryCode;
     }
 
-    public String getLiveAddressCode() {
-        return liveAddressCode;
+    public String getLiveAddress() {
+        return liveAddress;
     }
 
-    public void setLiveAddressCode(String liveAddressCode) {
-        this.liveAddressCode = liveAddressCode;
+    public void setLiveAddress(String liveAddress) {
+        this.liveAddress = liveAddress;
     }
 
     public String getProvinceCode() {
@@ -183,11 +183,11 @@ public class ApplicantFirst {
         this.addressEn = addressEn;
     }
 
-    public boolean getFeeRecord() {
-        return feeRecord;
+    public boolean getRecord() {
+        return record;
     }
 
-    public void setFeeRecord(boolean feeRecord) {
-        this.feeRecord = feeRecord;
+    public void setRecord(boolean record) {
+        this.record = record;
     }
 }

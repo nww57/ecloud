@@ -1,5 +1,6 @@
 package com.sunesoft.ecloud.caze.repository;
 
+import com.sunesoft.ecloud.caseclient.dto.PatAgentDto;
 import com.sunesoft.ecloud.caze.domain.PatAgent;
 import com.sunesoft.ecloud.hibernate.repository.BaseRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -26,4 +27,8 @@ public interface PatAgentRepository extends BaseRepository<PatAgent,UUID>{
     PatAgent getDown(@Param("patentId") String patentId,@Param("sort") int sort);
 
     List<PatAgent> findByPatentInfo_Id(UUID patentId);
+
+
+    @Query(value = "sselect ca.id as agencyAgentId,ca.name,ca.licenseCode,cacellphone from customer_agent ca where ca.id in :idList",nativeQuery = true)
+    List<PatAgentDto> findAgentInfoByIdList(@Param("idList") List<String> idList);
 }

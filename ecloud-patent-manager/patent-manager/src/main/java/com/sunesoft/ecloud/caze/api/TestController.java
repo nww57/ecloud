@@ -1,7 +1,5 @@
 package com.sunesoft.ecloud.caze.api;
 
-import com.sunesoft.ecloud.adminclient.annotation.IgnoreUserToken;
-import com.sunesoft.ecloud.adminclient.clientService.CustomerServiceClient;
 import com.sunesoft.ecloud.adminclient.clientService.UserServiceClient;
 import com.sunesoft.ecloud.adminclient.dtos.AgentDto;
 import com.sunesoft.ecloud.adminclient.dtos.UserDto;
@@ -25,9 +23,6 @@ public class TestController {
 
     @Autowired
     UserServiceClient userServiceClient;
-    @Autowired
-    CustomerServiceClient customerServiceClient;
-
 
     @RequestMapping(value = "/getuserinfo")
     public TResult<UserDto> getUserInfo(){
@@ -35,14 +30,5 @@ public class TestController {
         return result;
     }
 
-
-    @RequestMapping(value = "/getagent")
-    public ListResult<AgentDto> getAgentList(){
-        List<UUID> idList = new ArrayList<>();
-        idList.add(UUID.fromString("2f0ef79f-3966-47f5-9864-ddf065015ee5"));
-        idList.add(UUID.fromString("0bfbad1f-9b76-45d3-b03b-e76de5a549eb"));
-        idList.add(UUID.fromString("2e533907-3857-4a46-adb4-c3cdb63bb262"));
-        return customerServiceClient.findAgentByIdList(idList);
-    }
 }
 

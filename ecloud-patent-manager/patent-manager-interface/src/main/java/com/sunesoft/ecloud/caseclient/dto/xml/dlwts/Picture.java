@@ -19,7 +19,7 @@ public class Picture {
     @XStreamAlias("顺序")
     private int sort;
 
-    public Picture(String desc, String fileName, int sort) {
+    public Picture(int sort,String desc, String fileName) {
         this.desc = desc;
         this.fileName = fileName;
         this.sort = sort;

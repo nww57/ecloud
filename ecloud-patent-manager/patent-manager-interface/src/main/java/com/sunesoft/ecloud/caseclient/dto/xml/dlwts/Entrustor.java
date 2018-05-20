@@ -20,7 +20,7 @@ public class Entrustor {
     @XStreamAlias("顺序")
     private int sort;
 
-    public Entrustor(String name, int sort) {
+    public Entrustor(int sort,String name) {
         this.name = name;
         this.sort = sort;
     }

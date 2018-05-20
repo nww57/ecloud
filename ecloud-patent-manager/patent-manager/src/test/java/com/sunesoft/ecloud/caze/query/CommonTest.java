@@ -12,6 +12,7 @@ import com.sunesoft.ecloud.caseclient.dto.xml.dlwts.*;
 import com.sunesoft.ecloud.caseclient.dto.xml.qqs.*;
 import com.sunesoft.ecloud.caseclient.dto.xml.wgsjtp.AppearanceDesignPictureDto;
 import com.sunesoft.ecloud.caseclient.dto.xml.wgsjtp.AppearancePicture;
+import com.sunesoft.ecloud.common.utils.FileUtil;
 import com.thoughtworks.xstream.XStream;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,15 +43,15 @@ public class CommonTest {
     @Test
     public void test2() throws FileNotFoundException {
         List<ProxyAgent> agentList = new ArrayList<>();
-        agentList.add(new ProxyAgent("胡志强",1));
-        agentList.add(new ProxyAgent("",2));
+        agentList.add(new ProxyAgent(1,"胡志强"));
+        agentList.add(new ProxyAgent(2,""));
 
         List<Entrustor> entrustorList = new ArrayList<>();
-        entrustorList.add(new Entrustor("来看看的",1));
-        entrustorList.add(new Entrustor("签章",2));
+        entrustorList.add(new Entrustor(1,"来看看的"));
+        entrustorList.add(new Entrustor(2,"签章"));
 
         List<Picture> pictureList = new ArrayList<>();
-        pictureList.add(new Picture("委托书","171229144558.jpg",1));
+        pictureList.add(new Picture(1,"委托书","171229144558.jpg"));
 
         PatentProxyXMLDto dto = new PatentProxyXMLDto();
         dto.setAgencyName("上海点威知识产权代理有限公司");
@@ -62,7 +63,7 @@ public class CommonTest {
         dto.setXMLDate(new XMLDate("2018","5","16"));
 
         dto.setPictureList(pictureList);
-        dto.setInformationConsistencyStatement(new InformationConsistencyStatement());
+
 
         PrintWriter writer = new PrintWriter("E:/test100007.xml");
         writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
@@ -82,7 +83,7 @@ public class CommonTest {
         dto.setPatentInfo(new SubstantiveReviewRequestPatentInfo("二种通过文化云平台进行用户管理的方法及装置aab","上海创图网络科技股份有限公司aab"));
         dto.setContentInfo(new SubstantiveReviewRequestContentInfo(true));
         List<AttachmentInfo> infos = new ArrayList<>();
-        infos.add(new AttachmentInfo("",1));
+        infos.add(new AttachmentInfo(1,""));
         dto.setAttachmentInfo(infos);
         dto.setRemarksInfo(new SubstantiveReviewRequestRemarksInfo());
         dto.setSignatureInfo(new SignatureInfo("上海点威知识产权代理有限公司",new XMLDate("2018","5","16")));
@@ -119,12 +120,12 @@ public class CommonTest {
         applicantFirst.setIdCode("913101087653151511");
         applicantFirst.setEmail("");
         applicantFirst.setCountryCode("CN");
-        applicantFirst.setLiveAddressCode("CN");
+        applicantFirst.setLiveAddress("CN");
         applicantFirst.setProvinceCode("310000");
         applicantFirst.setCityCode("310000");
         applicantFirst.setAreaDetail("广中西路777弄12号二楼A－27室");
         applicantFirst.setZipCode("200072");
-        applicantFirst.setFeeRecord(false);
+        applicantFirst.setRecord(false);
         Applicant applicant = new Applicant(applicantFirst,Applicant.generateOriginalApplicantOther());
         dto.setApplicant(applicant);
 
@@ -259,12 +260,12 @@ public class CommonTest {
         applicantFirst.setIdCode("913101087653151511");
         applicantFirst.setEmail("");
         applicantFirst.setCountryCode("CN");
-        applicantFirst.setLiveAddressCode("CN");
+        applicantFirst.setLiveAddress("CN");
         applicantFirst.setProvinceCode("310000");
         applicantFirst.setCityCode("310000");
         applicantFirst.setAreaDetail("广中西路777弄12号二楼A－27室");
         applicantFirst.setZipCode("200072");
-        applicantFirst.setFeeRecord(false);
+        applicantFirst.setRecord(false);
         Applicant applicant = new Applicant(applicantFirst,Applicant.generateOriginalApplicantOther());
         dto.setApplicant(applicant);
 
@@ -287,6 +288,16 @@ public class CommonTest {
         xs.aliasField("幅数",ApplyFileInfo.class,"count");
         xs.toXML(dto,writer);
         System.out.println(123);
+    }
+
+    /**
+     * 测试生成zip
+     */
+    @Test
+    public void test9(){
+
+       boolean flag = FileUtil.fileToZip("D:\\201712295\\877cebc0-f6b3-4b7a-bdf3-ef4820ffd73a","D:\\201712295\\877cebc0-f6b3-4b7a-bdf3-ef4820ffd73a","877cebc0-f6b3-4b7a-bdf3-ef4820ffd73a");
+        System.out.println(23);
     }
 
 }

@@ -32,4 +32,5 @@ public class InventorOther {
         this.nameEn = "";
         this.sort = sort;
     }
+
 }
