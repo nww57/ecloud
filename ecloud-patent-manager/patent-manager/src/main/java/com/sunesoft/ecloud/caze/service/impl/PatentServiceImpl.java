@@ -1,6 +1,5 @@
 package com.sunesoft.ecloud.caze.service.impl;
 
-import com.sunesoft.ecloud.adminclient.dtos.AgencyBasicDto;
 import com.sunesoft.ecloud.caseclient.dto.*;
 import com.sunesoft.ecloud.caseclient.dto.xml.SignatureInfo;
 import com.sunesoft.ecloud.caseclient.dto.xml.XMLDate;
@@ -22,15 +21,22 @@ import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import com.sunesoft.ecloud.common.utils.JsonHelper;
+import com.sunesoft.ecloud.hibernate.repository.HibernateQuery;
 import com.thoughtworks.xstream.XStream;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import javax.persistence.criteria.CriteriaBuilder;
+import java.io.*;
+import java.lang.reflect.Field;
+import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -40,7 +46,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional
-public class PatentServiceImpl implements PatentService {
+public class PatentServiceImpl extends HibernateQuery implements PatentService {
 
 
     @Autowired
@@ -477,7 +483,7 @@ public class PatentServiceImpl implements PatentService {
     public TResult packaging(UUID patentId) throws Exception {
 
         LocalDate localDate = LocalDate.now();
-        XMLDate xmlDate = new XMLDate(String.valueOf(localDate.getYear()), String.valueOf(localDate.getMonth()), String.valueOf(localDate.getDayOfMonth()));
+        XMLDate xmlDate = new XMLDate(String.valueOf(localDate.getYear()), String.valueOf(localDate.getMonthValue()), String.valueOf(localDate.getDayOfMonth()));
         //TODO 打包
         //TODO 检查必要文件是否已经完成上传
         //确定著录项信息:申请人，发明人，代理机构，代理人
@@ -497,18 +503,18 @@ public class PatentServiceImpl implements PatentService {
         PatentElementDto elementDto = new PatentElementDto();
         elementDto.setPatentId(patentId);
         //代理机构
-        AgencyBasicDto agency = patentInfoRepository.getAgencyName(info.getAgId().toString());
-        String agencyName = agency.getName();
-        String agencyCode = agency.getAgencyCode();
+        Map<String, String> map = patentInfoRepository.getAgencyName(info.getAgId().toString());
+        String agencyName = map.get("name");
+        String agencyCode = map.get("agencyCode");
         elementDto.setAgency(agencyName);
         //代理人
         List<PatAgent> patAgentList = agentRepository.findByPatentInfo_Id(patentId);
         List<String> agentIdList = patAgentList.stream().map(a -> a.getAgencyAgentId().toString()).collect(Collectors.toList());
-        List<PatAgentDto> dtoList = agentRepository.findAgentInfoByIdList(agentIdList);
+        List<PatAgentDto> dtoList = transform(PatAgentDto.class, agentRepository.findAgentInfoByIdList(agentIdList));
         patAgentList = patAgentList.stream().sorted(Comparator.comparingInt(PatAgent::getSort)).collect(Collectors.toList());
         patAgentList.forEach(a -> {
             PatAgentDto dto = dtoList.stream().filter(d -> Objects.equals(d.getAgencyAgentId(), a.getAgencyAgentId())).findFirst().get();
-            BeanUtil.copyPropertiesIgnoreNull(dto, a);
+            BeanUtil.copyPropertiesIgnoreNull(dto, a,new String[]{"sort"});
         });
         String agents = patAgentList.stream().map(PatAgent::getName).reduce((acc, item) -> {
             acc += ";" + item;
@@ -518,17 +524,17 @@ public class PatentServiceImpl implements PatentService {
         List<AgencyAgent> agencyAgentList = generateAgent(patAgentList);
         Agency agencyInfo = new Agency(agencyName, agencyCode, true, agencyAgentList);
         //代理机构签章信息
-        SignatureInfo signatureInfo = new SignatureInfo(agencyName,xmlDate);
+        SignatureInfo signatureInfo = new SignatureInfo(agencyName, xmlDate);
 
         elementDto.setAgencyAgents(agents);
         //申请人
         List<PatApplicant> patApplicantList = applicantRepository.findByPatentInfo_Id(patentId);
         List<String> applicantIdList = patApplicantList.stream().map(p -> p.getCustomerApplicantId().toString()).collect(Collectors.toList());
-        List<PatApplicantDto> applicantDtoList = applicantRepository.findPatApplicantByIdList(applicantIdList);
+        List<PatApplicantDto> applicantDtoList = transform(PatApplicantDto.class, applicantRepository.findPatApplicantByIdList(applicantIdList));
         patApplicantList = patApplicantList.stream().sorted(Comparator.comparingInt(PatApplicant::getSort)).collect(Collectors.toList());
         patApplicantList.forEach(applicant -> {
             PatApplicantDto dto = applicantDtoList.stream().filter(f -> Objects.equals(f.getCustomerApplicantId(), applicant.getCustomerApplicantId())).findFirst().get();
-            BeanUtil.copyPropertiesIgnoreNull(dto, applicant);
+            BeanUtil.copyPropertiesIgnoreNull(dto, applicant,new String[]{"sort"});
         });
         String applicants = patApplicantList.stream().map(PatApplicant::getName).reduce((acc, item) -> {
             acc += ";" + item;
@@ -538,11 +544,11 @@ public class PatentServiceImpl implements PatentService {
         //发明人
         List<PatInventor> patInventorList = inventorRepository.findByPatentInfo_Id(patentId);
         List<String> inventorIdList = patInventorList.stream().map(s -> s.getCustomerInventorId().toString()).collect(Collectors.toList());
-        List<PatInventorDto> inventorDtoList = inventorRepository.findPatInventorsByIdList(inventorIdList);
+        List<PatInventorDto> inventorDtoList = transform(PatInventorDto.class, inventorRepository.findPatInventorsByIdList(inventorIdList));
         patInventorList = patInventorList.stream().sorted(Comparator.comparingInt(PatInventor::getSort)).collect(Collectors.toList());
         patInventorList.forEach(inventor -> {
             PatInventorDto dto = inventorDtoList.stream().filter(i -> Objects.equals(i.getCustomerInventorId(), inventor.getCustomerInventorId())).findFirst().get();
-            BeanUtil.copyPropertiesIgnoreNull(dto, inventor);
+            BeanUtil.copyPropertiesIgnoreNull(dto, inventor,new String[]{"sort"});
         });
         String inventors = patInventorList.stream().map(PatInventor::getName).reduce((acc, item) -> {
             acc += ";" + item;
@@ -558,7 +564,7 @@ public class PatentServiceImpl implements PatentService {
             claimsList = priorityClaimsRepository.findByPatent(patentId);
         }
 
-        Map<String,Object> xmlObjectMap = new HashMap<>();
+        Map<String, Object> xmlObjectMap = new HashMap<>();
         //1.生成代理委托书xml
         PatentProxyXMLDto dto = new PatentProxyXMLDto();
         List<ProxyAgent> agentList = transformProxyAgent(patAgentList);
@@ -567,15 +573,15 @@ public class PatentServiceImpl implements PatentService {
 
         List<Picture> pictureList = new ArrayList<>();
         pictureList.add(new Picture(1, "委托书", "委托书文件.jpg"));//TODO 委托书文件
-        dto.setAgencyName(agency.getName());
-        dto.setAgencyCode(agency.getAgencyCode());
+        dto.setAgencyName(agencyName);
+        dto.setAgencyCode(agencyCode);
         dto.setPatentName(info.getPatentName());
         dto.setAgentList(agentList);
         dto.setEntrustorSignatureList(entrustorList);
-        dto.setAgentSignature(agency.getName());
+        dto.setAgentSignature(agencyName);
         dto.setXMLDate(xmlDate);
         dto.setPictureList(pictureList);
-        xmlObjectMap.put("100007",dto);
+        xmlObjectMap.put("100007", dto);
 
         //2.生成专利请求书
         if (patentType.equals(PatentType.INVENTION_PATENT) || patentType.equals(PatentType.UTILITYMODEL_PATENT)) {
@@ -608,7 +614,7 @@ public class PatentServiceImpl implements PatentService {
             //申请人或代理机构签章
             inventorDto.setSignatureInfo(signatureInfo);
             //专利局审批(已在构造方法中处理)
-            xmlObjectMap.put("110101",inventorDto);
+            xmlObjectMap.put("110101", inventorDto);
 
         } else {
             AppearancePatentRequestDto appearanceDto = new AppearancePatentRequestDto();
@@ -633,7 +639,7 @@ public class PatentServiceImpl implements PatentService {
             //申请人或代理机构签章
             appearanceDto.setSignatureInfo(signatureInfo);
             //专利局审批(已在构造方法中处理)
-            xmlObjectMap.put("130101",appearanceDto);
+            xmlObjectMap.put("130101", appearanceDto);
         }
 
         //3.如果提实审，生成实质审查请求书
@@ -644,9 +650,9 @@ public class PatentServiceImpl implements PatentService {
             reviewRequestDto.setRemarksInfo(new SubstantiveReviewRequestRemarksInfo());
             reviewRequestDto.setSignatureInfo(new SignatureInfo(agencyName, xmlDate));
             reviewRequestDto.setOpinionInfo(new SubstantiveReviewRequestOpinionInfo());
-            xmlObjectMap.put("110401",reviewRequestDto);
+            xmlObjectMap.put("110401", reviewRequestDto);
         }
-        packageXML(info.getAgId().toString(),patentId.toString(),xmlObjectMap);
+        packageXML(info.getAgId().toString(), patentId.toString(), xmlObjectMap);
 
         agentRepository.saveAll(patAgentList);
         applicantRepository.saveAll(patApplicantList);
@@ -655,50 +661,82 @@ public class PatentServiceImpl implements PatentService {
         return ResultFactory.success();
     }
 
-    public void packageXML(String agId,String patentId,Map<String,Object> objectMap){
-        if(null == objectMap ){
+    private <E> List<E> transform(Class<E> patInventorDtoClass, List<Map<String, Object>> list) {
+        List resultList = new ArrayList<>();
+        Field[] fields = patInventorDtoClass.getDeclaredFields();
+        Object o;
+        try {
+            for (Map<String, Object> stringStringMap : list) {
+                o = patInventorDtoClass.newInstance();
+                for(Map.Entry<String,Object> map:stringStringMap.entrySet()){
+                    String key = map.getKey();
+                    Object value = map.getValue();
+                    for (Field field : fields) {
+                        if(field.getName().equals(key)){
+                            field.setAccessible(true);
+                            field.set(o,getObject(field.getType(),value));
+                        }
+                    }
+                }
+                resultList.add(o);
+            }
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
+
+    public void packageXML(String agId, String patentId, Map<String, Object> objectMap) {
+        if (null == objectMap) {
             throw new IllegalArgumentException("参数不能为null");
         }
         try {
-            for(Map.Entry<String,Object> entry:objectMap.entrySet()){
+            for (Map.Entry<String, Object> entry : objectMap.entrySet()) {
                 String type = entry.getKey();
                 Object object = entry.getValue();
-                PrintWriter writer = new PrintWriter(getXMLPath(agId,patentId,type));
-                writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
+                File f = getXMLPath(agId, patentId, type);
+//                PrintWriter writer = new PrintWriter(getXMLPath(agId, patentId, type));
+//                writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
                 XStream xStream = new XStream();
                 xStream.processAnnotations(object.getClass());
-                if("130101".equals(type)){
-                    xStream.aliasField("幅数",object.getClass(),"count");
+                if ("130101".equals(type)) {
+                    xStream.aliasField("幅数", object.getClass(), "count");
                 }
-                xStream.toXML(object,writer);
+                String xmlString = xStream.toXML(object);
+                StringBuilder sb= new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
+                sb.append(xmlString);
+                InputStream inputStream = new ByteArrayInputStream(sb.toString().getBytes());
+                FileUtils.copyInputStreamToFile(inputStream,f);
             }
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
 
-    private String getXMLPath(String agId,String patentId,String type){
-        if(StringUtils.isEmpty(type)){
+    private File getXMLPath(String agId, String patentId, String type) {
+        if (StringUtils.isEmpty(type)) {
             throw new IllegalArgumentException("参数type不能为null");
         }
         String path = "";
-        String root = "E:/ecloudFile/";
+        String root = "E:\\ecloudFile\\";
         String pathType = "Case";
         String baseRoot = patentId;
         String bizType = "打包文件";
         String docType = "";
         String fileName = "";
-        if("list".equals(type)){
-            fileName = type +".xml";
-            path = root +"/"+ agId +"/"+ pathType+"/" + baseRoot +"/"+ bizType +"/"+ fileName;
-        }else{
+        if ("list".equals(type)) {
+            fileName = type + ".xml";
+            path = root + "\\" + agId + "\\" + pathType + "\\" + baseRoot + "\\" + bizType ;
+        } else {
             docType = type;
-            fileName = type+".xml";
-            path = root +"/"+ agId +"/"+ pathType +"/"+ baseRoot +"/"+ bizType +"/"+ docType +"/"+ fileName;
+            fileName = type + ".xml";
+            path = root + "\\" + agId + "\\" + pathType + "\\" + baseRoot + "\\" + bizType + "\\" + docType ;
         }
-        return path;
+        return new File(path,fileName);
     }
 
 
@@ -789,9 +827,9 @@ public class PatentServiceImpl implements PatentService {
         if (null == patAgentList || patAgentList.size() == 0) {
             throw new IllegalArgumentException("参数patAgentList不能为空");
         }
-        if (patAgentList.size() > 2) {
-            throw new IllegalArgumentException("代理人最多填两个");
-        }
+//        if (patAgentList.size() > 2) {
+//            throw new IllegalArgumentException("代理人最多填两个");
+//        }
         List<ProxyAgent> agentList = new ArrayList<>();
         patAgentList = patAgentList.stream().sorted(Comparator.comparingInt(PatAgent::getSort)).collect(Collectors.toList());
         patAgentList.forEach(a -> {
@@ -830,7 +868,7 @@ public class PatentServiceImpl implements PatentService {
         return new Inventor(inventorFirst, otherList);
     }
 
-    private Designer generateDesigner(List<PatInventor> patInventorList){
+    private Designer generateDesigner(List<PatInventor> patInventorList) {
         List<InventorOther> otherList = new ArrayList<>();
         if (null == patInventorList || patInventorList.size() == 0) {
             otherList.add(new InventorOther(1, "", false));
@@ -895,12 +933,34 @@ public class PatentServiceImpl implements PatentService {
         PatAgent agent;
         for (int i = 0; i < agentList.size(); i++) {
             agent = agentList.get(i);
-            agencyAgentList.add(new AgencyAgent(i+1,agent.getName(),agent.getLicenseCode(),agent.getCellphone()));
+            agencyAgentList.add(new AgencyAgent(i + 1, agent.getName(), agent.getLicenseCode(), agent.getCellphone()));
         }
-        if(agencyAgentList.size() ==1){
-            agencyAgentList.add(new AgencyAgent(2,"","",""));
+        if (agencyAgentList.size() == 1) {
+            agencyAgentList.add(new AgencyAgent(2, "", "", ""));
         }
         return agencyAgentList;
+    }
+
+
+    public Object getObject(Class<?> filedType, Object value) {
+        if ((filedType == long.class) || (filedType == Long.class)) {
+            return (Long)value;
+        } else if ((filedType == int.class) || (filedType == Integer.class)) {
+            return (Integer)value;
+        }  else if (filedType == BigDecimal.class) {
+            return (BigDecimal)value;
+        } else if ((filedType == boolean.class) || (filedType == Boolean.class)) {
+            return (Boolean)value;
+        } else if (filedType == String.class) {
+            return (String)value;
+        }  else if (filedType == UUID.class) {
+            if (value != null)
+                return UUID.fromString((String)value);
+        } else if (filedType.isEnum()) {
+            if (value != null)
+                return Enum.valueOf((Class) filedType, (String)value);
+        }
+        return null;
     }
 
 }

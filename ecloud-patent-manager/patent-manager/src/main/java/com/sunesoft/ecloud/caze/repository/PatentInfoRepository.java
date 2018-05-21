@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -29,5 +31,5 @@ public interface PatentInfoRepository extends BaseRepository<PatentInfo,UUID> {
     PatentInfo findByApplicationNo(String applicationNo);
 
     @Query(value = "select sa.agencyCode,sa.name from sys_agency sa where sa.id = :agId",nativeQuery = true)
-    AgencyBasicDto getAgencyName(@Param("agId") String agId);
+    Map<String,String> getAgencyName(@Param("agId") String agId);
 }

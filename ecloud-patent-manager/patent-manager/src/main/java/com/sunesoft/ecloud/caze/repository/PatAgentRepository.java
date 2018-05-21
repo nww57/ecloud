@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -28,7 +29,6 @@ public interface PatAgentRepository extends BaseRepository<PatAgent,UUID>{
 
     List<PatAgent> findByPatentInfo_Id(UUID patentId);
 
-
-    @Query(value = "sselect ca.id as agencyAgentId,ca.name,ca.licenseCode,cacellphone from customer_agent ca where ca.id in :idList",nativeQuery = true)
-    List<PatAgentDto> findAgentInfoByIdList(@Param("idList") List<String> idList);
+    @Query(value = "select ca.id as agencyAgentId,ca.name,ca.licenseCode,ca.cellphone from sys_ag_agent ca where ca.id in :idList",nativeQuery = true)
+    List<Map<String,Object>> findAgentInfoByIdList(@Param("idList") List<String> idList);
 }

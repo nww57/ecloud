@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -30,5 +31,5 @@ public interface PatApplicantRepository extends BaseRepository<PatApplicant,UUID
     List<PatApplicant> findByPatentInfo_Id(UUID patentId);
 
     @Query(value = "select ca.id as customerApplicantId,ca.name,ca.countryCode,ca.type,ca.idCode,ca.record,ca.provinceCode,ca.cityCode,ca.areaDetail,ca.zipCode,ca.liveAddress,ca.userCode  from customer_applicant ca where ca.id in :idList",nativeQuery = true)
-    List<PatApplicantDto> findPatApplicantByIdList(@Param("idList") List<String> idList);
+    List<Map<String,Object>> findPatApplicantByIdList(@Param("idList") List<String> idList);
 }
