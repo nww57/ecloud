@@ -19,6 +19,7 @@ import com.sunesoft.ecloud.files.biz.domain.enums.PathType;
 import com.thoughtworks.xstream.XStream;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -49,7 +50,8 @@ public class FileController {
     @Autowired
     FileQueryService fileQueryService;
 
-
+    @Value("${file.basePath}")
+    String basePath;
     private static Map<UUID, String> fileDynmicId = new HashMap<>();
 
     @PostMapping(value = "/simple_file_relate")
@@ -361,6 +363,7 @@ public class FileController {
             throw new IllegalArgumentException("参数type不能为null");
         }
         String path = "";
+        String root = basePath;
         String pathType = PathType.Case.toString();
         String baseRoot = patentId;
         String bizType = "打包文件";
@@ -368,11 +371,11 @@ public class FileController {
         String fileName = "";
         if("list".equals(type)){
             fileName = type +".xml";
-            path = agId + pathType + baseRoot + bizType + fileName;
+            path = root +"/"+ agId +"/"+ pathType +"/"+ baseRoot +"/"+ bizType +"/"+ fileName;
         }else{
             docType = type;
             fileName = type+".xml";
-            path = agId + pathType + baseRoot + bizType + docType + fileName;
+            path = root +"/"+ agId +"/"+ pathType +"/"+ baseRoot +"/"+ bizType +"/"+ docType +"/"+ fileName;
         }
         return path;
     }

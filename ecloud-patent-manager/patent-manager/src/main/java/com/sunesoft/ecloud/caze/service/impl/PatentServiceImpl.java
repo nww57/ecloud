@@ -22,7 +22,6 @@ import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import com.sunesoft.ecloud.common.utils.JsonHelper;
-import com.sunesoft.ecloud.files.feign.FileClient;
 import com.thoughtworks.xstream.XStream;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,8 +65,6 @@ public class PatentServiceImpl implements PatentService {
     PatOfficialFeeDetailRepository officialFeeDetailRepository;
     @Autowired
     PatFeeInfoRepository patFeeInfoRepository;
-    @Autowired
-    FileClient fileClient;
 
 
     @Override
@@ -649,13 +646,59 @@ public class PatentServiceImpl implements PatentService {
             reviewRequestDto.setOpinionInfo(new SubstantiveReviewRequestOpinionInfo());
             xmlObjectMap.put("110401",reviewRequestDto);
         }
-        fileClient.packaging(info.getAgId().toString(),patentId.toString(),xmlObjectMap);
+        packageXML(info.getAgId().toString(),patentId.toString(),xmlObjectMap);
 
         agentRepository.saveAll(patAgentList);
         applicantRepository.saveAll(patApplicantList);
         inventorRepository.saveAll(patInventorList);
         addPatentElement(elementDto);
         return ResultFactory.success();
+    }
+
+    public void packageXML(String agId,String patentId,Map<String,Object> objectMap){
+        if(null == objectMap ){
+            throw new IllegalArgumentException("参数不能为null");
+        }
+        try {
+            for(Map.Entry<String,Object> entry:objectMap.entrySet()){
+                String type = entry.getKey();
+                Object object = entry.getValue();
+                PrintWriter writer = new PrintWriter(getXMLPath(agId,patentId,type));
+                writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
+                XStream xStream = new XStream();
+                xStream.processAnnotations(object.getClass());
+                if("130101".equals(type)){
+                    xStream.aliasField("幅数",object.getClass(),"count");
+                }
+                xStream.toXML(object,writer);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    private String getXMLPath(String agId,String patentId,String type){
+        if(StringUtils.isEmpty(type)){
+            throw new IllegalArgumentException("参数type不能为null");
+        }
+        String path = "";
+        String root = "E:/ecloudFile/";
+        String pathType = "Case";
+        String baseRoot = patentId;
+        String bizType = "打包文件";
+        String docType = "";
+        String fileName = "";
+        if("list".equals(type)){
+            fileName = type +".xml";
+            path = root +"/"+ agId +"/"+ pathType+"/" + baseRoot +"/"+ bizType +"/"+ fileName;
+        }else{
+            docType = type;
+            fileName = type+".xml";
+            path = root +"/"+ agId +"/"+ pathType +"/"+ baseRoot +"/"+ bizType +"/"+ docType +"/"+ fileName;
+        }
+        return path;
     }
 
 
