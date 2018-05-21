@@ -22,6 +22,7 @@ import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
 import com.sunesoft.ecloud.common.utils.BeanUtil;
 import com.sunesoft.ecloud.common.utils.JsonHelper;
+import com.sunesoft.ecloud.files.feign.FileClient;
 import com.thoughtworks.xstream.XStream;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,8 @@ public class PatentServiceImpl implements PatentService {
     PatOfficialFeeDetailRepository officialFeeDetailRepository;
     @Autowired
     PatFeeInfoRepository patFeeInfoRepository;
+    @Autowired
+    FileClient fileClient;
 
 
     @Override
@@ -489,6 +492,7 @@ public class PatentServiceImpl implements PatentService {
         if (null == info) {
             throw new IllegalArgumentException("无效的patentId:" + patentId);
         }
+        boolean isApplicationSameDay = info.getIsApplicationSameDay();
         String patentName = info.getPatentName();
         PatentType patentType = info.getPatentType();
         String caseNo = info.getCaseNo();
@@ -513,6 +517,12 @@ public class PatentServiceImpl implements PatentService {
             acc += ";" + item;
             return acc;
         }).get();
+        //代理机构信息
+        List<AgencyAgent> agencyAgentList = generateAgent(patAgentList);
+        Agency agencyInfo = new Agency(agencyName, agencyCode, true, agencyAgentList);
+        //代理机构签章信息
+        SignatureInfo signatureInfo = new SignatureInfo(agencyName,xmlDate);
+
         elementDto.setAgencyAgents(agents);
         //申请人
         List<PatApplicant> patApplicantList = applicantRepository.findByPatentInfo_Id(patentId);
@@ -550,11 +560,10 @@ public class PatentServiceImpl implements PatentService {
         if (customerDemand.getIsReqPriority()) {
             claimsList = priorityClaimsRepository.findByPatent(patentId);
         }
+
+        Map<String,Object> xmlObjectMap = new HashMap<>();
         //1.生成代理委托书xml
-        //TODO 查看是否有委托书文件
-
         PatentProxyXMLDto dto = new PatentProxyXMLDto();
-
         List<ProxyAgent> agentList = transformProxyAgent(patAgentList);
         List<Entrustor> entrustorList = new ArrayList<>();
         entrustorList.add(new Entrustor(1, "委托人签章"));//todo 委托人签章
@@ -569,12 +578,7 @@ public class PatentServiceImpl implements PatentService {
         dto.setAgentSignature(agency.getName());
         dto.setXMLDate(xmlDate);
         dto.setPictureList(pictureList);
-        PrintWriter writer = null;
-        writer = new PrintWriter("E:/test100007.xml");
-        writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
-        XStream xs = new XStream();
-        xs.processAnnotations(PatentProxyXMLDto.class);
-        xs.toXML(dto, writer);
+        xmlObjectMap.put("100007",dto);
 
         //2.生成专利请求书
         if (patentType.equals(PatentType.INVENTION_PATENT) || patentType.equals(PatentType.UTILITYMODEL_PATENT)) {
@@ -588,12 +592,51 @@ public class PatentServiceImpl implements PatentService {
             //联系人
             inventorDto.setContactor(new Contactor());
             //代理机构
-            List<AgencyAgent> agencyAgentList = generateAgent(patAgentList);
+            inventorDto.setAgency(agencyInfo);
+            //分案申请
+            inventorDto.setDivisionApplication(new DivisionApplication());
+            //生物材料(已在构造方法中初始化，如果有需要添加)
+            //序列表
+            inventorDto.setSequenceTable(new SequenceTable(false));
+            //优先权项（已在构造方法中初始化，如果有需要添加）
+            //不丧失新颖性申明颖性申明（已在构造方法中初始化，默认false）
+            //提前公开
+            inventorDto.setPublishAdvance(new PublishAdvance(customerDemand.getIsAdvancePublicity()));
+            //遗传资源(已在构造方法中初始化，默认false)
+            //同日申请
+            inventorDto.setApplySameDay(new ApplySameDay(isApplicationSameDay));
+            //摘要附图(已在构造方法中初始化，默认为空)
+            //申请文件清单（文件基本信息已在构造方法中初始话）
+            //附加文件清单（专利代理委托书信息已经初始化，如果有实质审查请求书，需要添加其信息）
+            //申请人或代理机构签章
+            inventorDto.setSignatureInfo(signatureInfo);
+            //专利局审批(已在构造方法中处理)
+            xmlObjectMap.put("110101",inventorDto);
 
-            inventorDto.setAgency(new Agency(agencyName, agencyCode, true, agencyAgentList));
         } else {
             AppearancePatentRequestDto appearanceDto = new AppearancePatentRequestDto();
-
+            appearanceDto.setPatentName(patentName);
+            appearanceDto.setCaseNo(caseNo);
+            //设计人
+            appearanceDto.setDesigner(generateDesigner(patInventorList));
+            //申请人
+            appearanceDto.setApplicant(generateApplicant(patApplicantList));
+            //联系人
+            appearanceDto.setContactor(new Contactor());
+            //专利代理机构
+            appearanceDto.setAgency(agencyInfo);
+            //分案申请
+            appearanceDto.setDivisionApplication(new DivisionApplication());
+            //要求优先权声明(已在构造方法中初始化，如果有需要添加)
+            //不丧失新颖性申明颖性申明(不丧失新颖性申明颖性申明（已在构造方法中初始化，默认false）)
+            //相似设计(已在构造方法中初始化,默认无)
+            //成套产品(已在构造方法中初始化,默认无)
+            //申请文件清单(已在构造方法中初始化)
+            //附加文件清单(已在构造方法中初始化)
+            //申请人或代理机构签章
+            appearanceDto.setSignatureInfo(signatureInfo);
+            //专利局审批(已在构造方法中处理)
+            xmlObjectMap.put("130101",appearanceDto);
         }
 
         //3.如果提实审，生成实质审查请求书
@@ -604,12 +647,9 @@ public class PatentServiceImpl implements PatentService {
             reviewRequestDto.setRemarksInfo(new SubstantiveReviewRequestRemarksInfo());
             reviewRequestDto.setSignatureInfo(new SignatureInfo(agencyName, xmlDate));
             reviewRequestDto.setOpinionInfo(new SubstantiveReviewRequestOpinionInfo());
-            writer = new PrintWriter("E:/test110401.xml");
-            writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
-            xs = new XStream();
-            xs.processAnnotations(SubstantiveReviewRequestDto.class);
-            xs.toXML(dto, writer);
+            xmlObjectMap.put("110401",reviewRequestDto);
         }
+        fileClient.packaging(info.getAgId().toString(),patentId.toString(),xmlObjectMap);
 
         agentRepository.saveAll(patAgentList);
         applicantRepository.saveAll(patApplicantList);
@@ -745,6 +785,33 @@ public class PatentServiceImpl implements PatentService {
             otherList.add(new InventorOther(2, "", false));
         }
         return new Inventor(inventorFirst, otherList);
+    }
+
+    private Designer generateDesigner(List<PatInventor> patInventorList){
+        List<InventorOther> otherList = new ArrayList<>();
+        if (null == patInventorList || patInventorList.size() == 0) {
+            otherList.add(new InventorOther(1, "", false));
+            otherList.add(new InventorOther(2, "", false));
+            return new Designer(new InventorFirst(), otherList);
+        }
+        PatInventor first = patInventorList.stream().filter(p -> p.getSort() == 1).findFirst().get();
+        InventorFirst inventorFirst = new InventorFirst(first.getName(), first.getCountryCode(), first.getOpen(), first.getIdCode());
+
+        patInventorList = patInventorList.stream().filter(p -> p.getSort() > 1).sorted(Comparator.comparingInt(PatInventor::getSort)).collect(Collectors.toList());
+        if (patInventorList.size() > 0) {
+            for (int i = 0; i < patInventorList.size(); i++) {
+                PatInventor inventor = patInventorList.get(i);
+                otherList.add(new InventorOther(i + 1, inventor.getName(), inventor.getOpen()));
+            }
+        }
+        if (otherList.size() == 1) {
+            otherList.add(new InventorOther(2, "", false));
+        }
+        if (otherList.size() == 0) {
+            otherList.add(new InventorOther(1, "", false));
+            otherList.add(new InventorOther(2, "", false));
+        }
+        return new Designer(inventorFirst, otherList);
     }
 
 

@@ -25,10 +25,10 @@ public class ApplyFileInfo {
     public static List<ApplyFile> generateApplyFileInfo(){
         List<ApplyFile> basicFileInfoList = new ArrayList<>();
         basicFileInfoList.add(new ApplyFile(1,"发明专利请求书","110101",4));
-        basicFileInfoList.add(new ApplyFile(2,"说明书摘要","100004",0));
-        basicFileInfoList.add(new ApplyFile(3,"权利要求书","100001",0));
-        basicFileInfoList.add(new ApplyFile(4,"说明书","100002",0));
-        basicFileInfoList.add(new ApplyFile(5,"说明书附图","100003",0));
+        basicFileInfoList.add(new ApplyFile(2,"权利要求书","100001",0));
+        basicFileInfoList.add(new ApplyFile(3,"说明书","100002",0));
+        basicFileInfoList.add(new ApplyFile(4,"说明书附图","100003",0));
+        basicFileInfoList.add(new ApplyFile(5,"说明书摘要","100004",0));
         return basicFileInfoList;
     }
 

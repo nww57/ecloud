@@ -418,11 +418,11 @@ public class PatentInfo extends BizEntity{
     }
 
 
-    public boolean isApplicationSameDay() {
+    public boolean getIsApplicationSameDay() {
         return isApplicationSameDay;
     }
 
-    public void setApplicationSameDay(boolean applicationSameDay) {
+    public void setIsApplicationSameDay(boolean applicationSameDay) {
         isApplicationSameDay = applicationSameDay;
     }
 

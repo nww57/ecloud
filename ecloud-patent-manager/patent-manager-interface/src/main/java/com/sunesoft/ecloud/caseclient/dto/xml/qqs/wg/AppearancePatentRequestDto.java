@@ -2,6 +2,7 @@ package com.sunesoft.ecloud.caseclient.dto.xml.qqs.wg;
 
 import com.sunesoft.ecloud.caseclient.dto.xml.ApprovalOpinion;
 import com.sunesoft.ecloud.caseclient.dto.xml.SignatureInfo;
+import com.sunesoft.ecloud.caseclient.dto.xml.XMLDate;
 import com.sunesoft.ecloud.caseclient.dto.xml.qqs.*;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -96,10 +97,13 @@ public class AppearancePatentRequestDto {
         this.registrationNumber = "";
         this.patentNameEn = "";
         this.representer = "";
+        this.similarDesign = new SimilarDesign(false,"0");
+        this.completeProduct = new CompleteProduct(false,"0");
         this.priorItemList = initPriorItem();
         this.noveltyStatement = new NoveltyStatement();
         this.applyFileInfo = initAppearanceFileInfo();
         this.attachFileInfo = initAttachFileInfo();
+        this.approvalOpinion = new ApprovalOpinion("",new XMLDate());
     }
 
     /**

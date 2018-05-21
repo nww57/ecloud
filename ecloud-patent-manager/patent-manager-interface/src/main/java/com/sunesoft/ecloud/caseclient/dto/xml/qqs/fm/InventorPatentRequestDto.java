@@ -121,7 +121,8 @@ public class InventorPatentRequestDto {
         this.publishAdvance = new PublishAdvance(true);
         this.applySameDay = new ApplySameDay(false);
         this.geneticResources = new GeneticResources(false);
-        this.abstractPicture = new AbstractPicture(1);
+        this.abstractPicture = new AbstractPicture("");
+        this.approvalOpinion = new ApprovalOpinion("",new XMLDate());
     }
 
 
@@ -163,8 +164,7 @@ public class InventorPatentRequestDto {
      */
     private List<AttachFile> initAttachFileInfo() {
         List<AttachFile> basicFileInfoList = new ArrayList<>();
-        basicFileInfoList.add(new AttachFile(1,"实质审查请求书","110401",1));
-        basicFileInfoList.add(new AttachFile(2,"专利代理委托书","100007",2));
+        basicFileInfoList.add(new AttachFile(1,"专利代理委托书","100007",0));
         return basicFileInfoList;
     }
 

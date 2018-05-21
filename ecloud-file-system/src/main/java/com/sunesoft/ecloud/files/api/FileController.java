@@ -2,6 +2,7 @@ package com.sunesoft.ecloud.files.api;
 
 
 import com.sunesoft.ecloud.auth.UserContext;
+import com.sunesoft.ecloud.auth.annotation.IgnoreUserToken;
 import com.sunesoft.ecloud.common.result.ListResult;
 import com.sunesoft.ecloud.common.result.TResult;
 import com.sunesoft.ecloud.common.result.resultFactory.ResultFactory;
@@ -329,17 +330,25 @@ public class FileController {
         return fileQueryService.getAgencyAllFile(agId);
     }
 
-    @PostMapping(value = "/toxml")
-    public void packageXML(String patentId,String type,Object object){
-        if(null == object || StringUtils.isEmpty(type)){
+    @IgnoreUserToken
+    @PostMapping(value = "/toXML")
+    public void packageXML(String agId,String patentId,Map<String,Object> objectMap){
+        if(null == objectMap ){
             throw new IllegalArgumentException("参数不能为null");
         }
         try {
-            PrintWriter writer = new PrintWriter(getXMLPath(patentId,type));
-            writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
-            XStream xStream = new XStream();
-            xStream.processAnnotations(object.getClass());
-            xStream.toXML(object,writer);
+            for(Map.Entry<String,Object> entry:objectMap.entrySet()){
+                String type = entry.getKey();
+                Object object = entry.getValue();
+                PrintWriter writer = new PrintWriter(getXMLPath(agId,patentId,type));
+                writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
+                XStream xStream = new XStream();
+                xStream.processAnnotations(object.getClass());
+                if("130101".equals(type)){
+                    xStream.aliasField("幅数",object.getClass(),"count");
+                }
+                xStream.toXML(object,writer);
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -347,12 +356,11 @@ public class FileController {
     }
 
 
-    private String getXMLPath(String patentId,String type){
+    private String getXMLPath(String agId,String patentId,String type){
         if(StringUtils.isEmpty(type)){
             throw new IllegalArgumentException("参数type不能为null");
         }
         String path = "";
-        String agId = UserContext.getAgencyId();
         String pathType = PathType.Case.toString();
         String baseRoot = patentId;
         String bizType = "打包文件";

@@ -9,9 +9,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 public class AbstractPicture {
 
     @XStreamAlias("图号")
-    private int abstractPicture;
+    private String abstractPicture;
 
-    public AbstractPicture(int abstractPicture) {
+    public AbstractPicture(String abstractPicture) {
         this.abstractPicture = abstractPicture;
     }
 }
