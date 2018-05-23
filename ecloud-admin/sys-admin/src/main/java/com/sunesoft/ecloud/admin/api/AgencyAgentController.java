@@ -2,7 +2,6 @@ package com.sunesoft.ecloud.admin.api;
 
 import com.sunesoft.ecloud.admin.query.AgencyAgentQueryService;
 import com.sunesoft.ecloud.admin.service.AgencyAgentService;
-import com.sunesoft.ecloud.adminclient.annotation.IgnoreUserToken;
 import com.sunesoft.ecloud.adminclient.cretirias.AgentCriteria;
 import com.sunesoft.ecloud.adminclient.dtos.AgentDto;
 import com.sunesoft.ecloud.auth.UserContext;
@@ -74,7 +73,7 @@ public class AgencyAgentController {
         return agencyAgentService.addOrUpdateAgencyAgent(agentDto);
     }
 
-    @IgnoreUserToken
+
     @PostMapping("idList")
     public ListResult<AgentDto> getAgentByIdList(@RequestParam List<UUID> idList){
         return agencyAgentQueryService.findAgentByIdList(idList);
