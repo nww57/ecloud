@@ -4,6 +4,7 @@ import com.sunesoft.ecloud.caseclient.enums.PatentNode;
 import com.sunesoft.ecloud.caseclient.enums.PatentType;
 import com.sunesoft.ecloud.common.cretiria.TCretiria;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -51,9 +52,9 @@ public class PatentQueryCriteria extends TCretiria {
     private PatentType patentType;
 
     /**
-     *案件节点/专利节点
+     *案件节点/专利节点（可多选）
      */
-    private PatentNode patentNode;
+    private List<PatentNode> patentNodeList;
 
     /**
      *所属合同
@@ -174,12 +175,12 @@ public class PatentQueryCriteria extends TCretiria {
         this.patentType = patentType;
     }
 
-    public PatentNode getPatentNode() {
-        return patentNode;
+    public List<PatentNode> getPatentNodeList() {
+        return patentNodeList;
     }
 
-    public void setPatentNode(PatentNode patentNode) {
-        this.patentNode = patentNode;
+    public void setPatentNodeList(List<PatentNode> patentNodeList) {
+        this.patentNodeList = patentNodeList;
     }
 
     public String getContractNo() {

@@ -24,6 +24,23 @@ public enum  PatentNode {
      */
     PACKAGING(3);
 
+
+    /**
+     * 受理
+     */
+
+    /**
+     * 授权
+     */
+
+    /**
+     * 等待证书下发
+     */
+
+    /**
+     * 结案
+     */
+
     private int node;
 
     PatentNode(int node) {

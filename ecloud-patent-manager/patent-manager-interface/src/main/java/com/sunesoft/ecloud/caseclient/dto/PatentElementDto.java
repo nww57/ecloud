@@ -44,10 +44,16 @@ public class PatentElementDto {
      */
     private PatentNode patentNode;
 
+
     /**
-     *分案提交日
+     * 公开日
      */
-    private LocalDate applicationSubmissionDate;
+    private LocalDate publishDate;
+
+    /**
+     * 公开号
+     */
+    private String publishNo;
 
     /**
      *申请人
@@ -109,9 +115,6 @@ public class PatentElementDto {
         this.applicationDate = applicationDate;
     }
 
-    public void setApplicationSubmissionDate(LocalDate applicationSubmissionDate) {
-        this.applicationSubmissionDate = applicationSubmissionDate;
-    }
 
     public String getMainClassificationNumber() {
         return mainClassificationNumber;
@@ -129,8 +132,20 @@ public class PatentElementDto {
         this.patentNode = patentNode;
     }
 
-    public LocalDate getApplicationSubmissionDate() {
-        return applicationSubmissionDate;
+    public LocalDate getPublishDate() {
+        return publishDate;
+    }
+
+    public void setPublishDate(LocalDate publishDate) {
+        this.publishDate = publishDate;
+    }
+
+    public String getPublishNo() {
+        return publishNo;
+    }
+
+    public void setPublishNo(String publishNo) {
+        this.publishNo = publishNo;
     }
 
     public String getApplicants() {
