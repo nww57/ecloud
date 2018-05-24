@@ -137,9 +137,9 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
             sb.append(" and p.patentType = :patentType");
             param.put("patentType",criteria.getPatentType().toString());
         }
-        if(null != criteria.getPatentNode()){
-            sb.append(" and p.patentNode = :patentNode");
-            param.put("patentNode",criteria.getPatentNode().toString());
+        if(null != criteria.getPatentNodeList()){
+            sb.append(" and p.patentNode in :patentNode");
+            param.put("patentNode",criteria.getPatentNodeList());
         }
         if(StringUtils.isNotEmpty(criteria.getContractNo())){
             sb.append(" and pci.contractNo like :contractNo");
@@ -326,5 +326,10 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
                 .select(PatPriorityClaimsDto.class);
         List<PatPriorityClaimsDto> claims = queryList(prioritySqlBuilder);
         return new ListResult<>(claims);
+    }
+
+    @Override
+    public PagedResult<PatentFlowDto> getPatentFlowInfo(UUID patentId) {
+        return null;
     }
 }

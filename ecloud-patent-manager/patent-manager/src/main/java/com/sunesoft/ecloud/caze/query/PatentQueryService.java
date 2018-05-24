@@ -105,4 +105,12 @@ public interface PatentQueryService {
      * @return 返回查询结果
      */
     ListResult<PatPriorityClaimsDto> getPatentPriorityClaims(UUID patentId);
+
+
+    /**
+     * 查询专利的流程信息
+     * @param patentId 专利id
+     * @return 返回查询结果
+     */
+    PagedResult<PatentFlowDto> getPatentFlowInfo(UUID patentId);
 }
