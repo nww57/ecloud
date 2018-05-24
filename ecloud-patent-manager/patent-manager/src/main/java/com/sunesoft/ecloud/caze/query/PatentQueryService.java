@@ -26,6 +26,13 @@ public interface PatentQueryService {
     TResult<Map<PatentNode,Integer>> getPatentNodeCount(UUID agId);
 
     /**
+     * 获取用户流程节点信息数量
+     * @param userId 用户id
+     * @return 返回节点信息
+     */
+    TResult<Map<PatentNode,Integer>> getUserPatentNodeCount(UUID userId);
+
+    /**
      * 获取用户设置的查询条件
      * @param userId 用户id
      * @return 返回查询结果
@@ -38,7 +45,7 @@ public interface PatentQueryService {
      * @param criteria 查询参数
      * @return 返回查询结果
      */
-    ListResult<PatentBasicDto> getPatentBasicInfoByPatentNode(PatentNodeQueryCriteria criteria);
+    PagedResult<PatentBasicDto> getPatentBasicInfoByPatentNode(PatentNodeQueryCriteria criteria);
 
 
     /**

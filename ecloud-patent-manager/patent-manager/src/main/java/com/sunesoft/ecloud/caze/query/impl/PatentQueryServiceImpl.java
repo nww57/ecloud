@@ -45,6 +45,11 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
     }
 
     @Override
+    public TResult<Map<PatentNode, Integer>> getUserPatentNodeCount(UUID userId) {
+        return null;
+    }
+
+    @Override
     public TResult<PatentQueryConfigDto> getUserPatentQueryConfig(UUID userId) {
         if(null == userId){
             throw new IllegalArgumentException("参数userId不能为null");
@@ -56,15 +61,16 @@ public class PatentQueryServiceImpl extends GenericQuery implements PatentQueryS
 
 
     @Override
-    public ListResult<PatentBasicDto> getPatentBasicInfoByPatentNode(PatentNodeQueryCriteria criteria) {
+    public PagedResult<PatentBasicDto> getPatentBasicInfoByPatentNode(PatentNodeQueryCriteria criteria) {
         if(null == criteria.getAgId()){
             throw new IllegalArgumentException("参数agId不能为null");
         }
         SqlBuilder<PatentBasicDto> sqlBuilder = HSqlBuilder.hFrom(PatentInfo.class, "p")
                 .where("p.agId",criteria.getAgId())
                 .where("p.patentNode",criteria.getPatentNode())
+                .pagging(criteria.getPageIndex(),criteria.getPageSize())
                 .select(PatentBasicDto.class);
-        return new ListResult<>(queryList(sqlBuilder));
+        return queryPaged(sqlBuilder);
     }
 
     @Override

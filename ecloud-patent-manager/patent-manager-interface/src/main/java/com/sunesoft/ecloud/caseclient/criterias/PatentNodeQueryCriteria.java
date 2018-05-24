@@ -1,6 +1,7 @@
 package com.sunesoft.ecloud.caseclient.criterias;
 
 import com.sunesoft.ecloud.caseclient.enums.PatentNode;
+import com.sunesoft.ecloud.common.cretiria.TCretiria;
 
 import java.util.UUID;
 
@@ -8,7 +9,7 @@ import java.util.UUID;
  * @Auther: niww
  * @Date: 2018/5/9/009
  */
-public class PatentNodeQueryCriteria {
+public class PatentNodeQueryCriteria extends TCretiria {
 
     private UUID agId;
 
